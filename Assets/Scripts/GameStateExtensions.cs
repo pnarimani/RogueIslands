@@ -13,18 +13,25 @@ namespace RogueIslands
             new GameEventConditionEvaluator(),
             new BuildingCategoryScoredEvaluator(),
             new OrConditionEvaluator(),
+            new TimeConditionEvaluator(),
         };
 
         private static readonly List<GameActionExecutor> _executors = new()
         {
             new MultiplierModifierExecutor(),
+            new BoosterScalingExecutor(),
+            new RetriggerScoringBuildingExecutor(),
+            new PermanentBuildingUpgradeExecutor(),
+            new GainSellValueExecutor(),
+            new BoosterResetExecutor(),
+            new DayModifierExecutor(),
         };
 
-        public static void Execute(this GameState state, GameAction action)
+        public static void Execute(this GameState state, Booster booster, GameAction action)
         {
             _executors
                 .First(x => x.ActionType.IsInstanceOfType(action))
-                .Execute(state, action);
+                .Execute(state, booster, action);
         }
 
         public static bool IsConditionMet(this GameState state, IGameCondition condition)
@@ -37,7 +44,7 @@ namespace RogueIslands
         public static void ExecuteEventActions(this GameState state)
         {
             foreach (var booster in state.Boosters) 
-                state.Execute(booster.EventAction);
+                state.Execute(booster, booster.EventAction);
         }
     }
 }

@@ -1,6 +1,6 @@
 namespace RogueIslands.Boosters
 {
-    public class PermanentUpgradeAction : GameAction
+    public class PermanentBuildingUpgradeAction : GameAction
     {
         public double ProductUpgrade { get; set; }
     }
