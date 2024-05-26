@@ -61,17 +61,24 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Suck my busking",
                     Description = "Retrigger all cat2 buildings",
-                    EventAction = new RetriggerBuildingAction()
+                    EventAction = new RetriggerScoringBuildingAction()
                     {
-                        Conditions = new[]
+                        RetriggerTimes = 1,
+                        Conditions = new IGameCondition[]
                         {
                             new BuildingCategoryScoredCondition
                             {
                                 Category = Category.Cat2,
                             },
+                            new GameEventCondition("BuildingScored"),
                         },
                     },
-                }
+                },
+                new()
+                {
+                    Name = "Bad Eyesight",
+                    Description = "Category 1 and 3 count as same. Category 2 and 4 count as same.",
+                },
             };
         }
     }

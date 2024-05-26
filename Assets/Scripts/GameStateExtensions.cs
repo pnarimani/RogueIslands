@@ -12,6 +12,7 @@ namespace RogueIslands
             new ProbabilityEvaluator(new Random()),
             new GameEventConditionEvaluator(),
             new BuildingCategoryScoredEvaluator(),
+            new OrConditionEvaluator(),
         };
 
         private static readonly List<GameActionExecutor> _executors = new()
