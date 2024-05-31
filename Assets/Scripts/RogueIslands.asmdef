@@ -1,5 +1,14 @@
 {
 	"name": "RogueIslands",
 	"rootNamespace": "RogueIslands",
-	"overrideReferences": true
+	"references": [
+		"Unity.TextMeshPro",
+		"MoreMountains.Feedbacks",
+		"DOTween.Modules",
+		"UniTask"
+	],
+	"overrideReferences": true,
+	"precompiledReferences": [
+		"DOTween.dll"
+	]
 }

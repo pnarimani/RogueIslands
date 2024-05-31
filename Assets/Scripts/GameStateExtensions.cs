@@ -18,30 +18,32 @@ namespace RogueIslands
 
         private static readonly List<GameActionExecutor> _executors = new()
         {
-            new MultiplierModifierExecutor(),
+            new ScoringActionExecutor(),
             new BoosterScalingExecutor(),
             new RetriggerScoringBuildingExecutor(),
             new PermanentBuildingUpgradeExecutor(),
             new GainSellValueExecutor(),
             new BoosterResetExecutor(),
             new DayModifierExecutor(),
+            new CompositeActionExecutor(),
         };
 
         public static void Execute(this GameState state, Booster booster, GameAction action)
         {
-            _executors
-                .First(x => x.ActionType.IsInstanceOfType(action))
+            var gameActionExecutor = _executors
+                .First(x => x.ActionType == action.GetType());
+            gameActionExecutor
                 .Execute(state, booster, action);
         }
 
         public static bool IsConditionMet(this GameState state, IGameCondition condition)
         {
             return _evaluators
-                .First(x => x.ConditionType.IsInstanceOfType(condition))
+                .First(x => x.ConditionType == condition.GetType())
                 .Evaluate(state, condition);
         }
 
-        public static void ExecuteEventActions(this GameState state)
+        public static void ExecuteAll(this GameState state)
         {
             foreach (var booster in state.Boosters) 
                 state.Execute(booster, booster.EventAction);

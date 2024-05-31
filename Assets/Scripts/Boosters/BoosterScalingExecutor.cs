@@ -6,22 +6,9 @@ namespace RogueIslands.Boosters
     {
         protected override void Execute(GameState state, Booster booster, BoosterScalingAction action)
         {
-            if (booster.EventAction is ScoringAction scoringAction)
-            {
-                ScaleScoringAction(action, scoringAction);
-                UpdateBoosterDescription(booster, scoringAction);
-            }
-            else if (booster.EventAction is CompositeAction composite)
-            {
-                foreach (var subAction in composite.Actions)
-                {
-                    if (subAction is ScoringAction subScoringAction)
-                    {
-                        ScaleScoringAction(action, subScoringAction);
-                        UpdateBoosterDescription(booster, subScoringAction);
-                    }
-                }
-            }
+            var scoringAction = booster.GetEventAction<ScoringAction>();
+            ScaleScoringAction(action, scoringAction);
+            UpdateBoosterDescription(booster, scoringAction);
         }
 
         private void UpdateBoosterDescription(Booster booster, ScoringAction scoringAction)

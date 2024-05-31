@@ -15,7 +15,7 @@ namespace RogueIslands.Boosters
                     : state.Week == GameState.TotalWeeks - condition.Time,
                 TimeCondition.Mode.Month => condition.FromStart
                     ? state.Month == condition.Time
-                    : state.Month == state.TotalMonths - condition.Time,
+                    : state.Month == GameState.TotalMonths - condition.Time,
                 _ => false,
             };
         }

@@ -9,6 +9,6 @@ namespace RogueIslands
         public Island CurrentScoringIsland { get; set; }
         public PlacedBuilding CurrentScoringBuilding { get; set; }
 
-        public Dictionary<string, object> CustomDate { get; set; }
+        public Dictionary<string, object> CustomData { get; set; }
     }
 }

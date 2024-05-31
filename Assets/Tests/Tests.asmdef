@@ -1,0 +1,12 @@
+{
+  "name": "Tests",
+  "references": [
+    "RogueIslands"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

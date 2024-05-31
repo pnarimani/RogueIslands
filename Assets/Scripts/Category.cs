@@ -9,7 +9,8 @@ namespace RogueIslands
         public bool Equals(Category other) => Value == other.Value;
         public override bool Equals(object obj) => obj is Category other && Equals(other);
         public override int GetHashCode() => (Value != null ? Value.GetHashCode() : 0);
-        
+        public override string ToString() => Value;
+
         public static bool operator ==(Category left, Category right) => left.Equals(right);
         public static bool operator !=(Category left, Category right) => !(left == right);
 

@@ -10,6 +10,20 @@
       },
       "hash": "e8c98732016d7cdba47eb0d283977abd1012741c"
     },
+    "com.cysharp.unitask": {
+      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "fbe0bf85155f42f8832205f7b3ac3df571ada33e"
+    },
+    "com.mnarimani.autoassigner": {
+      "version": "https://github.com/pnarimani/AutoAssigner.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d8e29e245153251f45438fb28192d0d9b280858e"
+    },
     "com.unity.cinemachine": {
       "version": "3.1.0",
       "depth": 0,
@@ -185,6 +199,13 @@
       "source": "git",
       "dependencies": {},
       "hash": "1231f5e645d71f60eed4ea51e8ca63d13a09f385"
+    },
+    "jp.hadashikick.vcontainer": {
+      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.15.4",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "58610810240efebe27b982a3adfb8405c57320a2"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

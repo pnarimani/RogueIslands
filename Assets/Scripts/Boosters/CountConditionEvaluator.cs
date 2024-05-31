@@ -10,7 +10,7 @@ namespace RogueIslands.Boosters
         {
             if (condition.TargetType == Target.BuildingsInAnyIsland)
             {
-                foreach (var island in state.PlacedBuildings)
+                foreach (var island in state.Islands)
                 {
                     var count = island.Buildings.Count;
                     var meetsCondition = condition.ComparisonMode switch
@@ -36,8 +36,8 @@ namespace RogueIslands.Boosters
             {
                 var count = condition.TargetType switch
                 {
-                    Target.Buildings => state.PlacedBuildings.SelectMany(x => x.Buildings).Count(),
-                    Target.Island => state.PlacedBuildings.Count,
+                    Target.Buildings => state.Islands.SelectMany(x => x.Buildings).Count(),
+                    Target.Island => state.Islands.Count,
                     Target.BuildingsInScoringIsland => state.ScoringState.CurrentScoringIsland.Buildings.Count,
                     Target.BuildingsInAnyIsland => throw new ArgumentOutOfRangeException(),
                     _ => throw new ArgumentOutOfRangeException(),

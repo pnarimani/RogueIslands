@@ -4,7 +4,7 @@ namespace RogueIslands.Boosters
     {
         protected override bool Evaluate(GameState state, BuildingCategoryScoredCondition condition)
         {
-            bool badEyesight = state.Boosters.Exists(b => b.Name == "Bad Eyesight");
+            var badEyesight = state.Boosters.Exists(b => b.Name == "Bad Eyesight");
             var buildingCategory = state.ScoringState.CurrentScoringBuilding.Building.Category;
             var conditionCategory = condition.Category;
 

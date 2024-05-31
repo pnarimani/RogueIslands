@@ -4,9 +4,9 @@ namespace RogueIslands.Boosters
 {
     public static class BoosterList
     {
-        public static IReadOnlyList<Booster> Get()
+        public static List<Booster> Get()
         {
-            return new Booster[]
+            return new List<Booster>
             {
                 new()
                 {
@@ -208,9 +208,21 @@ namespace RogueIslands.Boosters
                 },
                 new()
                 {
-                    Name = "Procrasinator",
+                    Name = "Procrastinator",
                     Description = "You only have 1 day",
-                    
+                    EventAction = new DayModifier
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            new GameEventCondition("DayStart"),
+                        },
+                        SetDays = 1,
+                    },
+                },
+                new()
+                {
+                    Name = "Stateful",
+                    Description = "For every 50 buildings placed, gain 1x mult.",
                 }
             };
         }

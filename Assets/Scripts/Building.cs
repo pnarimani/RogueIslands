@@ -8,6 +8,7 @@ namespace RogueIslands
         public float Range { get; set; }
         public BuildingInstanceId Id { get; set; }
         public Category Category { get; set; }
+        public ColorTag Color { get; set; }
         public int RequiredEnergy { get; set; }
         public double Output { get; set; }
         
