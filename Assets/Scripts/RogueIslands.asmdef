@@ -5,7 +5,8 @@
 		"Unity.TextMeshPro",
 		"MoreMountains.Feedbacks",
 		"DOTween.Modules",
-		"UniTask"
+		"UniTask",
+		"VContainer"
 	],
 	"overrideReferences": true,
 	"precompiledReferences": [

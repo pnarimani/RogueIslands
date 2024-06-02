@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace RogueIslands.View
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : Singleton<GameManager>
     {
-        public GameState State { get; set; }
+        public GameState State { get; private set; }
 
         private void Start()
         {

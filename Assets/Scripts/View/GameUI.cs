@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using RogueIslands.Boosters;
-using RogueIslands.View;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace RogueIslands
+namespace RogueIslands.View
 {
     public class GameUI : Singleton<GameUI>
     {
@@ -24,6 +22,7 @@ namespace RogueIslands
         [SerializeField] private BuildingCardView _buildingCardPrefab;
         [SerializeField] private BoosterView _boosterPrefab;
         [SerializeField] private CardListView _buildingCardList, _boosterList;
+        [SerializeField] private GameObject _notEnoughEnergy;
 
         public event Action PlayClicked;
 
@@ -44,6 +43,53 @@ namespace RogueIslands
             var card = Instantiate(_boosterPrefab, _boosterList.transform);
             card.Show(booster);
             _boosterList.Add(card.GetComponent<CardListItem>());
+        }
+
+        public bool IsInSpawnRegion(Vector3 screenPosition)
+        {
+            var corners = new Vector3[4];
+            ((RectTransform)_buildingCardList.transform).GetWorldCorners(corners);
+            var bl = corners[0];
+            var tr = corners[2];
+            var viewRect = new Rect(bl, tr - bl);
+            return !viewRect.Contains(screenPosition);
+        }
+
+        public void Refresh()
+        {
+            var state = GameManager.Instance.State;
+            
+            if (state.ScoringState != null)
+            {
+                _products.UpdateNumber(state.ScoringState.Products);
+                _multiplier.UpdateNumber(state.ScoringState.Multiplier);
+            }
+
+            _requiredOutput.UpdateNumber(state.RequiredScore);
+            _currentAmount.UpdateNumber(state.CurrentScore);
+            _budget.UpdateNumber(state.Money);
+            _energy.UpdateNumber(state.Energy);
+            _days.UpdateNumber(state.Day);
+            _week.UpdateNumber(state.Week);
+            _month.UpdateNumber(state.Month);
+        }
+
+        public void ShowNotEnoughEnergy()
+        {
+            _budget.transform.DOShakePosition(0.2f, 10, 20);
+
+            _notEnoughEnergy.transform.DOComplete();
+            _notEnoughEnergy.SetActive(true);
+            _notEnoughEnergy.transform.localScale = Vector3.zero;
+            _notEnoughEnergy.transform.DOScale(Vector3.one, 0.2f)
+                .SetEase(Ease.OutBack)
+                .OnComplete(() =>
+                {
+                    _notEnoughEnergy.transform.DOScale(0, .2f)
+                        .SetDelay(1)
+                        .SetEase(Ease.InBack)
+                        .OnComplete(() => _notEnoughEnergy.SetActive(false));
+                });
         }
     }
 }

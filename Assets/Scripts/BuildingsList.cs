@@ -19,11 +19,11 @@ namespace RogueIslands
                             Name = $"{colorName}",
                             Color = (colorName, color),
                             Category = cat,
-                            RequiredEnergy = i + 1,
+                            EnergyCost = i + 1,
                             Output = i + 1,
-                            PrefabAddress = $"Prefabs/Card-{colorName}-{i + 1}",
+                            PrefabAddress = $"Buildings/{colorName} {i + 1}",
                         };
-                        card.Description = $"Energy: {card.RequiredEnergy}\nOutput: {card.Output}\nCategory: {card.Category}";
+                        card.Description = $"Energy: {card.EnergyCost}\nOutput: {card.Output}\nCategory: {card.Category}";
                         allCards.Add(card);
                     }
                 }

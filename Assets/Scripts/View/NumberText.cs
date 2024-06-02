@@ -3,7 +3,7 @@ using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 
-namespace RogueIslands
+namespace RogueIslands.View
 {
     public class NumberText : MonoBehaviour
     {

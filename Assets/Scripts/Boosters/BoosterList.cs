@@ -79,6 +79,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Bad Eyesight",
                     Description = "Category 1 and 3 count as same. Category 2 and 4 count as same.",
+                    EvaluationOverrides = new[] { new BadEyesConditionEvaluator() },
                 },
                 new()
                 {
@@ -99,7 +100,7 @@ namespace RogueIslands.Boosters
                                         ComparisonMode = CountCondition.Mode.PowerOfTwo,
                                     },
                                 },
-                                ProductChange =   4,
+                                ProductChange = 4,
                             },
                             new ScoringAction
                             {
@@ -159,7 +160,6 @@ namespace RogueIslands.Boosters
                             },
                         },
                     },
-                    
                 },
                 new()
                 {
