@@ -68,10 +68,11 @@ namespace RogueIslands.View
                 {
                     _instance.transform.position = hit.point;
 
-                    var buildings = FindObjectsByType<BuildingView>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                    var buildings =
+                        FindObjectsByType<BuildingView>(FindObjectsInactive.Include, FindObjectsSortMode.None);
                     foreach (var b in buildings)
                         b.ShowSynergyRange(true);
-                    
+
                     if (_instanceNeighbours != null)
                     {
                         foreach (var neighbour in _instanceNeighbours)
@@ -83,9 +84,9 @@ namespace RogueIslands.View
 
                     _instanceNeighbours = GameManager.Instance.State.GetIslands(hit.point, Data.Range)
                         .SelectMany(x => x)
-                        .Select(placedBuilding => buildings.First(b => b.Data == placedBuilding.Building))
+                        .Select(placedBuilding => buildings.First(b => b.Data == placedBuilding))
                         .ToList();
-                    
+
                     foreach (var n in _instanceNeighbours)
                         n.HighlightConnection(true);
                 }
@@ -119,21 +120,17 @@ namespace RogueIslands.View
                     var ray = _camera.ScreenPointToRay(Input.mousePosition);
                     if (Physics.Raycast(ray, out var hit, 100, LayerMask.GetMask("Ground")))
                     {
+                        var buildingData = GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data);
+                        
                         var building = Instantiate(Resources.Load<BuildingView>(Data.PrefabAddress), hit.point, Quaternion.identity);
-                        building.SetData(Data);
                         building.transform.DOMoveY(1, 0.3f)
                             .From()
                             .SetRelative(true)
                             .SetEase(Ease.OutBounce);
-                        GameManager.Instance.State.PlaceBuilding(new PlacedBuilding
-                        {
-                            Building = Data,
-                            Position = hit.point,
-                            Rotation = Quaternion.identity,
-                        });
+                        building.SetData(buildingData);
 
                         GameUI.Instance.Refresh();
-                        
+
                         Destroy(gameObject);
 
                         OnPointerClick(default);
@@ -182,8 +179,8 @@ namespace RogueIslands.View
                 foreach (var b in FindObjectsByType<BuildingView>(FindObjectsInactive.Include,
                              FindObjectsSortMode.None))
                 {
-                    // b.ShowSynergyRadius(false);
-                    // b.HighlightConnection(false);
+                    b.ShowSynergyRange(false);
+                    b.HighlightConnection(false);
                 }
             }
         }

@@ -1,15 +1,20 @@
 {
-	"name": "RogueIslands",
-	"rootNamespace": "RogueIslands",
-	"references": [
-		"Unity.TextMeshPro",
-		"MoreMountains.Feedbacks",
-		"DOTween.Modules",
-		"UniTask",
-		"VContainer"
-	],
-	"overrideReferences": true,
-	"precompiledReferences": [
-		"DOTween.dll"
-	]
+    "name": "RogueIslands",
+    "rootNamespace": "RogueIslands",
+    "references": [
+        "UniTask",
+        "VContainer",
+        "Newtonsoft.Json.UnityConverters"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

@@ -1,0 +1,16 @@
+﻿{
+  "name": "RogueIslands.View",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "RogueIslands",
+    "Unity.TextMeshPro",
+    "MoreMountains.Feedbacks",
+    "DOTween.Modules",
+    "UniTask",
+    "VContainer"
+  ],
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "DOTween.dll"
+  ]
+}

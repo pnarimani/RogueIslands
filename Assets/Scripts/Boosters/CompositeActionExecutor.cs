@@ -2,10 +2,10 @@ namespace RogueIslands.Boosters
 {
     public class CompositeActionExecutor : GameActionExecutor<CompositeAction>
     {
-        protected override void Execute(GameState state, Booster booster, CompositeAction action)
+        protected override void Execute(GameState state, IGameView view, Booster booster, CompositeAction action)
         {
             foreach (var subAction in action.Actions)
-                state.Execute(booster, subAction);
+                state.Execute(view, booster, subAction);
         }
     }
 }

@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace RogueIslands
 {
     public static class BuildingPlacement
     {
-        public static void PlaceBuilding(this GameState state, PlacedBuilding building)
+        public static Building PlaceBuilding(this GameState state, IGameView view, Building buildingData)
         {
-            state.Energy -= building.Building.EnergyCost;
+            Assert.IsTrue(buildingData.Id.IsDefault());
+
+            var building = buildingData.Clone();
+
+            state.Energy -= building.EnergyCost;
 
             if (state.GetIslands(building) is { Count: > 0 } islands)
             {
@@ -27,14 +32,16 @@ namespace RogueIslands
                 state.Islands.Add(new Island()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Buildings = new List<PlacedBuilding> { building },
+                    Buildings = new List<Building> { building },
                 });
             }
 
-            ExecuteBuildingPlacedEvent(state);
+            ExecuteBuildingPlacedEvent(state, view);
+
+            return building;
         }
 
-        private static void MergeIslands(GameState state, List<Island> islands, PlacedBuilding building)
+        private static void MergeIslands(GameState state, List<Island> islands, Building building)
         {
             var buildings = islands
                 .SelectMany(island => island.Buildings)
@@ -50,15 +57,15 @@ namespace RogueIslands
             });
         }
 
-        private static void ExecuteBuildingPlacedEvent(this GameState state)
+        private static void ExecuteBuildingPlacedEvent(this GameState state, IGameView view)
         {
             state.CurrentEvent = "BuildingPlaced";
-            state.ExecuteAll();
+            state.ExecuteAll(view);
         }
 
-        public static List<Island> GetIslands(this GameState state, PlacedBuilding building)
+        public static List<Island> GetIslands(this GameState state, Building building)
         {
-            return GetIslands(state, building.Position, building.Building.Range);
+            return GetIslands(state, building.Position, building.Range);
         }
 
         public static List<Island> GetIslands(this GameState state, Vector3 position, float range)
@@ -69,7 +76,7 @@ namespace RogueIslands
                 foreach (var other in island)
                 {
                     var distance = Vector3.Distance(other.Position, position);
-                    var biggestRange = Math.Max(other.Building.Range, range);
+                    var biggestRange = Math.Max(other.Range, range);
                     if (distance < biggestRange)
                     {
                         islands.Add(island);

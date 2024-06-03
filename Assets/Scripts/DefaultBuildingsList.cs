@@ -2,7 +2,7 @@
 
 namespace RogueIslands
 {
-    public class BuildingsList
+    public class DefaultBuildingsList
     {
         public static List<Building> Get()
         {

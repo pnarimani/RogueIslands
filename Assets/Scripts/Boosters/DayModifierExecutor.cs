@@ -2,7 +2,7 @@ namespace RogueIslands.Boosters
 {
     public class DayModifierExecutor : GameActionExecutor<DayModifier>
     {
-        protected override void Execute(GameState state, Booster booster, DayModifier action)
+        protected override void Execute(GameState state, IGameView view, Booster booster, DayModifier action)
         {
             if (action.ChangeDays != 0)
                 state.TotalDays += action.ChangeDays;

@@ -8,7 +8,7 @@ namespace RogueIslands
     {
         public static GameState NewGame()
         {
-            List<Building> buildings = BuildingsList.Get();
+            List<Building> buildings = DefaultBuildingsList.Get();
             buildings.Shuffle();
             return new GameState()
             {

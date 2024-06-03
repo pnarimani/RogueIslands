@@ -4,6 +4,7 @@ namespace RogueIslands.Boosters
 {
     public class Booster
     {
+        public BoosterInstanceId Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int BuyPrice { get; set; }
@@ -11,7 +12,6 @@ namespace RogueIslands.Boosters
         public GameAction BuyAction { get; set; }
         public GameAction SellAction { get; set; }
         public GameAction EventAction { get; set; }
-        
         public IReadOnlyList<ConditionEvaluator> EvaluationOverrides { get; set; }
         
         public T GetEventAction<T>() where T : GameAction

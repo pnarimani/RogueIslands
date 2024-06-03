@@ -7,8 +7,8 @@ namespace RogueIslands
     {
         public const int TotalWeeks = 4;
         public const int TotalMonths = 5;
-        
-        public int Day { get; set; }
+
+        public int Day { get; set; } = 1;
         public int Week { get; set; }
         public int Month { get; set; }
 
@@ -32,5 +32,7 @@ namespace RogueIslands
         public int MaxBoosters { get; set; } = 5;
         public List<Booster> Boosters { get; set; } = new();
         public List<Booster> AvailableBoosters { get; set; }
+        
+        public GameResult Result { get; set; }
     }
 }

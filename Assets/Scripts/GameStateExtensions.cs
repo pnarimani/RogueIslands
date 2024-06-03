@@ -12,10 +12,10 @@ namespace RogueIslands
         private static IReadOnlyList<GameActionExecutor> _defaultExecutors;
         private static readonly List<ConditionEvaluator> _evaluatorOverrides = new();
 
-        public static void Execute(this GameState state, Booster booster, GameAction action)
+        public static void Execute(this GameState state, IGameView view, Booster booster, GameAction action)
         {
             _defaultExecutors ??= LifetimeScopeProvider.Get().Container.Resolve<IReadOnlyList<GameActionExecutor>>();
-            _defaultExecutors.First(x => x.ActionType == action.GetType()).Execute(state, booster, action);
+            _defaultExecutors.First(x => x.ActionType == action.GetType()).Execute(state, view, booster, action);
         }
 
         public static bool IsConditionMet(this GameState state, IGameCondition condition)
@@ -28,34 +28,39 @@ namespace RogueIslands
             return evaluator.Evaluate(state, condition);
         }
 
-        public static void AddBooster(this GameState state, Booster booster)
+        public static void ExecuteAll(this GameState state, IGameView view)
         {
-            state.Boosters.Add(booster);
-            state.Execute(booster, booster.BuyAction);
-
-            if (booster.EvaluationOverrides != null)
-                _evaluatorOverrides.AddRange(booster.EvaluationOverrides);
-
-            state.CurrentEvent = "BoosterBought";
-            state.ExecuteAll();
+            foreach (var booster in state.Boosters)
+                state.Execute(view, booster, booster.EventAction);
         }
 
-        public static void RemoveBooster(this GameState state, Booster booster)
+        public static void AddBooster(this GameState state, IGameView view, Booster booster)
         {
+            var instance = booster.Clone();
+            instance.Id = new BoosterInstanceId(Guid.NewGuid().GetHashCode());
+            
+            state.Boosters.Add(instance);
+            state.Execute(view, instance, instance.BuyAction);
+
+            if (instance.EvaluationOverrides != null)
+                _evaluatorOverrides.AddRange(instance.EvaluationOverrides);
+
+            state.CurrentEvent = "BoosterBought";
+            state.ExecuteAll(view);
+        }
+
+        public static void RemoveBooster(this GameState state, IGameView view, BoosterInstanceId boosterId)
+        {
+            var booster = state.Boosters.First(x => x.Id == boosterId);
+            
             state.Boosters.Remove(booster);
-            state.Execute(booster, booster.SellAction);
+            state.Execute(view, booster, booster.SellAction);
 
             if (booster.EvaluationOverrides != null)
                 _evaluatorOverrides.RemoveAll(booster.EvaluationOverrides.Contains);
 
             state.CurrentEvent = "BoosterSold";
-            state.ExecuteAll();
-        }
-
-        public static void ExecuteAll(this GameState state)
-        {
-            foreach (var booster in state.Boosters)
-                state.Execute(booster, booster.EventAction);
+            state.ExecuteAll(view);
         }
     }
 }

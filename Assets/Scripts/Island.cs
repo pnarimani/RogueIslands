@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace RogueIslands
 {
-    public class Island : IEnumerable<PlacedBuilding>
+    public class Island : IEnumerable<Building>
     {
         public string Id { get; set; }
-        public List<PlacedBuilding> Buildings { get; set; }
+        public List<Building> Buildings { get; set; }
         
-        public List<PlacedBuilding>.Enumerator GetEnumerator() 
+        public List<Building>.Enumerator GetEnumerator() 
             => Buildings.GetEnumerator();
 
-        IEnumerator<PlacedBuilding> IEnumerable<PlacedBuilding>.GetEnumerator() 
+        IEnumerator<Building> IEnumerable<Building>.GetEnumerator() 
             => Buildings.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() 

@@ -4,7 +4,7 @@
     {
         protected override bool Evaluate(GameState state, BuildingCategoryScoredCondition condition)
         {
-            var buildingCategory = state.ScoringState.CurrentScoringBuilding.Building.Category;
+            var buildingCategory = state.ScoringState.CurrentScoringBuilding.Category;
             var conditionCategory = condition.Category;
 
             if (conditionCategory == Category.Cat1)
