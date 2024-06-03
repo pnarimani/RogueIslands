@@ -25,6 +25,8 @@ namespace RogueIslands.View
             State.Play(this);
 
             await UniTask.WaitForSeconds(AnimationScheduler.GetTotalTime());
+            
+            State.PopulateShop();
 
             if(State.HasLost())
                 ShowLoseScreen();

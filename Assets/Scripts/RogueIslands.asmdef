@@ -4,7 +4,8 @@
     "references": [
         "UniTask",
         "VContainer",
-        "Newtonsoft.Json.UnityConverters"
+        "Newtonsoft.Json.UnityConverters",
+        "Unity.Mathematics"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

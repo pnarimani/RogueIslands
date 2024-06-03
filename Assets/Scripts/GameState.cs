@@ -33,6 +33,8 @@ namespace RogueIslands
         public List<Booster> Boosters { get; set; } = new();
         public List<Booster> AvailableBoosters { get; set; }
         
+        public ShopState Shop { get; set; }
+        
         public GameResult Result { get; set; }
     }
 }

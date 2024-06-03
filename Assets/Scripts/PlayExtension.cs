@@ -27,6 +27,7 @@ namespace RogueIslands
                 foreach (var building in island.Buildings)
                 {
                     var buildingView = view.GetBuilding(building);
+                    var triggeredOnce = false;
                     
                     while (building.RemainingTriggers > 0)
                     {
@@ -35,7 +36,9 @@ namespace RogueIslands
 
                         building.RemainingTriggers--;
                         state.ScoringState.Products += building.Output + building.OutputUpgrade;
-                        buildingView.BuildingTriggered();
+                        buildingView.BuildingTriggered(triggeredOnce);
+                        triggeredOnce = true;
+
 
                         state.ExecuteAll(view);
                     }
