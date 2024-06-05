@@ -19,6 +19,8 @@ namespace RogueIslands.Boosters
             if (action.Conditions != null && action.Conditions.Any(condition => !state.IsConditionMet(condition)))
                 return;
 
+            view.GetBooster(booster)?.OnActionExecuted(state, action);
+
             Execute(state, view, booster, (T)action);
         }
 

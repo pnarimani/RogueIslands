@@ -39,6 +39,8 @@ namespace RogueIslands.View.Shop
                         return;
 
                     GameManager.Instance.State.PurchaseItemAtShop(GameManager.Instance, index);
+                    
+                    Destroy(item.gameObject);
                 };
             }
         }
@@ -53,6 +55,8 @@ namespace RogueIslands.View.Shop
 
         private void OnContinueClicked()
         {
+            GameManager.Instance.State.StartWeek(GameManager.Instance);
+            
             Destroy(gameObject);
         }
     }

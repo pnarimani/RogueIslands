@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using DG.Tweening;
 using RogueIslands.Boosters;
 using RogueIslands.Particles;
@@ -78,9 +79,10 @@ namespace RogueIslands.View
             _currentAmount.UpdateNumber(state.CurrentScore);
             _budget.UpdateNumber(state.Money);
             _energy.UpdateNumber(state.Energy);
-            _days.UpdateNumber(state.Day);
-            _week.UpdateNumber(state.Week);
-            _month.UpdateNumber(state.Month);
+            _days.SetMax(state.TotalDays);
+            _days.UpdateNumber(state.Day + 1);
+            _week.UpdateNumber(state.Week + 1);
+            _month.UpdateNumber(state.Month + 1);
         }
 
         public void ShowNotEnoughEnergy()
@@ -101,9 +103,24 @@ namespace RogueIslands.View
                 });
         }
 
-        public void ProductBoosted(int count)
+        public void ProductBoosted(double count)
         {
             _products.UpdateNumber(_products.CurrentNumber + count);
+        }
+
+        public void RemoveBoosterCard(Booster booster)
+        {
+            Destroy(FindObjectsByType<BoosterView>(FindObjectsSortMode.None)
+                .First(b => b.Data == booster)
+                .gameObject);
+        }
+
+        public IBoosterView GetBoosterCard(Booster booster) 
+            => FindObjectsByType<BoosterView>(FindObjectsSortMode.None).FirstOrDefault(b => b.Data == booster);
+
+        public void MultBoosted(double multBoost)
+        {
+            _multiplier.UpdateNumber(multBoost);
         }
     }
 }

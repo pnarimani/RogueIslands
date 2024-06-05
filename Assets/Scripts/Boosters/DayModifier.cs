@@ -4,5 +4,6 @@ namespace RogueIslands.Boosters
     { 
         public int ChangeDays { get; set;}
         public int? SetDays { get; set; }
+        public bool ShouldSetToDefault { get; set; }
     }
 }

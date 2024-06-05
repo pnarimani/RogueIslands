@@ -109,8 +109,21 @@ namespace RogueIslands
             if (state.Result == GameResult.Win)
                 view.ShowGameWinScreen();
 
-            if (hasWeekEnded && state.Result != GameResult.Win)
+            if (hasWeekEnded && state.Result == GameResult.InProgress)
                 view.ShowWeekWin();
+        }
+
+        public static void StartWeek(this GameState state, IGameView view)
+        {
+            state.CurrentScore = 0;
+            state.Day = 0;
+            state.Islands.Clear();
+            state.TotalDays = state.DefaultTotalDays;
+            view.DestroyBuildings();
+            view.ShowBuildingsInHand();
+
+            state.CurrentEvent = "WeekStart";
+            state.ExecuteAll(view);
         }
 
         private static bool HasLost(this GameState state)

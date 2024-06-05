@@ -58,12 +58,14 @@ namespace RogueIslands
             instance.Id = new BoosterInstanceId(Guid.NewGuid().GetHashCode());
             
             state.Boosters.Add(instance);
+            view.AddBooster(instance);
+            
             if (instance.BuyAction != null) 
                 state.Execute(view, instance, instance.BuyAction);
 
             if (instance.EvaluationOverrides != null)
                 _evaluatorOverrides.AddRange(instance.EvaluationOverrides);
-
+            
             state.CurrentEvent = "BoosterBought";
             state.ExecuteAll(view);
         }
@@ -78,6 +80,8 @@ namespace RogueIslands
 
             if (booster.EvaluationOverrides != null)
                 _evaluatorOverrides.RemoveAll(booster.EvaluationOverrides.Contains);
+
+            view.RemoveBooster(booster);
 
             state.CurrentEvent = "BoosterSold";
             state.ExecuteAll(view);

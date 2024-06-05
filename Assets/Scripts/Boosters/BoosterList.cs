@@ -209,15 +209,29 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Procrastinator",
-                    Description = "You only have 1 day",
-                    EventAction = new DayModifier
+                    Description = "x3 mult. you only have 1 day",
+                    BuyAction = new DayModifier { SetDays = 1, },
+                    SellAction = new DayModifier { ShouldSetToDefault = true },
+                    EventAction = new CompositeAction
                     {
-                        Conditions = new IGameCondition[]
+                        Actions = new GameAction[]
                         {
-                            new GameEventCondition("DayStart"),
+                            new DayModifier
+                            {
+                                Conditions = new IGameCondition[]
+                                {
+                                    new GameEventCondition(new[]
+                                        { "DayStart", "DayEnd", "BoosterBought", "BoosterSold", })
+                                },
+                                SetDays = 1,
+                            },
+                            new ScoringAction
+                            {
+                                Conditions = new[] { new GameEventCondition("DayEnd") },
+                                XMult = 3,
+                            },
                         },
-                        SetDays = 1,
-                    },
+                    }
                 },
                 new()
                 {

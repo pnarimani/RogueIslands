@@ -106,8 +106,6 @@ namespace RogueIslands.View
 
         private void InputHandlerOnClick()
         {
-            Debug.Log("Click: " + name);
-
             InputHandling.Instance.Click -= InputHandlerOnClick;
 
             if (!_isSelected)
@@ -132,8 +130,6 @@ namespace RogueIslands.View
                         GameUI.Instance.Refresh();
 
                         Destroy(gameObject);
-
-                        OnPointerClick(default);
                     }
                 }
                 else

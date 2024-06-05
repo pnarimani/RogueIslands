@@ -8,11 +8,12 @@ namespace RogueIslands
         public const int TotalWeeks = 4;
         public const int TotalMonths = 5;
 
-        public int Day { get; set; } = 1;
+        public int Day { get; set; }
         public int Week { get; set; }
         public int Month { get; set; }
 
-        public int TotalDays { get; set; } = 3;
+        public int DefaultTotalDays { get; set; } = 4;
+        public int TotalDays { get; set; } = 4;
         
         public double CurrentScore { get; set; }
         

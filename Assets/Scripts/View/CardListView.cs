@@ -31,21 +31,14 @@ namespace RogueIslands.View
         {
             Tx.GetWorldCorners(_corners);
 
+            _items.RemoveAll(x => x == null);
+
             var leftCenter = (_corners[0] + _corners[1]) / 2;
             var size = _corners[2] - _corners[0];
             var distance = size / _items.Count;
 
-            for (var i = _items.Count - 1; i >= 0; i--)
-            {
-                var item = _items[i];
-                if (item == null)
-                {
-                    _items.RemoveAt(i);
-                    continue;
-                }
-
-                item.TargetPosition = leftCenter + Vector3.right * (distance.x / 2) + Vector3.right * (distance.x * i);
-            }
+            for (var i = _items.Count - 1; i >= 0; i--) 
+                _items[i].TargetPosition = leftCenter + Vector3.right * (distance.x / 2) + Vector3.right * (distance.x * i);
         }
 
         public void Reorder(CardListItem item)

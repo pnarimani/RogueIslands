@@ -11,7 +11,12 @@ namespace RogueIslands.View
             get
             {
                 if (_instance == null)
-                    _instance = new GameObject(typeof(T).Name).AddComponent<T>();
+                {
+                    _instance = FindObjectOfType<T>();
+                    
+                    if (_instance == null)
+                        _instance = new GameObject(typeof(T).Name).AddComponent<T>();
+                }
                 
                 return _instance;
             }

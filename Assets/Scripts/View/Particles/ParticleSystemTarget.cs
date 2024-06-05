@@ -59,6 +59,8 @@ namespace RogueIslands.Particles
         {
             _handles.Clear();
 
+            _particleSystems.RemoveAll(p => p.ParticleSystem == null);
+
             if (_particleSystems.Count == 0)
                 return;
             
