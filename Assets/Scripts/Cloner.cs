@@ -11,7 +11,8 @@ namespace RogueIslands
         private static readonly JsonSerializer _serializer = new JsonSerializer
         {
             TypeNameHandling = TypeNameHandling.Auto,
-            PreserveReferencesHandling = PreserveReferencesHandling.All,
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ObjectCreationHandling = ObjectCreationHandling.Replace,
             Converters =
             {
                 new Vector3Converter(),

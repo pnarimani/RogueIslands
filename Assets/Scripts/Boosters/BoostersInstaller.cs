@@ -11,7 +11,10 @@ namespace RogueIslands.Boosters
         {
             builder.RegisterInstance(new Random());
 
-            var allTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).ToList();
+            var allTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(x => x.GetTypes())
+                .Where(t => t.IsClass && !t.IsAbstract)
+                .ToList();
             
             foreach (var evalType in allTypes.Where(t => typeof(ConditionEvaluator).IsAssignableFrom(t)))
                 builder.Register(evalType, Lifetime.Scoped).As<ConditionEvaluator>();

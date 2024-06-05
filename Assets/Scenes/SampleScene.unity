@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 365ba420e88748919e394eda3c8546e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shopPrefab: {fileID: 5763890497887457565, guid: 3469dc268c028f94cae2d66e0c8d83b8, type: 3}
 --- !u!4 &30574756
 Transform:
   m_ObjectHideFlags: 0
@@ -416,6 +417,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ca4d3a6e041504458ca724f09fae348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &266370366 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4114604474229995307, guid: 2f1c568022eae6c4dac970904cabbd9c, type: 3}
+  m_PrefabInstance: {fileID: 266370363}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faf9a37f2809437fb81919b7d39ce92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &409051655
@@ -2430,6 +2442,7 @@ MonoBehaviour:
   _buildingCardList: {fileID: 957286663}
   _boosterList: {fileID: 409051657}
   _notEnoughEnergy: {fileID: 898269147}
+  _productTarget: {fileID: 266370366}
 --- !u!1001 &917116659988684144
 PrefabInstance:
   m_ObjectHideFlags: 0

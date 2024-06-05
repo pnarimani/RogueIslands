@@ -20,7 +20,12 @@ namespace RogueIslands
         public double RequiredScore => AllRequiredScores[Month * TotalWeeks + Week];
 
         public int Energy { get; set; } = 4;
+        public int StartingEnergy { get; set; } = 4;
+        public int EnergyIncreasePerWeek { get; set; } = 1;
+        public int EnergyIncreasePerMonth { get; set; } = 1;
+        
         public int Money { get; set; } = 4;
+        public int MoneyPayoutPerWeek { get; set; } = 6;
 
         public string CurrentEvent { get; set; }
         public ScoringState ScoringState { get; set; }

@@ -1,57 +1,58 @@
 ﻿using System;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using RogueIslands.Boosters;
+using RogueIslands.View.Shop;
 using UnityEngine;
 
 namespace RogueIslands.View
 {
     public class GameManager : Singleton<GameManager>, IGameView
     {
+        [SerializeField] private ShopScreen _shopPrefab;
+        
         public GameState State { get; private set; }
 
         private void Start()
         {
             GameUI.Instance.PlayClicked += OnPlayClicked;
 
-            State = GameFactory.NewGame();
+            State = GameFactory.NewGame("A");
 
             foreach (var b in State.BuildingsInHand)
                 GameUI.Instance.ShowBuildingCard(b);
+            
+            GameUI.Instance.Refresh();
         }
 
         private async void OnPlayClicked()
         {
+            AnimationScheduler.ResetTime();
+            
             State.Play(this);
 
-            await UniTask.WaitForSeconds(AnimationScheduler.GetTotalTime());
-            
-            State.PopulateShop();
-
-            if(State.HasLost())
-                ShowLoseScreen();
-            
-            if (State.IsWeekFinished())
+            var timer = 0f;
+            while (timer < AnimationScheduler.GetExtraTime())
             {
-                State.Win(this);
-                
-                if (State.Result == GameResult.Win)
-                    ShowGameWinScreen();
-                else
-                    ShowWeekWin();
+                await UniTask.DelayFrame(1);
+                timer += Time.deltaTime;
             }
+
+            State.ProcessScore(this);
+            
+            GameUI.Instance.Refresh();
         }
 
-        private void ShowGameWinScreen()
+        public void ShowGameWinScreen()
         {
             
         }
 
-        private void ShowWeekWin()
+        public void ShowWeekWin()
         {
+            Instantiate(_shopPrefab);
         }
 
-        private void ShowLoseScreen()
+        public void ShowLoseScreen()
         {
         }
 

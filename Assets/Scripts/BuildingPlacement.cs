@@ -13,6 +13,7 @@ namespace RogueIslands
             Assert.IsTrue(buildingData.Id.IsDefault());
 
             var building = buildingData.Clone();
+            building.Id = new BuildingInstanceId(Guid.NewGuid().GetHashCode());
 
             state.Energy -= building.EnergyCost;
 

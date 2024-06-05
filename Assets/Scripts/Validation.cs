@@ -20,6 +20,15 @@ namespace RogueIslands
                 Assert.IsTrue(building.Id.IsDefault());
             
             state.BuildingsInHand.ForEach(x => Assert.IsTrue(x.Id.IsDefault()));
+
+            Assert.IsNotNull(state.Shop);
+
+            Assert.IsNotNull(state.Shop.BoostersForSale);
+            Assert.AreEqual(state.Shop.CardCount, state.Shop.BoostersForSale.Length);
+
+            Assert.IsNotNull(state.AllRequiredScores);
+            Assert.AreEqual(GameState.TotalWeeks * GameState.TotalMonths, state.AllRequiredScores.Length);
+            Assert.IsTrue(state.RequiredScore > 0);
         }
     }
 }

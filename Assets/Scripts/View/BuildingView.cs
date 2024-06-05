@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using MoreMountains.Feedbacks;
+using RogueIslands.Particles;
 using UnityEngine;
 
 namespace RogueIslands.View
@@ -8,6 +9,7 @@ namespace RogueIslands.View
     {
         [SerializeField] private GameObject _synergyRange;
         [SerializeField] private MMF_Player _triggerFeedback, _retriggerFeedback;
+        [SerializeField] private ParticleSystem _productsParticleSystem;
         
         public Building Data { get; private set; }
 
@@ -22,18 +24,38 @@ namespace RogueIslands.View
 
         public void HighlightConnection(bool isEnabled)
         {
-            var m = transform.Find("Cube").GetComponent<MeshRenderer>();
+            var m = transform.FindRecursive("Cube").GetComponent<MeshRenderer>();
             m.material.EnableKeyword("_EMISSION");
             m.material.SetColor("_EmissionColor", isEnabled ? new Color(0f, 0.4f, 0f) : Color.black);
         }
 
         public async void BuildingTriggered(bool isRetrigger)
         {
-            var delay = AnimationScheduler.AllocateTime(_triggerFeedback.TotalDuration);
-            await UniTask.WaitForSeconds(delay);
+            var wait = AnimationScheduler.GetAnimationTime();
+            AnimationScheduler.AllocateTime(Mathf.Max(0.4f, _triggerFeedback.TotalDuration));
+            AnimationScheduler.EnsureExtraTime(1.3f);
+            
+            await UniTask.WaitForSeconds(wait);
+            
+            PlayParticleSystem();
             _triggerFeedback.PlayFeedbacks();
             if (isRetrigger)
                 _retriggerFeedback.PlayFeedbacks();
+            
+            await UniTask.WaitForSeconds(0.6f);
+            
+            await GameUI.Instance.ProductTarget.Attract(_productsParticleSystem, () =>
+            {
+                GameUI.Instance.ProductBoosted(1);
+            });
+        }
+
+        private void PlayParticleSystem()
+        {
+            var burst = _productsParticleSystem.emission.GetBurst(0);
+            burst.count = (int)Data.Output;
+            _productsParticleSystem.emission.SetBurst(0, burst);
+            _productsParticleSystem.Play();
         }
     }
 }

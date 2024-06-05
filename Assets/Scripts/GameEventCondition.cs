@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace RogueIslands
 {
@@ -10,6 +11,7 @@ namespace RogueIslands
         public GameEventCondition(string triggeringEvent) 
             => TriggeringEvents = new List<string> { triggeringEvent };
         
+        [JsonConstructor]
         public GameEventCondition(IReadOnlyList<string> triggeringEvents) 
             => TriggeringEvents = triggeringEvents;
     }

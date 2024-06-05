@@ -15,6 +15,8 @@ namespace RogueIslands.View
 
         private double _currentNumber;
 
+        public double CurrentNumber => _currentNumber;
+
         public void SetNumber(double number)
         {
             _currentNumber = number;
@@ -33,11 +35,11 @@ namespace RogueIslands.View
 
         public void UpdateNumber(double number)
         {
-            if (number > _currentNumber)
+            if (number > CurrentNumber)
             {
                 _increaseFx?.PlayFeedbacks();
             }
-            else if (number < _currentNumber)
+            else if (number < CurrentNumber)
             {
                 _decreaseFx?.PlayFeedbacks();
             }
@@ -49,7 +51,7 @@ namespace RogueIslands.View
         {
             _hasMax = true;
             _max = max;
-            SetNumber(_currentNumber);
+            SetNumber(CurrentNumber);
         }
     }
 }

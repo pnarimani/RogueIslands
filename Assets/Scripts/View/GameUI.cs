@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using RogueIslands.Boosters;
+using RogueIslands.Particles;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,8 +24,11 @@ namespace RogueIslands.View
         [SerializeField] private BoosterView _boosterPrefab;
         [SerializeField] private CardListView _buildingCardList, _boosterList;
         [SerializeField] private GameObject _notEnoughEnergy;
+        [SerializeField] private ParticleSystemTarget _productTarget;
 
         public event Action PlayClicked;
+
+        public ParticleSystemTarget ProductTarget => _productTarget;
 
         private void Start()
         {
@@ -64,6 +68,11 @@ namespace RogueIslands.View
                 _products.UpdateNumber(state.ScoringState.Products);
                 _multiplier.UpdateNumber(state.ScoringState.Multiplier);
             }
+            else
+            {
+                _products.SetNumber(0);
+                _multiplier.SetNumber(1);
+            }
 
             _requiredOutput.UpdateNumber(state.RequiredScore);
             _currentAmount.UpdateNumber(state.CurrentScore);
@@ -90,6 +99,11 @@ namespace RogueIslands.View
                         .SetEase(Ease.InBack)
                         .OnComplete(() => _notEnoughEnergy.SetActive(false));
                 });
+        }
+
+        public void ProductBoosted(int count)
+        {
+            _products.UpdateNumber(_products.CurrentNumber + count);
         }
     }
 }

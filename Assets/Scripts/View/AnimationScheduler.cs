@@ -1,25 +1,39 @@
 ﻿using System;
-using Cysharp.Threading.Tasks;
 
 namespace RogueIslands.View
 {
     public class AnimationScheduler : Singleton<AnimationScheduler>
     {
         private float _delay;
+        private float _ensureTime;
 
-        public static void ResetDelay() => Instance._delay = 0;
-
-        public static float AllocateTime(float time)
+        public static void ResetTime()
         {
-            if (time <= 0)
-                throw new ArgumentOutOfRangeException(nameof(time));
-
-            var ret = Instance._delay;
-            Instance._delay += time;
-            return ret;
+            Instance._delay = 0;
+            Instance._ensureTime = 1;
         }
 
-        public static float GetTotalTime() 
+        public static void AllocateTime(float time)
+        {
+            if (time < 0)
+                throw new ArgumentOutOfRangeException(nameof(time));
+
+            Instance._delay += time;
+        }
+
+        public static void EnsureExtraTime(float time)
+        {
+            if (time < 0)
+                throw new ArgumentOutOfRangeException(nameof(time));
+
+            Instance._ensureTime = Instance._delay + time;
+            Instance._ensureTime = Instance._delay + time;
+        }
+
+        public static float GetAnimationTime()
             => Instance._delay;
+
+        public static float GetExtraTime()
+            => MathF.Max(Instance._ensureTime, Instance._delay);
     }
 }
