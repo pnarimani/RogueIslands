@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Cysharp.Threading.Tasks;
 using RogueIslands.Boosters;
 using RogueIslands.View.Shop;
