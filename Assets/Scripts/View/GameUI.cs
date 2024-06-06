@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using RogueIslands.Boosters;
 using RogueIslands.Particles;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 
 namespace RogueIslands.View
 {
-    public class GameUI : Singleton<GameUI>
+    public class GameUI : Singleton<GameUI>, IGameUI
     {
         [SerializeField] private NumberText _products,
             _multiplier,
@@ -60,7 +61,21 @@ namespace RogueIslands.View
             return !viewRect.Contains(screenPosition);
         }
 
-        public void Refresh()
+        public void RefreshAll()
+        {
+            RefreshScores();
+            RefreshMoneyAndEnergy();
+            RefreshDate();
+        }
+
+        public void RefreshMoneyAndEnergy()
+        {
+            var state = GameManager.Instance.State;
+            _budget.UpdateNumber(state.Money);
+            _energy.UpdateNumber(state.Energy);
+        }
+
+        public void RefreshScores()
         {
             var state = GameManager.Instance.State;
             
@@ -77,10 +92,12 @@ namespace RogueIslands.View
 
             _requiredOutput.UpdateNumber(state.RequiredScore);
             _currentAmount.UpdateNumber(state.CurrentScore);
-            _budget.UpdateNumber(state.Money);
-            _energy.UpdateNumber(state.Energy);
-            _days.SetMax(state.TotalDays);
-            _days.UpdateNumber(state.Day + 1);
+        }
+
+        public void RefreshDate()
+        {
+            var state = GameManager.Instance.State;
+            _days.UpdateNumber(state.TotalDays - state.Day);
             _week.UpdateNumber(state.Week + 1);
             _month.UpdateNumber(state.Month + 1);
         }

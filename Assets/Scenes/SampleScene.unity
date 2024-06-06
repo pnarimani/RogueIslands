@@ -659,25 +659,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1960325077}
     m_Modifications:
-    - target: {fileID: 2127982976051780292, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
-      propertyPath: _max
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2127982976051780292, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
-      propertyPath: _format
-      value: '{0}/{1}'
-      objectReference: {fileID: 0}
-    - target: {fileID: 2127982976051780292, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
-      propertyPath: _hasMax
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2770097412762488271, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
       propertyPath: m_text
-      value: 1/4
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6122119634051370014, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
       propertyPath: m_text
-      value: Day
+      value: Rem Days
       objectReference: {fileID: 0}
     - target: {fileID: 6122119634051370014, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
       propertyPath: m_fontSize

@@ -127,7 +127,7 @@ namespace RogueIslands.View
                             .SetEase(Ease.OutBounce);
                         building.SetData(buildingData);
 
-                        GameUI.Instance.Refresh();
+                        GameUI.Instance.RefreshAll();
 
                         Destroy(gameObject);
                     }

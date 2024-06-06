@@ -4,6 +4,19 @@ namespace RogueIslands
 {
     public static class PlayExtension
     {
+        public static bool CanPlay(this GameState state)
+        {
+            if (state.Day >= state.TotalDays)
+                return false;
+            if (state.CurrentScore >= state.RequiredScore)
+                return false;
+            if (state.Result != GameResult.InProgress)
+                return false;
+            if (state.Islands.Count == 0)
+                return false;
+            return true;
+        }
+
         public static void Play(this GameState state, IGameView view)
         {
             state.CurrentEvent = "DayStart";
@@ -64,7 +77,14 @@ namespace RogueIslands
 
         public static void ProcessScore(this GameState state, IGameView view)
         {
-            bool hasWeekEnded = false, hasMonthEnded = false;
+            if (state.HasLost())
+            {
+                state.Result = GameResult.Lose;
+                view.ShowLoseScreen();
+                return;
+            }
+
+            var hasWeekEnded = false;
 
             if (state.IsWeekFinished())
             {
@@ -72,45 +92,37 @@ namespace RogueIslands
                 state.Money += state.MoneyPayoutPerWeek;
                 state.PopulateShop();
 
+                state.CurrentEvent = "WeekEnd";
+                state.ExecuteAll(view);
+
                 state.Week++;
                 if (state.Week >= GameState.TotalWeeks)
                 {
                     state.Week = 0;
                     state.Month++;
-                    hasMonthEnded = true;
+
+                    state.CurrentEvent = "MonthEnd";
+                    state.ExecuteAll(view);
                 }
 
                 if (state.Month >= GameState.TotalMonths)
                 {
                     state.Result = GameResult.Win;
+                    view.ShowGameWinScreen();
+                    return;
                 }
             }
 
             state.Energy = state.CalculateInitialEnergy();
 
-            if (hasWeekEnded)
-            {
-                state.CurrentEvent = "WeekEnd";
-                state.ExecuteAll(view);
-            }
-
-            if (hasMonthEnded)
-            {
-                state.CurrentEvent = "MonthEnd";
-                state.ExecuteAll(view);
-            }
-
-            if (state.HasLost())
-            {
-                state.Result = GameResult.Lose;
-                view.ShowLoseScreen();
-            }
-
-            if (state.Result == GameResult.Win)
-                view.ShowGameWinScreen();
-
             if (hasWeekEnded && state.Result == GameResult.InProgress)
+            {
                 view.ShowWeekWin();
+            }
+            else
+            {
+                view.GetUI().RefreshAll();
+            }
         }
 
         public static void StartWeek(this GameState state, IGameView view)
@@ -119,8 +131,10 @@ namespace RogueIslands
             state.Day = 0;
             state.Islands.Clear();
             state.TotalDays = state.DefaultTotalDays;
+
             view.DestroyBuildings();
             view.ShowBuildingsInHand();
+            view.GetUI().RefreshAll();
 
             state.CurrentEvent = "WeekStart";
             state.ExecuteAll(view);

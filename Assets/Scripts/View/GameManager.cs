@@ -16,15 +16,18 @@ namespace RogueIslands.View
         {
             GameUI.Instance.PlayClicked += OnPlayClicked;
 
-            State = GameFactory.NewGame("A");
+            State = GameFactory.NewGame("B");
             
             ShowBuildingsInHand();
             
-            GameUI.Instance.Refresh();
+            GameUI.Instance.RefreshAll();
         }
 
         private async void OnPlayClicked()
         {
+            if (!State.CanPlay())
+                return;
+            
             AnimationScheduler.ResetTime();
             
             State.Play(this);
@@ -35,10 +38,10 @@ namespace RogueIslands.View
                 await UniTask.DelayFrame(1);
                 timer += Time.deltaTime;
             }
+            
+            GameUI.Instance.RefreshScores();
 
             State.ProcessScore(this);
-            
-            GameUI.Instance.Refresh();
         }
 
         public void ShowGameWinScreen()
@@ -46,8 +49,9 @@ namespace RogueIslands.View
             
         }
 
-        public void ShowWeekWin()
+        public async void ShowWeekWin()
         {
+            await UniTask.WaitForSeconds(1);
             Instantiate(_shopPrefab);
         }
 
@@ -60,13 +64,15 @@ namespace RogueIslands.View
         public void AddBooster(Booster instance)
         {
             GameUI.Instance.ShowBoosterCard(instance);
-            GameUI.Instance.Refresh();
+            GameUI.Instance.RefreshDate();
+            GameUI.Instance.RefreshMoneyAndEnergy();
         }
 
         public void RemoveBooster(Booster booster)
         {
             GameUI.Instance.RemoveBoosterCard(booster);
-            GameUI.Instance.Refresh();  
+            GameUI.Instance.RefreshDate();
+            GameUI.Instance.RefreshMoneyAndEnergy();
         }
 
         public void ShowBuildingsInHand()
@@ -77,6 +83,8 @@ namespace RogueIslands.View
             foreach (var b in State.BuildingsInHand)
                 GameUI.Instance.ShowBuildingCard(b);
         }
+
+        public IGameUI GetUI() => GameUI.Instance;
 
         public void ShowLoseScreen()
         {

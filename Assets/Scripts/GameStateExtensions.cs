@@ -49,7 +49,10 @@ namespace RogueIslands
         public static void ExecuteAll(this GameState state, IGameView view)
         {
             foreach (var booster in state.Boosters)
-                state.Execute(view, booster, booster.EventAction);
+            {
+                if (booster.EventAction != null)
+                    state.Execute(view, booster, booster.EventAction);
+            }
         }
 
         public static void AddBooster(this GameState state, IGameView view, Booster booster)

@@ -1,14 +1,10 @@
-﻿using JetBrains.Annotations;
-using RogueIslands.Boosters;
+﻿using RogueIslands.Boosters;
 
 namespace RogueIslands
 {
     public interface IGameView
     {
-        [CanBeNull]
         IBuildingView GetBuilding(Building building);
-        
-        [CanBeNull]
         IBoosterView GetBooster(Booster booster);
         
         void HighlightIsland(Island island);
@@ -19,5 +15,6 @@ namespace RogueIslands
         void AddBooster(Booster instance);
         void RemoveBooster(Booster booster);
         void ShowBuildingsInHand();
+        IGameUI GetUI();
     }
 }
