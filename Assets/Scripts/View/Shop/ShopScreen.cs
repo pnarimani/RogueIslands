@@ -27,18 +27,19 @@ namespace RogueIslands.View.Shop
             
             for (var i = 0; i < Shop.CardCount; i++)
             {
+                var shopIndex = i;
+                
                 var item = Instantiate(_itemPrefab, _cardParent);
                 var booster = Shop.BoostersForSale[i];
-                var boosterView = Instantiate(_boosterPrefab, item.transform);
-                boosterView.Show(booster);
+                Instantiate(_boosterPrefab, item.transform).Show(booster);
 
-                var index = i;
+                item.SetPrice($"${booster.BuyPrice}");
                 item.BuyClicked += () =>
                 {
                     if (GameManager.Instance.State.Money < booster.BuyPrice)
                         return;
 
-                    GameManager.Instance.State.PurchaseItemAtShop(GameManager.Instance, index);
+                    GameManager.Instance.State.PurchaseItemAtShop(GameManager.Instance, shopIndex);
                     
                     Destroy(item.gameObject);
                 };
