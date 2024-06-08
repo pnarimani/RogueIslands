@@ -8,6 +8,7 @@ namespace RogueIslands
         IBoosterView GetBooster(Booster booster);
         
         void HighlightIsland(Island island);
+        void LowlightIsland(Island island);
         void ShowLoseScreen();
         void ShowGameWinScreen();
         void ShowWeekWin();
@@ -16,5 +17,6 @@ namespace RogueIslands
         void RemoveBooster(Booster booster);
         void ShowBuildingsInHand();
         IGameUI GetUI();
+        void SpawnBuilding(Building building);
     }
 }

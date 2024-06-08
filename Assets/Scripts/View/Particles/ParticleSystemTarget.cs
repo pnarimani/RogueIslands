@@ -149,6 +149,8 @@ namespace RogueIslands.Particles
             }
         }
 
+        public bool IsTrackingParticles() => _particleSystems.Count > 0;
+
         private readonly struct ManagingParticle
         {
             public readonly ParticleSystem ParticleSystem;

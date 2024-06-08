@@ -8,7 +8,6 @@ namespace RogueIslands
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            new BoostersInstaller().Install(builder);
         }
     }
 }

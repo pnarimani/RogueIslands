@@ -8,12 +8,17 @@ namespace RogueIslands
 {
     public static class BuildingPlacement
     {
-        public static Building PlaceBuilding(this GameState state, IGameView view, Building buildingData)
+        public static void PlaceBuilding(this GameState state, IGameView view, Building buildingData, Vector3 position,
+            Quaternion rotation)
         {
             Assert.IsTrue(buildingData.Id.IsDefault());
 
             var building = buildingData.Clone();
             building.Id = new BuildingInstanceId(Guid.NewGuid().GetHashCode());
+            building.Position = position;
+            building.Rotation = rotation;
+
+            view.SpawnBuilding(building);
 
             state.Energy -= building.EnergyCost;
 
@@ -38,8 +43,6 @@ namespace RogueIslands
             }
 
             ExecuteBuildingPlacedEvent(state, view);
-
-            return building;
         }
 
         private static void MergeIslands(GameState state, List<Island> islands, Building building)

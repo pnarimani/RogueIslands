@@ -11,7 +11,7 @@ namespace RogueIslands
         public string Name { get; set;}
         public string Description { get; set; }
         public string PrefabAddress { get; set; }
-        public float Range { get; set; }
+        public float Range { get; set; } = 2;
         public Category Category { get; set; }
         public ColorTag Color { get; set; }
         public int EnergyCost { get; set; }

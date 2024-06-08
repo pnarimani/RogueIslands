@@ -4,7 +4,7 @@ namespace RogueIslands.Boosters
 {
     public static class BoosterList
     {
-        public static List<Booster> Get()
+        public static List<Booster> Get(System.Random seedRandom)
         {
             return new List<Booster>
             {
@@ -12,15 +12,9 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Opps all sixes",
                     Description = "Add 1 to all probabilities",
-                    BuyAction = new ProbabilityModifier() { Modification = 1 },
-                    SellAction = new ProbabilityModifier() { Modification = -1 },
-                    EventAction = new ProbabilityModifier()
+                    EvaluationOverrides = new ConditionEvaluator[]
                     {
-                        Modification = 1,
-                        Conditions = new IGameCondition[]
-                        {
-                            new GameEventCondition("BoosterBought"),
-                        },
+                        new ProbabilityEvaluator(seedRandom.NextRandom()),
                     },
                 },
                 new()
@@ -31,6 +25,7 @@ namespace RogueIslands.Boosters
                     {
                         Conditions = new IGameCondition[]
                         {
+                            new GameEventCondition("AfterBuildingScored"),
                             new BuildingCategoryScoredCondition
                             {
                                 Category = Category.Cat1,
@@ -40,7 +35,6 @@ namespace RogueIslands.Boosters
                                 FavorableOutcome = 1,
                                 TotalOutcomes = 2,
                             },
-                            new GameEventCondition("BuildingScored"),
                         },
                         XMult = 2,
                     },
@@ -48,13 +42,13 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Hiker",
-                    Description = "Permanently add +10 product to played buildings",
+                    Description = "Permanently add +2 product to played buildings",
                     EventAction = new PermanentBuildingUpgradeAction()
                     {
-                        ProductUpgrade = 10,
+                        ProductUpgrade = 2,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("BuildingScored"),
+                            new GameEventCondition("AfterBuildingScored"),
                         },
                     },
                 },
@@ -67,11 +61,11 @@ namespace RogueIslands.Boosters
                         RetriggerTimes = 1,
                         Conditions = new IGameCondition[]
                         {
+                            new GameEventCondition("BuildingFirstTrigger"),
                             new BuildingCategoryScoredCondition
                             {
                                 Category = Category.Cat2,
                             },
-                            new GameEventCondition("BuildingScored"),
                         },
                     },
                 },
@@ -198,7 +192,7 @@ namespace RogueIslands.Boosters
                         Products = 30,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("BuildingScored"),
+                            new GameEventCondition("AfterBuildingScored"),
                             new BuildingCategoryScoredCondition
                             {
                                 Category = Category.Cat3,
@@ -235,7 +229,7 @@ namespace RogueIslands.Boosters
                 },
                 new()
                 {
-                    Name = "Stateful",
+                    Name = "Realstate Agent",
                     Description = "For every 50 buildings placed, gain 1x mult.",
                 }
             };

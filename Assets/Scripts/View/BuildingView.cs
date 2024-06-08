@@ -34,10 +34,11 @@ namespace RogueIslands.View
             var wait = AnimationScheduler.GetAnimationTime();
             AnimationScheduler.AllocateTime(Mathf.Max(0.4f, _triggerFeedback.TotalDuration));
             AnimationScheduler.EnsureExtraTime(1.3f);
+            var count = Data.Output + Data.OutputUpgrade;
             
             await UniTask.WaitForSeconds(wait);
-            
-            PlayParticleSystem();
+
+            PlayParticleSystem(count);
             _triggerFeedback.PlayFeedbacks();
             if (isRetrigger)
                 _retriggerFeedback.PlayFeedbacks();
@@ -50,10 +51,10 @@ namespace RogueIslands.View
             });
         }
 
-        private void PlayParticleSystem()
+        private void PlayParticleSystem(double count)
         {
             var burst = _productsParticleSystem.emission.GetBurst(0);
-            burst.count = (int)Data.Output;
+            burst.count = (int)(count);
             _productsParticleSystem.emission.SetBurst(0, burst);
             _productsParticleSystem.Play();
         }

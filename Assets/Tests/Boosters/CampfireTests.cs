@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using NSubstitute;
 using NUnit.Framework;
@@ -11,7 +12,7 @@ namespace Tests.Boosters
         [Test]
         public void CampfireTestsSimplePasses()
         {
-            var campfire = BoosterList.Get().First(x => x.Name == "Campfire");
+            var campfire = BoosterList.Get(new Random()).First(x => x.Name == "Campfire");
             var state = new GameState();
             state.Boosters.Add(campfire);
 

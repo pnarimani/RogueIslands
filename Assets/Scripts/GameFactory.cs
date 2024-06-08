@@ -1,40 +1,41 @@
 ﻿using System.Linq;
 using RogueIslands.Boosters;
+using VContainer;
 using Random = Unity.Mathematics.Random;
 
 namespace RogueIslands
 {
     public static class GameFactory
     {
-        public static GameState NewGame(string seed)
+        public static GameState NewGame()
         {
-            var random = new System.Random(seed.GetHashCode());
+            var seedRandom = LifetimeScopeProvider.Get().Container.Resolve<System.Random>();
             
             var buildings = DefaultBuildingsList.Get();
-            buildings.Shuffle(random);
+            buildings.Shuffle(seedRandom);
             
             return new GameState()
             {
                 AllRequiredScores = GetScoringRequirements(),
                 CurrentEvent = "MonthStart",
                 AvailableBuildings = buildings,
-                AvailableBoosters = BoosterList.Get(),
+                AvailableBoosters = BoosterList.Get(seedRandom),
                 BuildingsInHand = buildings.Take(4).ToList(),
                 Shop = new ShopState
                 {
-                    BoosterSpawn = random.CreateRandomArray(GameState.TotalMonths),
-                    CardPackSpawn = random.CreateRandomArray(GameState.TotalMonths),
-                    BoosterAntiDuplicate = random.CreateRandomArray(GameState.TotalMonths),
+                    BoosterSpawn = seedRandom.CreateRandomArray(GameState.TotalMonths),
+                    CardPackSpawn = seedRandom.CreateRandomArray(GameState.TotalMonths),
+                    BoosterAntiDuplicate = seedRandom.CreateRandomArray(GameState.TotalMonths),
                     CardCount = 2,
                     BoostersForSale = new Booster[2],
                 },
             };
         }
 
-        private static Random NextRandom(this System.Random sysRandom) 
+        public static Random NextRandom(this System.Random sysRandom) 
             => new((uint)sysRandom.Next());
 
-        private static Random[] CreateRandomArray(this System.Random sysRandom, int length)
+        public static Random[] CreateRandomArray(this System.Random sysRandom, int length)
         {
             var randoms = new Random[length];
             for (var i = 0; i < length; i++)

@@ -29,38 +29,42 @@ namespace RogueIslands
 
             foreach (var island in state.Islands)
             {
+                view.HighlightIsland(island);
+                
                 state.CurrentEvent = "BeforeIslandScore";
                 state.ScoringState.CurrentScoringIsland = island;
                 state.ScoringState.CurrentScoringBuilding = null;
-
-                view.HighlightIsland(island);
-
                 state.ExecuteAll(view);
 
                 foreach (var building in island.Buildings)
                 {
                     var buildingView = view.GetBuilding(building);
                     var triggeredOnce = false;
+                    
+                    state.CurrentEvent = "BuildingFirstTrigger";
+                    state.ScoringState.CurrentScoringBuilding = building;
+                    state.ExecuteAll(view);
 
                     while (building.RemainingTriggers > 0)
                     {
-                        state.CurrentEvent = "OnBuildingScore";
-                        state.ScoringState.CurrentScoringBuilding = building;
+                        state.CurrentEvent = "BeforeBuildingScored";
+                        state.ExecuteAll(view);
 
                         building.RemainingTriggers--;
                         state.ScoringState.Products += building.Output + building.OutputUpgrade;
                         buildingView.BuildingTriggered(triggeredOnce);
                         triggeredOnce = true;
-
-
+                        
+                        state.CurrentEvent = "AfterBuildingScored";
                         state.ExecuteAll(view);
                     }
                 }
 
                 state.CurrentEvent = "AfterIslandScore";
                 state.ScoringState.CurrentScoringBuilding = null;
-
                 state.ExecuteAll(view);
+                
+                view.LowlightIsland(island);
             }
 
             state.ScoringState.CurrentScoringIsland = null;

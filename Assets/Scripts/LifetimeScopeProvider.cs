@@ -11,7 +11,7 @@ namespace RogueIslands
         {
             if (_scope == null)
             {
-                _scope = Object.FindAnyObjectByType<LifetimeScope>();
+                _scope = Object.FindAnyObjectByType<GameplayLifetimeScope>();
             }
             
             return _scope;

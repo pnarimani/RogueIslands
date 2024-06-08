@@ -1,10 +1,11 @@
-using System;
+using Unity.Mathematics;
 
 namespace RogueIslands.Boosters
 {
     public sealed class ProbabilityEvaluator : ConditionEvaluator<ProbabilityCondition>
     {
-        private readonly Random _random;
+        public int FavorableOutcomeModification { get; set; }
+        private Random _random;
 
         public ProbabilityEvaluator(Random random)
         {
@@ -13,7 +14,7 @@ namespace RogueIslands.Boosters
         
         protected override bool Evaluate(GameState state,ProbabilityCondition condition)
         {
-            return _random.Next(0, condition.TotalOutcomes) < condition.FavorableOutcome;
+            return _random.NextInt(0, condition.TotalOutcomes) < condition.FavorableOutcome + FavorableOutcomeModification;
         }
     }
 }

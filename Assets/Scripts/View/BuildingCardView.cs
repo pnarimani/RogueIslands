@@ -68,9 +68,9 @@ namespace RogueIslands.View
                 {
                     _instance.transform.position = hit.point;
 
-                    var buildings =
+                    var buildingViews =
                         FindObjectsByType<BuildingView>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-                    foreach (var b in buildings)
+                    foreach (var b in buildingViews)
                         b.ShowSynergyRange(true);
 
                     if (_instanceNeighbours != null)
@@ -84,7 +84,7 @@ namespace RogueIslands.View
 
                     _instanceNeighbours = GameManager.Instance.State.GetIslands(hit.point, Data.Range)
                         .SelectMany(x => x)
-                        .Select(placedBuilding => buildings.First(b => b.Data == placedBuilding))
+                        .Select(buildingData => buildingViews.First(view => view.Data == buildingData))
                         .ToList();
 
                     foreach (var n in _instanceNeighbours)
@@ -104,12 +104,9 @@ namespace RogueIslands.View
             }
         }
 
-        private void InputHandlerOnClick()
+        private void OnWorldClicked()
         {
-            InputHandling.Instance.Click -= InputHandlerOnClick;
-
-            if (!_isSelected)
-                throw new Exception("wtfff");
+            InputHandling.Instance.Click -= OnWorldClicked;
 
             if (_ui.IsInSpawnRegion(Input.mousePosition))
             {
@@ -118,16 +115,16 @@ namespace RogueIslands.View
                     var ray = _camera.ScreenPointToRay(Input.mousePosition);
                     if (Physics.Raycast(ray, out var hit, 100, LayerMask.GetMask("Ground")))
                     {
-                        var buildingData = GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data);
-                        
-                        var building = Instantiate(Resources.Load<BuildingView>(Data.PrefabAddress), hit.point, Quaternion.identity);
-                        building.transform.DOMoveY(1, 0.3f)
-                            .From()
-                            .SetRelative(true)
-                            .SetEase(Ease.OutBounce);
-                        building.SetData(buildingData);
+                        GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data, hit.point, Quaternion.identity);
 
-                        GameUI.Instance.RefreshAll();
+                        foreach (var b in FindObjectsByType<BuildingView>(FindObjectsInactive.Include,
+                                     FindObjectsSortMode.None))
+                        {
+                            b.ShowSynergyRange(false);
+                            b.HighlightConnection(false);
+                        }
+                        
+                        GameUI.Instance.RefreshMoneyAndEnergy();
 
                         Destroy(gameObject);
                     }
@@ -145,6 +142,9 @@ namespace RogueIslands.View
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (GameManager.Instance.IsPlaying)
+                return;
+            
             _isSelected = !_isSelected;
 
             if (_isSelected)
@@ -153,7 +153,7 @@ namespace RogueIslands.View
 
                 transform.DOLocalMoveY(50, 0.2f)
                     .SetRelative(true)
-                    .OnComplete(() => { InputHandling.Instance.Click += InputHandlerOnClick; });
+                    .OnComplete(() => { InputHandling.Instance.Click += OnWorldClicked; });
 
                 foreach (var c in FindObjectsByType<BuildingCardView>(FindObjectsInactive.Include,
                              FindObjectsSortMode.None))
@@ -170,7 +170,7 @@ namespace RogueIslands.View
                     .SetRelative(true)
                     .OnComplete(() => _cardListItem.ShouldAnimateToTarget = true);
 
-                InputHandling.Instance.Click -= InputHandlerOnClick;
+                InputHandling.Instance.Click -= OnWorldClicked;
 
                 foreach (var b in FindObjectsByType<BuildingView>(FindObjectsInactive.Include,
                              FindObjectsSortMode.None))
