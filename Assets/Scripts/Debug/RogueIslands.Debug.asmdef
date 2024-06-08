@@ -1,0 +1,8 @@
+﻿{
+  "name": "RogueIslands.Debug",
+  "references": [
+    "RogueIslands",
+    "RogueIslands.View",
+    "IngameDebugConsole.Runtime"
+  ]
+}
