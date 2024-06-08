@@ -26,8 +26,7 @@ namespace RogueIslands.View
         public async void OnActionExecuted(GameState state, GameAction action)
         {
             var wait = AnimationScheduler.GetAnimationTime();
-            AnimationScheduler.AllocateTime(Mathf.Max(0.4f, _triggerFeedback.TotalDuration));
-            AnimationScheduler.EnsureExtraTime(1.3f);
+            AnimationScheduler.AllocateTime(0.4f);
 
             double productBoost = 0, multBoost = 0;
 

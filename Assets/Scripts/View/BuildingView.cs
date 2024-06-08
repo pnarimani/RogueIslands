@@ -38,25 +38,27 @@ namespace RogueIslands.View
             
             await UniTask.WaitForSeconds(wait);
 
-            PlayParticleSystem(count);
+            var ps = PlayParticleSystem(count);
             _triggerFeedback.PlayFeedbacks();
             if (isRetrigger)
                 _retriggerFeedback.PlayFeedbacks();
             
             await UniTask.WaitForSeconds(0.6f);
             
-            await GameUI.Instance.ProductTarget.Attract(_productsParticleSystem, () =>
+            await GameUI.Instance.ProductTarget.Attract(ps, () =>
             {
                 GameUI.Instance.ProductBoosted(1);
             });
         }
 
-        private void PlayParticleSystem(double count)
+        private ParticleSystem PlayParticleSystem(double count)
         {
-            var burst = _productsParticleSystem.emission.GetBurst(0);
+            var ps = Instantiate(_productsParticleSystem, transform, false);
+            var burst = ps.emission.GetBurst(0);
             burst.count = (int)(count);
-            _productsParticleSystem.emission.SetBurst(0, burst);
-            _productsParticleSystem.Play();
+            ps.emission.SetBurst(0, burst);
+            ps.Play();
+            return ps;
         }
     }
 }

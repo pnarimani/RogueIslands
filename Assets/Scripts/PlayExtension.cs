@@ -40,10 +40,6 @@ namespace RogueIslands
                 {
                     var buildingView = view.GetBuilding(building);
                     var triggeredOnce = false;
-                    
-                    state.CurrentEvent = "BuildingFirstTrigger";
-                    state.ScoringState.CurrentScoringBuilding = building;
-                    state.ExecuteAll(view);
 
                     while (building.RemainingTriggers > 0)
                     {
@@ -53,6 +49,14 @@ namespace RogueIslands
                         building.RemainingTriggers--;
                         state.ScoringState.Products += building.Output + building.OutputUpgrade;
                         buildingView.BuildingTriggered(triggeredOnce);
+                        
+                        if (!triggeredOnce)
+                        {
+                            state.CurrentEvent = "BuildingFirstTrigger";
+                            state.ScoringState.CurrentScoringBuilding = building;
+                            state.ExecuteAll(view);
+                        }
+                        
                         triggeredOnce = true;
                         
                         state.CurrentEvent = "AfterBuildingScored";
