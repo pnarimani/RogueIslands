@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
 using IngameDebugConsole;
-using RogueIslands;
 using RogueIslands.Boosters;
 using RogueIslands.View;
 
-namespace Debug
+namespace RogueIslands.Debug
 {
     public static class BoosterCommands
     {

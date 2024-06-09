@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using IngameDebugConsole;
-using RogueIslands;
+﻿using IngameDebugConsole;
 using RogueIslands.View;
 
-namespace Debug
+namespace RogueIslands.Debug
 {
     public static class DateCommands
     {

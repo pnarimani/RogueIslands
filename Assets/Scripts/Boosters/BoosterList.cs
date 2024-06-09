@@ -188,7 +188,7 @@ namespace RogueIslands.Boosters
                         RetriggerTimes = 1,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("DayEnd"),
+                            new GameEventCondition("BuildingFirstTrigger"),
                             TimeCondition.LastDay(),
                         },
                     },
@@ -244,7 +244,18 @@ namespace RogueIslands.Boosters
                     Name = "Realstate Agent",
                     Description = "For every 50 buildings placed, gain 1x mult.",
                     BuyPrice = 2,
-                }
+                },
+                new()
+                {
+                    Name = "Digger",
+                    Description = "Pays $4 at the end of the round",
+                    BuyPrice = 4,
+                    EventAction = new ChangeMoneyAction()
+                    {
+                        Conditions = new IGameCondition[] { new GameEventCondition("WeekEnd") },
+                        Change = 4,
+                    },
+                },
             };
         }
     }

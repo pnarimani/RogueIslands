@@ -11,12 +11,13 @@ namespace RogueIslands
         void LowlightIsland(Island island);
         void ShowLoseScreen();
         void ShowGameWinScreen();
-        void ShowWeekWin();
+        IWeekWinScreen ShowWeekWin();
         void DestroyBuildings();
         void AddBooster(Booster instance);
         void RemoveBooster(Booster booster);
         void ShowBuildingsInHand();
         IGameUI GetUI();
         void SpawnBuilding(Building building);
+        void ShowShopScreen();
     }
 }

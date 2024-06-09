@@ -30,7 +30,7 @@ namespace RogueIslands
             foreach (var island in state.Islands)
             {
                 view.HighlightIsland(island);
-                
+
                 state.CurrentEvent = "BeforeIslandScore";
                 state.ScoringState.CurrentScoringIsland = island;
                 state.ScoringState.CurrentScoringBuilding = null;
@@ -38,6 +38,7 @@ namespace RogueIslands
 
                 foreach (var building in island.Buildings)
                 {
+                    state.ScoringState.CurrentScoringBuilding = building;
                     var buildingView = view.GetBuilding(building);
                     var triggeredOnce = false;
 
@@ -49,16 +50,15 @@ namespace RogueIslands
                         building.RemainingTriggers--;
                         state.ScoringState.Products += building.Output + building.OutputUpgrade;
                         buildingView.BuildingTriggered(triggeredOnce);
-                        
+
                         if (!triggeredOnce)
                         {
                             state.CurrentEvent = "BuildingFirstTrigger";
-                            state.ScoringState.CurrentScoringBuilding = building;
                             state.ExecuteAll(view);
                         }
-                        
+
                         triggeredOnce = true;
-                        
+
                         state.CurrentEvent = "AfterBuildingScored";
                         state.ExecuteAll(view);
                     }
@@ -67,7 +67,7 @@ namespace RogueIslands
                 state.CurrentEvent = "AfterIslandScore";
                 state.ScoringState.CurrentScoringBuilding = null;
                 state.ExecuteAll(view);
-                
+
                 view.LowlightIsland(island);
             }
 
@@ -92,17 +92,15 @@ namespace RogueIslands
                 return;
             }
 
-            var hasWeekEnded = false;
-
             if (state.IsWeekFinished())
             {
-                hasWeekEnded = true;
-                state.Money += state.MoneyPayoutPerWeek;
-                state.PopulateShop();
-
                 state.CurrentEvent = "WeekEnd";
                 state.ExecuteAll(view);
 
+                ShowWeekWinScreen(state, view);
+                
+                state.PopulateShop();
+                
                 state.Week++;
                 if (state.Week >= GameState.TotalWeeks)
                 {
@@ -123,14 +121,29 @@ namespace RogueIslands
 
             state.Energy = state.CalculateInitialEnergy();
 
-            if (hasWeekEnded && state.Result == GameResult.InProgress)
+            view.GetUI().RefreshAll();
+        }
+
+        private static void ShowWeekWinScreen(GameState state, IGameView view)
+        {
+            var winScreen = view.ShowWeekWin();
+            winScreen.SetWeeklyPayout(state.MoneyPayoutPerWeek);
+                
+            foreach (var change in state.MoneyChanges)
             {
-                view.ShowWeekWin();
+                winScreen.AddMoneyChange(change);
             }
-            else
-            {
-                view.GetUI().RefreshAll();
-            }
+        }
+
+        public static void ClaimWeekEndMoney(this GameState state, IGameView view)
+        {
+            state.Money += state.MoneyPayoutPerWeek;
+            foreach (var change in state.MoneyChanges) 
+                state.Money += change.Change;
+            state.MoneyChanges.Clear();
+
+            view.GetUI().RefreshAll();
+            view.ShowShopScreen();
         }
 
         public static void StartWeek(this GameState state, IGameView view)

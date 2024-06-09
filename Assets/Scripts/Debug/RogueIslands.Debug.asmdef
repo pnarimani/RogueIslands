@@ -1,5 +1,6 @@
 ﻿{
   "name": "RogueIslands.Debug",
+  "rootNamespace": "RogueIslands",
   "references": [
     "RogueIslands",
     "RogueIslands.View",

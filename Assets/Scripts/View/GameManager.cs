@@ -4,6 +4,7 @@ using DG.Tweening;
 using RogueIslands.Boosters;
 using RogueIslands.Particles;
 using RogueIslands.View.Shop;
+using RogueIslands.View.Win;
 using UnityEngine;
 
 namespace RogueIslands.View
@@ -11,6 +12,7 @@ namespace RogueIslands.View
     public class GameManager : Singleton<GameManager>, IGameView
     {
         [SerializeField] private ShopScreen _shopPrefab;
+        [SerializeField] private WeekWinScreen _weekWinScreen;
         
         public GameState State { get; private set; }
         public bool IsPlaying { get; private set; }
@@ -62,10 +64,9 @@ namespace RogueIslands.View
             
         }
 
-        public async void ShowWeekWin()
+        public IWeekWinScreen ShowWeekWin()
         {
-            await UniTask.WaitForSeconds(1);
-            Instantiate(_shopPrefab);
+            return Instantiate(_weekWinScreen);
         }
 
         public void DestroyBuildings()
@@ -157,6 +158,11 @@ namespace RogueIslands.View
                     break;
                 }
             }
+        }
+
+        public void ShowShopScreen()
+        {
+            Instantiate(_shopPrefab);
         }
     }
 }

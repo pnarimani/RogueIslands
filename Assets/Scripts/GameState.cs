@@ -26,7 +26,8 @@ namespace RogueIslands
         public int EnergyIncreasePerMonth { get; set; } = 1;
         
         public int Money { get; set; } = 4;
-        public int MoneyPayoutPerWeek { get; set; } = 6;
+        public int MoneyPayoutPerWeek { get; set; } = 4;
+        public List<MoneyChange> MoneyChanges { get; set; } = new();
 
         public string CurrentEvent { get; set; }
         public ScoringState ScoringState { get; set; }
