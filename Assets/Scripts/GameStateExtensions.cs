@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.Boosters;
 using UnityEngine.Assertions;
-using VContainer;
 
 namespace RogueIslands
 {
@@ -19,7 +18,7 @@ namespace RogueIslands
             Assert.IsNotNull(booster);
             Assert.IsNotNull(view);
             
-            _defaultExecutors ??= LifetimeScopeProvider.Get().Container.Resolve<IReadOnlyList<GameActionExecutor>>();
+            _defaultExecutors ??= StaticResolver.Resolve<IReadOnlyList<GameActionExecutor>>();
 
             Assert.IsNotNull(_defaultExecutors);
             
@@ -33,7 +32,7 @@ namespace RogueIslands
         {
             Assert.IsNotNull(condition);
             
-            _defaultEvaluators ??= LifetimeScopeProvider.Get().Container.Resolve<IReadOnlyList<ConditionEvaluator>>();
+            _defaultEvaluators ??= StaticResolver.Resolve<IReadOnlyList<ConditionEvaluator>>();
             
             Assert.IsNotNull(_evaluatorOverrides);
             Assert.IsNotNull(_defaultEvaluators);

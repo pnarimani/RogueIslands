@@ -1,0 +1,11 @@
+{
+	"name": "RogueIslands.Autofac",
+	"rootNamespace": "RogueIslands",
+	"references": [
+		"AutofacUnity",
+		"RogueIslands",
+		"RogueIslands.View",
+		"RogueIslands.Debug",
+		"Unity.Mathematics"
+	]
+}

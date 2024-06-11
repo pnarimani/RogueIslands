@@ -207,13 +207,6 @@
       "dependencies": {},
       "hash": "1231f5e645d71f60eed4ea51e8ca63d13a09f385"
     },
-    "jp.hadashikick.vcontainer": {
-      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.15.4",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "58610810240efebe27b982a3adfb8405c57320a2"
-    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,

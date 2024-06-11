@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace RogueIslands.Boosters
 {
-    public class Booster
+    public class Booster : IPurchasableItem
     {
         public BoosterInstanceId Id { get; set; }
         public string Name { get; set; }

@@ -13,6 +13,7 @@ namespace RogueIslands.View
     {
         [SerializeField] private ShopScreen _shopPrefab;
         [SerializeField] private WeekWinScreen _weekWinScreen;
+        [SerializeField] private LoseScreen _loseScreen;
         
         public GameState State { get; private set; }
         public bool IsPlaying { get; private set; }
@@ -112,6 +113,7 @@ namespace RogueIslands.View
 
         public void ShowLoseScreen()
         {
+            Instantiate(_loseScreen);
         }
 
         public IBuildingView GetBuilding(Building building)

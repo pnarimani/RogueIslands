@@ -1,4 +1,4 @@
-﻿using System;
+﻿using RogueIslands.Boosters;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,13 +30,19 @@ namespace RogueIslands.View.Shop
                 var shopIndex = i;
                 
                 var item = Instantiate(_itemPrefab, _cardParent);
-                var booster = Shop.BoostersForSale[i];
-                Instantiate(_boosterPrefab, item.transform).Show(booster);
 
-                item.SetPrice($"${booster.BuyPrice}");
+                switch (Shop.ItemsForSale[i])
+                {
+                    case Booster booster:
+                        Instantiate(_boosterPrefab, item.transform).Show(booster);
+                        break;
+                }
+                
+
+                item.SetPrice($"${Shop.ItemsForSale[i].BuyPrice}");
                 item.BuyClicked += () =>
                 {
-                    if (GameManager.Instance.State.Money < booster.BuyPrice)
+                    if (GameManager.Instance.State.Money < Shop.ItemsForSale[shopIndex].BuyPrice)
                         return;
 
                     GameManager.Instance.State.PurchaseItemAtShop(GameManager.Instance, shopIndex);

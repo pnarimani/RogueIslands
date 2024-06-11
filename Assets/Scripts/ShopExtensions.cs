@@ -7,8 +7,8 @@ namespace RogueIslands
     {
         public static void PopulateShop(this GameState state)
         {
-            state.Shop.BoostersForSale = new Booster[state.Shop.CardCount];
-            
+            state.Shop.ItemsForSale = new IPurchasableItem[state.Shop.CardCount];
+
             PopulateBoosterSlots(state);
 
             state.Shop.CurrentRerollCost = state.Shop.StartingRerollCost;
@@ -20,8 +20,9 @@ namespace RogueIslands
                 throw new InvalidOperationException();
 
             state.Money -= state.Shop.CurrentRerollCost;
-            state.Shop.CurrentRerollCost = (int) MathF.Ceiling(state.Shop.CurrentRerollCost * state.Shop.RerollIncreaseRate);
-            
+            state.Shop.CurrentRerollCost =
+                (int)MathF.Ceiling(state.Shop.CurrentRerollCost * state.Shop.RerollIncreaseRate);
+
             PopulateBoosterSlots(state);
         }
 
@@ -31,19 +32,25 @@ namespace RogueIslands
             for (var i = 0; i < state.Shop.CardCount; i++)
             {
                 var index = rand.NextInt(state.AvailableBoosters.Count);
-                state.Shop.BoostersForSale[i] = state.AvailableBoosters[index];
+                state.Shop.ItemsForSale[i] = state.AvailableBoosters[index];
             }
         }
 
         public static void PurchaseItemAtShop(this GameState state, IGameView view, int index)
         {
-            var booster = state.Shop.BoostersForSale[index];
-            if (state.Money < booster.BuyPrice)
+            var item = state.Shop.ItemsForSale[index];
+            if (state.Money < item.BuyPrice)
                 throw new InvalidOperationException();
 
-            state.Money -= booster.BuyPrice;
-            state.AddBooster(view, booster);
-            state.Shop.BoostersForSale[index] = null;
+            state.Money -= item.BuyPrice;
+            state.Shop.ItemsForSale[index] = null;
+            
+            switch (item)
+            {
+                case Booster booster:
+                    state.AddBooster(view, booster);
+                    break;
+            }
         }
     }
 }

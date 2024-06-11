@@ -9,7 +9,7 @@ namespace RogueIslands
         public int CurrentRerollCost { get; set; } = 5;
         public float RerollIncreaseRate { get; set; } = 1.5f;
         public int CardCount { get; set; } = 2;
-        public Booster[] BoostersForSale { get; set; }
+        public IPurchasableItem[] ItemsForSale { get; set; }
         
         public Random[] BoosterSpawn { get; set; }
         public Random[] BoosterAntiDuplicate { get; set; }

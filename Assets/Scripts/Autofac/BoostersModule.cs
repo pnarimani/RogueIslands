@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Linq;
-using VContainer;
-using VContainer.Unity;
+using Autofac;
+using RogueIslands.Boosters;
 
-namespace RogueIslands.Boosters
+namespace RogueIslands.Autofac
 {
-    public class BoostersInstaller : IInstaller
+    public class BoostersModule : Module
     {
-        public void Install(IContainerBuilder builder)
+        protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(obj => obj.Resolve<Random>().NextRandom(), Lifetime.Transient);
+            builder.Register(obj => obj.Resolve<Random>().NextRandom());
 
             var allTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.GetTypes())
@@ -20,12 +20,12 @@ namespace RogueIslands.Boosters
                          typeof(ConditionEvaluator).IsAssignableFrom(t) &&
                          !typeof(IEvaluationConditionOverride).IsAssignableFrom(t)))
             {
-                builder.Register(evalType, Lifetime.Scoped).As<ConditionEvaluator>();
+                builder.RegisterType(evalType).As<ConditionEvaluator>();
             }
 
             foreach (var execType in allTypes.Where(t => typeof(GameActionExecutor).IsAssignableFrom(t)))
             {
-                builder.Register(execType, Lifetime.Scoped).As<GameActionExecutor>();
+                builder.RegisterType(execType).As<GameActionExecutor>();
             }
         }
     }

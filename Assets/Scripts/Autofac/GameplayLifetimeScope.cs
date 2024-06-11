@@ -1,11 +1,11 @@
+using Autofac;
+using AutofacUnity;
 using RogueIslands.Boosters;
 using UnityEngine;
-using VContainer;
-using VContainer.Unity;
 
-namespace RogueIslands
+namespace RogueIslands.Autofac
 {
-    public class GameplayLifetimeScope : LifetimeScope
+    public class GameplayLifetimeScope : AutofacScope, IResolver
     {
         [SerializeField] private string _seed;
 
@@ -15,11 +15,14 @@ namespace RogueIslands
             set => _seed = value;
         }
 
-        protected override void Configure(IContainerBuilder builder)
+        protected override void Configure(ContainerBuilder builder)
         {
             var seedRandom = new System.Random(Seed.GetHashCode());
             builder.RegisterInstance(seedRandom).As<System.Random>();
-            new BoostersInstaller().Install(builder);
+            
+            builder.RegisterModule<BoostersModule>();
         }
+
+        public T Resolve<T>() => Container.Resolve<T>();
     }
 }

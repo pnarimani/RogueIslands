@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using RogueIslands.Boosters;
-using VContainer;
 using Random = Unity.Mathematics.Random;
 
 namespace RogueIslands
@@ -9,7 +8,7 @@ namespace RogueIslands
     {
         public static GameState NewGame()
         {
-            var seedRandom = LifetimeScopeProvider.Get().Container.Resolve<System.Random>();
+            var seedRandom = StaticResolver.Resolve<System.Random>();
             
             var buildings = DefaultBuildingsList.Get();
             buildings.Shuffle(seedRandom);
@@ -27,7 +26,7 @@ namespace RogueIslands
                     CardPackSpawn = seedRandom.CreateRandomArray(GameState.TotalMonths),
                     BoosterAntiDuplicate = seedRandom.CreateRandomArray(GameState.TotalMonths),
                     CardCount = 2,
-                    BoostersForSale = new Booster[2],
+                    ItemsForSale = new Booster[2],
                 },
             };
         }

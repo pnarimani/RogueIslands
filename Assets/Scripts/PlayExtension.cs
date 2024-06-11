@@ -79,6 +79,8 @@ namespace RogueIslands
             state.CurrentScore += state.ScoringState.Products * state.ScoringState.Multiplier;
             state.Day++;
             state.ScoringState = null;
+            
+            view.GetUI().RefreshDate();
 
             state.Validate();
         }
@@ -161,18 +163,8 @@ namespace RogueIslands
             state.ExecuteAll(view);
         }
 
-        private static bool HasLost(this GameState state)
-        {
-            if (state.CurrentScore < state.RequiredScore)
-            {
-                if (state.Day >= state.TotalDays)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        private static bool HasLost(this GameState state) 
+            => state.Day >= state.TotalDays && state.CurrentScore < state.RequiredScore;
 
         private static bool IsWeekFinished(this GameState state)
         {

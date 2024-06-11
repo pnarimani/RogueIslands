@@ -23,8 +23,8 @@ namespace RogueIslands
 
             Assert.IsNotNull(state.Shop);
 
-            Assert.IsNotNull(state.Shop.BoostersForSale);
-            Assert.AreEqual(state.Shop.CardCount, state.Shop.BoostersForSale.Length);
+            Assert.IsNotNull(state.Shop.ItemsForSale);
+            Assert.AreEqual(state.Shop.CardCount, state.Shop.ItemsForSale.Length);
 
             Assert.IsNotNull(state.AllRequiredScores);
             Assert.AreEqual(GameState.TotalWeeks * GameState.TotalMonths, state.AllRequiredScores.Length);

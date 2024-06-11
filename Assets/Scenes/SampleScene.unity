@@ -153,6 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shopPrefab: {fileID: 5763890497887457565, guid: 3469dc268c028f94cae2d66e0c8d83b8, type: 3}
+  _weekWinScreen: {fileID: -2457985162201193136, guid: 6f3f9e2a654105040b0adabab1325890, type: 3}
+  _loseScreen: {fileID: 1160927452507146770, guid: b8770575ef22bdb47964d339969027de, type: 3}
 --- !u!4 &30574756
 Transform:
   m_ObjectHideFlags: 0
@@ -987,10 +989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09283da9cc94a95b08815d18a0f0372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentReference:
-    TypeName: 
-  autoRun: 1
-  autoInjectGameObjects: []
+  _autoRun: 1
   _seed: D
 --- !u!4 &768251863
 Transform:
