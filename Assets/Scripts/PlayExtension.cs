@@ -102,8 +102,6 @@ namespace RogueIslands
                 .Take(state.HandSize));
             view.ShowBuildingsInHand();
 
-            state.Energy = state.CalculateInitialEnergy();
-
             view.GetUI().RefreshAll();
         }
 
@@ -150,13 +148,6 @@ namespace RogueIslands
         private static bool IsWeekFinished(this GameState state)
         {
             return state.CurrentScore >= state.RequiredScore;
-        }
-
-        private static int CalculateInitialEnergy(this GameState state)
-        {
-            return state.StartingEnergy +
-                   state.EnergyIncreasePerWeek * (state.Month * GameState.TotalWeeks + state.Week) +
-                   state.EnergyIncreasePerMonth * state.Month;
         }
     }
 }

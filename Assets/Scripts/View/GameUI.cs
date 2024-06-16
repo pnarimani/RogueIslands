@@ -16,7 +16,6 @@ namespace RogueIslands.View
             _requiredOutput,
             _currentAmount,
             _budget,
-            _energy,
             _days,
             _week,
             _month;
@@ -72,7 +71,6 @@ namespace RogueIslands.View
         {
             var state = GameManager.Instance.State;
             _budget.UpdateNumber(state.Money);
-            _energy.UpdateNumber(state.Energy);
         }
 
         public void RefreshScores()
@@ -100,24 +98,6 @@ namespace RogueIslands.View
             _days.UpdateNumber(state.TotalDays - state.Day);
             _week.UpdateNumber(state.Week + 1);
             _month.UpdateNumber(state.Month + 1);
-        }
-
-        public void ShowNotEnoughEnergy()
-        {
-            _energy.transform.DOShakePosition(0.2f, 10, 20);
-
-            _notEnoughEnergy.transform.DOComplete();
-            _notEnoughEnergy.SetActive(true);
-            _notEnoughEnergy.transform.localScale = Vector3.zero;
-            _notEnoughEnergy.transform.DOScale(Vector3.one, 0.2f)
-                .SetEase(Ease.OutBack)
-                .OnComplete(() =>
-                {
-                    _notEnoughEnergy.transform.DOScale(0, .2f)
-                        .SetDelay(1)
-                        .SetEase(Ease.InBack)
-                        .OnComplete(() => _notEnoughEnergy.SetActive(false));
-                });
         }
 
         public void ProductBoosted(double count)

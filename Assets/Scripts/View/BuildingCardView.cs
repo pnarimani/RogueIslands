@@ -103,32 +103,22 @@ namespace RogueIslands.View
 
             if (_ui.IsInSpawnRegion(Input.mousePosition))
             {
-                if (CanAffordTheCard())
-                {
-                    GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data, _instance.transform.position,
+                GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data, _instance.transform.position,
                         Quaternion.identity);
 
-                    foreach (var b in FindObjectsByType<BuildingView>(FindObjectsInactive.Include,
-                                 FindObjectsSortMode.None))
-                    {
-                        b.ShowSynergyRange(false);
-                        b.HighlightConnection(false);
-                    }
-
-                    GameUI.Instance.RefreshMoneyAndEnergy();
-
-                    Destroy(gameObject);
-                }
-                else
+                foreach (var b in FindObjectsByType<BuildingView>(FindObjectsInactive.Include,
+                             FindObjectsSortMode.None))
                 {
-                    _ui.ShowNotEnoughEnergy();
+                    b.ShowSynergyRange(false);
+                    b.HighlightConnection(false);
                 }
+
+                GameUI.Instance.RefreshMoneyAndEnergy();
+
+                Destroy(gameObject);
             }
         }
-
-
-        private bool CanAffordTheCard()
-            => GameManager.Instance.State.Energy >= Data.EnergyCost;
+        
 
         public void OnPointerClick(PointerEventData eventData)
         {

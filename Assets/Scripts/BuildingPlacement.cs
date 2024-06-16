@@ -20,8 +20,6 @@ namespace RogueIslands
 
             view.SpawnBuilding(building);
 
-            state.Energy -= building.EnergyCost;
-
             if (state.GetIslands(building) is { Count: > 0 } islands)
             {
                 if (islands.Count == 1)

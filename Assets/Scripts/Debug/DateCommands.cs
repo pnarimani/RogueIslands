@@ -22,13 +22,6 @@ namespace RogueIslands.Debug
             GameManager.Instance.GetUI().RefreshAll();
         }
         
-        [ConsoleMethod("set_energy", "Set the energy to the specified value. Usage: set_energy <energy>")]
-        public static void SetEnergy(int energy)
-        {
-            GameManager.Instance.State.Energy = energy;
-            GameManager.Instance.GetUI().RefreshAll();
-        }
-        
         [ConsoleMethod("set_money", "Set the money to the specified value. Usage: set_money <money>")]
         public static void SetMoney(int money)
         {

@@ -22,11 +22,6 @@ namespace RogueIslands
         
         public double[] AllRequiredScores { get; set; }
         public double RequiredScore => AllRequiredScores[Month * TotalWeeks + Week];
-
-        public int Energy { get; set; } = 4;
-        public int StartingEnergy { get; set; } = 4;
-        public int EnergyIncreasePerWeek { get; set; } = 1;
-        public int EnergyIncreasePerMonth { get; set; } = 1;
         
         public int Money { get; set; } = 4;
         public int MoneyPayoutPerWeek { get; set; } = 4;
@@ -46,7 +41,7 @@ namespace RogueIslands
         public ShopState Shop { get; set; }
         
         public GameResult Result { get; set; }
-        
-        public List<IWorldBooster> WorldBoosters { get; set; }
+
+        public List<IWorldBooster> WorldBoosters { get; set; } = new();
     }
 }

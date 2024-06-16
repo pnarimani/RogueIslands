@@ -10,20 +10,20 @@ namespace RogueIslands
             
             foreach (var (colorName, color) in ColorTag.All)
             {
-                foreach (var cat in new[] { Category.Cat1, Category.Cat2, Category.Cat3, Category.Cat4 })
+                foreach (var cat in Category.All)
                 {
-                    for (var i = 0; i < 4; i++)
+                    for (var i = 0; i < 3; i++)
                     {
                         var card = new Building()
                         {
                             Name = $"{colorName}",
                             Color = (colorName, color),
                             Category = cat,
-                            EnergyCost = i + 1,
-                            Output = i + 1,
+                            Size = (BuildingSize) i,
+                            Output = 3 + (i * 2),
                             PrefabAddress = $"Buildings/{colorName} {i + 1}",
                         };
-                        card.Description = $"Energy: {card.EnergyCost}\nOutput: {card.Output}\nCategory: {card.Category}";
+                        card.Description = $"Output: {card.Output}\nSize: {card.Size}\nCategory: {card.Category}";
                         allCards.Add(card);
                     }
                 }

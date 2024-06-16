@@ -14,7 +14,7 @@ namespace RogueIslands
         public float Range { get; set; } = 2;
         public Category Category { get; set; }
         public ColorTag Color { get; set; }
-        public int EnergyCost { get; set; }
+        public BuildingSize Size { get; set; }
         public double Output { get; set; }
         
         public double OutputUpgrade { get; set; }
