@@ -89,10 +89,8 @@ namespace RogueIslands.View
             GameUI.Instance.RefreshMoneyAndEnergy();
         }
 
-        public async void ShowBuildingsInHand()
+        public void ShowBuildingsInHand()
         {
-            await UniTask.WaitForSeconds(AnimationScheduler.GetAnimationTime());
-            
             foreach (var v in FindObjectsOfType<BuildingCardView>()) 
                 Destroy(v.gameObject);
 

@@ -435,6 +435,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5911940268b1409da24fa3efef13686c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _center: 1
+  _minPadding: 5
 --- !u!114 &409051658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1462,6 +1464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5911940268b1409da24fa3efef13686c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _center: 1
+  _minPadding: 15
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2838,6 +2842,10 @@ PrefabInstance:
     - target: {fileID: 7693947556679107347, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
       propertyPath: m_Name
       value: Energy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7693947556679107347, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9041193780307548942, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
       propertyPath: m_Pivot.x

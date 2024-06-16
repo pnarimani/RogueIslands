@@ -79,12 +79,8 @@ namespace RogueIslands
             state.CurrentScore += state.ScoringState.Products * state.ScoringState.Multiplier;
             state.Day++;
             state.ScoringState = null;
-            
+
             view.GetUI().RefreshDate();
-            
-            state.BuildingsInHand.Clear();
-            state.BuildingsInHand.AddRange(state.AvailableBuildings.Skip(state.Day * state.HandSize).Take(state.HandSize));
-            view.ShowBuildingsInHand();
 
             state.Validate();
         }
@@ -104,9 +100,9 @@ namespace RogueIslands
                 state.ExecuteAll(view);
 
                 ShowWeekWinScreen(state, view);
-                
+
                 state.PopulateShop();
-                
+
                 state.Week++;
                 if (state.Week >= GameState.TotalWeeks)
                 {
@@ -125,6 +121,11 @@ namespace RogueIslands
                 }
             }
 
+            state.BuildingsInHand.Clear();
+            state.BuildingsInHand.AddRange(state.AvailableBuildings.Skip(state.Day * state.HandSize)
+                .Take(state.HandSize));
+            view.ShowBuildingsInHand();
+
             state.Energy = state.CalculateInitialEnergy();
 
             view.GetUI().RefreshAll();
@@ -134,7 +135,7 @@ namespace RogueIslands
         {
             var winScreen = view.ShowWeekWin();
             winScreen.SetWeeklyPayout(state.MoneyPayoutPerWeek);
-                
+
             foreach (var change in state.MoneyChanges)
             {
                 winScreen.AddMoneyChange(change);
@@ -144,7 +145,7 @@ namespace RogueIslands
         public static void ClaimWeekEndMoney(this GameState state, IGameView view)
         {
             state.Money += state.MoneyPayoutPerWeek;
-            foreach (var change in state.MoneyChanges) 
+            foreach (var change in state.MoneyChanges)
                 state.Money += change.Change;
             state.MoneyChanges.Clear();
 
@@ -168,7 +169,7 @@ namespace RogueIslands
             state.ExecuteAll(view);
         }
 
-        private static bool HasLost(this GameState state) 
+        private static bool HasLost(this GameState state)
             => state.Day >= state.TotalDays && state.CurrentScore < state.RequiredScore;
 
         private static bool IsWeekFinished(this GameState state)
