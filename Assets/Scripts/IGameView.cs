@@ -1,4 +1,5 @@
-﻿using RogueIslands.Boosters;
+﻿using System.Collections.Generic;
+using RogueIslands.Boosters;
 
 namespace RogueIslands
 {
@@ -19,5 +20,7 @@ namespace RogueIslands
         IGameUI GetUI();
         void SpawnBuilding(Building building);
         void ShowShopScreen();
+
+        IReadOnlyList<IWorldBooster> GetWorldBoosters();
     }
 }

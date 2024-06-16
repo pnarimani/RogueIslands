@@ -42,7 +42,7 @@ namespace RogueIslands
                 });
             }
 
-            ExecuteBuildingPlacedEvent(state, view);
+            state.ExecuteEvent(view, "BuildingPlaced");
         }
 
         private static void MergeIslands(GameState state, List<Island> islands, Building building)
@@ -59,12 +59,6 @@ namespace RogueIslands
                 Id = Guid.NewGuid().ToString(),
                 Buildings = buildings.ToList(),
             });
-        }
-
-        private static void ExecuteBuildingPlacedEvent(this GameState state, IGameView view)
-        {
-            state.CurrentEvent = "BuildingPlaced";
-            state.ExecuteAll(view);
         }
 
         public static List<Island> GetIslands(this GameState state, Building building)

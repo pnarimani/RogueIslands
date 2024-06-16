@@ -46,5 +46,7 @@ namespace RogueIslands
         public ShopState Shop { get; set; }
         
         public GameResult Result { get; set; }
+        
+        public List<IWorldBooster> WorldBoosters { get; set; }
     }
 }

@@ -16,8 +16,7 @@ namespace Tests.Boosters
             var state = new GameState();
             state.Boosters.Add(campfire);
 
-            state.CurrentEvent = "BoosterSold";
-            state.ExecuteAll(Substitute.For<IGameView>());
+            state.ExecuteEvent(Substitute.For<IGameView>(), "BoosterSold");
 
             Assert.AreEqual(1.5, campfire.GetEventAction<ScoringAction>().XMult);
         }

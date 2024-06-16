@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -165,6 +166,9 @@ namespace RogueIslands.View
         {
             Instantiate(_shopPrefab);
         }
+
+        public IReadOnlyList<IWorldBooster> GetWorldBoosters() 
+            => FindObjectsOfType<WorldBooster>();
 
         public void SetState(GameState state)
         {

@@ -45,8 +45,10 @@ namespace RogueIslands
             return evaluator.Evaluate(state, condition);
         }
 
-        public static void ExecuteAll(this GameState state, IGameView view)
+        public static void ExecuteEvent(this GameState state, IGameView view, string eventName)
         {
+            state.CurrentEvent = eventName;
+            
             foreach (var booster in state.Boosters)
             {
                 if (booster.EventAction != null)
@@ -68,8 +70,7 @@ namespace RogueIslands
             if (instance.EvaluationOverrides != null)
                 _evaluatorOverrides.AddRange(instance.EvaluationOverrides);
             
-            state.CurrentEvent = "BoosterBought";
-            state.ExecuteAll(view);
+            state.ExecuteEvent(view, "BoosterBought");
         }
 
         public static void RemoveBooster(this GameState state, IGameView view, BoosterInstanceId boosterId)
@@ -85,8 +86,7 @@ namespace RogueIslands
 
             view.RemoveBooster(booster);
 
-            state.CurrentEvent = "BoosterSold";
-            state.ExecuteAll(view);
+            state.ExecuteEvent(view, "BoosterSold");
         }
     }
 }
