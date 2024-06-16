@@ -18,6 +18,9 @@ namespace RogueIslands
                 AvailableBuildings = buildings,
                 AvailableBoosters = BoosterList.Get(seedRandom),
                 BuildingsInHand = buildings.Take(4).ToList(),
+                TotalDays = 4,
+                StartingEnergy = 1000,
+                Energy = 1000,
                 Shop = new ShopState
                 {
                     BoosterSpawn = seedRandom.CreateRandomArray(GameState.TotalMonths),

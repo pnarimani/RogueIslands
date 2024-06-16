@@ -14,6 +14,9 @@ namespace RogueIslands
 
         public int DefaultTotalDays { get; set; } = 4;
         public int TotalDays { get; set; } = 4;
+
+        public int DefaultHandSize { get; set; } = 4;
+        public int HandSize { get; set; } = 4;
         
         public double CurrentScore { get; set; }
         

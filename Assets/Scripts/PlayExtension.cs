@@ -81,6 +81,10 @@ namespace RogueIslands
             state.ScoringState = null;
             
             view.GetUI().RefreshDate();
+            
+            state.BuildingsInHand.Clear();
+            state.BuildingsInHand.AddRange(state.AvailableBuildings.Skip(state.Day * state.HandSize).Take(state.HandSize));
+            view.ShowBuildingsInHand();
 
             state.Validate();
         }
@@ -154,6 +158,7 @@ namespace RogueIslands
             state.Day = 0;
             state.Islands.Clear();
             state.TotalDays = state.DefaultTotalDays;
+            state.HandSize = state.DefaultHandSize;
 
             view.DestroyBuildings();
             view.ShowBuildingsInHand();
