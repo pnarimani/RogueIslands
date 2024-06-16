@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Buffers;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace RogueIslands.View
 {
@@ -25,6 +28,19 @@ namespace RogueIslands.View
             }
 
             return null;
+        }
+        
+        public static Rect GetWorldRect(this Transform transform)
+        {
+            if (transform is not RectTransform rectTransform)
+                throw new ArgumentException("transform should be a RectTransform", nameof(transform));
+            
+            var corners = ArrayPool<Vector3>.Shared.Rent(4);
+            rectTransform.GetWorldCorners(corners);
+            var min = corners[0];
+            var max = corners[2];
+            ArrayPool<Vector3>.Shared.Return(corners);
+            return new Rect(min, max - min);
         }
     }
 }

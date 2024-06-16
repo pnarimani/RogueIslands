@@ -5,8 +5,10 @@ namespace RogueIslands.View
 {
     public class CardListView : MonoBehaviour
     {
+        [SerializeField] private bool _center = true;
+        [SerializeField] private float _minPadding = 5;
+        
         private readonly List<CardListItem> _items = new();
-        private readonly Vector3[] _corners = new Vector3[4];
 
         private RectTransform Tx => (RectTransform)transform;
 
@@ -29,16 +31,12 @@ namespace RogueIslands.View
 
         private void UpdatePositions()
         {
-            Tx.GetWorldCorners(_corners);
-
             _items.RemoveAll(x => x == null);
+            if (_items.Count == 0)
+                return;
 
-            var leftCenter = (_corners[0] + _corners[1]) / 2;
-            var size = _corners[2] - _corners[0];
-            var distance = size / _items.Count;
-
-            for (var i = _items.Count - 1; i >= 0; i--) 
-                _items[i].TargetPosition = leftCenter + Vector3.right * (distance.x / 2) + Vector3.right * (distance.x * i);
+            for (var i = _items.Count - 1; i >= 0; i--)
+                _items[i].TargetPosition = GetPositionForIndex(i);
         }
 
         public void Reorder(CardListItem item)
@@ -53,18 +51,12 @@ namespace RogueIslands.View
 
         private int GetIndexForPosition(Vector3 position)
         {
-            Tx.GetWorldCorners(_corners);
-
-            var leftCenter = (_corners[0] + _corners[1]) / 2;
-            var size = _corners[2] - _corners[0];
-            var cardDistance = size / _items.Count;
-
             var min = float.MaxValue;
             var index = -1;
 
             for (var i = _items.Count - 1; i >= 0; i--)
             {
-                var target = leftCenter + Vector3.right * (cardDistance.x / 2) + Vector3.right * (cardDistance.x * i);
+                var target = GetPositionForIndex(i);
                 var distance = Vector3.Distance(position, target);
                 if (distance < min)
                 {
@@ -74,6 +66,24 @@ namespace RogueIslands.View
             }
 
             return index;
+        }
+
+        private Vector3 GetPositionForIndex(int index)
+        {
+            var worldRect = Tx.GetWorldRect();
+
+            if (_items.Count == 0)
+                return worldRect.center;
+
+            var distance = _center
+                ? _items[0].transform.GetWorldRect().width + _minPadding
+                : worldRect.width / _items.Count;
+
+            var startingPosition = _center
+                ? worldRect.center + Vector2.left * ((_items.Count - 1) / 2f * distance)
+                : worldRect.min + Vector2.up * worldRect.height / 2;
+
+            return startingPosition + Vector2.right * (index * distance);
         }
     }
 }
