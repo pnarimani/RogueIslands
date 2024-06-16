@@ -58,6 +58,8 @@ namespace RogueIslands.View.Shop
                 return;
             
             GameManager.Instance.State.RerollShop();
+            
+            PopulateShop();
         }
 
         private void OnContinueClicked()
