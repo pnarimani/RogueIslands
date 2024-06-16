@@ -32,6 +32,7 @@ namespace RogueIslands
 
         public List<Island> Islands { get; set; } = new();
         public List<Building> BuildingsInHand { get; set; } = new();
+        public List<Building> BuildingDeck { get; set; }
         public List<Building> AvailableBuildings { get; set; }
 
         public int MaxBoosters { get; set; } = 5;

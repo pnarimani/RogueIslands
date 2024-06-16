@@ -1,7 +1,5 @@
 using System;
 using System.Linq;
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using RogueIslands.Boosters;
 using RogueIslands.Particles;
 using UnityEngine;
@@ -11,7 +9,8 @@ namespace RogueIslands.View
 {
     public class GameUI : SingletonMonoBehaviour<GameUI>, IGameUI
     {
-        [SerializeField] private NumberText _products,
+        [SerializeField] private NumberText 
+            _products,
             _multiplier,
             _requiredOutput,
             _currentAmount,

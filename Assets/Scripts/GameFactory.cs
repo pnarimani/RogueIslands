@@ -8,16 +8,21 @@ namespace RogueIslands
     {
         public static GameState NewGame(System.Random seedRandom)
         {
-            var buildings = DefaultBuildingsList.Get();
+            var buildings = DefaultBuildingsList.GetDefaultDeckBuildings();
             buildings.Shuffle(seedRandom);
+
+            const int handSize = 6;
             
             return new GameState()
             {
                 AllRequiredScores = GetScoringRequirements(),
                 CurrentEvent = "MonthStart",
                 AvailableBuildings = buildings,
+                BuildingDeck = buildings.ToList(),
                 AvailableBoosters = BoosterList.Get(seedRandom),
-                BuildingsInHand = buildings.Take(4).ToList(),
+                HandSize = handSize,
+                DefaultHandSize = handSize,
+                BuildingsInHand = buildings.Take(handSize).ToList(),
                 TotalDays = 4,
                 Shop = new ShopState
                 {

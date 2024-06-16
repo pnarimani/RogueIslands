@@ -4,24 +4,25 @@ namespace RogueIslands
 {
     public class DefaultBuildingsList
     {
-        public static List<Building> Get()
+        public static List<Building> GetDefaultDeckBuildings()
         {
             var allCards = new List<Building>();
-            
+
             foreach (var (colorName, color) in ColorTag.All)
             {
-                foreach (var cat in Category.All)
+                for (var catIndex = 0; catIndex < Category.All.Length; catIndex++)
                 {
-                    for (var i = 0; i < 3; i++)
+                    var cat = Category.All[catIndex];
+                    for (var sizeIndex = 0; sizeIndex < 3; sizeIndex++)
                     {
                         var card = new Building()
                         {
                             Name = $"{colorName}",
                             Color = (colorName, color),
                             Category = cat,
-                            Size = (BuildingSize) i,
-                            Output = 3 + (i * 2),
-                            PrefabAddress = $"Buildings/{colorName} {i + 1}",
+                            Size = (BuildingSize)sizeIndex,
+                            Output = 3 + (sizeIndex * 2),
+                            PrefabAddress = $"Buildings/{colorName} {(catIndex + sizeIndex * 4 + 1)}",
                         };
                         card.Description = $"Output: {card.Output}\nSize: {card.Size}\nCategory: {card.Category}";
                         allCards.Add(card);

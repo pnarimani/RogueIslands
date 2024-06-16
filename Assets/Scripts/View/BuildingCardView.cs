@@ -64,7 +64,7 @@ namespace RogueIslands.View
                     _instance.ShowSynergyRange(true);
                 }
 
-                _instance.transform.position = BuildingViewPlacement.Instance.GetPosition(_instance.transform.position);
+                _instance.transform.position = BuildingViewPlacement.Instance.GetPosition(_instance.transform);
 
                 var buildingViews = FindObjectsByType<BuildingView>(FindObjectsSortMode.None);
                 foreach (var b in buildingViews)
