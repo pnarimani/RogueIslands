@@ -82,6 +82,9 @@ MonoBehaviour:
   _triggerFeedback: {fileID: 904679260292767535}
   _retriggerFeedback: {fileID: 904679260292767535}
   _productsParticleSystem: {fileID: 3904835384555638356, guid: bb2c289fa32dba542aafc90990d62755, type: 3}
+  _layer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &4778391073951474222
 GameObject:
   m_ObjectHideFlags: 0

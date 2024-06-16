@@ -4,7 +4,7 @@
     {
         public static T Instance { get; private set; }
 
-        public Singleton()
+        protected Singleton()
         {
             Instance = (T)this;
         }

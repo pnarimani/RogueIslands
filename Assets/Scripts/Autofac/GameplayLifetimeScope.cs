@@ -1,6 +1,5 @@
 using Autofac;
 using AutofacUnity;
-using RogueIslands.Boosters;
 using RogueIslands.View;
 using UnityEngine;
 using Random = System.Random;
@@ -12,11 +11,7 @@ namespace RogueIslands.Autofac
         [SerializeField] private string _seed;
         [SerializeField] private GameManager _gameManagerPrefab;
         
-        public string Seed
-        {
-            get => _seed;
-            set => _seed = value;
-        }
+        public string Seed => _seed;
 
         protected override void Configure(ContainerBuilder builder)
         {
@@ -31,6 +26,15 @@ namespace RogueIslands.Autofac
                 .AsSelf();
             
             builder.RegisterMonoBehaviour<InputHandling>()
+                .AutoActivate()
+                .SingleInstance();
+
+            builder.Register(_ => new AnimationScheduler())
+                .AutoActivate()
+                .SingleInstance();
+            
+            
+            builder.Register(_ => new BuildingViewPlacement())
                 .AutoActivate()
                 .SingleInstance();
 

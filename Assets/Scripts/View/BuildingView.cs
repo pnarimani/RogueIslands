@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using MoreMountains.Feedbacks;
-using RogueIslands.Particles;
 using UnityEngine;
 
 namespace RogueIslands.View
@@ -13,7 +12,12 @@ namespace RogueIslands.View
         
         public Building Data { get; private set; }
 
-        public void SetData(Building building)
+        private void Awake()
+        {
+            SetLayerRecursively(gameObject, LayerMask.NameToLayer("Building"));
+        }
+
+        public void Initialize(Building building)
         {
             Data = building;
             _synergyRange.transform.localScale = Vector3.one * (building.Range * 2);
@@ -59,6 +63,22 @@ namespace RogueIslands.View
             ps.emission.SetBurst(0, burst);
             ps.Play();
             return ps;
+        }
+
+        private static void SetLayerRecursively(GameObject obj, int newLayer)
+        {
+            if (obj == null)
+                return;
+
+            obj.layer = newLayer;
+
+            foreach (Transform child in obj.transform)
+            {
+                if (child == null)
+                    continue;
+
+                SetLayerRecursively(child.gameObject, newLayer);
+            }
         }
     }
 }

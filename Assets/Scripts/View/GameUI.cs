@@ -40,7 +40,7 @@ namespace RogueIslands.View
         public void ShowBuildingCard(Building building)
         {
             var card = Instantiate(_buildingCardPrefab, _buildingCardList.transform);
-            card.Show(building);
+            card.Initialize(building);
             _buildingCardList.Add(card.GetComponent<CardListItem>());
         }
 

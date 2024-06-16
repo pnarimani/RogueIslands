@@ -21,9 +21,11 @@ namespace RogueIslands.View
         private List<BuildingView> _instanceNeighbours;
         private Camera _camera;
 
+        private BuildingViewFactory _buildingViewFactory = new();
+
         public Building Data { get; private set; }
 
-        public void Show(Building data)
+        public void Initialize(Building data)
         {
             Data = data;
 
@@ -58,42 +60,33 @@ namespace RogueIslands.View
             {
                 if (_instance == null)
                 {
-                    _instance = Instantiate(Resources.Load<BuildingView>(Data.PrefabAddress));
-                    _instance.SetData(Data);
+                    _instance = _buildingViewFactory.Create(Data);
                     _instance.ShowSynergyRange(true);
                 }
 
-                var ray = _camera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out var hit, 100, LayerMask.GetMask("Ground")))
+                _instance.transform.position = BuildingViewPlacement.Instance.GetPosition(_instance.transform.position);
+
+                var buildingViews = FindObjectsByType<BuildingView>(FindObjectsSortMode.None);
+                foreach (var b in buildingViews)
+                    b.ShowSynergyRange(true);
+
+                if (_instanceNeighbours != null)
                 {
-                    _instance.transform.position = hit.point;
-
-                    var buildingViews =
-                        FindObjectsByType<BuildingView>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-                    foreach (var b in buildingViews)
-                        b.ShowSynergyRange(true);
-
-                    if (_instanceNeighbours != null)
+                    foreach (var neighbour in _instanceNeighbours)
                     {
-                        foreach (var neighbour in _instanceNeighbours)
-                        {
-                            if (neighbour != null)
-                                neighbour.HighlightConnection(false);
-                        }
+                        if (neighbour != null)
+                            neighbour.HighlightConnection(false);
                     }
-
-                    _instanceNeighbours = GameManager.Instance.State.GetIslands(hit.point, Data.Range)
-                        .SelectMany(x => x)
-                        .Select(buildingData => buildingViews.First(view => view.Data == buildingData))
-                        .ToList();
-
-                    foreach (var n in _instanceNeighbours)
-                        n.HighlightConnection(true);
                 }
-                else
-                {
-                    Destroy(_instance.gameObject);
-                }
+
+                _instanceNeighbours = GameManager.Instance.State
+                    .GetIslands(_instance.transform.position, Data.Range)
+                    .SelectMany(x => x)
+                    .Select(buildingData => buildingViews.First(view => view.Data == buildingData))
+                    .ToList();
+
+                foreach (var n in _instanceNeighbours)
+                    n.HighlightConnection(true);
             }
             else
             {
@@ -112,22 +105,19 @@ namespace RogueIslands.View
             {
                 if (CanAffordTheCard())
                 {
-                    var ray = _camera.ScreenPointToRay(Input.mousePosition);
-                    if (Physics.Raycast(ray, out var hit, 100, LayerMask.GetMask("Ground")))
+                    GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data, _instance.transform.position,
+                        Quaternion.identity);
+
+                    foreach (var b in FindObjectsByType<BuildingView>(FindObjectsInactive.Include,
+                                 FindObjectsSortMode.None))
                     {
-                        GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data, hit.point, Quaternion.identity);
-
-                        foreach (var b in FindObjectsByType<BuildingView>(FindObjectsInactive.Include,
-                                     FindObjectsSortMode.None))
-                        {
-                            b.ShowSynergyRange(false);
-                            b.HighlightConnection(false);
-                        }
-                        
-                        GameUI.Instance.RefreshMoneyAndEnergy();
-
-                        Destroy(gameObject);
+                        b.ShowSynergyRange(false);
+                        b.HighlightConnection(false);
                     }
+
+                    GameUI.Instance.RefreshMoneyAndEnergy();
+
+                    Destroy(gameObject);
                 }
                 else
                 {
@@ -144,7 +134,7 @@ namespace RogueIslands.View
         {
             if (GameManager.Instance.IsPlaying)
                 return;
-            
+
             _isSelected = !_isSelected;
 
             if (_isSelected)

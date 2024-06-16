@@ -2,7 +2,7 @@
 
 namespace RogueIslands.View
 {
-    public class AnimationScheduler : SingletonMonoBehaviour<AnimationScheduler>
+    public class AnimationScheduler : Singleton<AnimationScheduler>
     {
         private float _delay;
         private float _ensureTime;

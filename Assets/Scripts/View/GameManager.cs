@@ -107,7 +107,7 @@ namespace RogueIslands.View
                 .From()
                 .SetRelative(true)
                 .SetEase(Ease.OutBounce);
-            building.SetData(data);
+            building.Initialize(data);
         }
 
         public void ShowLoseScreen()
