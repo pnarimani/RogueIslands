@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace RogueIslands.View
 {
-    public class GameUI : Singleton<GameUI>, IGameUI
+    public class GameUI : SingletonMonoBehaviour<GameUI>, IGameUI
     {
         [SerializeField] private NumberText _products,
             _multiplier,
@@ -104,7 +104,7 @@ namespace RogueIslands.View
 
         public void ShowNotEnoughEnergy()
         {
-            _budget.transform.DOShakePosition(0.2f, 10, 20);
+            _energy.transform.DOShakePosition(0.2f, 10, 20);
 
             _notEnoughEnergy.transform.DOComplete();
             _notEnoughEnergy.SetActive(true);

@@ -1,3 +1,7 @@
 ﻿{
-  "name": "AutofacUnity"
+  "name": "AutofacUnity",
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "Autofac.dll"
+  ]
 }

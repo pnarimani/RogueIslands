@@ -270,7 +270,7 @@ MonoBehaviour:
         Owner: {fileID: 7388518696050552352}
         DebugActive: 0
         TargetShaker: {fileID: 7881121837602017225}
-        Duration: 0.5
+        Duration: 0.2
         ResetShakerValuesAfterShake: 1
         ResetTargetValuesAfterShake: 1
         ShakeSpeed: 30
@@ -284,7 +284,7 @@ MonoBehaviour:
         DirectionalNoiseStrengthMax: {x: 0.25, y: 0.25, z: 0.25}
         RandomnessSeed: {x: 0, y: 0, z: 0}
         RandomizeSeedOnShake: 1
-        UseAttenuation: 1
+        UseAttenuation: 0
         AttenuationCurve:
           serializedVersion: 2
           m_Curve:

@@ -2,7 +2,7 @@
 
 namespace RogueIslands.View
 {
-    public class CameraMovement : Singleton<CameraMovement>
+    public class CameraMovement : SingletonMonoBehaviour<CameraMovement>
     {
         private bool _mouseMoved;
 

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace RogueIslands.View
 {
-    public class InputHandling : Singleton<InputHandling>
+    public class InputHandling : SingletonMonoBehaviour<InputHandling>
     {
         private bool _mouseMoved;
         private Vector3 _previousMousePosition;

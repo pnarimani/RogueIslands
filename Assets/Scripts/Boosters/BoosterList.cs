@@ -204,9 +204,9 @@ namespace RogueIslands.Boosters
                         Conditions = new IGameCondition[]
                         {
                             new GameEventCondition("AfterBuildingScored"),
-                            new BuildingCategoryScoredCondition
+                            new BuildingColorScoredCondition()
                             {
-                                Category = Category.Cat3,
+                                ColorTag = ColorTag.Red,
                             },
                         },
                     },

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using RogueIslands.Boosters;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace RogueIslands.View
 {
-    public class GameManager : Singleton<GameManager>, IGameView
+    public class GameManager : SingletonMonoBehaviour<GameManager>, IGameView, IDisposable
     {
         [SerializeField] private ShopScreen _shopPrefab;
         [SerializeField] private WeekWinScreen _weekWinScreen;
@@ -21,8 +22,6 @@ namespace RogueIslands.View
         private void Start()
         {
             GameUI.Instance.PlayClicked += OnPlayClicked;
-
-            State = GameFactory.NewGame();
             
             ShowBuildingsInHand();
             
@@ -165,6 +164,17 @@ namespace RogueIslands.View
         public void ShowShopScreen()
         {
             Instantiate(_shopPrefab);
+        }
+
+        public void SetState(GameState state)
+        {
+            State = state;
+        }
+
+        public void Dispose()
+        {
+            if (this != null && gameObject != null) 
+                Destroy(gameObject);
         }
     }
 }

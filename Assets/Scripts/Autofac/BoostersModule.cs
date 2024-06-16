@@ -9,8 +9,6 @@ namespace RogueIslands.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(obj => obj.Resolve<Random>().NextRandom());
-
             var allTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.GetTypes())
                 .Where(t => t.IsClass && !t.IsAbstract)

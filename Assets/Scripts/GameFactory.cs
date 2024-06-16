@@ -6,10 +6,8 @@ namespace RogueIslands
 {
     public static class GameFactory
     {
-        public static GameState NewGame()
+        public static GameState NewGame(System.Random seedRandom)
         {
-            var seedRandom = StaticResolver.Resolve<System.Random>();
-            
             var buildings = DefaultBuildingsList.Get();
             buildings.Shuffle(seedRandom);
             
