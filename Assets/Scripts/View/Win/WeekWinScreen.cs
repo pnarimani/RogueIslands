@@ -23,16 +23,9 @@ namespace RogueIslands.View.Win
             });
         }
 
-        public void SetWeeklyPayout(int money)
-        {
-            _totalChange += money;
-            SetTotalMoneyText();
-            _weeklyPayoutText.text = money.ToString();
-        }
-
         private void SetTotalMoneyText()
         {
-            _totalMoneyText.text = $"${_totalChange}";
+            _totalMoneyText.text = $"Total: ${_totalChange}";
         }
 
         public void AddMoneyChange(MoneyChange change)

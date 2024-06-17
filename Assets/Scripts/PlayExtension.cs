@@ -98,8 +98,11 @@ namespace RogueIslands
             }
 
             state.BuildingsInHand.Clear();
-            state.BuildingsInHand.AddRange(state.AvailableBuildings.Skip(state.Day * state.HandSize)
-                .Take(state.HandSize));
+            state.BuildingsInHand.AddRange(
+                state.AvailableBuildings
+                    .Skip(state.Day * state.HandSize)
+                    .Take(state.HandSize)
+            );
             view.ShowBuildingsInHand();
 
             view.GetUI().RefreshAll();
@@ -108,7 +111,17 @@ namespace RogueIslands
         private static void ShowWeekWinScreen(GameState state, IGameView view)
         {
             var winScreen = view.ShowWeekWin();
-            winScreen.SetWeeklyPayout(state.MoneyPayoutPerWeek);
+            winScreen.AddMoneyChange(new MoneyChange
+            {
+                Change = state.MoneyPayoutPerWeek,
+                Reason = "Weekly Payout",
+            });
+            
+            winScreen.AddMoneyChange(new MoneyChange
+            {
+                Change = state.TotalDays - state.Day,
+                Reason = "Days Left (1$ per day)",
+            });
 
             foreach (var change in state.MoneyChanges)
             {
@@ -119,6 +132,7 @@ namespace RogueIslands
         public static void ClaimWeekEndMoney(this GameState state, IGameView view)
         {
             state.Money += state.MoneyPayoutPerWeek;
+            state.Money += state.TotalDays - state.Day;
             foreach (var change in state.MoneyChanges)
                 state.Money += change.Change;
             state.MoneyChanges.Clear();
