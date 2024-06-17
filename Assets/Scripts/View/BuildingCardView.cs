@@ -65,6 +65,7 @@ namespace RogueIslands.View
                 }
 
                 _instance.transform.position = BuildingViewPlacement.Instance.GetPosition(_instance.transform);
+                // _instance.GetComponent<Rigidbody>().MovePosition(pos);
 
                 var buildingViews = FindObjectsByType<BuildingView>(FindObjectsSortMode.None);
                 foreach (var b in buildingViews)

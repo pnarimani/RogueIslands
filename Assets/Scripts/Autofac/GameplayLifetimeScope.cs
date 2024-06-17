@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Autofac;
 using AutofacUnity;
 using RogueIslands.View;
@@ -36,7 +37,13 @@ namespace RogueIslands.Autofac
             
             builder.Register(_ => new BuildingViewPlacement())
                 .AutoActivate()
-                .SingleInstance();
+                .SingleInstance()
+                .AsImplementedInterfaces()
+                .AsSelf();
+            
+            builder.Register(c => new GameObject().AddComponent<GizmosCaller>())
+                .AutoActivate()
+                .OnActivated(c => c.Instance.Initialize(c.Context.Resolve<IReadOnlyList<IGizmosDrawer>>()));
 
             builder.Register(_ => Instantiate(_gameManagerPrefab))
                 .AutoActivate()

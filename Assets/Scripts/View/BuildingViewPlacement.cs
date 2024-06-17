@@ -2,10 +2,13 @@
 
 namespace RogueIslands.View
 {
-    public class BuildingViewPlacement : Singleton<BuildingViewPlacement>
+    public class BuildingViewPlacement : Singleton<BuildingViewPlacement>, IGizmosDrawer
     {
         private readonly Camera _camera = Camera.main;
         private readonly int _layerMask = LayerMask.GetMask("Building");
+        private readonly int _groundMask = LayerMask.GetMask("Ground");
+
+        private Vector3 _gizmosCenter, _gizmosSize;
 
         public Vector3 GetPosition(Transform building)
         {
@@ -14,62 +17,33 @@ namespace RogueIslands.View
 
             var ray = _camera!.ScreenPointToRay(Input.mousePosition);
 
-            if (!Physics.Raycast(ray, out var hit, 100, LayerMask.GetMask("Ground")))
+            if (!Physics.Raycast(ray, out var hit, 100, _groundMask))
                 return Vector3.zero;
 
-            var dir = (hit.point - currentBuildingPosition).normalized;
-            var xDir = new Vector3(dir.x, 0, 0);
-            var zDir = new Vector3(0, 0, dir.z);
+            var desiredPosition = hit.point;
 
-            if (
-                Vector3.Distance(hit.point, currentBuildingPosition) > 2f ||
-                !Physics.BoxCast(
-                    currentBuildingPosition,
-                    bounds.extents,
-                    (hit.point - currentBuildingPosition).normalized,
-                    Quaternion.identity,
-                    Vector3.Distance(hit.point, currentBuildingPosition),
-                    _layerMask
-                )
-            )
+            foreach (var other in Object.FindObjectsOfType<BuildingView>())
             {
-                return hit.point;
+                if (other.transform == building)
+                    continue;
+                
+                var otherBounds = GetBounds(other.transform);
+                bounds.center = desiredPosition;
+                if (!bounds.Intersects(otherBounds))
+                    continue;
+                
+                bounds.center = new Vector3(currentBuildingPosition.x, currentBuildingPosition.y, desiredPosition.z);
+                if (bounds.Intersects(otherBounds)) 
+                    desiredPosition.z = currentBuildingPosition.z;
+                
+                bounds.center = new Vector3(desiredPosition.x, currentBuildingPosition.y, currentBuildingPosition.z);
+                if (bounds.Intersects(otherBounds)) 
+                    desiredPosition.x = currentBuildingPosition.x;
             }
 
-            if (
-                !Physics.BoxCast(
-                    currentBuildingPosition,
-                    bounds.extents,
-                    xDir,
-                    Quaternion.identity,
-                    Vector3.Distance(hit.point, currentBuildingPosition),
-                    _layerMask
-                )
-            )
-            {
-                var pos = currentBuildingPosition;
-                pos.x = hit.point.x;
-                return pos;
-            }
-
-            if (
-                !Physics.BoxCast(
-                    currentBuildingPosition,
-                    bounds.extents,
-                    zDir,
-                    Quaternion.identity,
-                    Vector3.Distance(hit.point, currentBuildingPosition),
-                    _layerMask
-                )
-            )
-            {
-                var pos = currentBuildingPosition;
-                pos.z = hit.point.z;
-                return pos;
-            }
-
-            return hit.point;
+            return desiredPosition;
         }
+
 
         private static Bounds GetBounds(Transform building)
         {
@@ -78,6 +52,11 @@ namespace RogueIslands.View
                 if (renderer.GetComponent<Collider>())
                     bounds.Encapsulate(renderer.bounds);
             return bounds;
+        }
+
+        public void OnDrawGizmos()
+        {
+            Gizmos.DrawWireCube(_gizmosCenter, _gizmosSize);
         }
     }
 }

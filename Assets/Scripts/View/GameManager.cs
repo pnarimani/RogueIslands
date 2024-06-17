@@ -109,6 +109,7 @@ namespace RogueIslands.View
                 .SetRelative(true)
                 .SetEase(Ease.OutBounce);
             building.Initialize(data);
+            // building.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
 
         public void ShowLoseScreen()
