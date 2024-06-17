@@ -20,11 +20,16 @@ namespace RogueIslands.View
 
             Data = booster;
             _name.text = booster.Name;
-            _desc.text = booster.Description;
+            _desc.text = booster.Description.Get(booster);
         }
 
         public async void OnActionExecuted(GameState state, GameAction action)
         {
+            if (action is CompositeAction)
+                return;
+            if (action is not ScoringAction)
+                return;
+            
             var wait = AnimationScheduler.GetAnimationTime();
             AnimationScheduler.AllocateTime(0.4f);
 
@@ -58,6 +63,8 @@ namespace RogueIslands.View
             
             if (_triggerFeedback != null)
                 _triggerFeedback.PlayFeedbacks();
+            
+            _desc.text = Data.Description.Get(Data);
         }
     }
 }

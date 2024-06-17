@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using RogueIslands.Boosters.Descriptions;
 
 namespace RogueIslands.Boosters
 {
@@ -6,7 +7,7 @@ namespace RogueIslands.Boosters
     {
         public BoosterInstanceId Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public IDescriptionProvider Description { get; set; }
         public int BuyPrice { get; set; }
         public int SellPrice { get; set; }
         public GameAction BuyAction { get; set; }

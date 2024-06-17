@@ -36,7 +36,7 @@ namespace RogueIslands.View
         public async void BuildingTriggered(bool isRetrigger)
         {
             var wait = AnimationScheduler.GetAnimationTime();
-            AnimationScheduler.AllocateTime(Mathf.Max(0.4f, _triggerFeedback.TotalDuration));
+            AnimationScheduler.AllocateTime(0.2f);
             AnimationScheduler.EnsureExtraTime(1.3f);
             var count = Data.Output + Data.OutputUpgrade;
             

@@ -85,6 +85,8 @@ namespace RogueIslands
                 _evaluatorOverrides.RemoveAll(booster.EvaluationOverrides.Contains);
 
             view.RemoveBooster(booster);
+            state.Money += booster.SellPrice;
+            view.GetUI().RefreshAll();
 
             state.ExecuteEvent(view, "BoosterSold");
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RogueIslands.Boosters.Descriptions;
 
 namespace RogueIslands.Boosters
 {
@@ -11,7 +12,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Opps all sixes",
-                    Description = "Add 1 to all probabilities",
+                    Description = new LiteralDescription("Add 1 to all probabilities"),
                     BuyPrice = 2,
                     EvaluationOverrides = new ConditionEvaluator[]
                     {
@@ -21,7 +22,9 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Blood Pact",
-                    Description = "1 in 2 chance to give x2 mult for each cat3 building scored",
+                    Description =
+                        new LiteralDescription(
+                            $"1 in 2 chance to give x2 mult for each {Category.Cat3} building scored"),
                     BuyPrice = 2,
                     EventAction = new ScoringAction()
                     {
@@ -44,7 +47,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Hiker",
-                    Description = "Permanently add +2 product to played buildings",
+                    Description = new LiteralDescription("Permanently add +2 product to played buildings"),
                     BuyPrice = 2,
                     EventAction = new PermanentBuildingUpgradeAction()
                     {
@@ -58,7 +61,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Suck my busking",
-                    Description = "Retrigger all cat2 buildings",
+                    Description = new LiteralDescription($"Retrigger all `{Category.Cat2}` buildings"),
                     BuyPrice = 2,
                     EventAction = new RetriggerScoringBuildingAction()
                     {
@@ -77,13 +80,17 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Bad Eyesight",
                     BuyPrice = 2,
-                    Description = "Category 1 and 3 count as same. Category 2 and 4 count as same.",
+                    Description =
+                        new LiteralDescription(
+                            $"{Category.Cat1} and {Category.Cat3} count as same. Category {Category.Cat2} and {Category.Cat4} count as same."),
                     EvaluationOverrides = new[] { new BadEyesConditionEvaluator() },
                 },
                 new()
                 {
                     Name = "Base 2",
-                    Description = "If the number of buildings is a power of 2, gains +4 products",
+                    Description =
+                        new ScalingBoosterDescription("If the number of buildings is a power of 2, gains +4 products")
+                            { ShowProducts = true },
                     BuyPrice = 2,
                     EventAction = new CompositeAction()
                     {
@@ -116,7 +123,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Egg",
-                    Description = "Gains 3$ of sell value at the end of every week",
+                    Description = new LiteralDescription("Gains 3$ of sell value at the end of every week"),
                     BuyPrice = 2,
                     EventAction = new GainSellValueAction
                     {
@@ -130,7 +137,9 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Campfire",
-                    Description = "Gains 0.5x mult for each booster sold. Resets at the end of the month.",
+                    Description =
+                        new LiteralDescription(
+                            "Gains 0.5x mult for each booster sold. Resets at the end of the month."),
                     BuyPrice = 2,
                     EventAction = new CompositeAction()
                     {
@@ -166,7 +175,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Clutch",
-                    Description = "On the last day, +10 mult",
+                    Description = new LiteralDescription("On the last day, +10 mult"),
                     BuyPrice = 2,
                     EventAction = new ScoringAction()
                     {
@@ -181,7 +190,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Overtime",
-                    Description = "On the last day, Retrigger all buildings",
+                    Description = new LiteralDescription("On the last day, Retrigger all buildings"),
                     BuyPrice = 2,
                     EventAction = new RetriggerScoringBuildingAction()
                     {
@@ -196,7 +205,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Sweatshop",
-                    Description = "+30 products for each red building",
+                    Description = new LiteralDescription("+30 products for each red building"),
                     BuyPrice = 2,
                     EventAction = new ScoringAction()
                     {
@@ -214,7 +223,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Procrastinator",
-                    Description = "x3 mult. you only have 1 day",
+                    Description = new LiteralDescription("x3 mult. you only have 1 day"),
                     BuyPrice = 2,
                     BuyAction = new DayModifier { SetDays = 1, },
                     SellAction = new DayModifier { ShouldSetToDefault = true },
@@ -241,14 +250,14 @@ namespace RogueIslands.Boosters
                 },
                 new()
                 {
-                    Name = "Realstate Agent",
-                    Description = "For every 50 buildings placed, gain 1x mult.",
+                    Name = "Real-State Agent",
+                    Description = new LiteralDescription("For every 50 buildings placed, gain 1x mult."),
                     BuyPrice = 2,
                 },
                 new()
                 {
                     Name = "Digger",
-                    Description = "Pays $4 at the end of the round",
+                    Description = new LiteralDescription("Pays $4 at the end of the round"),
                     BuyPrice = 4,
                     EventAction = new ChangeMoneyAction()
                     {
