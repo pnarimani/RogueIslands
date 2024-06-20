@@ -40,6 +40,8 @@ namespace RogueIslands
                 });
             }
 
+            state.BuildingsInHand.Remove(buildingData);
+
             state.ExecuteEvent(view, "BuildingPlaced");
         }
 

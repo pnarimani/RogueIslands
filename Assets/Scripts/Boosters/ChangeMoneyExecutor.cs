@@ -4,11 +4,18 @@
     {
         protected override void Execute(GameState state, IGameView view, Booster booster, ChangeMoneyAction action)
         {
-            state.MoneyChanges.Add(new MoneyChange
+            if (action.IsImmediate)
             {
-                Reason = booster.Name,
-                Change = action.Change,
-            });
+                state.Money += action.Change;
+            }
+            else
+            {
+                state.MoneyChanges.Add(new MoneyChange
+                {
+                    Reason = booster.Name,
+                    Change = action.Change,
+                });
+            }
         }
     }
 }

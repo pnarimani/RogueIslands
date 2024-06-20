@@ -10,8 +10,8 @@ namespace RogueIslands.Boosters
             }
             else
             {
-                if (action.ChangeDays != 0)
-                    state.TotalDays += action.ChangeDays;
+                if (action.Change != 0)
+                    state.TotalDays += action.Change;
                 else if (action.SetDays.HasValue)
                     state.TotalDays = action.SetDays.Value;
             }

@@ -4,10 +4,10 @@ namespace RogueIslands.Boosters
     {
         protected override void Execute(GameState state, IGameView view, Booster booster, RetriggerScoringBuildingAction action)
         {
-            if(state.ScoringState.CurrentScoringBuilding == null)
+            if(state.ScoringState.SelectedBuilding == null)
                 return;
             
-            state.ScoringState.CurrentScoringBuilding.RemainingTriggers += action.RetriggerTimes;
+            state.ScoringState.SelectedBuilding.RemainingTriggers += action.RetriggerTimes;
         }
     }
 }

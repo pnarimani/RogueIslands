@@ -38,7 +38,7 @@ namespace RogueIslands.Boosters
                 {
                     Target.Buildings => state.Islands.SelectMany(x => x.Buildings).Count(),
                     Target.Island => state.Islands.Count,
-                    Target.BuildingsInScoringIsland => state.ScoringState.CurrentScoringIsland.Buildings.Count,
+                    Target.BuildingsInScoringIsland => state.ScoringState.SelectedIsland.Buildings.Count,
                     Target.BuildingsInAnyIsland => throw new ArgumentOutOfRangeException(),
                     _ => throw new ArgumentOutOfRangeException(),
                 };

@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Boosters
 {
-    public class BuildingColorScoredCondition : IGameCondition
+    public class SelectedBuildingColorCondition : IGameCondition
     {
         public ColorTag ColorTag { get; set; }
     }

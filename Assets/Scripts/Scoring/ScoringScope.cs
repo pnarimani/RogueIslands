@@ -17,8 +17,8 @@ namespace RogueIslands.Scoring
 
         public void Dispose()
         {
-            _state.ScoringState.CurrentScoringIsland = null;
-            _state.ScoringState.CurrentScoringBuilding = null;
+            _state.ScoringState.SelectedIsland = null;
+            _state.ScoringState.SelectedBuilding = null;
             _state.ExecuteEvent(_view, "DayEnd");
         }
     }

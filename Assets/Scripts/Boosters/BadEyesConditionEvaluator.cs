@@ -1,13 +1,13 @@
 ﻿namespace RogueIslands.Boosters
 {
-    public class BadEyesConditionEvaluator : ConditionEvaluator<BuildingCategoryScoredCondition>, IEvaluationConditionOverride
+    public class BadEyesConditionEvaluator : ConditionEvaluator<SelectedBuildingCategory>, IEvaluationConditionOverride
     {
-        protected override bool Evaluate(GameState state, BuildingCategoryScoredCondition condition)
+        protected override bool Evaluate(GameState state, SelectedBuildingCategory condition)
         {
-            if (state.ScoringState is not { CurrentScoringBuilding: not null })
+            if (state.ScoringState is not { SelectedBuilding: not null })
                 return false;
             
-            var buildingCategory = state.ScoringState.CurrentScoringBuilding.Category;
+            var buildingCategory = state.ScoringState.SelectedBuilding.Category;
             var conditionCategory = condition.Category;
 
             if (conditionCategory == Category.Cat1)

@@ -89,6 +89,22 @@ namespace RogueIslands
             view.GetUI().RefreshAll();
 
             state.ExecuteEvent(view, "BoosterSold");
+            state.ExecuteEvent(view, "BoosterRemoved");
+        }
+        
+        public static void DestroyBooster(this GameState state, IGameView view, BoosterInstanceId boosterId)
+        {
+            var booster = state.Boosters.First(x => x.Id == boosterId);
+            
+            state.Boosters.Remove(booster);
+
+            if (booster.EvaluationOverrides != null)
+                _evaluatorOverrides.RemoveAll(booster.EvaluationOverrides.Contains);
+
+            view.RemoveBooster(booster);
+            view.GetUI().RefreshAll();
+
+            state.ExecuteEvent(view, "BoosterRemoved");
         }
     }
 }

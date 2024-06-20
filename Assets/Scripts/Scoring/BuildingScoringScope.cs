@@ -14,7 +14,7 @@ namespace RogueIslands.Scoring
             _state = state;
             _hasTriggeredOnce = false;
 
-            state.ScoringState.CurrentScoringBuilding = building;
+            state.ScoringState.SelectedBuilding = building;
         }
 
         public void TriggerBeforeScore()
@@ -30,9 +30,14 @@ namespace RogueIslands.Scoring
             _state.ExecuteEvent(_view, "AfterBuildingScored");
         }
 
+        public void BuildingRemainedInHand()
+        {
+            _state.ExecuteEvent(_view, "BuildingRemainedInHand");
+        }
+
         public void Dispose()
         {
-            _state.ScoringState.CurrentScoringBuilding = null;
+            _state.ScoringState.SelectedBuilding = null;
         }
     }
 }

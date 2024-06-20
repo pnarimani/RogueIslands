@@ -52,6 +52,12 @@ namespace RogueIslands
                         }
                     }
                 }
+
+                foreach (var building in state.BuildingsInHand)
+                {
+                    using var buildingScoring = new BuildingScoringScope(state, view, building);
+                    buildingScoring.BuildingRemainedInHand();
+                }
             }
 
             state.CurrentScore += state.ScoringState.Products * state.ScoringState.Multiplier;
@@ -116,7 +122,7 @@ namespace RogueIslands
                 Change = state.MoneyPayoutPerWeek,
                 Reason = "Weekly Payout",
             });
-            
+
             winScreen.AddMoneyChange(new MoneyChange
             {
                 Change = state.TotalDays - state.Day,

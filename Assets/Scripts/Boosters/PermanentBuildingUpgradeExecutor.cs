@@ -4,6 +4,6 @@ namespace RogueIslands.Boosters
     {
         protected override void Execute(GameState state, IGameView view, Booster booster,
             PermanentBuildingUpgradeAction action) 
-            => state.ScoringState.CurrentScoringBuilding.OutputUpgrade += action.ProductUpgrade;
+            => state.ScoringState.SelectedBuilding.OutputUpgrade += action.ProductUpgrade;
     }
 }

@@ -14,8 +14,8 @@ namespace RogueIslands.Scoring
             _view = view;
             _state = state;
 
-            state.ScoringState.CurrentScoringIsland = island;
-            state.ScoringState.CurrentScoringBuilding = null;
+            state.ScoringState.SelectedIsland = island;
+            state.ScoringState.SelectedBuilding = null;
             state.ExecuteEvent(view, "BeforeIslandScore");
             
             view.HighlightIsland(island);
@@ -23,7 +23,7 @@ namespace RogueIslands.Scoring
 
         public void Dispose()
         {
-            _state.ScoringState.CurrentScoringBuilding = null;
+            _state.ScoringState.SelectedBuilding = null;
             _state.ExecuteEvent(_view, "AfterIslandScore");
             
             _view.LowlightIsland(_island);
