@@ -11,7 +11,7 @@ namespace RogueIslands.Boosters
             _random = random;
         }
 
-        protected override void Execute(GameState state, IGameView view, BoosterCard booster, RandomScoringAction action)
+        protected override void Execute(GameState state, IGameView view, IBooster booster, RandomScoringAction action)
             => state.ScoringState.Multiplier += _random.NextInt(0, (int)action.PlusMult);
     }
 }

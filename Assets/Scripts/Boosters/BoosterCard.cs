@@ -3,7 +3,7 @@ using RogueIslands.Boosters.Descriptions;
 
 namespace RogueIslands.Boosters
 {
-    public class BoosterCard : IPurchasableItem
+    public class BoosterCard : IPurchasableItem, IBooster
     {
         public BoosterInstanceId Id { get; set; }
         public string Name { get; set; }
@@ -14,26 +14,5 @@ namespace RogueIslands.Boosters
         public GameAction SellAction { get; set; }
         public GameAction EventAction { get; set; }
         public IReadOnlyList<ConditionEvaluator> EvaluationOverrides { get; set; }
-        
-        public T GetEventAction<T>() where T : GameAction
-        {
-            if(EventAction is T action)
-            {
-                return action;
-            }
-
-            if (EventAction is CompositeAction composite)
-            {
-                foreach (var compositeAction in composite.Actions)
-                {
-                    if(compositeAction is T subAction)
-                    {
-                        return subAction;
-                    }
-                }
-            }
-
-            return null;
-        }
     }
 }
