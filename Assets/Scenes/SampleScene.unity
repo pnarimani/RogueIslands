@@ -217,7 +217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9041193780307548942, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 365.5
+      value: 269
       objectReference: {fileID: 0}
     - target: {fileID: 9041193780307548942, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -702,7 +702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9041193780307548942, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 365.5
+      value: 269
       objectReference: {fileID: 0}
     - target: {fileID: 9041193780307548942, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1246,7 +1246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9041193780307548942, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 272.99
+      value: 367
       objectReference: {fileID: 0}
     - target: {fileID: 9041193780307548942, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1834,7 +1834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9041193780307548942, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 365.5
+      value: 269
       objectReference: {fileID: 0}
     - target: {fileID: 9041193780307548942, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2515,17 +2515,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9041193780307548942, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
   m_PrefabInstance: {fileID: 2472612385814104981}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1935080196 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2127982976051780292, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
-  m_PrefabInstance: {fileID: 2472612385814104981}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ca4d3a6e041504458ca724f09fae348, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1960325073
 GameObject:
   m_ObjectHideFlags: 0
@@ -2659,7 +2648,6 @@ MonoBehaviour:
   _requiredOutput: {fileID: 1344700334}
   _currentAmount: {fileID: 1861788817}
   _budget: {fileID: 1856713847}
-  _energy: {fileID: 1935080196}
   _days: {fileID: 1028927484}
   _week: {fileID: 1311128421}
   _month: {fileID: 444714034}
