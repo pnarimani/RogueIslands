@@ -4,5 +4,10 @@ namespace RogueIslands.Boosters
     {
         public bool MultiplyByDay { get; set; }
         public bool MultiplyByIslandCount { get; set; }
+
+        public MultipliedScoringAction()
+        {
+            XMult = 0;
+        }
     }
 }

@@ -68,7 +68,8 @@ namespace RogueIslands.Boosters
                         RetriggerTimes = 1,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("BuildingFirstTrigger"),
+                            new GameEventCondition("AfterBuildingScored"),
+                            BuildingTriggerCountCheck.FirstTrigger, 
                             new SelectedBuildingCategory
                             {
                                 Category = Category.Cat2,
@@ -197,7 +198,8 @@ namespace RogueIslands.Boosters
                         RetriggerTimes = 1,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("BuildingFirstTrigger"),
+                            new GameEventCondition("AfterBuildingScored"),
+                            BuildingTriggerCountCheck.FirstTrigger, 
                             TimeCondition.LastDay(),
                         },
                     },
@@ -278,7 +280,8 @@ namespace RogueIslands.Boosters
                     {
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("BuildingFirstTrigger"),
+                            new GameEventCondition("AfterBuildingScored"),
+                            BuildingTriggerCountCheck.FirstTrigger, 
                             new CountCondition
                             {
                                 TargetType = CountCondition.Target.Island,
@@ -298,7 +301,7 @@ namespace RogueIslands.Boosters
                     {
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("BuildingFirstTrigger"),
+                            new GameEventCondition("AfterBuildingScored"),
                             new CountCondition
                             {
                                 TargetType = CountCondition.Target.BuildingsInScoringIsland,

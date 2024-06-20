@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using RogueIslands.Boosters;
 using RogueIslands.Particles;
+using RogueIslands.View.Boosters;
 using RogueIslands.View.Shop;
 using RogueIslands.View.Win;
 using UnityEngine;

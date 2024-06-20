@@ -4,6 +4,7 @@ namespace RogueIslands
 {
     public interface IBoosterView
     {
-        void OnActionExecuted(GameState state, GameAction action);
+        void OnBeforeActionExecuted(GameState state, GameAction action);
+        void OnAfterActionExecuted(GameState state, GameAction action);
     }
 }

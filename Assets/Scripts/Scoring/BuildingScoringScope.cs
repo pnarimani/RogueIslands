@@ -2,19 +2,18 @@
 
 namespace RogueIslands.Scoring
 {
-    public struct BuildingScoringScope : IDisposable
+    public readonly struct BuildingScoringScope : IDisposable
     {
         private readonly GameState _state;
         private readonly IGameView _view;
-        private bool _hasTriggeredOnce;
 
         public BuildingScoringScope(GameState state, IGameView view, Building building)
         {
             _view = view;
             _state = state;
-            _hasTriggeredOnce = false;
 
             state.ScoringState.SelectedBuilding = building;
+            state.ScoringState.SelectedBuildingTriggerCount = 0;
         }
 
         public void TriggerBeforeScore()
@@ -24,20 +23,20 @@ namespace RogueIslands.Scoring
 
         public void TriggerAfterScore()
         {
-            if (!_hasTriggeredOnce)
-                _state.ExecuteEvent(_view, "BuildingFirstTrigger");
-            _hasTriggeredOnce = true;
+            _state.ScoringState.SelectedBuildingTriggerCount++;
             _state.ExecuteEvent(_view, "AfterBuildingScored");
         }
 
         public void BuildingRemainedInHand()
         {
+            _state.ScoringState.SelectedBuildingTriggerCount++;
             _state.ExecuteEvent(_view, "BuildingRemainedInHand");
         }
 
         public void Dispose()
         {
             _state.ScoringState.SelectedBuilding = null;
+            _state.ScoringState.SelectedBuildingTriggerCount = 0;
         }
     }
 }

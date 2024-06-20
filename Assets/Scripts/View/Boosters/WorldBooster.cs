@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RogueIslands.View
+namespace RogueIslands.View.Boosters
 {
     public class WorldBooster : MonoBehaviour, IWorldBooster
     {

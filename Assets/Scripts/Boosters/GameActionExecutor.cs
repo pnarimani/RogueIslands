@@ -28,9 +28,11 @@ namespace RogueIslands.Boosters
                 return;
             }
 
-            view.GetBooster(booster)?.OnActionExecuted(state, action);
-
+            var boosterView = view.GetBooster(booster);
+            
+            boosterView.OnBeforeActionExecuted(state, action);
             Execute(state, view, booster, (T)action);
+            boosterView.OnAfterActionExecuted(state, action);
         }
 
         protected abstract void Execute(GameState state, IGameView view, Booster booster, T action);

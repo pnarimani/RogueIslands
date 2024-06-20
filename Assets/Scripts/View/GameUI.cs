@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using RogueIslands.Boosters;
 using RogueIslands.Particles;
+using RogueIslands.View.Boosters;
 using UnityEngine;
 using UnityEngine.UI;
 
