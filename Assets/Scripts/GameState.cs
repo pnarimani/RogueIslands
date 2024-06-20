@@ -36,8 +36,8 @@ namespace RogueIslands
         public List<Building> AvailableBuildings { get; set; }
 
         public int MaxBoosters { get; set; } = 5;
-        public List<Booster> Boosters { get; set; } = new();
-        public List<Booster> AvailableBoosters { get; set; }
+        public List<BoosterCard> Boosters { get; set; } = new();
+        public List<BoosterCard> AvailableBoosters { get; set; }
         
         public ShopState Shop { get; set; }
         

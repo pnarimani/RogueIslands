@@ -47,7 +47,7 @@ namespace RogueIslands
             
             switch (item)
             {
-                case Booster booster:
+                case BoosterCard booster:
                     state.AddBooster(view, booster);
                     break;
             }

@@ -33,7 +33,7 @@ namespace RogueIslands.Debug
             GameManager.Instance.GetUI().RefreshAll();
         }
 
-        private static Func<Booster, bool> CompareName(string name)
+        private static Func<BoosterCard, bool> CompareName(string name)
         {
             name = name.Replace(" ", "");
             return x => x.Name.Replace(" ", "").Equals(name, StringComparison.OrdinalIgnoreCase);

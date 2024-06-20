@@ -2,7 +2,7 @@
 {
     public class ChangeMoneyExecutor : GameActionExecutor<ChangeMoneyAction>
     {
-        protected override void Execute(GameState state, IGameView view, Booster booster, ChangeMoneyAction action)
+        protected override void Execute(GameState state, IGameView view, BoosterCard booster, ChangeMoneyAction action)
         {
             if (action.IsImmediate)
             {

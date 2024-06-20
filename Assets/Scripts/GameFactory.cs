@@ -30,7 +30,7 @@ namespace RogueIslands
                     CardPackSpawn = seedRandom.CreateRandomArray(GameState.TotalMonths),
                     BoosterAntiDuplicate = seedRandom.CreateRandomArray(GameState.TotalMonths),
                     CardCount = 2,
-                    ItemsForSale = new Booster[2],
+                    ItemsForSale = new BoosterCard[2],
                 },
             };
         }

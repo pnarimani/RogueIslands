@@ -43,7 +43,7 @@ namespace RogueIslands.View
             _buildingCardList.Add(card.GetComponent<CardListItem>());
         }
 
-        public void ShowBoosterCard(Booster booster)
+        public void ShowBoosterCard(BoosterCard booster)
         {
             var card = Instantiate(_boosterPrefab, _boosterList.transform);
             card.Show(booster);
@@ -105,14 +105,14 @@ namespace RogueIslands.View
             _products.UpdateNumber(_products.CurrentNumber + count);
         }
 
-        public void RemoveBoosterCard(Booster booster)
+        public void RemoveBoosterCard(BoosterCard booster)
         {
             Destroy(FindObjectsByType<BoosterView>(FindObjectsSortMode.None)
                 .First(b => b.Data == booster)
                 .gameObject);
         }
 
-        public IBoosterView GetBoosterCard(Booster booster) 
+        public IBoosterView GetBoosterCard(BoosterCard booster) 
             => FindObjectsByType<BoosterView>(FindObjectsSortMode.None).FirstOrDefault(b => b.Data == booster);
 
         public void MultBoosted(double multBoost)

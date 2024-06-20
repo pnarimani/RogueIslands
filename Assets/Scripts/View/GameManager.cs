@@ -77,14 +77,14 @@ namespace RogueIslands.View
                 Destroy(building.gameObject);
         }
 
-        public void AddBooster(Booster instance)
+        public void AddBooster(BoosterCard instance)
         {
             GameUI.Instance.ShowBoosterCard(instance);
             GameUI.Instance.RefreshDate();
             GameUI.Instance.RefreshMoneyAndEnergy();
         }
 
-        public void RemoveBooster(Booster booster)
+        public void RemoveBooster(BoosterCard booster)
         {
             GameUI.Instance.RemoveBoosterCard(booster);
             GameUI.Instance.RefreshDate();
@@ -121,7 +121,7 @@ namespace RogueIslands.View
         public IBuildingView GetBuilding(Building building)
             => FindObjectsOfType<BuildingView>().First(b => b.Data == building);
 
-        public IBoosterView GetBooster(Booster booster) 
+        public IBoosterView GetBooster(BoosterCard booster) 
             => GameUI.Instance.GetBoosterCard(booster);
 
         public async void HighlightIsland(Island island)

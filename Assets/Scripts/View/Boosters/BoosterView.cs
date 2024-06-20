@@ -14,14 +14,14 @@ namespace RogueIslands.View.Boosters
 
         private List<BoosterActionVisualizer> _visualizers;
 
-        public Booster Data { get; private set; }
+        public BoosterCard Data { get; private set; }
 
         private void Awake()
         {
             _visualizers = new List<BoosterActionVisualizer>(GetComponents<BoosterActionVisualizer>());
         }
 
-        public void Show(Booster booster)
+        public void Show(BoosterCard booster)
         {
             Assert.IsNotNull(booster);
 

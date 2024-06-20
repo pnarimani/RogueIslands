@@ -2,6 +2,6 @@
 {
     public interface IDescriptionProvider
     {
-        string Get(Booster booster);
+        string Get(BoosterCard booster);
     }
 }

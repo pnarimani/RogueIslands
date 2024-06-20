@@ -3,7 +3,7 @@ using RogueIslands.Boosters.Descriptions;
 
 namespace RogueIslands.Boosters
 {
-    public class Booster : IPurchasableItem
+    public class BoosterCard : IPurchasableItem
     {
         public BoosterInstanceId Id { get; set; }
         public string Name { get; set; }

@@ -4,7 +4,7 @@ namespace RogueIslands.Boosters
 {
     public class BoosterScalingExecutor : GameActionExecutor<BoosterScalingAction>
     {
-        protected override void Execute(GameState state, IGameView view, Booster booster, BoosterScalingAction action) 
+        protected override void Execute(GameState state, IGameView view, BoosterCard booster, BoosterScalingAction action) 
             => ScaleScoringAction(action, booster.GetEventAction<ScoringAction>());
 
         private static void ScaleScoringAction(BoosterScalingAction action, ScoringAction scoringAction)

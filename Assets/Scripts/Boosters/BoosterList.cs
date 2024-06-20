@@ -5,9 +5,9 @@ namespace RogueIslands.Boosters
 {
     public static class BoosterList
     {
-        public static List<Booster> Get(System.Random seedRandom)
+        public static List<BoosterCard> Get(System.Random seedRandom)
         {
-            return new List<Booster>
+            return new List<BoosterCard>
             {
                 new()
                 {
@@ -665,7 +665,7 @@ namespace RogueIslands.Boosters
             };
         }
 
-        private static Booster CreateColorBooster(string name, string desc, ColorTag color)
+        private static BoosterCard CreateColorBooster(string name, string desc, ColorTag color)
             => new()
             {
                 Name = name,

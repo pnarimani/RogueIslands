@@ -2,7 +2,7 @@ namespace RogueIslands.Boosters
 {
     public class DestroyBoosterExecutor : GameActionExecutor<DestroyBoosterAction>
     {
-        protected override void Execute(GameState state, IGameView view, Booster booster, DestroyBoosterAction action)
+        protected override void Execute(GameState state, IGameView view, BoosterCard booster, DestroyBoosterAction action)
         {
             if (action.Self)
             {

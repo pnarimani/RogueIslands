@@ -2,7 +2,7 @@ namespace RogueIslands.Boosters
 {
     public class ScoringActionExecutor : GameActionExecutor<ScoringAction>
     {
-        protected override void Execute(GameState state, IGameView view, Booster booster, ScoringAction action)
+        protected override void Execute(GameState state, IGameView view, BoosterCard booster, ScoringAction action)
         {
             state.ScoringState.Products += action.Products;
             state.ScoringState.Multiplier += action.PlusMult;

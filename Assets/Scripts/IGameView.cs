@@ -6,7 +6,7 @@ namespace RogueIslands
     public interface IGameView
     {
         IBuildingView GetBuilding(Building building);
-        IBoosterView GetBooster(Booster booster);
+        IBoosterView GetBooster(BoosterCard booster);
         
         void HighlightIsland(Island island);
         void LowlightIsland(Island island);
@@ -14,8 +14,8 @@ namespace RogueIslands
         void ShowGameWinScreen();
         IWeekWinScreen ShowWeekWin();
         void DestroyBuildings();
-        void AddBooster(Booster instance);
-        void RemoveBooster(Booster booster);
+        void AddBooster(BoosterCard instance);
+        void RemoveBooster(BoosterCard booster);
         void ShowBuildingsInHand();
         IGameUI GetUI();
         void SpawnBuilding(Building building);

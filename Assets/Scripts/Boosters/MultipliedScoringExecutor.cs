@@ -2,7 +2,7 @@ namespace RogueIslands.Boosters
 {
     public class MultipliedScoringExecutor : GameActionExecutor<MultipliedScoringAction>
     {
-        protected override void Execute(GameState state, IGameView view, Booster booster,
+        protected override void Execute(GameState state, IGameView view, BoosterCard booster,
             MultipliedScoringAction action)
         {
             if (action.MultiplyByDay)

@@ -2,7 +2,7 @@ namespace RogueIslands.Boosters
 {
     public class HandModifierExecutor : GameActionExecutor<HandModifier>
     {
-        protected override void Execute(GameState state, IGameView view, Booster booster, HandModifier action)
+        protected override void Execute(GameState state, IGameView view, BoosterCard booster, HandModifier action)
         {
             if (action.ShouldSetToDefault)
             {

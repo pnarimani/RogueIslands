@@ -12,7 +12,7 @@ namespace RogueIslands
         private static IReadOnlyList<GameActionExecutor> _defaultExecutors;
         private static readonly List<ConditionEvaluator> _evaluatorOverrides = new();
 
-        public static void Execute(this GameState state, IGameView view, Booster booster, GameAction action)
+        public static void Execute(this GameState state, IGameView view, BoosterCard booster, GameAction action)
         {
             Assert.IsNotNull(action);
             Assert.IsNotNull(booster);
@@ -56,7 +56,7 @@ namespace RogueIslands
             }
         }
 
-        public static void AddBooster(this GameState state, IGameView view, Booster booster)
+        public static void AddBooster(this GameState state, IGameView view, BoosterCard booster)
         {
             var instance = booster.Clone();
             instance.Id = new BoosterInstanceId(Guid.NewGuid().GetHashCode());

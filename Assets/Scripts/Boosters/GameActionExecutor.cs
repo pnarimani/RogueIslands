@@ -7,7 +7,7 @@ namespace RogueIslands.Boosters
     public abstract class GameActionExecutor
     {
         public abstract Type ActionType { get; }
-        public abstract void Execute(GameState state, IGameView view, Booster booster, GameAction action);
+        public abstract void Execute(GameState state, IGameView view, BoosterCard booster, GameAction action);
     }
     
     public abstract class GameActionExecutor<T> : GameActionExecutor 
@@ -15,7 +15,7 @@ namespace RogueIslands.Boosters
     {
         public override Type ActionType { get; } = typeof(T);
 
-        public sealed override void Execute(GameState state, IGameView view, Booster booster, GameAction action)
+        public sealed override void Execute(GameState state, IGameView view, BoosterCard booster, GameAction action)
         {
             try
             {
@@ -35,6 +35,6 @@ namespace RogueIslands.Boosters
             boosterView.OnAfterActionExecuted(state, action);
         }
 
-        protected abstract void Execute(GameState state, IGameView view, Booster booster, T action);
+        protected abstract void Execute(GameState state, IGameView view, BoosterCard booster, T action);
     }
 }
