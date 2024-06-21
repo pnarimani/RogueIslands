@@ -42,14 +42,16 @@ namespace RogueIslands
             if (state.Money < item.BuyPrice)
                 throw new InvalidOperationException();
 
-            state.Money -= item.BuyPrice;
-            state.Shop.ItemsForSale[index] = null;
-            
-            switch (item)
+            var success = item switch
             {
-                case BoosterCard booster:
-                    state.AddBooster(view, booster);
-                    break;
+                BoosterCard booster => state.TryAddBooster(view, booster),
+                _ => false,
+            };
+
+            if (success)
+            {
+                state.Money -= item.BuyPrice;
+                state.Shop.ItemsForSale[index] = null;
             }
         }
     }

@@ -19,7 +19,7 @@ namespace RogueIslands.Boosters
         {
             try
             {
-                if (action.Conditions != null && action.Conditions.Any(condition => !state.IsConditionMet(condition)))
+                if (action.Conditions != null && action.Conditions.Any(condition => !state.IsConditionMet(booster, condition)))
                     return;
             }
             catch (Exception e)
@@ -28,7 +28,7 @@ namespace RogueIslands.Boosters
                 return;
             }
 
-            var boosterView = view.GetBooster(booster as BoosterCard);
+            var boosterView = view.GetBooster(booster);
             
             boosterView.OnBeforeActionExecuted(state, action);
             Execute(state, view, booster, (T)action);

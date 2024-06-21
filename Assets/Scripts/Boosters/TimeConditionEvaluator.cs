@@ -2,7 +2,7 @@ namespace RogueIslands.Boosters
 {
     public class TimeConditionEvaluator : ConditionEvaluator<TimeCondition>
     {
-        protected override bool Evaluate(GameState state, TimeCondition condition)
+        protected override bool Evaluate(GameState state, IBooster booster, TimeCondition condition)
         {
             return condition.TimeMode switch
             {

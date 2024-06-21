@@ -4,7 +4,7 @@ namespace RogueIslands.Boosters
 {
     public class SameBuildingsConditionEvaluator : ConditionEvaluator<SameBuildingsCondition>
     {
-        protected override bool Evaluate(GameState state, SameBuildingsCondition condition)
+        protected override bool Evaluate(GameState state, IBooster booster, SameBuildingsCondition condition)
         {
             var buildings = state.Islands.SelectMany(x => x).ToList();
             return buildings.Count <= 1 || buildings.All(other =>

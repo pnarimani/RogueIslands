@@ -17,16 +17,16 @@ namespace RogueIslands.View
         [SerializeField] private ShopScreen _shopPrefab;
         [SerializeField] private WeekWinScreen _weekWinScreen;
         [SerializeField] private LoseScreen _loseScreen;
-        
+
         public GameState State { get; private set; }
         public bool IsPlaying { get; private set; }
 
         private void Start()
         {
             GameUI.Instance.PlayClicked += OnPlayClicked;
-            
+
             ShowBuildingsInHand();
-            
+
             GameUI.Instance.RefreshAll();
         }
 
@@ -36,9 +36,9 @@ namespace RogueIslands.View
                 return;
 
             IsPlaying = true;
-            
+
             AnimationScheduler.ResetTime();
-            
+
             State.Play(this);
 
             var timer = 0f;
@@ -53,7 +53,7 @@ namespace RogueIslands.View
             {
                 await UniTask.DelayFrame(1);
             }
-            
+
             GameUI.Instance.RefreshScores();
 
             State.ProcessScore(this);
@@ -63,7 +63,6 @@ namespace RogueIslands.View
 
         public void ShowGameWinScreen()
         {
-            
         }
 
         public IWeekWinScreen ShowWeekWin()
@@ -77,23 +76,24 @@ namespace RogueIslands.View
                 Destroy(building.gameObject);
         }
 
-        public void AddBooster(BoosterCard instance)
+        public void AddBooster(IBooster instance)
         {
-            GameUI.Instance.ShowBoosterCard(instance);
-            GameUI.Instance.RefreshDate();
-            GameUI.Instance.RefreshMoneyAndEnergy();
-        }
-
-        public void RemoveBooster(BoosterCard booster)
-        {
-            GameUI.Instance.RemoveBoosterCard(booster);
-            GameUI.Instance.RefreshDate();
-            GameUI.Instance.RefreshMoneyAndEnergy();
+            if (instance is BoosterCard card)
+            {
+                GameUI.Instance.ShowBoosterCard(card);
+                GameUI.Instance.RefreshDate();
+                GameUI.Instance.RefreshMoneyAndEnergy();
+            }
+            else if(instance is WorldBooster world)
+            {
+                var booster = Instantiate(Resources.Load<BoosterView>(world.PrefabAddress), world.Position, world.Rotation);
+                booster.Initialize(world);
+            }
         }
 
         public void ShowBuildingsInHand()
         {
-            foreach (var v in FindObjectsOfType<BuildingCardView>()) 
+            foreach (var v in FindObjectsOfType<BuildingCardView>())
                 Destroy(v.gameObject);
 
             foreach (var b in State.BuildingsInHand)
@@ -101,7 +101,7 @@ namespace RogueIslands.View
         }
 
         public IGameUI GetUI() => GameUI.Instance;
-        
+
         public void SpawnBuilding(Building data)
         {
             var building = Instantiate(Resources.Load<BuildingView>(data.PrefabAddress), data.Position, data.Rotation);
@@ -121,8 +121,8 @@ namespace RogueIslands.View
         public IBuildingView GetBuilding(Building building)
             => FindObjectsOfType<BuildingView>().First(b => b.Data == building);
 
-        public IBoosterView GetBooster(BoosterCard booster) 
-            => GameUI.Instance.GetBoosterCard(booster);
+        public IBoosterView GetBooster(IBooster booster)
+            => FindObjectsByType<BoosterView>(FindObjectsSortMode.None).FirstOrDefault(b => b.Data == booster);
 
         public async void HighlightIsland(Island island)
         {
@@ -169,17 +169,18 @@ namespace RogueIslands.View
             Instantiate(_shopPrefab);
         }
 
-        public IReadOnlyList<IWorldBooster> GetWorldBoosters() 
-            => FindObjectsOfType<WorldBooster>();
+        public IReadOnlyList<Vector3> GetWorldBoosterPositions()
+            => FindObjectsOfType<WorldBoosterSpawnPoint>().Select(booster => booster.transform.position).ToList();
 
         public void SetState(GameState state)
         {
             State = state;
+            State.SpawnWorldBoosters(this, GetWorldBoosterPositions());
         }
 
         public void Dispose()
         {
-            if (this != null && gameObject != null) 
+            if (this != null && gameObject != null)
                 Destroy(gameObject);
         }
     }

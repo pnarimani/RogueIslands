@@ -37,9 +37,10 @@ namespace RogueIslands.View.Boosters
             if (IsProduct(action))
             {
                 GameUI.Instance.ProductBoosted(productBoost);
-                
-                _productAmountText.text = $"+{productBoost:F1}";
-                
+
+                if (_productAmountText != null) 
+                    _productAmountText.text = $"+{productBoost:F1}";
+
                 if (_productScoreFeedback != null) 
                     _productScoreFeedback.PlayFeedbacks();
             }
@@ -51,11 +52,13 @@ namespace RogueIslands.View.Boosters
                 if (action.XMult > 1)
                 {
                     var xMultAmount = multBoost / action.XMult;
-                    _multAmountText.text = $"x{xMultAmount:F1}";
+                    if (_multAmountText != null) 
+                        _multAmountText.text = $"x{xMultAmount:F1}";
                 }
                 else
                 {
-                    _multAmountText.text = $"+{multBoost:F1}";
+                    if (_multAmountText != null) 
+                        _multAmountText.text = $"+{multBoost:F1}";
                 }
                 
                 if (_multScoreFeedback != null) 

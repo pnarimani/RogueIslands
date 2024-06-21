@@ -9,39 +9,30 @@ namespace AutofacUnity
 {
     public class AutofacSettings : ScriptableObject
     {
+        public const string FileResourcesPath = "Autofac/Settings";
+        private const string FilePath = "Assets/Autofac/Resources/" + FileResourcesPath + ".asset";
+
         public AutofacScope RootScope;
+        
+        public static AutofacSettings Instance { get; internal set; }
 
-        public static AutofacSettings Instance { get; private set; }
-
-        private void OnEnable()
-        {
-            Instance = this;
-
-            if (RootScope != null)
-            {
-                RootScope.IsRoot = true;
-                RootScope.Build();
-            }
-        }
+        public static void LoadInstanceFromResources() 
+            => Instance = Resources.Load<AutofacSettings>(FileResourcesPath);
 
 #if UNITY_EDITOR
         [InitializeOnLoadMethod]
         private static void Initialize()
         {
-            var assets = PlayerSettings.GetPreloadedAssets();
-            if (Array.Exists(assets, o => o is AutofacSettings))
+            if (AssetDatabase.LoadAssetAtPath<AutofacSettings>(FilePath) != null)
                 return;
 
-            Array.Resize(ref assets, assets.Length + 1);
             var autofacSettings = CreateInstance<AutofacSettings>();
-            assets[^1] = Instance = autofacSettings;
 
-            if (!AssetDatabase.IsValidFolder("Assets/Autofac"))
-                AssetDatabase.CreateFolder("Assets", "Autofac");
-            AssetDatabase.CreateAsset(autofacSettings, "Assets/Autofac/Settings.asset");
+            if (!AssetDatabase.IsValidFolder("Assets/Autofac/Resources/Autofac/"))
+                AssetDatabase.CreateFolder("Assets", "Autofac/Resources/Autofac/");
+
+            AssetDatabase.CreateAsset(autofacSettings, FilePath);
             AssetDatabase.SaveAssets();
-
-            PlayerSettings.SetPreloadedAssets(assets);
         }
 #endif
     }

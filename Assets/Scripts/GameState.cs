@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RogueIslands.Boosters;
+using Unity.Mathematics;
 
 namespace RogueIslands
 {
@@ -42,7 +43,10 @@ namespace RogueIslands
         public ShopState Shop { get; set; }
         
         public GameResult Result { get; set; }
+        
+        public Random WorldBoosterRandom { get; set; }
 
-        public List<IWorldBooster> WorldBoosters { get; set; } = new();
+        public List<WorldBooster> WorldBoosters { get; set; } = new();
+        public List<WorldBooster> AvailableWorldBoosters { get; set; }
     }
 }

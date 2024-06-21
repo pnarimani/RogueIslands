@@ -18,7 +18,7 @@ namespace RogueIslands.Debug
                 return;
             }
 
-            GameManager.Instance.State.AddBooster(GameManager.Instance, booster);
+            GameManager.Instance.State.TryAddBooster(GameManager.Instance, booster);
             GameManager.Instance.GetUI().RefreshAll();
         }
 

@@ -2,7 +2,7 @@
 {
     public class SelectedBuildingColorEvaluator : ConditionEvaluator<SelectedBuildingColorCondition>
     {
-        protected override bool Evaluate(GameState state, SelectedBuildingColorCondition condition) 
+        protected override bool Evaluate(GameState state, IBooster booster, SelectedBuildingColorCondition condition) 
             => state.ScoringState.SelectedBuilding is { } building && building.Color == condition.ColorTag;
     }
 }

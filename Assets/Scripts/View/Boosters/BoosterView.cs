@@ -10,18 +10,17 @@ namespace RogueIslands.View.Boosters
     public class BoosterView : MonoBehaviour, IBoosterView
     {
         [SerializeField] private TextMeshProUGUI _name, _desc;
-        [SerializeField] private MMF_Player _triggerFeedback;
 
         private List<BoosterActionVisualizer> _visualizers;
 
-        public BoosterCard Data { get; private set; }
+        public IBooster Data { get; private set; }
 
         private void Awake()
         {
             _visualizers = new List<BoosterActionVisualizer>(GetComponents<BoosterActionVisualizer>());
         }
 
-        public void Show(BoosterCard booster)
+        public void Initialize(IBooster booster)
         {
             Assert.IsNotNull(booster);
 
@@ -52,6 +51,13 @@ namespace RogueIslands.View.Boosters
                     break;
                 }
             }
+        }
+
+        public void Remove()
+        {
+            Destroy(gameObject);
+            GameUI.Instance.RefreshDate();
+            GameUI.Instance.RefreshMoneyAndEnergy();
         }
 
         public void UpdateDescription()

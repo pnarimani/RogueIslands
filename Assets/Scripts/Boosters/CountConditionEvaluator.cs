@@ -6,7 +6,7 @@ namespace RogueIslands.Boosters
 {
     public class CountConditionEvaluator : ConditionEvaluator<CountCondition>
     {
-        protected override bool Evaluate(GameState state, CountCondition condition)
+        protected override bool Evaluate(GameState state, IBooster booster, CountCondition condition)
         {
             if (condition.TargetType == Target.BuildingsInAnyIsland)
             {

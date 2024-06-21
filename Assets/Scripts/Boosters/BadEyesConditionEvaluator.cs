@@ -2,7 +2,7 @@
 {
     public class BadEyesConditionEvaluator : ConditionEvaluator<SelectedBuildingCategory>, IEvaluationConditionOverride
     {
-        protected override bool Evaluate(GameState state, SelectedBuildingCategory condition)
+        protected override bool Evaluate(GameState state, IBooster booster, SelectedBuildingCategory condition)
         {
             if (state.ScoringState is not { SelectedBuilding: not null })
                 return false;

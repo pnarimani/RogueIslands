@@ -20,9 +20,6 @@ namespace RogueIslands
 
         public static void Play(this GameState state, IGameView view)
         {
-            state.WorldBoosters.Clear();
-            state.WorldBoosters.AddRange(view.GetWorldBoosters());
-
             foreach (var building in state.Islands.SelectMany(island => island.Buildings))
                 building.RemainingTriggers = 1;
 

@@ -23,6 +23,8 @@ namespace RogueIslands
                 HandSize = handSize,
                 DefaultHandSize = handSize,
                 BuildingsInHand = buildings.Take(handSize).ToList(),
+                AvailableWorldBoosters = WorldBoosterList.Get(),
+                WorldBoosterRandom = seedRandom.NextRandom(),
                 TotalDays = 4,
                 Shop = new ShopState
                 {

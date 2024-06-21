@@ -12,7 +12,7 @@
             _prefix = prefix;
         }
 
-        public string Get(BoosterCard booster)
+        public string Get(IBooster booster)
         {
             var scoringAction = booster.GetEventAction<ScoringAction>();
 

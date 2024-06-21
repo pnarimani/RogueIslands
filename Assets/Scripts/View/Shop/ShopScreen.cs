@@ -35,7 +35,7 @@ namespace RogueIslands.View.Shop
                 switch (Shop.ItemsForSale[i])
                 {
                     case BoosterCard booster:
-                        Instantiate(_boosterPrefab, item.transform).Show(booster);
+                        Instantiate(_boosterPrefab, item.transform).Initialize(booster);
                         break;
                 }
                 

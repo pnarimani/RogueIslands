@@ -12,7 +12,7 @@ namespace RogueIslands.Boosters
             _random = random;
         }
         
-        protected override bool Evaluate(GameState state,ProbabilityCondition condition)
+        protected override bool Evaluate(GameState state, IBooster booster, ProbabilityCondition condition)
         {
             return _random.NextInt(0, condition.TotalOutcomes) < condition.FavorableOutcome + FavorableOutcomeModification;
         }

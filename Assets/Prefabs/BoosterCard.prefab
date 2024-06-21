@@ -195,7 +195,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: {fileID: 5730987614014400325}
   _desc: {fileID: 4020698546247267507}
-  _triggerFeedback: {fileID: 7388518696050552352}
 --- !u!114 &512890588080133066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1117,10 +1116,10 @@ MonoBehaviour:
         m_Calls: []
   DebugActive: 0
   FeedbacksList:
-  - rid: 1915568528584605700
   - rid: 1915568528584605699
   - rid: 1915568528584605696
   - rid: 1915568528584605705
+  - rid: 1915568528584605700
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
@@ -2240,6 +2239,7 @@ GameObject:
   - component: {fileID: 8878164081707011904}
   - component: {fileID: 7282373604548478642}
   - component: {fileID: 8912803990436862328}
+  - component: {fileID: 7218322085464868357}
   m_Layer: 5
   m_Name: Mult
   m_TagString: Untagged
@@ -2305,6 +2305,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &7218322085464868357
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4793947426611679389}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &5013089215720014157
 GameObject:
   m_ObjectHideFlags: 0

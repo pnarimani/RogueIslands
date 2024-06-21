@@ -6,7 +6,7 @@ namespace RogueIslands.Boosters
     public class ColorCheckEvaluator : ConditionEvaluator<ColorCheckCondition>
     {
         private readonly HashSet<string> _existingColors = new();
-        protected override bool Evaluate(GameState state, ColorCheckCondition condition)
+        protected override bool Evaluate(GameState state, IBooster booster, ColorCheckCondition condition)
         {
             _existingColors.Clear();
             foreach (var (tag, _) in state.Islands.SelectMany(x => x).Select(b => b.Color))
