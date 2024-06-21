@@ -1501,8 +1501,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.46174866, y: 0, z: 0, w: 0.8870108}
-  m_LocalPosition: {x: 0, y: 10, z: -6}
+  m_LocalRotation: {x: 0.4617579, y: 0.000000095972304, z: -0.00000018435637, w: 0.887006}
+  m_LocalPosition: {x: 0, y: 16.38304, z: -11.471529}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2700,20 +2700,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1749921883863475635, guid: dcfa6cbc7a7950442b530cb7212de0f2, type: 3}
-      propertyPath: TrackerSettings.BindingMode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1749921883863475635, guid: dcfa6cbc7a7950442b530cb7212de0f2, type: 3}
-      propertyPath: TrackerSettings.AngularDampingMode
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3237072519973992033, guid: dcfa6cbc7a7950442b530cb7212de0f2, type: 3}
       propertyPath: m_Name
       value: Cameras
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 200001685375316054, guid: dcfa6cbc7a7950442b530cb7212de0f2, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

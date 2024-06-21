@@ -12,6 +12,7 @@ namespace RogueIslands.View
 
         private const float ScrollMultiplier = 1f;
         private float _radiusTarget;
+        private float _horizontalAxisValue;
 
         private void Start()
         {
@@ -20,11 +21,13 @@ namespace RogueIslands.View
             InputHandling.Instance.AltDrag += OnAltDrag;
             
             _radiusTarget = _cinemachineCamera.Radius;
+            _horizontalAxisValue = _cinemachineCamera.HorizontalAxis.Value;
         }
 
         private void OnAltDrag(Vector2 obj)
         {
-            _cinemachineCamera.HorizontalAxis.Value += obj.x * Time.deltaTime * 30;
+            _horizontalAxisValue += obj.x * 0.1f;
+            _horizontalAxisValue = (_horizontalAxisValue + 360) % 360;
         }
 
         private void OnScroll(float obj)
@@ -35,6 +38,7 @@ namespace RogueIslands.View
         private void Update()
         {
             _cinemachineCamera.Radius = Mathf.Lerp(_cinemachineCamera.Radius, _radiusTarget, 20 * Time.deltaTime);
+            _cinemachineCamera.HorizontalAxis.Value = Mathf.LerpAngle(_cinemachineCamera.HorizontalAxis.Value, _horizontalAxisValue, 10 * Time.deltaTime);
         }
 
         private void OnDrag(Vector2 obj)
