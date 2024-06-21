@@ -37,11 +37,29 @@ namespace RogueIslands.Boosters
                         {
                             new GameEventCondition("AfterBuildingScored"),
                             new SelectedBuildingRangeCondition(),
-                            new SelectedBuildingCategory() { Category = Category.Cat3 },
+                            new SelectedBuildingCategory() { Categories = new[] { Category.Cat3 } },
                         },
                         Products = 10,
                     },
-                }
+                },
+                new()
+                {
+                    Name = "Mine",
+                    Description =
+                        new LiteralDescription($"+3 mult for all {Category.Cat4} and {Category.Cat5} buildings"),
+                    Range = 3,
+                    PrefabAddress = "WorldBoosters/Mine",
+                    EventAction = new ScoringAction
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            new GameEventCondition("AfterBuildingScored"),
+                            new SelectedBuildingRangeCondition(),
+                            new SelectedBuildingCategory() { Categories = new[] { Category.Cat4, Category.Cat5, } },
+                        },
+                        PlusMult = 3,
+                    },
+                },
             };
         }
     }

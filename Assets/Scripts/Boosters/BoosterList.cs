@@ -33,7 +33,7 @@ namespace RogueIslands.Boosters
                             new GameEventCondition("AfterBuildingScored"),
                             new SelectedBuildingCategory
                             {
-                                Category = Category.Cat1,
+                                Categories = new[] { Category.Cat1 },
                             },
                             new ProbabilityCondition
                             {
@@ -69,10 +69,10 @@ namespace RogueIslands.Boosters
                         Conditions = new IGameCondition[]
                         {
                             new GameEventCondition("AfterBuildingScored"),
-                            BuildingTriggerCountCheck.FirstTrigger, 
+                            BuildingTriggerCountCheck.FirstTrigger,
                             new SelectedBuildingCategory
                             {
-                                Category = Category.Cat2,
+                                Categories = new[] { Category.Cat2 },
                             },
                         },
                     },
@@ -199,7 +199,7 @@ namespace RogueIslands.Boosters
                         Conditions = new IGameCondition[]
                         {
                             new GameEventCondition("AfterBuildingScored"),
-                            BuildingTriggerCountCheck.FirstTrigger, 
+                            BuildingTriggerCountCheck.FirstTrigger,
                             TimeCondition.LastDay(),
                         },
                     },
@@ -281,7 +281,7 @@ namespace RogueIslands.Boosters
                         Conditions = new IGameCondition[]
                         {
                             new GameEventCondition("AfterBuildingScored"),
-                            BuildingTriggerCountCheck.FirstTrigger, 
+                            BuildingTriggerCountCheck.FirstTrigger,
                             new CountCondition
                             {
                                 TargetType = CountCondition.Target.Island,
@@ -569,7 +569,7 @@ namespace RogueIslands.Boosters
                             new GameEventCondition("AfterBuildingScored"),
                             new SelectedBuildingCategory
                             {
-                                Category = Category.Cat1,
+                                Categories = new[] { Category.Cat1 },
                             },
                         },
                     },
@@ -587,7 +587,7 @@ namespace RogueIslands.Boosters
                             new GameEventCondition("AfterBuildingScored"),
                             new SelectedBuildingCategory
                             {
-                                Category = Category.Cat2,
+                                Categories = new[] { Category.Cat2 },
                             },
                         },
                     },
@@ -606,7 +606,7 @@ namespace RogueIslands.Boosters
                             new GameEventCondition("BuildingRemainedInHand"),
                             new SelectedBuildingCategory()
                             {
-                                Category = Category.Cat5,
+                                Categories = new[] { Category.Cat5 },
                             },
                         },
                     },
