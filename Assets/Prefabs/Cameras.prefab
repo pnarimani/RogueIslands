@@ -47,9 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 1555562629238231023}
-  _cinemachineCamera: {fileID: 1749921883863475635}
-  _minTargetHeight: -2.5
-  _maxTargetHeight: 30
+  _cinemachineCamera: {fileID: 3262092529031287222}
 --- !u!1 &6090816299313467051
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,13 +72,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6090816299313467051}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.46174863, y: 0, z: 0, w: 0.8870109}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 424963859808374466}
-  m_LocalEulerAnglesHint: {x: 55, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6202076463125669777
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,8 +89,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4640155754697960327}
   - component: {fileID: 4758448566126249533}
-  - component: {fileID: 1749921883863475635}
-  - component: {fileID: 1865395199772919778}
+  - component: {fileID: 3262092529031287222}
+  - component: {fileID: 5448225151261727855}
   m_Layer: 0
   m_Name: GameplayCamera
   m_TagString: Untagged
@@ -108,13 +106,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6202076463125669777}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.46174863, y: -0, z: 0, w: 0.8870109}
-  m_LocalPosition: {x: 0.3, y: 10, z: -6}
+  m_LocalRotation: {x: 0.46174863, y: 0, z: 0, w: 0.8870109}
+  m_LocalPosition: {x: 0, y: 16.38304, z: -11.471529}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 424963859808374466}
-  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 55, y: 0, z: 0}
 --- !u!114 &4758448566126249533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,7 +156,7 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
---- !u!114 &1749921883863475635
+--- !u!114 &3262092529031287222
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,17 +165,61 @@ MonoBehaviour:
   m_GameObject: {fileID: 6202076463125669777}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b617507da6d07e749b7efdb34e1173e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FollowOffset: {x: 0.3, y: 10, z: -6}
+  TargetOffset: {x: 0, y: 0, z: 0}
   TrackerSettings:
-    BindingMode: 1
+    BindingMode: 4
     PositionDamping: {x: 1, y: 1, z: 1}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
---- !u!114 &1865395199772919778
+  OrbitStyle: 0
+  Radius: 20
+  Orbits:
+    Top:
+      Radius: 2
+      Height: 5
+    Center:
+      Radius: 4
+      Height: 2.25
+    Bottom:
+      Radius: 2.5
+      Height: 0.1
+    SplineCurvature: 0.5
+  RecenteringTarget: 2
+  HorizontalAxis:
+    Value: 0
+    Center: 0
+    Range: {x: -180, y: 180}
+    Wrap: 1
+    Recentering:
+      Enabled: 0
+      Wait: 1
+      Time: 2
+    Restrictions: 0
+  VerticalAxis:
+    Value: 55
+    Center: 55
+    Range: {x: 55, y: 55}
+    Wrap: 0
+    Recentering:
+      Enabled: 0
+      Wait: 1
+      Time: 2
+    Restrictions: 0
+  RadialAxis:
+    Value: 1
+    Center: 1
+    Range: {x: 1, y: 1}
+    Wrap: 0
+    Recentering:
+      Enabled: 0
+      Wait: 1
+      Time: 2
+    Restrictions: 0
+--- !u!114 &5448225151261727855
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,7 +228,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6202076463125669777}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4afa82ae3200b82408d605c3dbdd1e38, type: 3}
+  m_Script: {fileID: 11500000, guid: 4004351da0394ee6a8d247ad46bf1fd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damping: 1
