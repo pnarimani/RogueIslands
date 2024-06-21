@@ -10,12 +10,14 @@ namespace RogueIslands.View
     {
         private bool _mouseMoved;
         private Vector3 _previousMousePosition;
-        private bool _validMouseEvent;
+        private ClickState _lastClickState;
         private readonly List<RaycastResult> _raycastResults = new();
         private int _uiLayer;
 
         public event Action Click;
         public event Action<Vector2> Drag;
+        public event Action<Vector2> AltDrag;
+        public event Action<float> Scroll;
 
         protected override void Awake()
         {
@@ -28,22 +30,33 @@ namespace RogueIslands.View
         {
             if (Input.GetMouseButtonDown(0))
             {
-                _validMouseEvent = IsValidMouseEvent();
+                _lastClickState = IsValidMouseEvent() ? ClickState.ValidLeft : ClickState.Invalid;
+                _previousMousePosition = Input.mousePosition;
+            }
+            
+            if (Input.GetMouseButtonDown(1))
+            {
+                _lastClickState = IsValidMouseEvent() ? ClickState.ValidRight : ClickState.Invalid;
                 _previousMousePosition = Input.mousePosition;
             }
 
-            if (!_validMouseEvent) return;
+            if (_lastClickState == ClickState.Invalid)
+                return;
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
             {
-                if ((Input.mousePosition - _previousMousePosition).sqrMagnitude > 10f)
+                var delta = Input.mousePosition - _previousMousePosition;
+                if (delta.sqrMagnitude > 10f)
                 {
                     _mouseMoved = true;
                 }
 
                 if (_mouseMoved)
                 {
-                    Drag?.Invoke(Input.mousePosition - _previousMousePosition);
+                    if (_lastClickState == ClickState.ValidLeft)
+                        Drag?.Invoke(delta);
+                    else if (_lastClickState == ClickState.ValidRight)
+                        AltDrag?.Invoke(delta);
                     _previousMousePosition = Input.mousePosition;
                 }
             }
@@ -56,6 +69,11 @@ namespace RogueIslands.View
                 }
 
                 _mouseMoved = false;
+            }
+            
+            if (Input.mouseScrollDelta.y != 0)
+            {
+                Scroll?.Invoke(Input.mouseScrollDelta.y);
             }
         }
 
@@ -74,6 +92,13 @@ namespace RogueIslands.View
             }
 
             return true;
+        }
+
+        private enum ClickState
+        {
+            Invalid,
+            ValidLeft,
+            ValidRight
         }
     }
 }
