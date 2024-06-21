@@ -20,5 +20,7 @@ namespace RogueIslands
         IGameUI GetUI();
         void SpawnBuilding(Building building);
         void ShowShopScreen();
+        Bounds GetBounds(Building buildingData);
+        Bounds GetBounds(WorldBooster worldBooster);
     }
 }

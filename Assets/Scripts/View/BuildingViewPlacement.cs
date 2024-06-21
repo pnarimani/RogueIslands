@@ -13,7 +13,7 @@ namespace RogueIslands.View
         public Vector3 GetPosition(Transform building)
         {
             var currentBuildingPosition = building.position;
-            var bounds = GetBounds(building);
+            var bounds = building.GetCollisionBounds();
 
             var ray = _camera!.ScreenPointToRay(Input.mousePosition);
 
@@ -26,32 +26,22 @@ namespace RogueIslands.View
             {
                 if (other.transform == building)
                     continue;
-                
-                var otherBounds = GetBounds(other.transform);
+
+                var otherBounds = other.transform.GetCollisionBounds();
                 bounds.center = desiredPosition;
                 if (!bounds.Intersects(otherBounds))
                     continue;
-                
+
                 bounds.center = new Vector3(currentBuildingPosition.x, currentBuildingPosition.y, desiredPosition.z);
-                if (bounds.Intersects(otherBounds)) 
+                if (bounds.Intersects(otherBounds))
                     desiredPosition.z = currentBuildingPosition.z;
-                
+
                 bounds.center = new Vector3(desiredPosition.x, currentBuildingPosition.y, currentBuildingPosition.z);
-                if (bounds.Intersects(otherBounds)) 
+                if (bounds.Intersects(otherBounds))
                     desiredPosition.x = currentBuildingPosition.x;
             }
 
             return desiredPosition;
-        }
-
-
-        private static Bounds GetBounds(Transform building)
-        {
-            var bounds = new Bounds(building.position, Vector3.zero);
-            foreach (var renderer in building.GetComponentsInChildren<Renderer>())
-                if (renderer.GetComponent<Collider>())
-                    bounds.Encapsulate(renderer.bounds);
-            return bounds;
         }
 
         public void OnDrawGizmos()

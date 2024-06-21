@@ -20,6 +20,17 @@ namespace RogueIslands
 
             view.SpawnBuilding(building);
 
+            RemoveOverlappingWorldBoosters(state, view, building);
+            
+            PlaceBuildingInIsland(state, building);
+
+            state.BuildingsInHand.Remove(buildingData);
+
+            state.ExecuteEvent(view, "BuildingPlaced");
+        }
+
+        private static void PlaceBuildingInIsland(GameState state, Building building)
+        {
             if (state.GetIslands(building) is { Count: > 0 } islands)
             {
                 if (islands.Count == 1)
@@ -39,10 +50,25 @@ namespace RogueIslands
                     Buildings = new List<Building> { building },
                 });
             }
+        }
 
-            state.BuildingsInHand.Remove(buildingData);
-
-            state.ExecuteEvent(view, "BuildingPlaced");
+        private static void RemoveOverlappingWorldBoosters(GameState state, IGameView view, Building building)
+        {
+            var bounds = view.GetBounds(building);
+            for (var i = state.WorldBoosters.Count - 1; i >= 0; i--)
+            {
+                var wb = state.WorldBoosters[i];
+                var wbBounds = view.GetBounds(wb);
+                if (bounds.Intersects(wbBounds))
+                {
+                    state.WorldBoosters.RemoveAt(i);
+                    
+                    state.ExecuteEvent(view, "BoosterRemoved");
+                    state.ExecuteEvent(view, "WorldBoosterRemoved");
+                    
+                    view.GetBooster(wb).Remove();
+                }
+            }
         }
 
         private static void MergeIslands(GameState state, List<Island> islands, Building building)

@@ -83,7 +83,7 @@ namespace RogueIslands
             return true;
         }
 
-        public static void RemoveBooster(this GameState state, IGameView view, BoosterInstanceId boosterId)
+        public static void SellBooster(this GameState state, IGameView view, BoosterInstanceId boosterId)
         {
             var booster = state.Boosters.First(x => x.Id == boosterId);
             

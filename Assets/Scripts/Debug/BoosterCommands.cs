@@ -29,7 +29,7 @@ namespace RogueIslands.Debug
             var booster = GameManager.Instance.State.Boosters.FirstOrDefault(CompareName(name));
             if (booster == null)
                 return;
-            GameManager.Instance.State.RemoveBooster(GameManager.Instance, booster.Id);
+            GameManager.Instance.State.SellBooster(GameManager.Instance, booster.Id);
             GameManager.Instance.GetUI().RefreshAll();
         }
 

@@ -84,9 +84,10 @@ namespace RogueIslands.View
                 GameUI.Instance.RefreshDate();
                 GameUI.Instance.RefreshMoneyAndEnergy();
             }
-            else if(instance is WorldBooster world)
+            else if (instance is WorldBooster world)
             {
-                var booster = Instantiate(Resources.Load<BoosterView>(world.PrefabAddress), world.Position, world.Rotation);
+                var booster = Instantiate(Resources.Load<BoosterView>(world.PrefabAddress), world.Position,
+                    world.Rotation);
                 booster.Initialize(world);
             }
         }
@@ -182,6 +183,16 @@ namespace RogueIslands.View
         {
             if (this != null && gameObject != null)
                 Destroy(gameObject);
+        }
+
+        public Bounds GetBounds(Building buildingData)
+        {
+            return FindObjectsOfType<BuildingView>().First(b => b.Data == buildingData).transform.GetCollisionBounds();
+        }
+
+        public Bounds GetBounds(WorldBooster worldBooster)
+        {
+            return FindObjectsOfType<BoosterView>().First(b => b.Data == worldBooster).transform.GetCollisionBounds();
         }
     }
 }
