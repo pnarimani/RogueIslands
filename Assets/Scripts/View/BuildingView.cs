@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using RogueIslands.View.Feedbacks;
 using UnityEngine;
@@ -5,18 +7,24 @@ using UnityEngine.EventSystems;
 
 namespace RogueIslands.View
 {
-    public class BuildingView : MonoBehaviour, IBuildingView, IPointerEnterHandler, IPointerExitHandler
+    public class BuildingView : MonoBehaviour, IBuildingView, IPointerEnterHandler, IPointerExitHandler, IHighlightable
     {
         [SerializeField] private GameObject _synergyRange;
         [SerializeField] private BuildingTriggerFeedback _triggerFeedback;
         [SerializeField] private LabelFeedback _retriggerLabelFeedback;
         [SerializeField] private ParticleSystem _productsParticleSystem;
-        
+
         public Building Data { get; private set; }
 
         private void Awake()
         {
             SetLayerRecursively(gameObject, LayerMask.NameToLayer("Building"));
+            EffectRangeHighlighter.Register(this);
+        }
+
+        private void OnDestroy()
+        {
+            EffectRangeHighlighter.Remove(this);
         }
 
         public void Initialize(Building building)
@@ -25,23 +33,13 @@ namespace RogueIslands.View
             _synergyRange.transform.localScale = Vector3.one * (building.Range * 2);
         }
 
-        public void ShowSynergyRange(bool show)
-            => _synergyRange.SetActive(show);
-
-        public void HighlightConnection(bool isEnabled)
-        {
-            var m = transform.FindRecursive("Cube").GetComponent<MeshRenderer>();
-            m.material.EnableKeyword("_EMISSION");
-            m.material.SetColor("_EmissionColor", isEnabled ? new Color(0f, 0.4f, 0f) : Color.black);
-        }
-
         public async void BuildingTriggered(bool isRetrigger)
         {
             var wait = AnimationScheduler.GetAnimationTime();
             AnimationScheduler.AllocateTime(0.2f);
             AnimationScheduler.EnsureExtraTime(1.3f);
             var count = Data.Output + Data.OutputUpgrade;
-            
+
             await UniTask.WaitForSeconds(wait);
 
             var ps = PlayParticleSystem(count);
@@ -50,13 +48,10 @@ namespace RogueIslands.View
             if (isRetrigger)
                 task = UniTask.WhenAll(task, _retriggerLabelFeedback.Play());
             await task;
-            
+
             await UniTask.WaitForSeconds(0.6f);
-            
-            await GameUI.Instance.ProductTarget.Attract(ps, () =>
-            {
-                GameUI.Instance.ProductBoosted(1);
-            });
+
+            await GameUI.Instance.ProductTarget.Attract(ps, () => { GameUI.Instance.ProductBoosted(1); });
         }
 
         private ParticleSystem PlayParticleSystem(double count)
@@ -87,12 +82,37 @@ namespace RogueIslands.View
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            ShowSynergyRange(true);
+            ShowRange(true);
+            EffectRangeHighlighter.Highlight(transform.position, Data.Range);
+            var island = GameManager.Instance.State.Islands.Find(x => x.Buildings.Contains(Data));
+            if (island != null)
+            {
+                var allBuildings = FindObjectsOfType<BuildingView>();
+                foreach (var building in island.Buildings)
+                {
+                    var neighbour = allBuildings.First(b => b.Data == building);
+                    neighbour.Highlight(true);
+                    neighbour.ShowRange(true);
+                }
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            ShowSynergyRange(false);
+            ShowRange(false);
+            EffectRangeHighlighter.LowlightAll();
+        }
+
+        public void Highlight(bool highlight)
+        {
+            var m = transform.FindRecursive("Cube").GetComponent<MeshRenderer>();
+            m.material.EnableKeyword("_EMISSION");
+            m.material.SetColor("_EmissionColor", highlight ? new Color(0f, 0.4f, 0f) : Color.black);
+        }
+
+        public void ShowRange(bool showRange)
+        {
+            _synergyRange.SetActive(showRange);
         }
     }
 }

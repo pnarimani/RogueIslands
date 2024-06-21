@@ -62,11 +62,10 @@ namespace RogueIslands.View
         private bool IsValidMouseEvent()
         {
             _raycastResults.Clear();
+
+            var data = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
             
-            EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current)
-            {
-                position = Input.mousePosition,
-            }, _raycastResults);
+            EventSystem.current.RaycastAll(data, _raycastResults);
 
             foreach (var r in _raycastResults)
             {

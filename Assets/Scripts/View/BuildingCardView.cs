@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DG.Tweening;
+﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,8 +15,6 @@ namespace RogueIslands.View
         private BuildingView _instance;
         private Transform _originalParent;
         private CardListItem _cardListItem;
-        private List<BuildingView> _instanceNeighbours;
-        private Camera _camera;
 
         private BuildingViewFactory _buildingViewFactory = new();
 
@@ -35,7 +30,6 @@ namespace RogueIslands.View
 
         private void Start()
         {
-            _camera = Camera.main;
             _ui = FindFirstObjectByType<GameUI>();
             _cardListItem = GetComponent<CardListItem>();
         }
@@ -61,33 +55,12 @@ namespace RogueIslands.View
                 if (_instance == null)
                 {
                     _instance = _buildingViewFactory.Create(Data);
-                    _instance.ShowSynergyRange(true);
                 }
 
                 _instance.transform.position = BuildingViewPlacement.Instance.GetPosition(_instance.transform);
-                // _instance.GetComponent<Rigidbody>().MovePosition(pos);
-
-                var buildingViews = FindObjectsByType<BuildingView>(FindObjectsSortMode.None);
-                foreach (var b in buildingViews)
-                    b.ShowSynergyRange(true);
-
-                if (_instanceNeighbours != null)
-                {
-                    foreach (var neighbour in _instanceNeighbours)
-                    {
-                        if (neighbour != null)
-                            neighbour.HighlightConnection(false);
-                    }
-                }
-
-                _instanceNeighbours = GameManager.Instance.State
-                    .GetIslands(_instance.transform.position, Data.Range)
-                    .SelectMany(x => x)
-                    .Select(buildingData => buildingViews.First(view => view.Data == buildingData))
-                    .ToList();
-
-                foreach (var n in _instanceNeighbours)
-                    n.HighlightConnection(true);
+                
+                EffectRangeHighlighter.Highlight(_instance.transform.position, Data.Range, _instance.gameObject);
+                EffectRangeHighlighter.ShowRanges(true);
             }
             else
             {
@@ -107,12 +80,8 @@ namespace RogueIslands.View
                 GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data, _instance.transform.position,
                         Quaternion.identity);
 
-                foreach (var b in FindObjectsByType<BuildingView>(FindObjectsInactive.Include,
-                             FindObjectsSortMode.None))
-                {
-                    b.ShowSynergyRange(false);
-                    b.HighlightConnection(false);
-                }
+                EffectRangeHighlighter.ShowRanges(false);
+                EffectRangeHighlighter.LowlightAll();
 
                 GameUI.Instance.RefreshMoneyAndEnergy();
 
@@ -153,12 +122,8 @@ namespace RogueIslands.View
 
                 InputHandling.Instance.Click -= OnWorldClicked;
 
-                foreach (var b in FindObjectsByType<BuildingView>(FindObjectsInactive.Include,
-                             FindObjectsSortMode.None))
-                {
-                    b.ShowSynergyRange(false);
-                    b.HighlightConnection(false);
-                }
+                EffectRangeHighlighter.ShowRanges(false);
+                EffectRangeHighlighter.LowlightAll();
             }
         }
     }

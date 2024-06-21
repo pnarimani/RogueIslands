@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace RogueIslands.View.Boosters
 {
-    public class BoosterView : MonoBehaviour, IBoosterView, IPointerEnterHandler, IPointerExitHandler
+    public class BoosterView : MonoBehaviour, IBoosterView, IPointerEnterHandler, IPointerExitHandler, IHighlightable
     {
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private DescriptionBox _descriptionBoxPrefab;
@@ -22,6 +22,13 @@ namespace RogueIslands.View.Boosters
         private void Awake()
         {
             _visualizers = new List<BoosterActionVisualizer>(GetComponents<BoosterActionVisualizer>());
+            
+            EffectRangeHighlighter.Register(this);
+        }
+        
+        private void OnDestroy()
+        {
+            EffectRangeHighlighter.Remove(this);
         }
 
         public void Initialize(IBooster booster)
@@ -74,8 +81,11 @@ namespace RogueIslands.View.Boosters
                 _descriptionBoxInstance.SetDescription(Data.Description.Get(Data));
             }
             
-            if (Data is WorldBooster)
+            if (Data is WorldBooster world)
+            {
                 _rangeVisuals.gameObject.SetActive(true);
+                EffectRangeHighlighter.Highlight(transform.position, world.Range, gameObject);
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -87,7 +97,26 @@ namespace RogueIslands.View.Boosters
             }
             
             if (Data is WorldBooster)
+            {
                 _rangeVisuals.gameObject.SetActive(false);
+                EffectRangeHighlighter.LowlightAll();
+            }
+        }
+
+        public void Highlight(bool highlight)
+        {
+            if (Data is WorldBooster)
+            {
+                var m = transform.FindRecursive("Cube").GetComponent<MeshRenderer>();
+                m.material.EnableKeyword("_EMISSION");
+                m.material.SetColor("_EmissionColor", highlight ? new Color(0f, 0.4f, 0f) : Color.black);
+            }
+        }
+
+        public void ShowRange(bool showRange)
+        {
+            if (Data is WorldBooster)
+                _rangeVisuals.gameObject.SetActive(showRange);
         }
     }
 }
