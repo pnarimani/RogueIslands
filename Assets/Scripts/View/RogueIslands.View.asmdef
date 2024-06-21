@@ -4,7 +4,7 @@
   "references": [
     "RogueIslands",
     "Unity.TextMeshPro",
-    "MoreMountains.Feedbacks",
+    "Unity.Mathematics",
     "DOTween.Modules",
     "UniTask",
     "NaughtyAttributes.Core"

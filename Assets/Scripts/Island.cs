@@ -5,8 +5,8 @@ namespace RogueIslands
 {
     public class Island : IEnumerable<Building>
     {
-        public string Id { get; set; }
-        public List<Building> Buildings { get; set; }
+        public string Id;
+        public List<Building> Buildings;
         
         public List<Building>.Enumerator GetEnumerator() 
             => Buildings.GetEnumerator();

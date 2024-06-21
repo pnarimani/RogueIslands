@@ -9,44 +9,44 @@ namespace RogueIslands
         public const int TotalWeeks = 4;
         public const int TotalMonths = 5;
 
-        public int Day { get; set; }
-        public int Week { get; set; }
-        public int Month { get; set; }
+        public int Day;
+        public int Week;
+        public int Month;
 
-        public int DefaultTotalDays { get; set; } = 4;
-        public int TotalDays { get; set; } = 4;
+        public int DefaultTotalDays = 4;
+        public int TotalDays = 4;
 
-        public int DefaultHandSize { get; set; } = 4;
-        public int HandSize { get; set; } = 4;
-        
-        public double CurrentScore { get; set; }
-        
-        public double[] AllRequiredScores { get; set; }
+        public int DefaultHandSize = 4;
+        public int HandSize = 4;
+
+        public double CurrentScore;
+
+        public double[] AllRequiredScores;
         public double RequiredScore => AllRequiredScores[Month * TotalWeeks + Week];
-        
-        public int Money { get; set; } = 4;
-        public int MoneyPayoutPerWeek { get; set; } = 4;
-        public List<MoneyChange> MoneyChanges { get; set; } = new();
 
-        public string CurrentEvent { get; set; }
-        public ScoringState ScoringState { get; set; }
+        public int Money = 4;
+        public int MoneyPayoutPerWeek = 4;
+        public List<MoneyChange> MoneyChanges = new();
 
-        public List<Island> Islands { get; set; } = new();
-        public List<Building> BuildingsInHand { get; set; } = new();
-        public List<Building> BuildingDeck { get; set; }
-        public List<Building> AvailableBuildings { get; set; }
+        public string CurrentEvent;
+        public ScoringState ScoringState;
 
-        public int MaxBoosters { get; set; } = 5;
-        public List<BoosterCard> Boosters { get; set; } = new();
-        public List<BoosterCard> AvailableBoosters { get; set; }
-        
-        public ShopState Shop { get; set; }
-        
-        public GameResult Result { get; set; }
-        
-        public Random WorldBoosterRandom { get; set; }
+        public List<Island> Islands = new();
+        public List<Building> BuildingsInHand = new();
+        public List<Building> BuildingDeck;
+        public List<Building> AvailableBuildings;
 
-        public List<WorldBooster> WorldBoosters { get; set; } = new();
-        public List<WorldBooster> AvailableWorldBoosters { get; set; }
+        public int MaxBoosters = 5;
+        public List<BoosterCard> Boosters = new();
+        public List<BoosterCard> AvailableBoosters;
+
+        public ShopState Shop;
+
+        public GameResult Result;
+
+        public Random WorldBoosterRandom;
+
+        public List<WorldBooster> WorldBoosters = new();
+        public List<WorldBooster> AvailableWorldBoosters;
     }
 }

@@ -4,19 +4,18 @@ namespace RogueIslands
 {
     public class Building
     {
-        public BuildingInstanceId Id { get; set; }
-        public Vector3 Position { get; set; }
-        public Quaternion Rotation { get; set; }
-        public int RemainingTriggers { get; set; }
-        public string Name { get; set;}
-        public string Description { get; set; }
-        public string PrefabAddress { get; set; }
-        public float Range { get; set; } = 2;
-        public Category Category { get; set; }
-        public ColorTag Color { get; set; }
-        public BuildingSize Size { get; set; }
-        public double Output { get; set; }
-        
-        public double OutputUpgrade { get; set; }
+        public BuildingInstanceId Id;
+        public Vector3 Position;
+        public Quaternion Rotation;
+        public int RemainingTriggers;
+        public string Name;
+        public string Description;
+        public string PrefabAddress;
+        public float Range;
+        public Category Category;
+        public ColorTag Color;
+        public BuildingSize Size;
+        public double Output;
+        public double OutputUpgrade;
     }
 }
