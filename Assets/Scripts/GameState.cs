@@ -34,7 +34,7 @@ namespace RogueIslands
 
         public List<Cluster> Islands = new();
         public List<Building> BuildingsInHand = new();
-        public List<Building> BuildingDeck;
+        public BuildingDeck BuildingDeck;
         public List<Building> AvailableBuildings;
 
         public int MaxBoosters = 5;

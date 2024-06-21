@@ -102,7 +102,7 @@ namespace RogueIslands
 
             state.BuildingsInHand.Clear();
             state.BuildingsInHand.AddRange(
-                state.BuildingDeck
+                state.BuildingDeck.Deck
                     .Skip(state.Day * state.HandSize)
                     .Take(state.HandSize)
             );
@@ -146,7 +146,7 @@ namespace RogueIslands
 
         public static void StartRound(this GameState state, IGameView view)
         {
-            state.BuildingDeck.Shuffle();
+            state.BuildingDeck.Deck.Shuffle(state.BuildingDeck.ShufflingRandom);
             state.CurrentScore = 0;
             state.Day = 0;
             state.Islands.Clear();

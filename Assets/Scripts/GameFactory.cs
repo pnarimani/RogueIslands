@@ -10,7 +10,7 @@ namespace RogueIslands
         public static GameState NewGame(System.Random seedRandom)
         {
             var buildings = DefaultBuildingsList.GetDefaultDeckBuildings();
-            buildings.Shuffle(seedRandom);
+            buildings.Shuffle(seedRandom.NextRandom());
 
             const int handSize = 6;
             
@@ -19,7 +19,11 @@ namespace RogueIslands
                 AllRequiredScores = GetScoringRequirements(),
                 CurrentEvent = new ActStart(),
                 AvailableBuildings = buildings,
-                BuildingDeck = buildings.ToList(),
+                BuildingDeck = new BuildingDeck
+                {
+                    Deck = buildings,
+                    ShufflingRandom = seedRandom.NextRandom(),
+                },
                 AvailableBoosters = BoosterList.Get(seedRandom),
                 HandSize = handSize,
                 DefaultHandSize = handSize,
