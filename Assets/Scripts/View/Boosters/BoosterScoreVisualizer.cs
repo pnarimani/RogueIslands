@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using NaughtyAttributes;
 using RogueIslands.Boosters;
 using RogueIslands.View.Feedbacks;
 using TMPro;
@@ -69,5 +70,11 @@ namespace RogueIslands.View.Boosters
 
         private static bool IsMult(ScoringAction action) 
             => action.PlusMult > 0 || action.XMult > 1;
+
+        [Button]
+        public async void PlayFeedbacks()
+        {
+            await _multiLabelFeedback.Play();
+        }
     }
 }

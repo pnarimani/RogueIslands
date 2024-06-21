@@ -7,7 +7,7 @@
     "MoreMountains.Feedbacks",
     "DOTween.Modules",
     "UniTask",
-    "VContainer"
+    "NaughtyAttributes.Core"
   ],
   "overrideReferences": true,
   "precompiledReferences": [
