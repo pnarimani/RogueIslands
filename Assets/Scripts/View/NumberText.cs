@@ -1,5 +1,5 @@
 using System.Globalization;
-using MoreMountains.Feedbacks;
+using RogueIslands.View.Feedbacks;
 using TMPro;
 using UnityEngine;
 
@@ -11,7 +11,9 @@ namespace RogueIslands.View
         [SerializeField] private string _format;
         [SerializeField] private bool _hasMax;
         [SerializeField] private double _max;
-        [SerializeField] private MMF_Player _increaseFx, _decreaseFx;
+        [SerializeField] private NumberTextIncreaseFeedback _increaseFeedback;
+        [SerializeField] private NumberTextDecreaseFeedback _decreaseFeedback;
+        
 
         private double _currentNumber;
 
@@ -37,11 +39,11 @@ namespace RogueIslands.View
         {
             if (number > CurrentNumber)
             {
-                _increaseFx?.PlayFeedbacks();
+                _increaseFeedback.Play();
             }
             else if (number < CurrentNumber)
             {
-                _decreaseFx?.PlayFeedbacks();
+                _decreaseFeedback.Play();
             }
 
             SetNumber(number);

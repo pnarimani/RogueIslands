@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
-using MoreMountains.Feedbacks;
 using RogueIslands.Boosters;
+using RogueIslands.View.Feedbacks;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +8,7 @@ namespace RogueIslands.View.Boosters
 {
     public class BoosterScoreVisualizer : BoosterActionVisualizer<ScoringAction>
     {
-        [SerializeField] private MMF_Player _productScoreFeedback, _multScoreFeedback;
+        [SerializeField] private LabelFeedback _productLabelFeedback, _multiLabelFeedback;
         [SerializeField] private TextMeshProUGUI _productAmountText, _multAmountText;
         
         private double _previousProduct, _previousMult;
@@ -41,8 +41,7 @@ namespace RogueIslands.View.Boosters
                 if (_productAmountText != null) 
                     _productAmountText.text = $"+{productBoost:F1}";
 
-                if (_productScoreFeedback != null) 
-                    _productScoreFeedback.PlayFeedbacks();
+                await _productLabelFeedback.Play();
             }
             
             if (IsMult(action))
@@ -60,9 +59,8 @@ namespace RogueIslands.View.Boosters
                     if (_multAmountText != null) 
                         _multAmountText.text = $"+{multBoost:F1}";
                 }
-                
-                if (_multScoreFeedback != null) 
-                    _multScoreFeedback.PlayFeedbacks();
+
+                await _multiLabelFeedback.Play();
             }
         }
         

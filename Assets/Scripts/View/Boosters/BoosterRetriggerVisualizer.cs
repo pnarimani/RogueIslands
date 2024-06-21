@@ -1,13 +1,13 @@
 ﻿using Cysharp.Threading.Tasks;
-using MoreMountains.Feedbacks;
 using RogueIslands.Boosters;
+using RogueIslands.View.Feedbacks;
 using UnityEngine;
 
 namespace RogueIslands.View.Boosters
 {
     public class BoosterRetriggerVisualizer : BoosterActionVisualizer
     {
-        [SerializeField] private MMF_Player _retriggerFeedback;
+        [SerializeField] private LabelFeedback _labelFeedback;
         
         public override bool CanVisualize(GameAction action)
         {
@@ -20,9 +20,7 @@ namespace RogueIslands.View.Boosters
             AnimationScheduler.AllocateTime(0.2f);
             await UniTask.WaitForSeconds(wait);
             
-            if (_retriggerFeedback != null)
-                _retriggerFeedback.PlayFeedbacks();
-            
+            await _labelFeedback.Play();
         }
 
         public override UniTask OnAfterBoosterExecuted(GameState state, GameAction action, BoosterView booster)

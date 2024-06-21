@@ -1,5 +1,5 @@
 using Cysharp.Threading.Tasks;
-using MoreMountains.Feedbacks;
+using RogueIslands.View.Feedbacks;
 using UnityEngine;
 
 namespace RogueIslands.View
@@ -7,7 +7,8 @@ namespace RogueIslands.View
     public class BuildingView : MonoBehaviour, IBuildingView
     {
         [SerializeField] private GameObject _synergyRange;
-        [SerializeField] private MMF_Player _triggerFeedback, _retriggerFeedback;
+        [SerializeField] private BuildingTriggerFeedback _triggerFeedback;
+        [SerializeField] private LabelFeedback _retriggerLabelFeedback;
         [SerializeField] private ParticleSystem _productsParticleSystem;
         
         public Building Data { get; private set; }
@@ -43,9 +44,11 @@ namespace RogueIslands.View
             await UniTask.WaitForSeconds(wait);
 
             var ps = PlayParticleSystem(count);
-            _triggerFeedback.PlayFeedbacks();
+
+            var task = _triggerFeedback.Play();
             if (isRetrigger)
-                _retriggerFeedback.PlayFeedbacks();
+                task = UniTask.WhenAll(task, _retriggerLabelFeedback.Play());
+            await task;
             
             await UniTask.WaitForSeconds(0.6f);
             
