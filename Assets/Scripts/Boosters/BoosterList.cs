@@ -82,8 +82,7 @@ namespace RogueIslands.Boosters
                     Name = "Bad Eyesight",
                     BuyPrice = 2,
                     Description =
-                        new LiteralDescription(
-                            $"{Category.Cat1} and {Category.Cat3} count as same. Category {Category.Cat2} and {Category.Cat4} count as same."),
+                        new LiteralDescription($"{ColorTag.Red} and {ColorTag.Blue} are the same. {ColorTag.White} and {ColorTag.Black} are the same."),
                     EvaluationOverrides = new[] { new BadEyesConditionEvaluator() },
                 },
                 new()
@@ -217,7 +216,7 @@ namespace RogueIslands.Boosters
                             new GameEventCondition("AfterBuildingScored"),
                             new SelectedBuildingColorCondition()
                             {
-                                ColorTag = ColorTag.Red,
+                                Colors = new[] { ColorTag.Red },
                             },
                         },
                     },
@@ -679,7 +678,7 @@ namespace RogueIslands.Boosters
                         new GameEventCondition("AfterBuildingScored"),
                         new SelectedBuildingColorCondition()
                         {
-                            ColorTag = color,
+                            Colors = new[] { color },
                         },
                     },
                 },

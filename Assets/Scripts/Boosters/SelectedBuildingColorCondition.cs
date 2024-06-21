@@ -1,7 +1,9 @@
-﻿namespace RogueIslands.Boosters
+﻿using System.Collections.Generic;
+
+namespace RogueIslands.Boosters
 {
     public class SelectedBuildingColorCondition : IGameCondition
     {
-        public ColorTag ColorTag { get; set; }
+        public IReadOnlyList<ColorTag> Colors { get; set; }
     }
 }

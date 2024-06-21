@@ -2,29 +2,20 @@
 
 namespace RogueIslands.Boosters
 {
-    public class BadEyesConditionEvaluator : ConditionEvaluator<SelectedBuildingCategory>, IEvaluationConditionOverride
+    public class BadEyesConditionEvaluator : ConditionEvaluator<SelectedBuildingColorCondition>,
+        IEvaluationConditionOverride
     {
-        protected override bool Evaluate(GameState state, IBooster booster, SelectedBuildingCategory condition)
+        protected override bool Evaluate(GameState state, IBooster booster, SelectedBuildingColorCondition condition)
         {
             if (state.ScoringState is not { SelectedBuilding: not null })
                 return false;
-            
-            // var buildingCategory = state.ScoringState.SelectedBuilding.Category;
-            // var conditionCategory = condition.Category.ToList();
-            // if(conditionCategory.Contains())
-            //
-            // if (conditionCategory == Category.Cat1)
-            //     conditionCategory = Category.Cat3;
-            // if (conditionCategory == Category.Cat2)
-            //     conditionCategory = Category.Cat4;
-            //
-            // if (buildingCategory == Category.Cat1)
-            //     buildingCategory = Category.Cat3;
-            // if (buildingCategory == Category.Cat2)
-            //     buildingCategory = Category.Cat4;
 
-            return condition.Categories.Contains(state.ScoringState.SelectedBuilding.Category);
-
+            var conditionColors = condition.Colors.ToList();
+            if (conditionColors.Contains(ColorTag.Blue))
+                conditionColors.Add(ColorTag.Red);
+            if (conditionColors.Contains(ColorTag.Black))
+                conditionColors.Add(ColorTag.White);
+            return conditionColors.Contains(state.ScoringState.SelectedBuilding.Color);
         }
     }
 }
