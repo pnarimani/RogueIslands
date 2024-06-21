@@ -2,9 +2,9 @@
   "dependencies": {
     "com.coffee.ui-particle": "https://github.com/mob-sakai/ParticleEffectForUGUI.git",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+    "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
     "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
     "com.mnarimani.autoassigner": "https://github.com/pnarimani/AutoAssigner.git",
-    "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
     "com.unity.cinemachine": "3.1.0",
     "com.unity.collab-proxy": "2.3.1",
     "com.unity.feature.development": "1.0.1",
@@ -12,7 +12,6 @@
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.6",
     "com.unity.ugui": "1.0.0",
-    "com.unity.visualscripting": "1.9.1",
     "jillejr.newtonsoft.json-for-unity.converters": "https://github.com/jilleJr/Newtonsoft.Json-for-Unity.Converters.git#1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",

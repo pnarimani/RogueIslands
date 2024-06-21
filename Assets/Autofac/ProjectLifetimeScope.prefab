@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _autoRun: 1
+  _debugConsole: {fileID: 6530785274434090491, guid: 91189247b5f35fe4dac2ebef74f0aca1, type: 3}

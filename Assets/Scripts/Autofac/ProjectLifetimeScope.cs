@@ -1,16 +1,19 @@
-﻿using System.Collections.Generic;
-using Autofac;
+﻿using Autofac;
 using AutofacUnity;
-using RogueIslands.View;
+using IngameDebugConsole;
 using UnityEngine;
 
 namespace RogueIslands.Autofac
 {
     public class ProjectLifetimeScope : AutofacScope
     {
+        [SerializeField] private DebugLogManager _debugConsole;
+
         protected override void Configure(ContainerBuilder builder)
         {
-
+            builder.Register(_ => Instantiate(_debugConsole))
+                .AutoActivate()
+                .SingleInstance();
         }
     }
 }

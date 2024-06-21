@@ -8,6 +8,5 @@ namespace RogueIslands
         void OnAfterActionExecuted(GameState state, GameAction action);
 
         void Remove();
-        void UpdateDescription();
     }
 }

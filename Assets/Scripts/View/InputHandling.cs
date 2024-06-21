@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,20 +11,29 @@ namespace RogueIslands.View
         private bool _mouseMoved;
         private Vector3 _previousMousePosition;
         private bool _validMouseEvent;
+        private readonly List<RaycastResult> _raycastResults = new();
+        private int _uiLayer;
 
         public event Action Click;
         public event Action<Vector2> Drag;
-    
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            _uiLayer = LayerMask.NameToLayer("UI");
+        }
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                _validMouseEvent = !EventSystem.current.IsPointerOverGameObject();
+                _validMouseEvent = IsValidMouseEvent();
                 _previousMousePosition = Input.mousePosition;
             }
-        
-            if(!_validMouseEvent) return;
-        
+
+            if (!_validMouseEvent) return;
+
             if (Input.GetMouseButton(0))
             {
                 if ((Input.mousePosition - _previousMousePosition).sqrMagnitude > 10f)
@@ -46,6 +57,24 @@ namespace RogueIslands.View
 
                 _mouseMoved = false;
             }
+        }
+
+        private bool IsValidMouseEvent()
+        {
+            _raycastResults.Clear();
+            
+            EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current)
+            {
+                position = Input.mousePosition,
+            }, _raycastResults);
+
+            foreach (var r in _raycastResults)
+            {
+                if (r.gameObject.layer == _uiLayer)
+                    return false;
+            }
+
+            return true;
         }
     }
 }

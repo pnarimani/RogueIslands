@@ -1,10 +1,11 @@
 using Cysharp.Threading.Tasks;
 using RogueIslands.View.Feedbacks;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace RogueIslands.View
 {
-    public class BuildingView : MonoBehaviour, IBuildingView
+    public class BuildingView : MonoBehaviour, IBuildingView, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private GameObject _synergyRange;
         [SerializeField] private BuildingTriggerFeedback _triggerFeedback;
@@ -82,6 +83,16 @@ namespace RogueIslands.View
 
                 SetLayerRecursively(child.gameObject, newLayer);
             }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            ShowSynergyRange(true);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            ShowSynergyRange(false);
         }
     }
 }

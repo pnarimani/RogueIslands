@@ -10,8 +10,7 @@ namespace AutofacUnity
             AutofacSettings.LoadInstanceFromResources();
             if(AutofacSettings.Instance == null)
                 return;
-            if (AutofacSettings.Instance.RootScope != null) 
-                AutofacSettings.Instance.RootScope.Build();
+            AutofacSettings.Instance.InitializeRootScope();
         }
     }
 }

@@ -7,11 +7,15 @@ namespace AutofacUnity
     {
         [SerializeField] private bool _autoRun = true;
 
-        public bool AutoRun => _autoRun;
+        public bool AutoRun
+        {
+            get => _autoRun;
+            internal set => _autoRun = value;
+        }
 
         public ILifetimeScope Container { get; private set; }
 
-        public bool IsRoot => ReferenceEquals(Container.Tag, "root");
+        public bool IsRoot { get; internal set; }
 
         private void Awake()
         {
@@ -27,7 +31,7 @@ namespace AutofacUnity
             if (AutofacSettings.Instance == null)
                 AutofacSettings.LoadInstanceFromResources();
 
-            if (AutofacSettings.Instance == null || AutofacSettings.Instance.RootScope == this)
+            if (IsRoot || AutofacSettings.Instance == null || !AutofacSettings.Instance.HasRootScope())
             {
                 var builder = new ContainerBuilder();
                 Configure(builder);
@@ -35,8 +39,8 @@ namespace AutofacUnity
             }
             else
             {
-                if(AutofacSettings.Instance.RootScope.Container == null)
-                    AutofacSettings.Instance.RootScope.Build();
+                if(AutofacSettings.Instance.RootScope == null)
+                    AutofacSettings.Instance.InitializeRootScope();
                 Container = AutofacSettings.Instance.RootScope.Container!.BeginLifetimeScope(this, Configure);
             }
         }

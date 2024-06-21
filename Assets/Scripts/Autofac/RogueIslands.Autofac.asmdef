@@ -6,6 +6,7 @@
 		"RogueIslands",
 		"RogueIslands.View",
 		"RogueIslands.Debug",
-		"Unity.Mathematics"
+		"Unity.Mathematics",
+		"IngameDebugConsole.Runtime"
 	]
 }

@@ -17,8 +17,6 @@ namespace RogueIslands.View.Boosters
             await UniTask.WaitForSeconds(wait);
 
             await _labelFeedback.Play();
-            
-            booster.UpdateDescription();
         }
     }
 }

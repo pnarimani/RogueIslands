@@ -32,7 +32,7 @@ namespace RogueIslands.View.Boosters
             var multBoost = finalMult - _previousMult;
             
             var wait = AnimationScheduler.GetAnimationTime();
-            AnimationScheduler.AllocateTime(0.4f);
+            AnimationScheduler.AllocateTime(0.2f);
             await UniTask.WaitForSeconds(wait);
             
             if (IsProduct(action))
