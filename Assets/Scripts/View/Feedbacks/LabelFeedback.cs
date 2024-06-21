@@ -13,6 +13,9 @@ namespace RogueIslands.View.Feedbacks
         
         public async UniTask Play()
         {
+            _labelParent.DOComplete();
+            _group.DOComplete();
+            
             _group.alpha = 0;
             _group.DOFade(1, 0.1f);
             
