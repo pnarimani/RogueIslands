@@ -9,8 +9,8 @@ namespace RogueIslands
         IBuildingView GetBuilding(Building building);
         IBoosterView GetBooster(IBooster booster);
         
-        void HighlightIsland(Island island);
-        void LowlightIsland(Island island);
+        void HighlightIsland(Cluster cluster);
+        void LowlightIsland(Cluster cluster);
         void ShowLoseScreen();
         void ShowGameWinScreen();
         IWeekWinScreen ShowWeekWin();

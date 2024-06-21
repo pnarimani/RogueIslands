@@ -5,7 +5,7 @@ namespace RogueIslands.Boosters
         public enum Target
         {
             Buildings,
-            Island,
+            Cluster,
             BuildingsInAnyIsland,
             BuildingsInScoringIsland,
         }

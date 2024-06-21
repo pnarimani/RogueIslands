@@ -4,8 +4,5 @@ namespace RogueIslands
     {
         public double Products;
         public double Multiplier = 1;
-        public Island SelectedIsland;
-        public Building SelectedBuilding;
-        public int SelectedBuildingTriggerCount;
     }
 }

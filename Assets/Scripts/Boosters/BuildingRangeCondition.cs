@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Boosters
 {
-    public class SelectedBuildingRangeCondition : IGameCondition
+    public class BuildingInRangeCondition : IGameCondition
     {
     }
 }

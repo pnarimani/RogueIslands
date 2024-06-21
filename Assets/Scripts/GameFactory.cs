@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using RogueIslands.Boosters;
+using RogueIslands.GameEvents;
 using Random = Unity.Mathematics.Random;
 
 namespace RogueIslands
@@ -16,7 +17,7 @@ namespace RogueIslands
             return new GameState()
             {
                 AllRequiredScores = GetScoringRequirements(),
-                CurrentEvent = "MonthStart",
+                CurrentEvent = new ActStart(),
                 AvailableBuildings = buildings,
                 BuildingDeck = buildings.ToList(),
                 AvailableBoosters = BoosterList.Get(seedRandom),
@@ -28,11 +29,11 @@ namespace RogueIslands
                 TotalDays = 4,
                 Shop = new ShopState
                 {
-                    BoosterSpawn = seedRandom.CreateRandomArray(GameState.TotalMonths),
-                    CardPackSpawn = seedRandom.CreateRandomArray(GameState.TotalMonths),
-                    BoosterAntiDuplicate = seedRandom.CreateRandomArray(GameState.TotalMonths),
+                    BoosterSpawn = seedRandom.CreateRandomArray(GameState.TotalActs),
+                    CardPackSpawn = seedRandom.CreateRandomArray(GameState.TotalActs),
+                    BoosterAntiDuplicate = seedRandom.CreateRandomArray(GameState.TotalActs),
                     CardCount = 2,
-                    ItemsForSale = new BoosterCard[2],
+                    ItemsForSale = new IPurchasableItem[2],
                 },
             };
         }
@@ -50,13 +51,13 @@ namespace RogueIslands
 
         private static double[] GetScoringRequirements()
         {
-            var result = new double[GameState.TotalWeeks * GameState.TotalMonths];
-            for (var i = 0; i < GameState.TotalMonths; i++)
+            var result = new double[GameState.TotalRounds * GameState.TotalActs];
+            for (var i = 0; i < GameState.TotalActs; i++)
             {
-                result[i * GameState.TotalWeeks + 0] = (i + 1) * 10;
-                result[i * GameState.TotalWeeks + 1] = (i + 1) * 25;
-                result[i * GameState.TotalWeeks + 2] = (i + 1) * 50;
-                result[i * GameState.TotalWeeks + 3] = (i + 1) * 100;
+                result[i * GameState.TotalRounds + 0] = (i + 1) * 10;
+                result[i * GameState.TotalRounds + 1] = (i + 1) * 25;
+                result[i * GameState.TotalRounds + 2] = (i + 1) * 50;
+                result[i * GameState.TotalRounds + 3] = (i + 1) * 100;
 
             }
             return result;

@@ -11,11 +11,11 @@ namespace RogueIslands.Boosters
                         ? state.Day == condition.Time
                         : state.Day == state.TotalDays - condition.Time,
                 TimeCondition.Mode.Week => condition.FromStart
-                    ? state.Week == condition.Time
-                    : state.Week == GameState.TotalWeeks - condition.Time,
+                    ? state.Round == condition.Time
+                    : state.Round == GameState.TotalRounds - condition.Time,
                 TimeCondition.Mode.Month => condition.FromStart
-                    ? state.Month == condition.Time
-                    : state.Month == GameState.TotalMonths - condition.Time,
+                    ? state.Act == condition.Time
+                    : state.Act == GameState.TotalActs - condition.Time,
                 _ => false,
             };
         }

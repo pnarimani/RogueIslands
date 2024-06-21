@@ -4,6 +4,7 @@ using NSubstitute;
 using NUnit.Framework;
 using RogueIslands;
 using RogueIslands.Boosters;
+using RogueIslands.GameEvents;
 
 namespace Tests.Boosters
 {
@@ -16,7 +17,7 @@ namespace Tests.Boosters
             var state = new GameState();
             state.Boosters.Add(campfire);
 
-            state.ExecuteEvent(Substitute.For<IGameView>(), "BoosterSold");
+            state.ExecuteEvent(Substitute.For<IGameView>(), new BoosterSold());
 
             Assert.AreEqual(1.5, campfire.GetEventAction<ScoringAction>().XMult);
         }

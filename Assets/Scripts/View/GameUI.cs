@@ -95,8 +95,8 @@ namespace RogueIslands.View
         {
             var state = GameManager.Instance.State;
             _days.UpdateNumber(state.TotalDays - state.Day);
-            _week.UpdateNumber(state.Week + 1);
-            _month.UpdateNumber(state.Month + 1);
+            _week.UpdateNumber(state.Round + 1);
+            _month.UpdateNumber(state.Act + 1);
         }
 
         public void ProductBoosted(double count)

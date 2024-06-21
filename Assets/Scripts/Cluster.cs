@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RogueIslands
 {
-    public class Island : IEnumerable<Building>
+    public class Cluster : IEnumerable<Building>
     {
         public string Id;
         public List<Building> Buildings;

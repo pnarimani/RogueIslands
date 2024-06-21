@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using RogueIslands.Boosters.Descriptions;
+using RogueIslands.GameEvents;
 
 namespace RogueIslands.Boosters
 {
@@ -19,8 +20,8 @@ namespace RogueIslands.Boosters
                     {
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("AfterBuildingScored"),
-                            new SelectedBuildingRangeCondition(),
+                            GameEventCondition.Create<BuildingScored>(), 
+                            new BuildingInRangeCondition(),
                         },
                         Products = 5,
                     },
@@ -35,8 +36,8 @@ namespace RogueIslands.Boosters
                     {
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("AfterBuildingScored"),
-                            new SelectedBuildingRangeCondition(),
+                            GameEventCondition.Create<BuildingScored>(),
+                            new BuildingInRangeCondition(),
                             new SelectedBuildingCategory() { Categories = new[] { Category.Cat3 } },
                         },
                         Products = 10,
@@ -53,8 +54,8 @@ namespace RogueIslands.Boosters
                     {
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("AfterBuildingScored"),
-                            new SelectedBuildingRangeCondition(),
+                            GameEventCondition.Create<BuildingScored>(),
+                            new BuildingInRangeCondition(),
                             new SelectedBuildingCategory() { Categories = new[] { Category.Cat4, Category.Cat5, } },
                         },
                         PlusMult = 3,

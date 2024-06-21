@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using RogueIslands.Boosters.Descriptions;
+using RogueIslands.GameEvents;
 
 namespace RogueIslands.Boosters
 {
@@ -26,11 +27,11 @@ namespace RogueIslands.Boosters
                         new LiteralDescription(
                             $"1 in 2 chance to give x2 mult for each {Category.Cat3} building scored"),
                     BuyPrice = 2,
-                    EventAction = new ScoringAction()
+                    EventAction = new ScoringAction
                     {
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("AfterBuildingScored"),
+                            GameEventCondition.Create<BuildingScored>(),
                             new SelectedBuildingCategory
                             {
                                 Categories = new[] { Category.Cat1 },
@@ -49,12 +50,12 @@ namespace RogueIslands.Boosters
                     Name = "Hiker",
                     Description = new LiteralDescription("Permanently add +2 product to played buildings"),
                     BuyPrice = 2,
-                    EventAction = new PermanentBuildingUpgradeAction()
+                    EventAction = new PermanentBuildingUpgradeAction
                     {
                         ProductUpgrade = 2,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("AfterBuildingScored"),
+                            GameEventCondition.Create<BuildingScored>(),
                         },
                     },
                 },
@@ -63,12 +64,12 @@ namespace RogueIslands.Boosters
                     Name = "Suck my busking",
                     Description = new LiteralDescription($"Retrigger all `{Category.Cat2}` buildings"),
                     BuyPrice = 2,
-                    EventAction = new RetriggerScoringBuildingAction()
+                    EventAction = new RetriggerBuildingAction
                     {
                         RetriggerTimes = 1,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("AfterBuildingScored"),
+                            GameEventCondition.Create<BuildingScored>(),
                             BuildingTriggerCountCheck.FirstTrigger,
                             new SelectedBuildingCategory
                             {
@@ -82,7 +83,8 @@ namespace RogueIslands.Boosters
                     Name = "Bad Eyesight",
                     BuyPrice = 2,
                     Description =
-                        new LiteralDescription($"{ColorTag.Red} and {ColorTag.Blue} are the same. {ColorTag.White} and {ColorTag.Black} are the same."),
+                        new LiteralDescription(
+                            $"{ColorTag.Red} and {ColorTag.Blue} are the same. {ColorTag.White} and {ColorTag.Black} are the same."),
                     EvaluationOverrides = new[] { new BadEyesConditionEvaluator() },
                 },
                 new()
@@ -92,7 +94,7 @@ namespace RogueIslands.Boosters
                         new ScalingBoosterDescription("If the number of buildings is a power of 2, gains +4 products")
                             { ShowProducts = true },
                     BuyPrice = 2,
-                    EventAction = new CompositeAction()
+                    EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
                         {
@@ -100,7 +102,7 @@ namespace RogueIslands.Boosters
                             {
                                 Conditions = new IGameCondition[]
                                 {
-                                    new GameEventCondition("DayStart"),
+                                    GameEventCondition.Create<DayStart>(),
                                     new CountCondition
                                     {
                                         TargetType = CountCondition.Target.Buildings,
@@ -114,7 +116,7 @@ namespace RogueIslands.Boosters
                                 Products = 0,
                                 Conditions = new IGameCondition[]
                                 {
-                                    new GameEventCondition("DayEnd"),
+                                    GameEventCondition.Create<DayEnd>(),
                                 },
                             },
                         },
@@ -130,7 +132,7 @@ namespace RogueIslands.Boosters
                         Amount = 3,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("WeekEnd"),
+                            GameEventCondition.Create<RoundEnd>(),
                         },
                     },
                 },
@@ -141,32 +143,32 @@ namespace RogueIslands.Boosters
                         new LiteralDescription(
                             "Gains 0.5x mult for each booster sold. Resets at the end of the month."),
                     BuyPrice = 2,
-                    EventAction = new CompositeAction()
+                    EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
                         {
-                            new ScoringAction()
+                            new ScoringAction
                             {
                                 XMult = 1,
                                 Conditions = new IGameCondition[]
                                 {
-                                    new GameEventCondition("DayEnd"),
+                                    GameEventCondition.Create<DayEnd>(),
                                 },
                             },
-                            new BoosterScalingAction()
+                            new BoosterScalingAction
                             {
                                 XMultChange = 0.5,
                                 Conditions = new IGameCondition[]
                                 {
-                                    new GameEventCondition("BoosterSold"),
+                                    GameEventCondition.Create<BoosterSold>(),
                                 },
                             },
-                            new BoosterResetAction()
+                            new BoosterResetAction
                             {
                                 XMult = 1,
                                 Conditions = new IGameCondition[]
                                 {
-                                    new GameEventCondition("MonthEnd"),
+                                    GameEventCondition.Create<ActEnd>(),
                                 },
                             },
                         },
@@ -177,12 +179,12 @@ namespace RogueIslands.Boosters
                     Name = "Clutch",
                     Description = new LiteralDescription("+10 mult on the last day."),
                     BuyPrice = 2,
-                    EventAction = new ScoringAction()
+                    EventAction = new ScoringAction
                     {
                         PlusMult = 10,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("DayEnd"),
+                            GameEventCondition.Create<DayEnd>(),
                             TimeCondition.LastDay(),
                         },
                     },
@@ -192,12 +194,12 @@ namespace RogueIslands.Boosters
                     Name = "Overtime",
                     Description = new LiteralDescription("On the last day, Retrigger all buildings"),
                     BuyPrice = 2,
-                    EventAction = new RetriggerScoringBuildingAction()
+                    EventAction = new RetriggerBuildingAction
                     {
                         RetriggerTimes = 1,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("AfterBuildingScored"),
+                            GameEventCondition.Create<BuildingScored>(),
                             BuildingTriggerCountCheck.FirstTrigger,
                             TimeCondition.LastDay(),
                         },
@@ -208,13 +210,13 @@ namespace RogueIslands.Boosters
                     Name = "Sweatshop",
                     Description = new LiteralDescription("+30 products for each red building"),
                     BuyPrice = 2,
-                    EventAction = new ScoringAction()
+                    EventAction = new ScoringAction
                     {
                         Products = 30,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("AfterBuildingScored"),
-                            new SelectedBuildingColorCondition()
+                            GameEventCondition.Create<BuildingScored>(),
+                            new SelectedBuildingColorCondition
                             {
                                 Colors = new[] { ColorTag.Red },
                             },
@@ -236,14 +238,13 @@ namespace RogueIslands.Boosters
                             {
                                 Conditions = new IGameCondition[]
                                 {
-                                    new GameEventCondition(new[]
-                                        { "DayStart", "DayEnd", "BoosterBought", "BoosterSold" }),
+                                    GameEventCondition.Create<RoundStart>(),
                                 },
                                 SetDays = 1,
                             },
                             new ScoringAction
                             {
-                                Conditions = new[] { new GameEventCondition("DayEnd") },
+                                Conditions = new[] { GameEventCondition.Create<DayEnd>() },
                                 XMult = 3,
                             },
                         },
@@ -260,9 +261,9 @@ namespace RogueIslands.Boosters
                     Name = "Digger",
                     Description = new LiteralDescription("Pays $4 at the end of the round"),
                     BuyPrice = 4,
-                    EventAction = new ChangeMoneyAction()
+                    EventAction = new ChangeMoneyAction
                     {
-                        Conditions = new IGameCondition[] { new GameEventCondition("WeekEnd") },
+                        Conditions = new IGameCondition[] { GameEventCondition.Create<RoundEnd>() },
                         Change = 4,
                     },
                 },
@@ -275,15 +276,15 @@ namespace RogueIslands.Boosters
                     Name = "Crowded",
                     Description = new LiteralDescription("Retrigger all buildings if there are exactly 5 groups"),
                     BuyPrice = 2,
-                    EventAction = new RetriggerScoringBuildingAction
+                    EventAction = new RetriggerBuildingAction
                     {
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("AfterBuildingScored"),
+                            GameEventCondition.Create<BuildingScored>(),
                             BuildingTriggerCountCheck.FirstTrigger,
                             new CountCondition
                             {
-                                TargetType = CountCondition.Target.Island,
+                                TargetType = CountCondition.Target.Cluster,
                                 ComparisonMode = CountCondition.Mode.Equal,
                                 Value = 5,
                             },
@@ -300,7 +301,7 @@ namespace RogueIslands.Boosters
                     {
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("AfterBuildingScored"),
+                            GameEventCondition.Create<BuildingScored>(),
                             new CountCondition
                             {
                                 TargetType = CountCondition.Target.BuildingsInScoringIsland,
@@ -319,7 +320,7 @@ namespace RogueIslands.Boosters
                     {
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("DayEnd"),
+                            GameEventCondition.Create<DayEnd>(),
                             new ColorCheckCondition
                             {
                                 ColorsToExist = ColorTag.All,
@@ -337,8 +338,8 @@ namespace RogueIslands.Boosters
                     {
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("DayEnd"),
-                            new ColorCheckCondition()
+                            GameEventCondition.Create<DayEnd>(),
+                            new ColorCheckCondition
                             {
                                 ColorsToExist = new[] { ColorTag.White, ColorTag.Black },
                                 ColorsToNotExist = new[] { ColorTag.Red, ColorTag.Blue },
@@ -356,7 +357,7 @@ namespace RogueIslands.Boosters
                     {
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("DayEnd"),
+                            GameEventCondition.Create<DayEnd>(),
                         },
                         PlusMult = 50,
                     },
@@ -366,9 +367,9 @@ namespace RogueIslands.Boosters
                     Name = "Simple",
                     Description = new LiteralDescription("+4 mult"),
                     BuyPrice = 2,
-                    EventAction = new ScoringAction()
+                    EventAction = new ScoringAction
                     {
-                        Conditions = new[] { new GameEventCondition("DayEnd") },
+                        Conditions = new[] { GameEventCondition.Create<DayEnd>() },
                         PlusMult = 4,
                     },
                 },
@@ -377,11 +378,11 @@ namespace RogueIslands.Boosters
                     Name = "Sacrifice",
                     Description = new LiteralDescription("+20 mult if 6 or less buildings exist"),
                     BuyPrice = 2,
-                    EventAction = new ScoringAction()
+                    EventAction = new ScoringAction
                     {
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("DayEnd"),
+                            GameEventCondition.Create<DayEnd>(),
                             new CountCondition
                             {
                                 TargetType = CountCondition.Target.Buildings,
@@ -397,16 +398,16 @@ namespace RogueIslands.Boosters
                     Name = "Big Hands",
                     Description = new LiteralDescription("+2 hand size, -1 day"),
                     BuyPrice = 2,
-                    EventAction = new CompositeAction()
+                    EventAction = new CompositeAction
                     {
-                        Conditions = new[] { new GameEventCondition("WeekStart") },
+                        Conditions = new[] { GameEventCondition.Create<RoundStart>() },
                         Actions = new GameAction[]
                         {
                             new DayModifier
                             {
                                 Change = -1,
                             },
-                            new HandModifier()
+                            new HandModifier
                             {
                                 Change = 2,
                             },
@@ -423,30 +424,28 @@ namespace RogueIslands.Boosters
                             ShowPlusMult = true,
                         },
                     BuyPrice = 2,
-                    EventAction = new CompositeAction()
+                    EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
                         {
-                            new CompositeAction()
+                            new CompositeAction
                             {
                                 Conditions = new IGameCondition[]
                                 {
-                                    new GameEventCondition("WeekStart"),
+                                    GameEventCondition.Create<RoundStart>(),
                                 },
                                 Actions = new GameAction[]
                                 {
-                                    new DestroyBoosterAction()
-                                    {
-                                    },
-                                    new BoosterScalingAction()
+                                    new DestroyBoosterAction(),
+                                    new BoosterScalingAction
                                     {
                                         PlusMultChange = 5,
                                     },
                                 },
                             },
-                            new ScoringAction()
+                            new ScoringAction
                             {
-                                Conditions = new[] { new GameEventCondition("DayEnd") },
+                                Conditions = new[] { GameEventCondition.Create<DayEnd>() },
                             }
                         }
                     },
@@ -456,13 +455,13 @@ namespace RogueIslands.Boosters
                     Name = "Efficiency",
                     Description = new LiteralDescription("+50 products for each day remaining"),
                     BuyPrice = 2,
-                    EventAction = new MultipliedScoringAction()
+                    EventAction = new MultipliedScoringAction
                     {
                         MultiplyByDay = true,
                         Products = 50,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("DayEnd"),
+                            GameEventCondition.Create<DayEnd>(),
                         },
                     },
                 },
@@ -477,12 +476,12 @@ namespace RogueIslands.Boosters
                     Name = "Raised Fist United",
                     Description = new LiteralDescription("add double the number of groups to the mult"),
                     BuyPrice = 2,
-                    EventAction = new MultipliedScoringAction()
+                    EventAction = new MultipliedScoringAction
                     {
                         MultiplyByIslandCount = true,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("DayEnd"),
+                            GameEventCondition.Create<DayEnd>(),
                         },
                         PlusMult = 1,
                     },
@@ -493,23 +492,23 @@ namespace RogueIslands.Boosters
                     Description =
                         new LiteralDescription("+15 mult, 1 in 8 chance to get destroyed at the end of the week"),
                     BuyPrice = 2,
-                    EventAction = new CompositeAction()
+                    EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
                         {
-                            new ScoringAction()
+                            new ScoringAction
                             {
                                 PlusMult = 15,
                                 Conditions = new IGameCondition[]
                                 {
-                                    new GameEventCondition("DayEnd"),
+                                    GameEventCondition.Create<DayEnd>(),
                                 },
                             },
-                            new DestroyBoosterAction()
+                            new DestroyBoosterAction
                             {
                                 Conditions = new IGameCondition[]
                                 {
-                                    new GameEventCondition("WeekEnd"),
+                                    GameEventCondition.Create<RoundEnd>(),
                                     new ProbabilityCondition
                                     {
                                         FavorableOutcome = 1,
@@ -527,23 +526,23 @@ namespace RogueIslands.Boosters
                     Description =
                         new LiteralDescription("x4 mult, 1 in 1000 chance to get destroyed at the end of the week"),
                     BuyPrice = 2,
-                    EventAction = new CompositeAction()
+                    EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
                         {
-                            new ScoringAction()
+                            new ScoringAction
                             {
                                 XMult = 4,
                                 Conditions = new IGameCondition[]
                                 {
-                                    new GameEventCondition("DayEnd"),
+                                    GameEventCondition.Create<DayEnd>(),
                                 },
                             },
-                            new DestroyBoosterAction()
+                            new DestroyBoosterAction
                             {
                                 Conditions = new IGameCondition[]
                                 {
-                                    new GameEventCondition("WeekEnd"),
+                                    GameEventCondition.Create<RoundEnd>(),
                                     new ProbabilityCondition
                                     {
                                         FavorableOutcome = 1,
@@ -560,12 +559,12 @@ namespace RogueIslands.Boosters
                     Name = "City Steven",
                     Description = new LiteralDescription($"+4 mult for each {Category.Cat1} building"),
                     BuyPrice = 2,
-                    EventAction = new ScoringAction()
+                    EventAction = new ScoringAction
                     {
                         PlusMult = 4,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("AfterBuildingScored"),
+                            GameEventCondition.Create<BuildingScored>(),
                             new SelectedBuildingCategory
                             {
                                 Categories = new[] { Category.Cat1 },
@@ -578,12 +577,12 @@ namespace RogueIslands.Boosters
                     Name = "Country Carl",
                     Description = new LiteralDescription($"+50 products for each {Category.Cat2} building"),
                     BuyPrice = 2,
-                    EventAction = new ScoringAction()
+                    EventAction = new ScoringAction
                     {
                         Products = 50,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("AfterBuildingScored"),
+                            GameEventCondition.Create<BuildingScored>(),
                             new SelectedBuildingCategory
                             {
                                 Categories = new[] { Category.Cat2 },
@@ -597,13 +596,13 @@ namespace RogueIslands.Boosters
                     Description =
                         new LiteralDescription($"+4 mult for each {Category.Cat5} building remaining in hand"),
                     BuyPrice = 2,
-                    EventAction = new ScoringAction()
+                    EventAction = new ScoringAction
                     {
                         PlusMult = 4,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("BuildingRemainedInHand"),
-                            new SelectedBuildingCategory()
+                            GameEventCondition.Create<BuildingRemainedInHand>(),
+                            new SelectedBuildingCategory
                             {
                                 Categories = new[] { Category.Cat5 },
                             },
@@ -615,13 +614,13 @@ namespace RogueIslands.Boosters
                     Name = "Investment",
                     Description = new LiteralDescription("$1 for each building remained in hand"),
                     BuyPrice = 2,
-                    EventAction = new ChangeMoneyAction()
+                    EventAction = new ChangeMoneyAction
                     {
                         IsImmediate = true,
                         Change = 1,
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("BuildingRemainedInHand"),
+                            GameEventCondition.Create<BuildingRemainedInHand>(),
                         },
                     },
                 },
@@ -631,16 +630,16 @@ namespace RogueIslands.Boosters
                     Description = new ScalingBoosterDescription("+100 products, loses 5 products every day.")
                         { ShowProducts = true },
                     BuyPrice = 2,
-                    EventAction = new CompositeAction()
+                    EventAction = new CompositeAction
                     {
-                        Conditions = new[] { new GameEventCondition("DayEnd") },
+                        Conditions = new[] { GameEventCondition.Create<DayEnd>() },
                         Actions = new GameAction[]
                         {
-                            new ScoringAction()
+                            new ScoringAction
                             {
                                 Products = 100,
                             },
-                            new BoosterScalingAction()
+                            new BoosterScalingAction
                             {
                                 ProductChange = -5,
                             }
@@ -656,7 +655,7 @@ namespace RogueIslands.Boosters
                     {
                         Conditions = new IGameCondition[]
                         {
-                            new GameEventCondition("DayEnd"),
+                            GameEventCondition.Create<DayEnd>(),
                             new SameBuildingsCondition(),
                         }
                     }
@@ -675,7 +674,7 @@ namespace RogueIslands.Boosters
                     PlusMult = 3,
                     Conditions = new IGameCondition[]
                     {
-                        new GameEventCondition("AfterBuildingScored"),
+                        GameEventCondition.Create<BuildingScored>(),
                         new SelectedBuildingColorCondition()
                         {
                             Colors = new[] { color },

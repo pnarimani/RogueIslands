@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Boosters
 {
-    public class RetriggerScoringBuildingAction : GameAction
+    public class RetriggerBuildingAction : GameAction
     {
         public int RetriggerTimes { get; set; } = 1;
     }

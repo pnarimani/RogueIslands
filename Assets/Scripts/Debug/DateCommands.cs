@@ -8,8 +8,8 @@ namespace RogueIslands.Debug
         [ConsoleMethod("set_date", "Set the date to the specified month and week. Usage: set_date <month> <week>")]
         public static void SetDate(int month, int week)
         {
-            GameManager.Instance.State.Month = month;
-            GameManager.Instance.State.Week = week;
+            GameManager.Instance.State.Act = month;
+            GameManager.Instance.State.Round = week;
             GameManager.Instance.GetUI().RefreshAll();
         }
         

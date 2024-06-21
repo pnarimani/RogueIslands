@@ -125,13 +125,13 @@ namespace RogueIslands.View
         public IBoosterView GetBooster(IBooster booster)
             => FindObjectsByType<BoosterView>(FindObjectsSortMode.None).FirstOrDefault(b => b.Data == booster);
 
-        public async void HighlightIsland(Island island)
+        public async void HighlightIsland(Cluster cluster)
         {
             var wait = AnimationScheduler.GetAnimationTime();
             AnimationScheduler.AllocateTime(0.4f);
             await UniTask.WaitForSeconds(wait);
 
-            foreach (var building in island)
+            foreach (var building in cluster)
             {
                 foreach (var view in FindObjectsOfType<BuildingView>())
                 {
@@ -145,13 +145,13 @@ namespace RogueIslands.View
             }
         }
 
-        public async void LowlightIsland(Island island)
+        public async void LowlightIsland(Cluster cluster)
         {
             var wait = AnimationScheduler.GetAnimationTime();
             AnimationScheduler.AllocateTime(0.4f);
             await UniTask.WaitForSeconds(wait);
 
-            foreach (var building in island)
+            foreach (var building in cluster)
             {
                 foreach (var view in FindObjectsOfType<BuildingView>())
                 {

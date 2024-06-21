@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using RogueIslands.GameEvents;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -21,12 +22,12 @@ namespace RogueIslands
             view.SpawnBuilding(building);
 
             RemoveOverlappingWorldBoosters(state, view, building);
-            
+
             PlaceBuildingInIsland(state, building);
 
             state.BuildingsInHand.Remove(buildingData);
 
-            state.ExecuteEvent(view, "BuildingPlaced");
+            state.ExecuteEvent(view, new BuildingPlaced { Building = building });
         }
 
         private static void PlaceBuildingInIsland(GameState state, Building building)
@@ -44,7 +45,7 @@ namespace RogueIslands
             }
             else
             {
-                state.Islands.Add(new Island()
+                state.Islands.Add(new Cluster()
                 {
                     Id = Guid.NewGuid().ToString(),
                     Buildings = new List<Building> { building },
@@ -62,16 +63,15 @@ namespace RogueIslands
                 if (bounds.Intersects(wbBounds))
                 {
                     state.WorldBoosters.RemoveAt(i);
-                    
-                    state.ExecuteEvent(view, "BoosterRemoved");
-                    state.ExecuteEvent(view, "WorldBoosterRemoved");
-                    
+
+                    state.ExecuteEvent(view, new WorldBoosterDestroyed { Booster = wb });
+
                     view.GetBooster(wb).Remove();
                 }
             }
         }
 
-        private static void MergeIslands(GameState state, List<Island> islands, Building building)
+        private static void MergeIslands(GameState state, List<Cluster> islands, Building building)
         {
             var buildings = islands
                 .SelectMany(island => island.Buildings)
@@ -80,21 +80,21 @@ namespace RogueIslands
             foreach (var island in islands)
                 state.Islands.Remove(island);
 
-            state.Islands.Add(new Island()
+            state.Islands.Add(new Cluster()
             {
                 Id = Guid.NewGuid().ToString(),
                 Buildings = buildings.ToList(),
             });
         }
 
-        public static List<Island> GetIslands(this GameState state, Building building)
+        public static List<Cluster> GetIslands(this GameState state, Building building)
         {
             return GetIslands(state, building.Position, building.Range);
         }
 
-        public static List<Island> GetIslands(this GameState state, Vector3 position, float range)
+        public static List<Cluster> GetIslands(this GameState state, Vector3 position, float range)
         {
-            var islands = new List<Island>();
+            var islands = new List<Cluster>();
             foreach (var island in state.Islands)
             {
                 foreach (var other in island)

@@ -11,7 +11,7 @@ namespace RogueIslands.View.Boosters
 
         public override bool CanVisualize(GameAction action)
         {
-            return action is RetriggerScoringBuildingAction;
+            return action is RetriggerBuildingAction;
         }
 
         public override async UniTask OnBeforeBoosterExecuted(GameState state, GameAction action, BoosterView booster)

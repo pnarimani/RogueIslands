@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using RogueIslands.Scoring;
+using RogueIslands.GameEvents;
 
 namespace RogueIslands
 {
@@ -22,40 +22,40 @@ namespace RogueIslands
         {
             foreach (var building in state.Islands.SelectMany(island => island.Buildings))
                 building.RemainingTriggers = 1;
-
-            using (new ScoringScope(state, view))
+            
+            state.ScoringState = new ScoringState();
+            
+            foreach (var cluster in state.Islands)
             {
-                foreach (var island in state.Islands)
+                foreach (var building in cluster.Buildings)
                 {
-                    using (new IslandScoringScope(state, view, island))
+                    BuildingScored buildingScoredEvent = new() { Building = building };
+
+                    var buildingView = view.GetBuilding(building);
+
+                    while (building.RemainingTriggers > 0)
                     {
-                        foreach (var building in island.Buildings)
-                        {
-                            using (var buildingScoring = new BuildingScoringScope(state, view, building))
-                            {
-                                var buildingView = view.GetBuilding(building);
+                        building.RemainingTriggers--;
+                        state.ScoringState.Products += building.Output + building.OutputUpgrade;
+                        buildingView.BuildingTriggered(false);
+                        buildingScoredEvent.TriggerCount++;
 
-                                while (building.RemainingTriggers > 0)
-                                {
-                                    buildingScoring.TriggerBeforeScore();
-
-                                    building.RemainingTriggers--;
-                                    state.ScoringState.Products += building.Output + building.OutputUpgrade;
-                                    buildingView.BuildingTriggered(false);
-
-                                    buildingScoring.TriggerAfterScore();
-                                }
-                            }
-                        }
+                        state.ExecuteEvent(view, buildingScoredEvent);
                     }
                 }
 
-                foreach (var building in state.BuildingsInHand)
-                {
-                    using var buildingScoring = new BuildingScoringScope(state, view, building);
-                    buildingScoring.BuildingRemainedInHand();
-                }
+                state.ExecuteEvent(view, new ClusterScored { Cluster = cluster });
             }
+
+            BuildingRemainedInHand buildingRemainedInHand = new();
+
+            foreach (var building in state.BuildingsInHand)
+            {
+                buildingRemainedInHand.Building = building;
+                buildingRemainedInHand.TriggerCount = 1;
+                state.ExecuteEvent(view, buildingRemainedInHand);
+            }
+
 
             state.CurrentScore += state.ScoringState.Products * state.ScoringState.Multiplier;
             state.Day++;
@@ -75,24 +75,24 @@ namespace RogueIslands
                 return;
             }
 
-            if (state.IsWeekFinished())
+            if (state.IsRoundFinished())
             {
-                state.ExecuteEvent(view, "WeekEnd");
+                state.ExecuteEvent(view, new RoundEnd());
 
-                ShowWeekWinScreen(state, view);
+                ShowRoundWinScreen(state, view);
 
                 state.PopulateShop();
 
-                state.Week++;
-                if (state.Week >= GameState.TotalWeeks)
+                state.Round++;
+                if (state.Round >= GameState.TotalRounds)
                 {
-                    state.Week = 0;
-                    state.Month++;
+                    state.Round = 0;
+                    state.Act++;
 
-                    state.ExecuteEvent(view, "MonthEnd");
+                    state.ExecuteEvent(view, new ActEnd());
                 }
 
-                if (state.Month >= GameState.TotalMonths)
+                if (state.Act >= GameState.TotalActs)
                 {
                     state.Result = GameResult.Win;
                     view.ShowGameWinScreen();
@@ -102,7 +102,7 @@ namespace RogueIslands
 
             state.BuildingsInHand.Clear();
             state.BuildingsInHand.AddRange(
-                state.AvailableBuildings
+                state.BuildingDeck
                     .Skip(state.Day * state.HandSize)
                     .Take(state.HandSize)
             );
@@ -111,7 +111,7 @@ namespace RogueIslands
             view.GetUI().RefreshAll();
         }
 
-        private static void ShowWeekWinScreen(GameState state, IGameView view)
+        private static void ShowRoundWinScreen(GameState state, IGameView view)
         {
             var winScreen = view.ShowWeekWin();
             winScreen.AddMoneyChange(new MoneyChange
@@ -144,8 +144,9 @@ namespace RogueIslands
             view.ShowShopScreen();
         }
 
-        public static void StartWeek(this GameState state, IGameView view)
+        public static void StartRound(this GameState state, IGameView view)
         {
+            state.BuildingDeck.Shuffle();
             state.CurrentScore = 0;
             state.Day = 0;
             state.Islands.Clear();
@@ -156,13 +157,13 @@ namespace RogueIslands
             view.ShowBuildingsInHand();
             view.GetUI().RefreshAll();
 
-            state.ExecuteEvent(view, "WeekStart");
+            state.ExecuteEvent(view, new RoundStart());
         }
 
         private static bool HasLost(this GameState state)
             => state.Day >= state.TotalDays && state.CurrentScore < state.RequiredScore;
 
-        private static bool IsWeekFinished(this GameState state)
+        private static bool IsRoundFinished(this GameState state)
         {
             return state.CurrentScore >= state.RequiredScore;
         }

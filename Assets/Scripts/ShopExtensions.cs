@@ -28,7 +28,7 @@ namespace RogueIslands
 
         private static void PopulateBoosterSlots(GameState state)
         {
-            ref var rand = ref state.Shop.BoosterSpawn[state.Month];
+            ref var rand = ref state.Shop.BoosterSpawn[state.Act];
             for (var i = 0; i < state.Shop.CardCount; i++)
             {
                 var index = rand.NextInt(state.AvailableBoosters.Count);

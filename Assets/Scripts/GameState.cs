@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using RogueIslands.Boosters;
+using RogueIslands.GameEvents;
 using Unity.Mathematics;
 
 namespace RogueIslands
 {
     public class GameState
     {
-        public const int TotalWeeks = 4;
-        public const int TotalMonths = 5;
+        public const int TotalRounds = 4;
+        public const int TotalActs = 5;
 
         public int Day;
-        public int Week;
-        public int Month;
+        public int Round;
+        public int Act;
 
         public int DefaultTotalDays = 4;
         public int TotalDays = 4;
@@ -22,16 +23,16 @@ namespace RogueIslands
         public double CurrentScore;
 
         public double[] AllRequiredScores;
-        public double RequiredScore => AllRequiredScores[Month * TotalWeeks + Week];
+        public double RequiredScore => AllRequiredScores[Act * TotalRounds + Round];
 
         public int Money = 4;
         public int MoneyPayoutPerWeek = 4;
         public List<MoneyChange> MoneyChanges = new();
 
-        public string CurrentEvent;
+        public IGameEvent CurrentEvent;
         public ScoringState ScoringState;
 
-        public List<Island> Islands = new();
+        public List<Cluster> Islands = new();
         public List<Building> BuildingsInHand = new();
         public List<Building> BuildingDeck;
         public List<Building> AvailableBuildings;
