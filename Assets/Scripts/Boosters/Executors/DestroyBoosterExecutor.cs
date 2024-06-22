@@ -6,9 +6,10 @@ namespace RogueIslands.Boosters.Executors
     {
         protected override void Execute(GameState state, IGameView view, IBooster booster, DestroyBoosterAction action)
         {
+            var boosterManagement = StaticResolver.Resolve<BoosterManagement>();
             if (action.Self)
             {
-                state.DestroyBooster(view, booster.Id);
+                boosterManagement.DestroyBooster(booster.Id);
             }
             else
             {
@@ -16,7 +17,7 @@ namespace RogueIslands.Boosters.Executors
                 if (index < state.Boosters.Count - 1)
                 {
                     var nextBooster = state.Boosters[index + 1];
-                    state.DestroyBooster(view, nextBooster.Id);
+                    boosterManagement.DestroyBooster(nextBooster.Id);
                 }
             }
         }

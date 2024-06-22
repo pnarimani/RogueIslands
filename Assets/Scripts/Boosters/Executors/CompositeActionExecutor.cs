@@ -6,8 +6,9 @@ namespace RogueIslands.Boosters.Executors
     {
         protected override void Execute(GameState state, IGameView view, IBooster booster, CompositeAction action)
         {
+            var actionManager = StaticResolver.Resolve<GameActionController>();
             foreach (var subAction in action.Actions)
-                state.Execute(view, booster, subAction);
+                actionManager.Execute(booster, subAction);
         }
     }
 }

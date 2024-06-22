@@ -4,9 +4,10 @@ namespace RogueIslands.Boosters
     {
         protected override bool Evaluate(GameState state, IBooster booster, OrCondition condition)
         {
+            var m = StaticResolver.Resolve<GameConditionsController>();
             foreach (var subCondition in condition.Conditions)
             {
-                if (state.IsConditionMet(booster, subCondition))
+                if (m.IsConditionMet(booster, subCondition))
                     return true;
             }
 

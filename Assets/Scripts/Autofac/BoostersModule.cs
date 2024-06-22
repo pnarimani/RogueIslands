@@ -17,12 +17,14 @@ namespace RogueIslands.Autofac
 
             foreach (var evalType in allTypes.Where(t => typeof(GameConditionEvaluator).IsAssignableFrom(t)))
             {
-                builder.RegisterType(evalType).As<GameConditionEvaluator>();
+                builder.RegisterType(evalType)
+                    .As<GameConditionEvaluator>();
             }
 
             foreach (var execType in allTypes.Where(t => typeof(GameActionExecutor).IsAssignableFrom(t)))
             {
-                builder.RegisterType(execType).As<GameActionExecutor>();
+                builder.RegisterType(execType)
+                    .As<GameActionExecutor>();
             }
         }
     }

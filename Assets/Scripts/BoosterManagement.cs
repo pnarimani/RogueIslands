@@ -8,68 +8,82 @@ using UnityEngine;
 
 namespace RogueIslands
 {
-    public static class BoosterManagement
+    public class BoosterManagement
     {
-        public static bool TryAddBooster(this GameState state, IGameView view, BoosterCard booster)
+        private readonly GameState _state;
+        private readonly IGameView _view;
+        private readonly EventController _eventController;
+        private readonly GameActionController _gameActionController;
+
+        public BoosterManagement(GameState state, IGameView view, EventController eventController,
+            GameActionController gameActionController)
         {
-            if (state.Boosters.Count >= state.MaxBoosters)
+            _gameActionController = gameActionController;
+            _eventController = eventController;
+            _view = view;
+            _state = state;
+        }
+
+        public bool TryAddBooster(BoosterCard booster)
+        {
+            if (_state.Boosters.Count >= _state.MaxBoosters)
                 return false;
 
             var instance = booster.Clone();
             instance.Id = new BoosterInstanceId(Guid.NewGuid().GetHashCode());
 
-            state.Boosters.Add(instance);
-            view.AddBooster(instance);
-            
-            state.RestoreProperties();
-            state.ExecuteEvent(view, new PropertiesRestored());
+            _state.Boosters.Add(instance);
+            _view.AddBooster(instance);
+
+            _state.RestoreProperties();
+            _state.ExecuteEvent(_view, new PropertiesRestored());
 
             if (instance.BuyAction != null)
-                state.Execute(view, instance, instance.BuyAction);
+                _gameActionController.Execute(instance, instance.BuyAction);
 
-            state.ExecuteEvent(view, new BoosterBought { Booster = instance });
+            _eventController.Execute(new BoosterBought { Booster = instance });
             return true;
         }
-        
-        public static void SpawnWorldBoosters(this GameState state, IGameView view, IReadOnlyList<Vector3> spawnPoints)
+
+        public void SpawnWorldBoosters(IReadOnlyList<Vector3> spawnPoints)
         {
             foreach (var point in spawnPoints)
             {
-                var index = state.WorldBoosterRandom.NextInt(state.AvailableWorldBoosters.Count);
-                
-                var booster = state.AvailableWorldBoosters[index].Clone();
+                var index = _state.WorldBoosterRandom.NextInt(_state.AvailableWorldBoosters.Count);
+
+                var booster = _state.AvailableWorldBoosters[index].Clone();
                 booster.Id = new BoosterInstanceId(Guid.NewGuid().GetHashCode());
                 booster.Position = point;
                 booster.Rotation = Quaternion.identity;
-                
-                state.WorldBoosters.Add(booster);
-                view.AddBooster(booster);
+
+                _state.WorldBoosters.Add(booster);
+                _view.AddBooster(booster);
             }
         }
 
-        public static void SellBooster(this GameState state, IGameView view, BoosterInstanceId boosterId)
+        public void SellBooster(BoosterInstanceId boosterId)
         {
-            var booster = state.Boosters.First(x => x.Id == boosterId);
-            state.Boosters.Remove(booster);
+            var booster = _state.Boosters.First(x => x.Id == boosterId);
+            _state.Boosters.Remove(booster);
             if (booster.SellAction != null)
-                state.Execute(view, booster, booster.SellAction);
-            state.Money += booster.SellPrice;
-            view.GetBooster(booster).Remove();
-            view.GetUI().RefreshAll();
-            
-            state.RestoreProperties();
-            state.ExecuteEvent(view, new PropertiesRestored());
-            
-            state.ExecuteEvent(view, new BoosterSold() { Booster = booster });
+                _gameActionController.Execute(booster, booster.SellAction);
+            _state.Money += booster.SellPrice;
+            _view.GetBooster(booster).Remove();
+            _view.GetUI().RefreshAll();
+
+            _state.RestoreProperties();
+            _state.ExecuteEvent(_view, new PropertiesRestored());
+
+            _state.ExecuteEvent(_view, new BoosterSold() { Booster = booster });
         }
 
-        public static void DestroyBooster(this GameState state, IGameView view, BoosterInstanceId boosterId)
+        public void DestroyBooster(BoosterInstanceId boosterId)
         {
-            var booster = state.Boosters.First(x => x.Id == boosterId);
-            state.Boosters.Remove(booster);
-            view.GetBooster(booster).Remove();
-            view.GetUI().RefreshAll();
-            state.ExecuteEvent(view, new BoosterDestroyed() { Booster = booster });
+            var booster = _state.Boosters.First(x => x.Id == boosterId);
+            _state.Boosters.Remove(booster);
+            _view.GetBooster(booster).Remove();
+            _view.GetUI().RefreshAll();
+            _state.ExecuteEvent(_view, new BoosterDestroyed() { Booster = booster });
         }
     }
 }

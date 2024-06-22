@@ -17,8 +17,11 @@ namespace RogueIslands.Autofac
                             .SingleInstance()
                             .AsSelf();
 
-            builder.RegisterType<PlayController>();
-            builder.RegisterType<EventController>();
+            builder.RegisterType<PlayController>().SingleInstance();
+            builder.RegisterType<EventController>().SingleInstance();
+            builder.RegisterType<GameActionController>().SingleInstance();
+            builder.RegisterType<GameConditionsController>().SingleInstance();
+            builder.RegisterType<BoosterManagement>().SingleInstance();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace RogueIslands.Debug
                 return;
             }
 
-            GameManager.Instance.State.TryAddBooster(GameManager.Instance, booster);
+            StaticResolver.Resolve<BoosterManagement>().TryAddBooster(booster);
             GameManager.Instance.GetUI().RefreshAll();
         }
 
@@ -29,7 +29,7 @@ namespace RogueIslands.Debug
             var booster = GameManager.Instance.State.Boosters.FirstOrDefault(CompareName(name));
             if (booster == null)
                 return;
-            GameManager.Instance.State.SellBooster(GameManager.Instance, booster.Id);
+            StaticResolver.Resolve<BoosterManagement>().SellBooster(booster.Id);
             GameManager.Instance.GetUI().RefreshAll();
         }
 

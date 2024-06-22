@@ -8,11 +8,11 @@ namespace RogueIslands
     public class EventController
     {
         private readonly GameState _state;
-        private readonly IGameView _view;
+        private readonly GameActionController _gameActionController;
 
-        public EventController(GameState state, IGameView view)
+        public EventController(GameState state, GameActionController gameActionController)
         {
-            _view = view;
+            _gameActionController = gameActionController;
             _state = state;
         }
         
@@ -39,7 +39,7 @@ namespace RogueIslands
         private void ExecuteBooster(IBooster b)
         {
             if (b.EventAction != null)
-                _state.Execute(_view, b, b.EventAction);
+                _gameActionController.Execute(b, b.EventAction);
         }
     }
 }

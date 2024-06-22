@@ -44,7 +44,7 @@ namespace RogueIslands
 
             var success = item switch
             {
-                BoosterCard booster => state.TryAddBooster(view, booster),
+                BoosterCard booster => StaticResolver.Resolve<BoosterManagement>().TryAddBooster(booster),
                 _ => false,
             };
 

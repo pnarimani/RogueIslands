@@ -11,7 +11,7 @@ namespace RogueIslands.Autofac
     {
         [SerializeField] private string _seed;
         [SerializeField] private GameManager _gameManagerPrefab;
-        
+
         public string Seed => _seed;
 
         protected override void Configure(ContainerBuilder builder)
@@ -19,7 +19,7 @@ namespace RogueIslands.Autofac
             builder.RegisterInstance(new Random(Seed.GetHashCode()));
 
             builder.RegisterModule<GameplayCoreModule>();
-            
+
             builder.RegisterMonoBehaviour<InputHandling>()
                 .AutoActivate()
                 .SingleInstance();
@@ -27,13 +27,13 @@ namespace RogueIslands.Autofac
             builder.Register(_ => new AnimationScheduler())
                 .AutoActivate()
                 .SingleInstance();
-            
+
             builder.Register(_ => new BuildingViewPlacement())
                 .AutoActivate()
                 .SingleInstance()
                 .AsImplementedInterfaces()
                 .AsSelf();
-            
+
             builder.Register(c => new GameObject().AddComponent<GizmosCaller>())
                 .AutoActivate()
                 .OnActivated(c => c.Instance.Initialize(c.Context.Resolve<IReadOnlyList<IGizmosDrawer>>()));
@@ -42,7 +42,11 @@ namespace RogueIslands.Autofac
                 .AutoActivate()
                 .OnActivated(m =>
                 {
-                    m.Instance.Initialize(m.Context.Resolve<GameState>(), m.Context.Resolve<PlayController>());
+                    m.Instance.Initialize(
+                        m.Context.Resolve<GameState>(),
+                        m.Context.Resolve<PlayController>(),
+                        m.Context.Resolve<BoosterManagement>()
+                    );
                 })
                 .AsSelf()
                 .AsImplementedInterfaces()

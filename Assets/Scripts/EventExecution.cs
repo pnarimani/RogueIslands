@@ -10,17 +10,18 @@ namespace RogueIslands
         {
             try
             {
+                var gameActionManager = StaticResolver.Resolve<GameActionController>();
                 state.CurrentEvent = e;
                 foreach (var worldBooster in state.WorldBoosters)
                 {
                     if (worldBooster.EventAction != null)
-                        state.Execute(view, worldBooster, worldBooster.EventAction);
+                        gameActionManager.Execute(worldBooster, worldBooster.EventAction);
                 }
 
                 foreach (var booster in state.Boosters)
                 {
                     if (booster.EventAction != null)
-                        state.Execute(view, booster, booster.EventAction);
+                        gameActionManager.Execute(booster, booster.EventAction);
                 }
             }
             catch (Exception exception)
