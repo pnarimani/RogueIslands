@@ -25,6 +25,8 @@ namespace RogueIslands
             
             state.ScoringState = new ScoringState();
             
+            state.ExecuteEvent(view, new DayStart());
+            
             foreach (var cluster in state.Clusters)
             {
                 foreach (var building in cluster.Buildings)
@@ -56,6 +58,7 @@ namespace RogueIslands
                 state.ExecuteEvent(view, buildingRemainedInHand);
             }
 
+            state.ExecuteEvent(view, new DayEnd());
 
             state.CurrentScore += state.ScoringState.Products * state.ScoringState.Multiplier;
             state.Day++;
