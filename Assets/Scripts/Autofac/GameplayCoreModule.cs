@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using RogueIslands.Rollback;
 
 namespace RogueIslands.Autofac
 {
@@ -22,6 +23,7 @@ namespace RogueIslands.Autofac
             builder.RegisterType<GameActionController>().SingleInstance();
             builder.RegisterType<GameConditionsController>().SingleInstance();
             builder.RegisterType<BoosterManagement>().SingleInstance();
+            builder.RegisterType<ResetController>().SingleInstance();
         }
     }
 }

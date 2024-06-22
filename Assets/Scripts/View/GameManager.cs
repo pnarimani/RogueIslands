@@ -177,7 +177,6 @@ namespace RogueIslands.View
         {
             _playController = playController;
             State = state;
-            State.RestoreProperties();
             boosterManagement.SpawnWorldBoosters(GetWorldBoosterPositions());
         }
 

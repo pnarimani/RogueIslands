@@ -99,8 +99,7 @@ namespace RogueIslands
 
         public static void StartRound(this GameState state, IGameView view)
         {
-            state.RestoreProperties();
-            state.ExecuteEvent(view, new PropertiesRestored());
+            StaticResolver.Resolve<ResetController>().RestoreProperties();
             
             state.BuildingDeck.Deck.Shuffle(state.BuildingDeck.ShufflingRandom);
             state.CurrentScore = 0;

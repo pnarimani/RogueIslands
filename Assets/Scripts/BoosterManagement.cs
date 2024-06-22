@@ -14,10 +14,12 @@ namespace RogueIslands
         private readonly IGameView _view;
         private readonly EventController _eventController;
         private readonly GameActionController _gameActionController;
+        private ResetController _resetController;
 
         public BoosterManagement(GameState state, IGameView view, EventController eventController,
-            GameActionController gameActionController)
+            GameActionController gameActionController, ResetController resetController)
         {
+            _resetController = resetController;
             _gameActionController = gameActionController;
             _eventController = eventController;
             _view = view;
@@ -35,8 +37,7 @@ namespace RogueIslands
             _state.Boosters.Add(instance);
             _view.AddBooster(instance);
 
-            _state.RestoreProperties();
-            _state.ExecuteEvent(_view, new PropertiesRestored());
+            _resetController.RestoreProperties();
 
             if (instance.BuyAction != null)
                 _gameActionController.Execute(instance, instance.BuyAction);
@@ -71,8 +72,7 @@ namespace RogueIslands
             _view.GetBooster(booster).Remove();
             _view.GetUI().RefreshAll();
 
-            _state.RestoreProperties();
-            _state.ExecuteEvent(_view, new PropertiesRestored());
+            _resetController.RestoreProperties();
 
             _state.ExecuteEvent(_view, new BoosterSold() { Booster = booster });
         }
