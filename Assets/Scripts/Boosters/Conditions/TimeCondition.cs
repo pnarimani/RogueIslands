@@ -7,6 +7,7 @@ namespace RogueIslands.Boosters
             Day,
             Week,
             Month,
+            TotalDays,
         }
 
         public Mode TimeMode { get; set; }

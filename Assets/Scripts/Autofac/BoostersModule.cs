@@ -2,6 +2,7 @@
 using System.Linq;
 using Autofac;
 using RogueIslands.Boosters;
+using RogueIslands.Boosters.Executors;
 
 namespace RogueIslands.Autofac
 {
@@ -14,9 +15,7 @@ namespace RogueIslands.Autofac
                 .Where(t => t.IsClass && !t.IsAbstract)
                 .ToList();
 
-            foreach (var evalType in allTypes.Where(t =>
-                         typeof(GameConditionEvaluator).IsAssignableFrom(t) &&
-                         !typeof(IEvaluationConditionOverride).IsAssignableFrom(t)))
+            foreach (var evalType in allTypes.Where(t => typeof(GameConditionEvaluator).IsAssignableFrom(t)))
             {
                 builder.RegisterType(evalType).As<GameConditionEvaluator>();
             }

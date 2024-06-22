@@ -1,6 +1,6 @@
-﻿namespace RogueIslands.Boosters
+﻿namespace RogueIslands.Boosters.Actions
 {
-    public class ModifyProbabilitiesAction : GameAction
+    public class ModifyProbabilitiesAction : ModifyConditionGameAction
     {
     }
 }

@@ -1,4 +1,4 @@
-namespace RogueIslands.Boosters
+namespace RogueIslands.Boosters.Actions
 {
     public class ScoringAction : GameAction
     {

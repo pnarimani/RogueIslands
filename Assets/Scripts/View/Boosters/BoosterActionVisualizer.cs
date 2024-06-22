@@ -1,6 +1,5 @@
-﻿using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
-using RogueIslands.Boosters;
+﻿using Cysharp.Threading.Tasks;
+using RogueIslands.Boosters.Actions;
 using UnityEngine;
 
 namespace RogueIslands.View.Boosters

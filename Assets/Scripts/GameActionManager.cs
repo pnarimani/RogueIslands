@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.Boosters;
+using RogueIslands.Boosters.Actions;
+using RogueIslands.Boosters.Executors;
 using UnityEngine.Assertions;
 
 namespace RogueIslands

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
+using RogueIslands.Boosters.Actions;
 using UnityEngine;
 
-namespace RogueIslands.Boosters
+namespace RogueIslands.Boosters.Executors
 {
     public abstract class GameActionExecutor
     {

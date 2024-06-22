@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using RogueIslands.Boosters.Actions;
 using RogueIslands.Boosters.Descriptions;
 
 namespace RogueIslands.Boosters
@@ -9,6 +9,5 @@ namespace RogueIslands.Boosters
         string Name { get; set; }
         IDescriptionProvider Description { get; set; }
         GameAction EventAction { get; set; }
-        IReadOnlyList<GameConditionEvaluator> EvaluationOverrides { get; set; }
     }
 }

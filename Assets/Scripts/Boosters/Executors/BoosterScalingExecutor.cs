@@ -1,6 +1,6 @@
-using System;
+using RogueIslands.Boosters.Actions;
 
-namespace RogueIslands.Boosters
+namespace RogueIslands.Boosters.Executors
 {
     public class BoosterScalingExecutor : GameActionExecutor<BoosterScalingAction>
     {

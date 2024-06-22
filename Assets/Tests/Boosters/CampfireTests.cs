@@ -4,6 +4,7 @@ using NSubstitute;
 using NUnit.Framework;
 using RogueIslands;
 using RogueIslands.Boosters;
+using RogueIslands.Boosters.Actions;
 using RogueIslands.GameEvents;
 
 namespace Tests.Boosters

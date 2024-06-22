@@ -1,6 +1,7 @@
+using RogueIslands.Boosters.Actions;
 using RogueIslands.GameEvents;
 
-namespace RogueIslands.Boosters
+namespace RogueIslands.Boosters.Executors
 {
     public class PermanentBuildingUpgradeExecutor : GameActionExecutor<PermanentBuildingUpgradeAction>
     {

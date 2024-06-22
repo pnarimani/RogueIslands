@@ -1,0 +1,21 @@
+﻿using System;
+using Autofac;
+
+namespace RogueIslands.Autofac
+{
+    public class GameplayCoreModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.Register((c) => c.Resolve<Random>().NextRandom())
+                .InstancePerDependency();
+            
+            builder.RegisterModule<BoostersModule>();
+            builder.RegisterModule<RollbackModule>();
+            
+            builder.Register(c => GameFactory.NewGame(c.Resolve<Random>()))
+                            .SingleInstance()
+                            .AsSelf();
+        }
+    }
+}

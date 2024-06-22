@@ -3,9 +3,9 @@ using RogueIslands.GameEvents;
 
 namespace RogueIslands.Boosters
 {
-    public class SelectedBuildingColorEvaluator : GameConditionEvaluator<SelectedBuildingColorCondition>
+    public class SelectedBuildingColorEvaluator : GameConditionEvaluator<BuildingColorCondition>
     {
-        protected override bool Evaluate(GameState state, IBooster booster, SelectedBuildingColorCondition condition) 
+        protected override bool Evaluate(GameState state, IBooster booster, BuildingColorCondition condition) 
             => state.CurrentEvent is BuildingEvent e && condition.Colors.Contains(e.Building.Color);
     }
 }

@@ -1,4 +1,5 @@
 using RogueIslands.Boosters;
+using RogueIslands.Boosters.Actions;
 
 namespace RogueIslands
 {

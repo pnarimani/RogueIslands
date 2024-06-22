@@ -17,15 +17,8 @@ namespace RogueIslands.Autofac
         protected override void Configure(ContainerBuilder builder)
         {
             builder.RegisterInstance(new Random(Seed.GetHashCode()));
-            builder.Register((c) => c.Resolve<Random>().NextRandom())
-                .InstancePerDependency();
-            
-            builder.RegisterModule<BoostersModule>();
-            builder.RegisterModule<RollbackModule>();
 
-            builder.Register(_ => GameFactory.NewGame(new Random(Seed.GetHashCode())))
-                .SingleInstance()
-                .AsSelf();
+            builder.RegisterModule<GameplayCoreModule>();
             
             builder.RegisterMonoBehaviour<InputHandling>()
                 .AutoActivate()
@@ -34,7 +27,6 @@ namespace RogueIslands.Autofac
             builder.Register(_ => new AnimationScheduler())
                 .AutoActivate()
                 .SingleInstance();
-            
             
             builder.Register(_ => new BuildingViewPlacement())
                 .AutoActivate()

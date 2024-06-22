@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RogueIslands.Boosters.Actions;
 using RogueIslands.Boosters.Descriptions;
 using RogueIslands.GameEvents;
 
@@ -15,19 +16,13 @@ namespace RogueIslands.Boosters
                     Name = "Oops all sixes",
                     Description = new LiteralDescription("Double all probabilities"),
                     BuyPrice = 2,
-                    BuyAction = new ModifyProbabilitiesAction(),
-                    EventAction = new ModifyProbabilitiesAction
-                    {
-                        Conditions = new[]
-                        {
-                            new OrCondition(GameEventCondition.Create<PropertiesRestored>()),
-                        },
-                    },
+                    EventAction = new ModifyProbabilitiesAction(),
                 },
                 new()
                 {
                     Name = "Blood Pact",
-                    Description = new ProbabilityDescription($"{{0}} to give x2 mult for each {Category.Cat3} building scored"),
+                    Description =
+                        new ProbabilityDescription($"{{0}} to give x2 mult for each {Category.Cat3} building scored"),
                     BuyPrice = 2,
                     EventAction = new ScoringAction
                     {
@@ -87,7 +82,7 @@ namespace RogueIslands.Boosters
                     Description =
                         new LiteralDescription(
                             $"{ColorTag.Red} and {ColorTag.Blue} are the same. {ColorTag.White} and {ColorTag.Black} are the same."),
-                    EvaluationOverrides = new[] { new BadEyesConditionEvaluator() },
+                    EventAction = new ModifyBuildingColorConditionAction(),
                 },
                 new()
                 {
@@ -218,7 +213,7 @@ namespace RogueIslands.Boosters
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<BuildingScored>(),
-                            new SelectedBuildingColorCondition
+                            new BuildingColorCondition
                             {
                                 Colors = new[] { ColorTag.Red },
                             },
@@ -230,7 +225,6 @@ namespace RogueIslands.Boosters
                     Name = "Procrastinator",
                     Description = new LiteralDescription("x3 mult. you only have 1 day"),
                     BuyPrice = 2,
-                    BuyAction = new DayModifier { SetDays = 1 },
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
@@ -245,7 +239,11 @@ namespace RogueIslands.Boosters
                             },
                             new ScoringAction
                             {
-                                Conditions = new[] { GameEventCondition.Create<DayEnd>() },
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<DayEnd>(),
+                                    new TimeCondition { Time = 1, TimeMode = TimeCondition.Mode.TotalDays },
+                                },
                                 XMult = 3,
                             },
                         },
@@ -691,7 +689,7 @@ namespace RogueIslands.Boosters
                     Conditions = new IGameCondition[]
                     {
                         GameEventCondition.Create<BuildingScored>(),
-                        new SelectedBuildingColorCondition()
+                        new BuildingColorCondition()
                         {
                             Colors = new[] { color },
                         },

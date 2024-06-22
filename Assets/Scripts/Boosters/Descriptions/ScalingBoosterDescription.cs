@@ -1,4 +1,6 @@
-﻿namespace RogueIslands.Boosters.Descriptions
+﻿using RogueIslands.Boosters.Actions;
+
+namespace RogueIslands.Boosters.Descriptions
 {
     public class ScalingBoosterDescription : IDescriptionProvider
     {

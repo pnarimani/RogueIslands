@@ -27,8 +27,6 @@ namespace RogueIslands
             if (instance.BuyAction != null)
                 state.Execute(view, instance, instance.BuyAction);
 
-            AddEvaluationOverrides(instance);
-
             state.ExecuteEvent(view, new BoosterBought { Booster = instance });
             return true;
         }
@@ -56,7 +54,6 @@ namespace RogueIslands
             if (booster.SellAction != null)
                 state.Execute(view, booster, booster.SellAction);
             state.Money += booster.SellPrice;
-            RemoveEvaluationOverrides(booster);
             view.GetBooster(booster).Remove();
             view.GetUI().RefreshAll();
             
@@ -70,28 +67,9 @@ namespace RogueIslands
         {
             var booster = state.Boosters.First(x => x.Id == boosterId);
             state.Boosters.Remove(booster);
-            RemoveEvaluationOverrides(booster);
             view.GetBooster(booster).Remove();
             view.GetUI().RefreshAll();
             state.ExecuteEvent(view, new BoosterDestroyed() { Booster = booster });
-        }
-
-        private static void AddEvaluationOverrides(BoosterCard instance)
-        {
-            if (instance.EvaluationOverrides != null)
-            {
-                foreach (var e in instance.EvaluationOverrides) 
-                    GameConditionsManager.RegisterEvaluatorOverride(e);
-            }
-        }
-
-        private static void RemoveEvaluationOverrides(BoosterCard booster)
-        {
-            if (booster.EvaluationOverrides != null)
-            {
-                foreach (var e in booster.EvaluationOverrides) 
-                    GameConditionsManager.UnregisterEvaluatorOverride(e);
-            }
         }
     }
 }

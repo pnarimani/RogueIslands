@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using NaughtyAttributes;
 using RogueIslands.Boosters;
+using RogueIslands.Boosters.Actions;
 using RogueIslands.View.Feedbacks;
 using TMPro;
 using UnityEngine;

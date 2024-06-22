@@ -160,9 +160,10 @@ namespace RogueIslands
 
             view.DestroyBuildings();
             view.ShowBuildingsInHand();
-            view.GetUI().RefreshAll();
 
             state.ExecuteEvent(view, new RoundStart());
+            
+            view.GetUI().RefreshAll();
         }
 
         private static bool HasLost(this GameState state)

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RogueIslands.Boosters
+namespace RogueIslands.Boosters.Actions
 {
     public abstract class GameAction
     {

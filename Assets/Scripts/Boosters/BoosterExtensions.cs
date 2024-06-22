@@ -1,4 +1,6 @@
-﻿namespace RogueIslands.Boosters
+﻿using RogueIslands.Boosters.Actions;
+
+namespace RogueIslands.Boosters
 {
     public static class BoosterExtensions
     {

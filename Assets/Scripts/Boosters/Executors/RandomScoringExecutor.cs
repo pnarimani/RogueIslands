@@ -1,6 +1,7 @@
+using RogueIslands.Boosters.Actions;
 using Unity.Mathematics;
 
-namespace RogueIslands.Boosters
+namespace RogueIslands.Boosters.Executors
 {
     public class RandomScoringExecutor : GameActionExecutor<RandomScoringAction>
     {
