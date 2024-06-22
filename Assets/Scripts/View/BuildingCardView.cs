@@ -63,7 +63,7 @@ namespace RogueIslands.View
                 foreach (var r in _instance.GetComponentsInChildren<Renderer>(true))
                     r.enabled = isValidPlacement;
 
-                EffectRangeHighlighter.Highlight(_instance.transform.position, Data.Range, _instance.gameObject);
+                EffectRangeHighlighter.Highlight(_instance.transform.position, Data.ModifiedRange, _instance.gameObject);
                 EffectRangeHighlighter.ShowRanges(true);
             }
             else

@@ -30,7 +30,7 @@ namespace RogueIslands.View
         public void Initialize(Building building)
         {
             Data = building;
-            _synergyRange.transform.localScale = Vector3.one * (building.Range * 2);
+            _synergyRange.transform.localScale = Vector3.one * (building.ModifiedRange * 2);
         }
 
         public async void BuildingTriggered(bool isRetrigger)
@@ -83,7 +83,7 @@ namespace RogueIslands.View
         public void OnPointerEnter(PointerEventData eventData)
         {
             ShowRange(true);
-            EffectRangeHighlighter.Highlight(transform.position, Data.Range);
+            EffectRangeHighlighter.Highlight(transform.position, Data.ModifiedRange);
             var island = GameManager.Instance.State.Clusters.Find(x => x.Buildings.Contains(Data));
             if (island != null)
             {

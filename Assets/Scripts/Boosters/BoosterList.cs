@@ -664,6 +664,16 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Net",
                     Description = new ScalingBoosterDescription("Gain +1 mult whenever a random event does not happen"),
+                },
+                new()
+                {
+                    Name = "Network",
+                    Description = new LiteralDescription("x2 building synergy range"),
+                },
+                new()
+                {
+                    Name = "Isolation",
+                    Description = new LiteralDescription("x0.5 building synergy range"),
                 }
             };
         }
