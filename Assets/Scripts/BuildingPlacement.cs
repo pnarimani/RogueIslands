@@ -32,7 +32,7 @@ namespace RogueIslands
 
         private static void PlaceBuildingInIsland(GameState state, Building building)
         {
-            if (state.GetIslands(building) is { Count: > 0 } islands)
+            if (state.GetClusterForBuilding(building) is { Count: > 0 } islands)
             {
                 if (islands.Count == 1)
                 {
@@ -45,7 +45,7 @@ namespace RogueIslands
             }
             else
             {
-                state.Islands.Add(new Cluster()
+                state.Clusters.Add(new Cluster()
                 {
                     Id = Guid.NewGuid().ToString(),
                     Buildings = new List<Building> { building },
@@ -78,24 +78,24 @@ namespace RogueIslands
                 .Append(building);
 
             foreach (var island in islands)
-                state.Islands.Remove(island);
+                state.Clusters.Remove(island);
 
-            state.Islands.Add(new Cluster()
+            state.Clusters.Add(new Cluster()
             {
                 Id = Guid.NewGuid().ToString(),
                 Buildings = buildings.ToList(),
             });
         }
 
-        public static List<Cluster> GetIslands(this GameState state, Building building)
+        public static List<Cluster> GetClusterForBuilding(this GameState state, Building building)
         {
-            return GetIslands(state, building.Position, building.Range);
+            return GetClusterAtPosition(state, building.Position, building.Range);
         }
 
-        public static List<Cluster> GetIslands(this GameState state, Vector3 position, float range)
+        public static List<Cluster> GetClusterAtPosition(this GameState state, Vector3 position, float range)
         {
             var islands = new List<Cluster>();
-            foreach (var island in state.Islands)
+            foreach (var island in state.Clusters)
             {
                 foreach (var other in island)
                 {

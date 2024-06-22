@@ -9,7 +9,7 @@ namespace RogueIslands.Boosters
         protected override bool Evaluate(GameState state, IBooster booster, ColorCheckCondition condition)
         {
             _existingColors.Clear();
-            foreach (var (tag, _) in state.Islands.SelectMany(x => x).Select(b => b.Color))
+            foreach (var (tag, _) in state.Clusters.SelectMany(x => x).Select(b => b.Color))
                 _existingColors.Add(tag);
 
             var exist = condition.ColorsToExist == null || condition.ColorsToExist.All(color => _existingColors.Contains(color.Tag));

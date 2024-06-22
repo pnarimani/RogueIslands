@@ -84,7 +84,7 @@ namespace RogueIslands.View
         {
             ShowRange(true);
             EffectRangeHighlighter.Highlight(transform.position, Data.Range);
-            var island = GameManager.Instance.State.Islands.Find(x => x.Buildings.Contains(Data));
+            var island = GameManager.Instance.State.Clusters.Find(x => x.Buildings.Contains(Data));
             if (island != null)
             {
                 var allBuildings = FindObjectsOfType<BuildingView>();

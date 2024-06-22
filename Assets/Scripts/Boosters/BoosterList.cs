@@ -659,6 +659,11 @@ namespace RogueIslands.Boosters
                             new SameBuildingsCondition(),
                         }
                     }
+                },
+                new()
+                {
+                    Name = "Net",
+                    Description = new ScalingBoosterDescription("Gain +1 mult whenever a random event does not happen"),
                 }
             };
         }

@@ -14,7 +14,7 @@ namespace RogueIslands.Boosters
             }
             else if (action.MultiplyByIslandCount)
             {
-                var count = state.Islands.Count;
+                var count = state.Clusters.Count;
                 state.ScoringState.Products += action.Products * count;
                 state.ScoringState.Multiplier += action.PlusMult * count;
                 state.ScoringState.Multiplier *= action.XMult * count;

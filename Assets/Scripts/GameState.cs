@@ -32,7 +32,7 @@ namespace RogueIslands
         public IGameEvent CurrentEvent;
         public ScoringState ScoringState;
 
-        public List<Cluster> Islands = new();
+        public List<Cluster> Clusters = new();
         public List<Building> BuildingsInHand = new();
         public BuildingDeck BuildingDeck;
         public List<Building> AvailableBuildings;

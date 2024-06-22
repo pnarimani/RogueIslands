@@ -13,19 +13,19 @@ namespace RogueIslands
                 return false;
             if (state.Result != GameResult.InProgress)
                 return false;
-            if (state.Islands.Count == 0)
+            if (state.Clusters.Count == 0)
                 return false;
             return true;
         }
 
         public static void Play(this GameState state, IGameView view)
         {
-            foreach (var building in state.Islands.SelectMany(island => island.Buildings))
+            foreach (var building in state.Clusters.SelectMany(island => island.Buildings))
                 building.RemainingTriggers = 1;
             
             state.ScoringState = new ScoringState();
             
-            foreach (var cluster in state.Islands)
+            foreach (var cluster in state.Clusters)
             {
                 foreach (var building in cluster.Buildings)
                 {
@@ -149,7 +149,7 @@ namespace RogueIslands
             state.BuildingDeck.Deck.Shuffle(state.BuildingDeck.ShufflingRandom);
             state.CurrentScore = 0;
             state.Day = 0;
-            state.Islands.Clear();
+            state.Clusters.Clear();
             state.TotalDays = state.DefaultTotalDays;
             state.HandSize = state.DefaultHandSize;
 

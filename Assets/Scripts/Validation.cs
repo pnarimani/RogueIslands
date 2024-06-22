@@ -10,7 +10,7 @@ namespace RogueIslands
             foreach (var booster in state.Boosters) 
                 Assert.IsFalse(booster.Id.IsDefault());
             
-            foreach (var building in state.Islands.SelectMany(x => x))
+            foreach (var building in state.Clusters.SelectMany(x => x))
                 Assert.IsFalse(building.Id.IsDefault());
             
             foreach (var booster in state.AvailableBoosters) 
