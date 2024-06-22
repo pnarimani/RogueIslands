@@ -5,6 +5,7 @@
     "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
     "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
     "com.mnarimani.autoassigner": "https://github.com/pnarimani/AutoAssigner.git",
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.cinemachine": "3.1.0",
     "com.unity.collab-proxy": "2.3.1",
     "com.unity.feature.development": "1.0.1",

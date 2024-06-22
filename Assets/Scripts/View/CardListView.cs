@@ -7,6 +7,8 @@ namespace RogueIslands.View
     {
         [SerializeField] private bool _center = true;
         [SerializeField] private float _minPadding = 5;
+        [SerializeField] private Vector2 _offset;
+        [SerializeField] private Vector2 _padding;
         
         private readonly List<CardListItem> _items = new();
 
@@ -27,6 +29,8 @@ namespace RogueIslands.View
         private void Update()
         {
             UpdatePositions();
+            if(_center)
+                Tx.sizeDelta = Vector2.Lerp(Tx.sizeDelta, GetContentSize(), 10 * Time.deltaTime);
         }
 
         private void UpdatePositions()
@@ -68,7 +72,7 @@ namespace RogueIslands.View
             return index;
         }
 
-        private Vector3 GetPositionForIndex(int index)
+        private Vector2 GetPositionForIndex(int index)
         {
             var worldRect = Tx.GetWorldRect();
 
@@ -83,7 +87,18 @@ namespace RogueIslands.View
                 ? worldRect.center + Vector2.left * ((_items.Count - 1) / 2f * distance)
                 : worldRect.min + Vector2.up * worldRect.height / 2;
 
-            return startingPosition + Vector2.right * (index * distance);
+            return startingPosition + Vector2.right * (index * distance) + _offset;
+        }
+
+        private Vector2 GetContentSize()
+        {
+            if(_items.Count == 0)
+                return Vector2.zero;
+            var itemRect = _items[0].transform.GetWorldRect();
+            return GetPositionForIndex(_items.Count - 1) - GetPositionForIndex(0) +
+                   Vector2.right * itemRect.width +
+                   Vector2.up * itemRect.height 
+                   + _padding;
         }
     }
 }
