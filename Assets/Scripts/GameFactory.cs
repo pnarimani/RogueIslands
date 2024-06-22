@@ -15,7 +15,7 @@ namespace RogueIslands
 
             const int handSize = 6;
 
-            var gameState = new GameState()
+            return new GameState()
             {
                 AllRequiredScores = GetScoringRequirements(),
                 CurrentEvent = new ActStart(),
@@ -40,8 +40,6 @@ namespace RogueIslands
                     ItemsForSale = new IPurchasableItem[2],
                 },
             };
-            gameState.RestoreProperties();
-            return gameState;
         }
 
         public static Random NextRandom(this System.Random sysRandom) 

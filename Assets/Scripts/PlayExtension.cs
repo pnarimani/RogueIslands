@@ -19,57 +19,6 @@ namespace RogueIslands
             return true;
         }
 
-        public static void Play(this GameState state, IGameView view)
-        {
-            foreach (var building in state.Clusters.SelectMany(island => island.Buildings))
-                building.RemainingTriggers = 1;
-            
-            state.ScoringState = new ScoringState();
-            
-            state.ExecuteEvent(view, new DayStart());
-            
-            foreach (var cluster in state.Clusters)
-            {
-                foreach (var building in cluster.Buildings)
-                {
-                    BuildingScored buildingScoredEvent = new() { Building = building };
-
-                    var buildingView = view.GetBuilding(building);
-
-                    while (building.RemainingTriggers > 0)
-                    {
-                        building.RemainingTriggers--;
-                        state.ScoringState.Products += building.Output + building.OutputUpgrade;
-                        buildingView.BuildingTriggered(false);
-                        buildingScoredEvent.TriggerCount++;
-
-                        state.ExecuteEvent(view, buildingScoredEvent);
-                    }
-                }
-
-                state.ExecuteEvent(view, new ClusterScored { Cluster = cluster });
-            }
-
-            BuildingRemainedInHand buildingRemainedInHand = new();
-
-            foreach (var building in state.BuildingsInHand)
-            {
-                buildingRemainedInHand.Building = building;
-                buildingRemainedInHand.TriggerCount = 1;
-                state.ExecuteEvent(view, buildingRemainedInHand);
-            }
-
-            state.ExecuteEvent(view, new DayEnd());
-
-            state.CurrentScore += state.ScoringState.Products * state.ScoringState.Multiplier;
-            state.Day++;
-            state.ScoringState = null;
-
-            view.GetUI().RefreshDate();
-
-            state.Validate();
-        }
-
         public static void ProcessScore(this GameState state, IGameView view)
         {
             if (state.HasLost())

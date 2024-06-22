@@ -40,9 +40,13 @@ namespace RogueIslands.Autofac
 
             builder.Register(_ => Instantiate(_gameManagerPrefab))
                 .AutoActivate()
-                .OnActivating(m => m.Instance.SetState(m.Context.Resolve<GameState>()))
+                .OnActivated(m =>
+                {
+                    m.Instance.Initialize(m.Context.Resolve<GameState>(), m.Context.Resolve<PlayController>());
+                })
                 .AsSelf()
-                .AsImplementedInterfaces();
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
 
         public T Resolve<T>() => Container.Resolve<T>();

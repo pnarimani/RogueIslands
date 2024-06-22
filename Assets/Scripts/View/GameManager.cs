@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using RogueIslands.Boosters;
 using RogueIslands.Particles;
+using RogueIslands.Rollback;
 using RogueIslands.View.Boosters;
 using RogueIslands.View.Shop;
 using RogueIslands.View.Win;
@@ -17,6 +18,7 @@ namespace RogueIslands.View
         [SerializeField] private ShopScreen _shopPrefab;
         [SerializeField] private WeekWinScreen _weekWinScreen;
         [SerializeField] private LoseScreen _loseScreen;
+        private PlayController _playController;
 
         public GameState State { get; private set; }
         public bool IsPlaying { get; private set; }
@@ -39,7 +41,7 @@ namespace RogueIslands.View
 
             AnimationScheduler.ResetTime();
 
-            State.Play(this);
+            _playController.Play();
 
             var timer = 0f;
             while (timer < AnimationScheduler.GetExtraTime())
@@ -56,7 +58,7 @@ namespace RogueIslands.View
 
             GameUI.Instance.RefreshScores();
 
-            State.ProcessScore(this);
+            _playController.ProcessScore();
 
             IsPlaying = false;
         }
@@ -171,9 +173,11 @@ namespace RogueIslands.View
         public IReadOnlyList<Vector3> GetWorldBoosterPositions()
             => FindObjectsOfType<WorldBoosterSpawnPoint>().Select(booster => booster.transform.position).ToList();
 
-        public void SetState(GameState state)
+        public void Initialize(GameState state, PlayController playController)
         {
+            _playController = playController;
             State = state;
+            State.RestoreProperties();
             State.SpawnWorldBoosters(this, GetWorldBoosterPositions());
         }
 

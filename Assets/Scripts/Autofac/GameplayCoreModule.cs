@@ -16,6 +16,9 @@ namespace RogueIslands.Autofac
             builder.Register(c => GameFactory.NewGame(c.Resolve<Random>()))
                             .SingleInstance()
                             .AsSelf();
+
+            builder.RegisterType<PlayController>();
+            builder.RegisterType<EventController>();
         }
     }
 }
