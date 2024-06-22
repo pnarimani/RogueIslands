@@ -5,10 +5,14 @@ namespace RogueIslands.View
     public class BuildingViewPlacement : Singleton<BuildingViewPlacement>, IGizmosDrawer
     {
         private readonly Camera _camera = Camera.main;
-        private readonly int _layerMask = LayerMask.GetMask("Building");
+        private readonly int _buildingMask = LayerMask.GetMask("Building");
         private readonly int _groundMask = LayerMask.GetMask("Ground");
 
         private Vector3 _gizmosCenter, _gizmosSize;
+        private Vector3 _bottomLeft;
+        private Vector3 _topLeft;
+        private Vector3 _topRight;
+        private Vector3 _bottomRight;
 
         public Vector3 GetPosition(Transform building)
         {
@@ -44,9 +48,50 @@ namespace RogueIslands.View
             return desiredPosition;
         }
 
+        public bool IsValidPlacement(Transform building)
+        {
+            var bounds = building.GetCollisionBounds();
+
+            foreach (var other in Object.FindObjectsOfType<BuildingView>())
+            {
+                if (other.transform == building)
+                    continue;
+
+                if (bounds.Intersects(other.transform.GetCollisionBounds()))
+                    return false;
+            }
+            
+            var min = bounds.min;
+            var max = bounds.max;
+
+            _bottomLeft = new Vector3(min.x, bounds.center.y, min.z);
+            _topLeft = new Vector3(min.x, bounds.center.y, max.z);
+            _topRight = new Vector3(max.x, bounds.center.y, max.z);
+            _bottomRight = new Vector3(max.x, bounds.center.y, min.z);
+
+            var rays = new Ray[]
+            {
+                new(_bottomLeft, Vector3.down),
+                new(_topLeft, Vector3.down),
+                new(_topRight, Vector3.down),
+                new(_bottomRight, Vector3.down),
+            };
+
+            foreach (var ray in rays)
+            {
+                if (!Physics.Raycast(ray, out _, 1, _groundMask | _buildingMask))
+                    return false;
+            }
+
+            return true;
+        }
+
         public void OnDrawGizmos()
         {
-            Gizmos.DrawWireCube(_gizmosCenter, _gizmosSize);
+            Gizmos.DrawRay(_bottomLeft, Vector3.down);
+            Gizmos.DrawRay(_topLeft, Vector3.down);
+            Gizmos.DrawRay(_topRight, Vector3.down);
+            Gizmos.DrawRay(_bottomRight, Vector3.down);
         }
     }
 }

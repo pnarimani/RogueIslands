@@ -58,6 +58,10 @@ namespace RogueIslands.View
                 }
 
                 _instance.transform.position = BuildingViewPlacement.Instance.GetPosition(_instance.transform);
+
+                var isValidPlacement = BuildingViewPlacement.Instance.IsValidPlacement(_instance.transform);
+                foreach (var r in _instance.GetComponentsInChildren<Renderer>(true)) 
+                    r.enabled = isValidPlacement;
                 
                 EffectRangeHighlighter.Highlight(_instance.transform.position, Data.Range, _instance.gameObject);
                 EffectRangeHighlighter.ShowRanges(true);
