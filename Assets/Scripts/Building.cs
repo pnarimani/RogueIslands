@@ -11,6 +11,7 @@ namespace RogueIslands
         public string Name;
         public string Description;
         public string PrefabAddress;
+        public string IconAddress;
         public float Range;
         public Category Category;
         public ColorTag Color;

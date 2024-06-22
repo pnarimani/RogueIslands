@@ -81,7 +81,7 @@ namespace RogueIslands.Boosters
                     BuyPrice = 2,
                     Description =
                         new LiteralDescription(
-                            $"{ColorTag.Red} and {ColorTag.Blue} are the same. {ColorTag.White} and {ColorTag.Black} are the same."),
+                            $"{ColorTag.Red} and {ColorTag.Blue} are the same. {ColorTag.Green} and {ColorTag.Purple} are the same."),
                     EventAction = new ModifyBuildingColorConditionAction(),
                 },
                 new()
@@ -266,8 +266,8 @@ namespace RogueIslands.Boosters
                         Change = 4,
                     },
                 },
-                CreateColorBooster("Black Boost", "+3 mult when black buildings score", ColorTag.Black),
-                CreateColorBooster("White Boost", "+3 mult when white buildings score", ColorTag.White),
+                CreateColorBooster("Black Boost", "+3 mult when black buildings score", ColorTag.Purple),
+                CreateColorBooster("White Boost", "+3 mult when white buildings score", ColorTag.Green),
                 CreateColorBooster("Red Boost", "+3 mult when red buildings score", ColorTag.Red),
                 CreateColorBooster("Blue Boost", "+3 mult when blue buildings score", ColorTag.Blue),
                 new()
@@ -340,7 +340,7 @@ namespace RogueIslands.Boosters
                             GameEventCondition.Create<DayEnd>(),
                             new ColorCheckCondition
                             {
-                                ColorsToExist = new[] { ColorTag.White, ColorTag.Black },
+                                ColorsToExist = new[] { ColorTag.Green, ColorTag.Purple },
                                 ColorsToNotExist = new[] { ColorTag.Red, ColorTag.Blue },
                             },
                         },

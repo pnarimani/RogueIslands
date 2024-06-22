@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace RogueIslands.View
 {
@@ -9,7 +10,8 @@ namespace RogueIslands.View
     {
         [SerializeField] private TextMeshProUGUI _name, _description;
         [SerializeField] private RectTransform _animationParent;
-
+        [SerializeField] private Image _colorBg, _colorGradient, _buildingIcon;
+        
         private GameUI _ui;
         private bool _isSelected;
         private BuildingView _instance;
@@ -24,8 +26,10 @@ namespace RogueIslands.View
         {
             Data = data;
 
-            _name.text = data.Name;
-            _description.text = data.Description;
+            _colorBg.color = _colorGradient.color = data.Color.Color;
+            _buildingIcon.sprite = Resources.Load<Sprite>(data.IconAddress);
+            // _name.text = data.Name;
+            // _description.text = data.Description;
         }
 
         private void Start()

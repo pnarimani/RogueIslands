@@ -1,21 +1,31 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RogueIslands.View
 {
     public class CardListView : MonoBehaviour
     {
-        [SerializeField] private bool _center = true;
+        [FormerlySerializedAs("_center")] [SerializeField]
+        private bool _fitContent = true;
+
         [SerializeField] private float _minPadding = 5;
         [SerializeField] private Vector2 _offset;
         [SerializeField] private Vector2 _padding;
-        
+        [SerializeField] private Vector2 _minSize, _maxSize;
+        [SerializeField] private RectTransform _content;
+
         private readonly List<CardListItem> _items = new();
 
         private RectTransform Tx => (RectTransform)transform;
 
+        public RectTransform Content => _content;
+
         public void Add(CardListItem item)
         {
+            if (item.transform.parent != Content)
+                item.transform.SetParent(Content, false);
+
             item.ShouldAnimateToTarget = true;
             item.Owner = this;
             _items.Add(item);
@@ -29,7 +39,7 @@ namespace RogueIslands.View
         private void Update()
         {
             UpdatePositions();
-            if(_center)
+            if (_fitContent)
                 Tx.sizeDelta = Vector2.Lerp(Tx.sizeDelta, GetContentSize(), 10 * Time.deltaTime);
         }
 
@@ -75,30 +85,32 @@ namespace RogueIslands.View
         private Vector2 GetPositionForIndex(int index)
         {
             var worldRect = Tx.GetWorldRect();
+            var contentSize = GetContentSize() - _padding;
+            var maxSpacePerItem = contentSize.x / _items.Count;
 
-            if (_items.Count == 0)
-                return worldRect.center;
+            var spacePerItem = _fitContent
+                ? Mathf.Min(maxSpacePerItem, _items[0].transform.GetWorldRect().width + _minPadding)
+                : maxSpacePerItem;
 
-            var distance = _center
-                ? _items[0].transform.GetWorldRect().width + _minPadding
-                : worldRect.width / _items.Count;
-
-            var startingPosition = _center
-                ? worldRect.center + Vector2.left * ((_items.Count - 1) / 2f * distance)
+            var startingPosition = _fitContent
+                ? worldRect.center + Vector2.left * ((_items.Count - 1) / 2f * spacePerItem)
                 : worldRect.min + Vector2.up * worldRect.height / 2;
 
-            return startingPosition + Vector2.right * (index * distance) + _offset;
+            return startingPosition + Vector2.right * (index * spacePerItem) + _offset;
         }
 
         private Vector2 GetContentSize()
         {
-            if(_items.Count == 0)
-                return Vector2.zero;
+            if (_items.Count == 0)
+                return _minSize;
             var itemRect = _items[0].transform.GetWorldRect();
-            return GetPositionForIndex(_items.Count - 1) - GetPositionForIndex(0) +
-                   Vector2.right * itemRect.width +
-                   Vector2.up * itemRect.height 
-                   + _padding;
+            var spacePerItem = itemRect.width + _minPadding;
+            var size = new Vector2(_items.Count * spacePerItem, itemRect.height) + _padding;
+            size.x = Mathf.Max(size.x, _minSize.x);
+            size.y = Mathf.Max(size.y, _minSize.y);
+            size.x = Mathf.Min(size.x, _maxSize.x);
+            size.y = Mathf.Min(size.y, _maxSize.y);
+            return size;
         }
     }
 }

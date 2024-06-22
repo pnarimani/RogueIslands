@@ -17,7 +17,8 @@ namespace RogueIslands.View
             _budget,
             _days,
             _week,
-            _month;
+            _month,
+            _boosterSlots;
 
         [SerializeField] private Button _playButton;
         [SerializeField] private BuildingCardView _buildingCardPrefab;
@@ -37,14 +38,14 @@ namespace RogueIslands.View
 
         public void ShowBuildingCard(Building building)
         {
-            var card = Instantiate(_buildingCardPrefab, _buildingCardList.transform);
+            var card = Instantiate(_buildingCardPrefab, _buildingCardList.Content);
             card.Initialize(building);
             _buildingCardList.Add(card.GetComponent<CardListItem>());
         }
 
         public void ShowBoosterCard(BoosterCard booster)
         {
-            var card = Instantiate(_boosterPrefab, _boosterList.transform);
+            var card = Instantiate(_boosterPrefab, _boosterList.Content);
             card.Initialize(booster);
             _boosterList.Add(card.GetComponent<CardListItem>());
         }
@@ -64,6 +65,13 @@ namespace RogueIslands.View
             RefreshScores();
             RefreshMoneyAndEnergy();
             RefreshDate();
+            RefreshBoosters();
+        }
+
+        private void RefreshBoosters()
+        {
+            _boosterSlots.UpdateNumber(GameManager.Instance.State.Boosters.Count);
+            _boosterSlots.SetMax(GameManager.Instance.State.MaxBoosters);
         }
 
         public void RefreshMoneyAndEnergy()
