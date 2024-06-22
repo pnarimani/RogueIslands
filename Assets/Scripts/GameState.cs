@@ -14,10 +14,7 @@ namespace RogueIslands
         public int Round;
         public int Act;
 
-        public int DefaultTotalDays = 4;
         public int TotalDays = 4;
-
-        public int DefaultHandSize = 4;
         public int HandSize = 4;
 
         public double CurrentScore;

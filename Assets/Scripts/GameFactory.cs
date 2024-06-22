@@ -13,8 +13,8 @@ namespace RogueIslands
             buildings.Shuffle(seedRandom.NextRandom());
 
             const int handSize = 6;
-            
-            return new GameState()
+
+            var gameState = new GameState()
             {
                 AllRequiredScores = GetScoringRequirements(),
                 CurrentEvent = new ActStart(),
@@ -26,7 +26,6 @@ namespace RogueIslands
                 },
                 AvailableBoosters = BoosterList.Get(seedRandom),
                 HandSize = handSize,
-                DefaultHandSize = handSize,
                 BuildingsInHand = buildings.Take(handSize).ToList(),
                 AvailableWorldBoosters = WorldBoosterList.Get(),
                 WorldBoosterRandom = seedRandom.NextRandom(),
@@ -40,6 +39,8 @@ namespace RogueIslands
                     ItemsForSale = new IPurchasableItem[2],
                 },
             };
+            gameState.RestoreProperties();
+            return gameState;
         }
 
         public static Random NextRandom(this System.Random sysRandom) 

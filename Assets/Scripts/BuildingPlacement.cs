@@ -89,7 +89,7 @@ namespace RogueIslands
 
         public static List<Cluster> GetClusterForBuilding(this GameState state, Building building)
         {
-            return GetClusterAtPosition(state, building.Position, building.ModifiedRange);
+            return GetClusterAtPosition(state, building.Position, building.Range);
         }
 
         public static List<Cluster> GetClusterAtPosition(this GameState state, Vector3 position, float range)
@@ -100,7 +100,7 @@ namespace RogueIslands
                 foreach (var other in island)
                 {
                     var distance = Vector3.Distance(other.Position, position);
-                    var biggestRange = Math.Max(other.ModifiedRange, range);
+                    var biggestRange = Math.Max(other.Range, range);
                     if (distance < biggestRange)
                     {
                         islands.Add(island);

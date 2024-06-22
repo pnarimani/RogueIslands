@@ -149,13 +149,13 @@ namespace RogueIslands
 
         public static void StartRound(this GameState state, IGameView view)
         {
+            state.RestoreProperties();
+            state.ExecuteEvent(view, new PropertiesRestored());
+            
             state.BuildingDeck.Deck.Shuffle(state.BuildingDeck.ShufflingRandom);
-            state.BuildingDeck.Deck.ForEach(b => b.ModifiedRange = b.DefaultRange);
             state.CurrentScore = 0;
             state.Day = 0;
             state.Clusters.Clear();
-            state.TotalDays = state.DefaultTotalDays;
-            state.HandSize = state.DefaultHandSize;
 
             view.DestroyBuildings();
             view.ShowBuildingsInHand();

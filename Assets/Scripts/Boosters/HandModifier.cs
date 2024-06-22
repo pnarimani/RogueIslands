@@ -4,6 +4,5 @@ namespace RogueIslands.Boosters
     { 
         public int Change { get; set;}
         public int? SetHandSize { get; set; }
-        public bool ShouldSetToDefault { get; set; }
     }
 }

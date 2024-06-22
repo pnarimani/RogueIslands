@@ -12,20 +12,22 @@ namespace RogueIslands.Boosters
             {
                 new()
                 {
-                    Name = "Opps all sixes",
+                    Name = "Oops all sixes",
                     Description = new LiteralDescription("Double all probabilities"),
                     BuyPrice = 2,
-                    EvaluationOverrides = new GameConditionEvaluator[]
+                    BuyAction = new ModifyProbabilitiesAction(),
+                    EventAction = new ModifyProbabilitiesAction
                     {
-                        new ProbabilityEvaluator(seedRandom.NextRandom()),
+                        Conditions = new[]
+                        {
+                            new OrCondition(GameEventCondition.Create<PropertiesRestored>()),
+                        },
                     },
                 },
                 new()
                 {
                     Name = "Blood Pact",
-                    Description =
-                        new LiteralDescription(
-                            $"1 in 2 chance to give x2 mult for each {Category.Cat3} building scored"),
+                    Description = new ProbabilityDescription($"{{0}} to give x2 mult for each {Category.Cat3} building scored"),
                     BuyPrice = 2,
                     EventAction = new ScoringAction
                     {
@@ -229,7 +231,6 @@ namespace RogueIslands.Boosters
                     Description = new LiteralDescription("x3 mult. you only have 1 day"),
                     BuyPrice = 2,
                     BuyAction = new DayModifier { SetDays = 1 },
-                    SellAction = new DayModifier { ShouldSetToDefault = true },
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]

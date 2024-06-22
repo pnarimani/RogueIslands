@@ -19,6 +19,9 @@ namespace RogueIslands
 
             state.Boosters.Add(instance);
             view.AddBooster(instance);
+            
+            state.RestoreProperties();
+            state.ExecuteEvent(view, new PropertiesRestored());
 
             if (instance.BuyAction != null)
                 state.Execute(view, instance, instance.BuyAction);
@@ -55,6 +58,10 @@ namespace RogueIslands
             RemoveEvaluationOverrides(booster);
             view.GetBooster(booster).Remove();
             view.GetUI().RefreshAll();
+            
+            state.RestoreProperties();
+            state.ExecuteEvent(view, new PropertiesRestored());
+            
             state.ExecuteEvent(view, new BoosterSold() { Booster = booster });
         }
 
