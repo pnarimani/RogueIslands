@@ -72,7 +72,7 @@ namespace RogueIslands.Boosters
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<BuildingScored>(),
-                            BuildingTriggerCountCheck.FirstTrigger,
+                            BuildingTriggerCountCondition.FirstTrigger,
                             new SelectedBuildingCategory
                             {
                                 Categories = new[] { Category.Cat2 },
@@ -202,7 +202,7 @@ namespace RogueIslands.Boosters
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<BuildingScored>(),
-                            BuildingTriggerCountCheck.FirstTrigger,
+                            BuildingTriggerCountCondition.FirstTrigger,
                             TimeCondition.LastDay(),
                         },
                     },
@@ -282,7 +282,7 @@ namespace RogueIslands.Boosters
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<BuildingScored>(),
-                            BuildingTriggerCountCheck.FirstTrigger,
+                            BuildingTriggerCountCondition.FirstTrigger,
                             new CountCondition
                             {
                                 TargetType = CountCondition.Target.Cluster,
