@@ -13,7 +13,7 @@ namespace RogueIslands.Boosters
         public float Range { get; set; }
         public IDescriptionProvider Description { get; set; }
         public GameAction EventAction { get; set; }
-        public IReadOnlyList<ConditionEvaluator> EvaluationOverrides { get; set; }
+        public IReadOnlyList<GameConditionEvaluator> EvaluationOverrides { get; set; }
         public string PrefabAddress { get; set; }
     }
 }

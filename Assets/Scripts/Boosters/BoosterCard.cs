@@ -13,6 +13,6 @@ namespace RogueIslands.Boosters
         public GameAction BuyAction { get; set; }
         public GameAction SellAction { get; set; }
         public GameAction EventAction { get; set; }
-        public IReadOnlyList<ConditionEvaluator> EvaluationOverrides { get; set; }
+        public IReadOnlyList<GameConditionEvaluator> EvaluationOverrides { get; set; }
     }
 }

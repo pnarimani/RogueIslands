@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace RogueIslands.Boosters
 {
-    public class ColorCheckEvaluator : ConditionEvaluator<ColorCheckCondition>
+    public class ColorCheckEvaluator : GameConditionEvaluator<ColorCheckCondition>
     {
         private readonly HashSet<string> _existingColors = new();
         protected override bool Evaluate(GameState state, IBooster booster, ColorCheckCondition condition)

@@ -15,10 +15,10 @@ namespace RogueIslands.Autofac
                 .ToList();
 
             foreach (var evalType in allTypes.Where(t =>
-                         typeof(ConditionEvaluator).IsAssignableFrom(t) &&
+                         typeof(GameConditionEvaluator).IsAssignableFrom(t) &&
                          !typeof(IEvaluationConditionOverride).IsAssignableFrom(t)))
             {
-                builder.RegisterType(evalType).As<ConditionEvaluator>();
+                builder.RegisterType(evalType).As<GameConditionEvaluator>();
             }
 
             foreach (var execType in allTypes.Where(t => typeof(GameActionExecutor).IsAssignableFrom(t)))

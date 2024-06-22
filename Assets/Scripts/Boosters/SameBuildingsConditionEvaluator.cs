@@ -2,7 +2,7 @@ using System.Linq;
 
 namespace RogueIslands.Boosters
 {
-    public class SameBuildingsConditionEvaluator : ConditionEvaluator<SameBuildingsCondition>
+    public class SameBuildingsConditionEvaluator : GameConditionEvaluator<SameBuildingsCondition>
     {
         protected override bool Evaluate(GameState state, IBooster booster, SameBuildingsCondition condition)
         {

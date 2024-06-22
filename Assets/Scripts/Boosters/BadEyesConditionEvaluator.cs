@@ -3,7 +3,7 @@ using RogueIslands.GameEvents;
 
 namespace RogueIslands.Boosters
 {
-    public class BadEyesConditionEvaluator : ConditionEvaluator<SelectedBuildingColorCondition>,
+    public class BadEyesConditionEvaluator : GameConditionEvaluator<SelectedBuildingColorCondition>,
         IEvaluationConditionOverride
     {
         protected override bool Evaluate(GameState state, IBooster booster, SelectedBuildingColorCondition condition)

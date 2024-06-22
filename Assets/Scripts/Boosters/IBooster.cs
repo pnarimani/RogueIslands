@@ -9,6 +9,6 @@ namespace RogueIslands.Boosters
         string Name { get; set; }
         IDescriptionProvider Description { get; set; }
         GameAction EventAction { get; set; }
-        IReadOnlyList<ConditionEvaluator> EvaluationOverrides { get; set; }
+        IReadOnlyList<GameConditionEvaluator> EvaluationOverrides { get; set; }
     }
 }

@@ -2,13 +2,13 @@ using System;
 
 namespace RogueIslands.Boosters
 {
-    public abstract class ConditionEvaluator
+    public abstract class GameConditionEvaluator
     {
         public abstract Type ConditionType { get; }
         public abstract bool Evaluate(GameState state, IBooster booster, IGameCondition condition);
     }
 
-    public abstract class ConditionEvaluator<T> : ConditionEvaluator where T : IGameCondition
+    public abstract class GameConditionEvaluator<T> : GameConditionEvaluator where T : IGameCondition
     {
         public override Type ConditionType { get; } = typeof(T);
 

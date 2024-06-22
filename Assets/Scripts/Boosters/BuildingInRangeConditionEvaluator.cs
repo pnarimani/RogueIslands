@@ -2,7 +2,7 @@
 
 namespace RogueIslands.Boosters
 {
-    public class BuildingInRangeConditionEvaluator : ConditionEvaluator<BuildingInRangeCondition>
+    public class BuildingInRangeConditionEvaluator : GameConditionEvaluator<BuildingInRangeCondition>
     {
         protected override bool Evaluate(GameState state, IBooster booster, BuildingInRangeCondition condition)
         {

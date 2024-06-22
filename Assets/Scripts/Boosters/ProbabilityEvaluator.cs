@@ -2,7 +2,7 @@ using Unity.Mathematics;
 
 namespace RogueIslands.Boosters
 {
-    public sealed class ProbabilityEvaluator : ConditionEvaluator<ProbabilityCondition>
+    public sealed class ProbabilityEvaluator : GameConditionEvaluator<ProbabilityCondition>
     {
         public int FavorableOutcomeModification { get; set; }
         private Random _random;

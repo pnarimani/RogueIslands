@@ -13,9 +13,9 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Opps all sixes",
-                    Description = new LiteralDescription("Add 1 to all probabilities"),
+                    Description = new LiteralDescription("Double all probabilities"),
                     BuyPrice = 2,
-                    EvaluationOverrides = new ConditionEvaluator[]
+                    EvaluationOverrides = new GameConditionEvaluator[]
                     {
                         new ProbabilityEvaluator(seedRandom.NextRandom()),
                     },

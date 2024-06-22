@@ -4,7 +4,7 @@ using static RogueIslands.Boosters.CountCondition;
 
 namespace RogueIslands.Boosters
 {
-    public class CountConditionEvaluator : ConditionEvaluator<CountCondition>
+    public class CountConditionEvaluator : GameConditionEvaluator<CountCondition>
     {
         protected override bool Evaluate(GameState state, IBooster booster, CountCondition condition)
         {

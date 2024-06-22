@@ -1,6 +1,6 @@
 namespace RogueIslands.Boosters
 {
-    public class TimeConditionEvaluator : ConditionEvaluator<TimeCondition>
+    public class TimeConditionEvaluator : GameConditionEvaluator<TimeCondition>
     {
         protected override bool Evaluate(GameState state, IBooster booster, TimeCondition condition)
         {
