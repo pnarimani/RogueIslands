@@ -34,10 +34,14 @@ namespace RogueIslands.View
             }
         }
         
-        public static void ShowRanges(bool show)
+        public static void ShowRanges(bool show, GameObject exception = null)
         {
             foreach (var highlightable in _highlightables)
+            {
+                if (highlightable.transform.gameObject == exception) 
+                    continue;
                 highlightable.ShowRange(show);
+            }
         }
 
         public static void LowlightAll()

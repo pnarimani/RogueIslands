@@ -106,12 +106,10 @@ namespace RogueIslands.View
         public void SpawnBuilding(Building data)
         {
             var building = Instantiate(Resources.Load<BuildingView>(data.PrefabAddress), data.Position, data.Rotation);
-            building.transform.DOMoveY(1, 0.3f)
-                .From()
-                .SetRelative(true)
+            building.transform.position += Vector3.up;
+            building.transform.DOMove(data.Position, 0.3f)
                 .SetEase(Ease.OutBounce);
             building.Initialize(data);
-            // building.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
 
         public void ShowLoseScreen()

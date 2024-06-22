@@ -16,6 +16,8 @@ namespace RogueIslands.View
 
         public Building Data { get; private set; }
 
+        private bool IsPlacedDown => !Data.Id.IsDefault();
+
         private void Awake()
         {
             SetLayerRecursively(gameObject, LayerMask.NameToLayer("Building"));
@@ -82,6 +84,8 @@ namespace RogueIslands.View
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (!IsPlacedDown)
+                return;
             ShowRange(true);
             EffectRangeHighlighter.Highlight(transform.position, Data.ModifiedRange);
             var island = GameManager.Instance.State.Clusters.Find(x => x.Buildings.Contains(Data));
@@ -99,6 +103,9 @@ namespace RogueIslands.View
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (!IsPlacedDown)
+                return;
+            
             ShowRange(false);
             EffectRangeHighlighter.LowlightAll();
         }
