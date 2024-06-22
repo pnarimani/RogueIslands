@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using RogueIslands.Boosters;
 using RogueIslands.GameEvents;
+using RogueIslands.Rollback;
 using Random = Unity.Mathematics.Random;
 
 namespace RogueIslands

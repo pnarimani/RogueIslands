@@ -21,6 +21,7 @@ namespace RogueIslands.Autofac
                 .InstancePerDependency();
             
             builder.RegisterModule<BoostersModule>();
+            builder.RegisterModule<RollbackModule>();
 
             builder.Register(_ => GameFactory.NewGame(new Random(Seed.GetHashCode())))
                 .SingleInstance()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.Boosters;
 using RogueIslands.GameEvents;
+using RogueIslands.Rollback;
 using UnityEngine;
 
 namespace RogueIslands

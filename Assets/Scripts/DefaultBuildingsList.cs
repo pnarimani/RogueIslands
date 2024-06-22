@@ -24,6 +24,7 @@ namespace RogueIslands
                             Output = 3 + (sizeIndex * 2),
                             Range = 5,
                             PrefabAddress = $"Buildings/{colorName} {(catIndex + sizeIndex * 4 + 1)}",
+                            RemainingTriggers = 1,
                         };
                         card.Description = $"Output: {card.Output}\nSize: {card.Size}\nCategory: {card.Category}";
                         allCards.Add(card);
