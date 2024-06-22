@@ -108,9 +108,7 @@ namespace RogueIslands.View.Boosters
         {
             if (Data is WorldBooster)
             {
-                var m = transform.FindRecursive("Cube").GetComponent<MeshRenderer>();
-                m.material.EnableKeyword("_EMISSION");
-                m.material.SetColor("_EmissionColor", highlight ? new Color(0f, 0.4f, 0f) : Color.black);
+                
             }
         }
 

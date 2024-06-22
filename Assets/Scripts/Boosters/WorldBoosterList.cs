@@ -31,7 +31,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Tree",
                     Description = new LiteralDescription($"+10 products for all {Category.Cat3} buildings"),
-                    Range = 2,
+                    Range = 6,
                     PrefabAddress = "WorldBoosters/Tree",
                     EventAction = new ScoringAction
                     {

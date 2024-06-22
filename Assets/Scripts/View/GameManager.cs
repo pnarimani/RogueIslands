@@ -171,7 +171,9 @@ namespace RogueIslands.View
         }
 
         public IReadOnlyList<Vector3> GetWorldBoosterPositions()
-            => FindObjectsOfType<WorldBoosterSpawnPoint>().Select(booster => booster.transform.position).ToList();
+        {
+            return FindObjectsOfType<WorldBoosterSpawnPoint>().Select(booster => booster.transform.position).ToList();
+        }
 
         public void Initialize(GameState state, PlayController playController, BoosterManagement boosterManagement)
         {
