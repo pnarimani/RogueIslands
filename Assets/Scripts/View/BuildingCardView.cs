@@ -70,12 +70,16 @@ namespace RogueIslands.View
 
                 EffectRangeHighlighter.Highlight(_buildingPreview.transform.position, Data.Range, _buildingPreview.gameObject);
                 EffectRangeHighlighter.ShowRanges(true, _buildingPreview.gameObject);
+                WorldBoosterBoundCheck.HighlightOverlappingWorldBoosters(_buildingPreview.transform);
             }
             else
             {
                 if (_buildingPreview != null)
                 {
                     Destroy(_buildingPreview.gameObject);
+                    WorldBoosterBoundCheck.HideAllDeletionWarnings();
+                    EffectRangeHighlighter.ShowRanges(false);
+                    EffectRangeHighlighter.LowlightAll();
                 }
             }
         }
@@ -130,9 +134,6 @@ namespace RogueIslands.View
                     .OnComplete(() => _cardListItem.ShouldAnimateToTarget = true);
 
                 InputHandling.Instance.Click -= OnWorldClicked;
-
-                EffectRangeHighlighter.ShowRanges(false);
-                EffectRangeHighlighter.LowlightAll();
             }
         }
 

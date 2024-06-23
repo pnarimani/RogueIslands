@@ -7,6 +7,8 @@ namespace RogueIslands.View.Boosters
     public class WorldBoosterView : MonoBehaviour, IHighlightable, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Transform _rangeVisuals;
+        [SerializeField] private GameObject _deletionWarning;
+        
         private WorldBooster _booster;
 
         private void Awake()
@@ -46,5 +48,8 @@ namespace RogueIslands.View.Boosters
             _rangeVisuals.gameObject.SetActive(false);
             EffectRangeHighlighter.LowlightAll();
         }
+
+        public void WarnDeletion(bool shouldWarn) 
+            => _deletionWarning.SetActive(shouldWarn);
     }
 }
