@@ -14,7 +14,7 @@ namespace RogueIslands
         private readonly IGameView _view;
         private readonly EventController _eventController;
         private readonly GameActionController _gameActionController;
-        private ResetController _resetController;
+        private readonly ResetController _resetController;
 
         public BoosterManagement(GameState state, IGameView view, EventController eventController,
             GameActionController gameActionController, ResetController resetController)
@@ -86,6 +86,9 @@ namespace RogueIslands
             _state.Boosters.Remove(booster);
             _view.GetBooster(booster).Remove();
             _view.GetUI().RefreshAll();
+            
+            _resetController.RestoreProperties();
+            
             _state.ExecuteEvent(_view, new BoosterDestroyed() { Booster = booster });
         }
 
