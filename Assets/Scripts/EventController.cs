@@ -17,22 +17,28 @@ namespace RogueIslands
             _gameActionController = gameActionController;
             _state = state;
         }
-        
+
         public void Execute<T>(T e) where T : IGameEvent
         {
             try
             {
                 _state.CurrentEvent = e;
-                
+
                 _buffer.Clear();
                 _buffer.AddRange(_state.WorldBoosters);
-                foreach (var booster in _buffer) 
-                    ExecuteBooster(booster);
-                
+                foreach (var booster in _buffer)
+                {
+                    if (_state.WorldBoosters.Contains((WorldBooster)booster))
+                        ExecuteBooster(booster);
+                }
+
                 _buffer.Clear();
                 _buffer.AddRange(_state.Boosters);
-                foreach (var booster in _buffer) 
-                    ExecuteBooster(booster);
+                foreach (var booster in _buffer)
+                {
+                    if (_state.Boosters.Contains((BoosterCard)booster))
+                        ExecuteBooster(booster);
+                }
             }
             catch (Exception exception)
             {
