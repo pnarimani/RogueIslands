@@ -46,6 +46,23 @@ namespace RogueIslands.Boosters
                         PlusMult = 3,
                     },
                 },
+                new()
+                {
+                    Name = "Money Tree",
+                    Description = new LiteralDescription("$1 for every building in range"),
+                    Range = 4,
+                    PrefabAddress = "WorldBoosters/MoneyTree",
+                    EventAction = new ChangeMoneyAction
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<BuildingScored>(),
+                            new BuildingInRangeCondition(),
+                        },
+                        Change = 1,
+                        IsImmediate = true,
+                    },
+                },
             };
         }
     }
