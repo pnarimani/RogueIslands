@@ -4,11 +4,16 @@ namespace RogueIslands.Boosters.Executors
 {
     public class CompositeActionExecutor : GameActionExecutor<CompositeAction>
     {
+        private GameActionController _actionController;
+
+        public CompositeActionExecutor(GameActionController actionController)
+        {
+            _actionController = actionController;
+        }
         protected override void Execute(GameState state, IGameView view, IBooster booster, CompositeAction action)
         {
-            var actionManager = StaticResolver.Resolve<GameActionController>();
             foreach (var subAction in action.Actions)
-                actionManager.Execute(booster, subAction);
+                _actionController.Execute(booster, subAction);
         }
     }
 }

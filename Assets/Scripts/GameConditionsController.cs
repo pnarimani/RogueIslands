@@ -8,11 +8,15 @@ namespace RogueIslands
     public class GameConditionsController
     {
         private readonly GameState _state;
-        private readonly IReadOnlyList<GameConditionEvaluator> _evals;
+        private IReadOnlyList<GameConditionEvaluator> _evals;
 
-        public GameConditionsController(GameState state, IReadOnlyList<GameConditionEvaluator> evals)
+        public GameConditionsController(GameState state)
         {
             _state = state;
+        }
+
+        public void SetEvaluators(IReadOnlyList<GameConditionEvaluator> evals)
+        {
             _evals = evals;
         }
 

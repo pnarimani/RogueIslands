@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using RogueIslands.Buildings;
 
-namespace RogueIslands
+namespace RogueIslands.Buildings
 {
     public class DefaultBuildingsList
     {

@@ -1,4 +1,6 @@
-﻿namespace RogueIslands.Rollback
+﻿using RogueIslands.Buildings;
+
+namespace RogueIslands.Rollback
 {
     public class BuildingRestoreHandler : IStateRestoreHandler
     {

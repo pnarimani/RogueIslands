@@ -1,4 +1,4 @@
-namespace RogueIslands
+namespace RogueIslands.Buildings
 {
     public interface IBuildingView
     {

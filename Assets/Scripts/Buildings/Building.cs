@@ -1,7 +1,6 @@
-using RogueIslands.Boosters.Descriptions;
 using UnityEngine;
 
-namespace RogueIslands
+namespace RogueIslands.Buildings
 {
     public class Building : IDescribableItem
     {

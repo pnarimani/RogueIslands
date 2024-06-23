@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Autofac;
+using RogueIslands.Boosters;
+using RogueIslands.Boosters.Executors;
 using RogueIslands.Rollback;
 
 namespace RogueIslands.Autofac
@@ -20,8 +23,12 @@ namespace RogueIslands.Autofac
 
             builder.RegisterType<PlayController>().SingleInstance();
             builder.RegisterType<EventController>().SingleInstance();
-            builder.RegisterType<GameActionController>().SingleInstance();
-            builder.RegisterType<GameConditionsController>().SingleInstance();
+            builder.RegisterType<GameActionController>()
+                .OnActivated(c => c.Instance.SetExecutors(c.Context.Resolve<IReadOnlyList<GameActionExecutor>>()))
+                .SingleInstance();
+            builder.RegisterType<GameConditionsController>()
+                .OnActivated(c => c.Instance.SetEvaluators(c.Context.Resolve<IReadOnlyList<GameConditionEvaluator>>()))
+                .SingleInstance();
             builder.RegisterType<BoosterManagement>().SingleInstance();
             builder.RegisterType<ResetController>().SingleInstance();
         }

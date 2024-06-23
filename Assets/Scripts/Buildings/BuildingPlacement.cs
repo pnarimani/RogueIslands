@@ -5,7 +5,7 @@ using RogueIslands.GameEvents;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace RogueIslands
+namespace RogueIslands.Buildings
 {
     public static class BuildingPlacement
     {

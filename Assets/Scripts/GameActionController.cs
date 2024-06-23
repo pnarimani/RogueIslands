@@ -10,16 +10,20 @@ namespace RogueIslands
 {
     public class GameActionController
     {
-        private readonly IReadOnlyList<GameActionExecutor> _execs;
+        private IReadOnlyList<GameActionExecutor> _execs;
         private readonly GameState _state;
         private readonly IGameView _view;
         private readonly GameConditionsController _conditionsController;
 
-        public GameActionController(GameState state, IGameView view, GameConditionsController conditionsController, IReadOnlyList<GameActionExecutor> execs)
+        public GameActionController(GameState state, IGameView view, GameConditionsController conditionsController)
         {
             _conditionsController = conditionsController;
             _view = view;
             _state = state;
+        }
+        
+        public void SetExecutors(IReadOnlyList<GameActionExecutor> execs)
+        {
             _execs = execs;
         }
         

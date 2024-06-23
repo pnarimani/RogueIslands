@@ -1,6 +1,6 @@
 using System;
 
-namespace RogueIslands
+namespace RogueIslands.Buildings
 {
     public readonly struct BuildingInstanceId : IEquatable<BuildingInstanceId>
     {

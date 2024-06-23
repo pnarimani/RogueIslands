@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using RogueIslands.Buildings;
 using RogueIslands.GameEvents;
 using RogueIslands.Rollback;
 
@@ -101,7 +102,7 @@ namespace RogueIslands
         {
             StaticResolver.Resolve<ResetController>().RestoreProperties();
             
-            state.BuildingDeck.Deck.Shuffle(state.BuildingDeck.ShufflingRandom);
+            state.BuildingDeck.Shuffle();
             state.BuildingsInHand = state.BuildingDeck.Deck.Take(state.HandSize).ToList();
             state.CurrentScore = 0;
             state.Day = 0;

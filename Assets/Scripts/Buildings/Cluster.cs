@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace RogueIslands
+namespace RogueIslands.Buildings
 {
     public class Cluster : IEnumerable<Building>
     {

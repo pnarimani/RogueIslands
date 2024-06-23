@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using RogueIslands.Buildings;
 using RogueIslands.GameEvents;
 
 namespace RogueIslands

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace RogueIslands
+namespace RogueIslands.Buildings
 {
     public readonly struct ColorTag : IEquatable<ColorTag>
     {

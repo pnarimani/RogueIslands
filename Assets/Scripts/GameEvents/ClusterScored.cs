@@ -1,4 +1,6 @@
-﻿namespace RogueIslands.GameEvents
+﻿using RogueIslands.Buildings;
+
+namespace RogueIslands.GameEvents
 {
     public class ClusterScored : IGameEvent
     {
