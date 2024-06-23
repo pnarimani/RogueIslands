@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using RogueIslands.Boosters;
 using RogueIslands.GameEvents;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace RogueIslands
     {
         private readonly GameState _state;
         private readonly GameActionController _gameActionController;
+        private readonly List<IBooster> _buffer = new();
 
         public EventController(GameState state, GameActionController gameActionController)
         {
@@ -21,9 +23,15 @@ namespace RogueIslands
             try
             {
                 _state.CurrentEvent = e;
-                foreach (var booster in _state.WorldBoosters) 
+                
+                _buffer.Clear();
+                _buffer.AddRange(_state.WorldBoosters);
+                foreach (var booster in _buffer) 
                     ExecuteBooster(booster);
-                foreach (var booster in _state.Boosters) 
+                
+                _buffer.Clear();
+                _buffer.AddRange(_state.Boosters);
+                foreach (var booster in _buffer) 
                     ExecuteBooster(booster);
             }
             catch (Exception exception)

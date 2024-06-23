@@ -513,40 +513,40 @@ namespace RogueIslands.Boosters
                         },
                     },
                 },
-                new()
-                {
-                    Name = "Super Banana",
-                    Description =
-                        new LiteralDescription("x4 mult, 1 in 1000 chance to get destroyed at the end of the round"),
-                    BuyPrice = 2,
-                    EventAction = new CompositeAction
-                    {
-                        Actions = new GameAction[]
-                        {
-                            new ScoringAction
-                            {
-                                XMult = 4,
-                                Conditions = new IGameCondition[]
-                                {
-                                    GameEventCondition.Create<DayEnd>(),
-                                },
-                            },
-                            new DestroyBoosterAction
-                            {
-                                Conditions = new IGameCondition[]
-                                {
-                                    GameEventCondition.Create<RoundEnd>(),
-                                    new ProbabilityCondition
-                                    {
-                                        FavorableOutcome = 1,
-                                        TotalOutcomes = 1000,
-                                    },
-                                },
-                                Self = true,
-                            },
-                        },
-                    },
-                },
+                // new()
+                // {
+                //     Name = "Super Banana",
+                //     Description =
+                //         new LiteralDescription("x4 mult, 1 in 1000 chance to get destroyed at the end of the round"),
+                //     BuyPrice = 2,
+                //     EventAction = new CompositeAction
+                //     {
+                //         Actions = new GameAction[]
+                //         {
+                //             new ScoringAction
+                //             {
+                //                 XMult = 4,
+                //                 Conditions = new IGameCondition[]
+                //                 {
+                //                     GameEventCondition.Create<DayEnd>(),
+                //                 },
+                //             },
+                //             new DestroyBoosterAction
+                //             {
+                //                 Conditions = new IGameCondition[]
+                //                 {
+                //                     GameEventCondition.Create<RoundEnd>(),
+                //                     new ProbabilityCondition
+                //                     {
+                //                         FavorableOutcome = 1,
+                //                         TotalOutcomes = 1000,
+                //                     },
+                //                 },
+                //                 Self = true,
+                //             },
+                //         },
+                //     },
+                // },
                 new()
                 {
                     Name = "City Steven",
