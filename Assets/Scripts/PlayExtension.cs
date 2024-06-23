@@ -102,6 +102,7 @@ namespace RogueIslands
             StaticResolver.Resolve<ResetController>().RestoreProperties();
             
             state.BuildingDeck.Deck.Shuffle(state.BuildingDeck.ShufflingRandom);
+            state.BuildingsInHand = state.BuildingDeck.Deck.Take(state.HandSize).ToList();
             state.CurrentScore = 0;
             state.Day = 0;
             state.Clusters.Clear();

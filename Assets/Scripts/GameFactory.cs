@@ -27,7 +27,6 @@ namespace RogueIslands
                 },
                 AvailableBoosters = BoosterList.Get(seedRandom),
                 HandSize = handSize,
-                BuildingsInHand = buildings.Take(handSize).ToList(),
                 AvailableWorldBoosters = WorldBoosterList.Get(),
                 WorldBoosterRandom = seedRandom.NextRandom(),
                 TotalDays = 4,
