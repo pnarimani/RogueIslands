@@ -50,19 +50,18 @@ namespace RogueIslands
                 {
                     state.Result = GameResult.Win;
                     view.ShowGameWinScreen();
-                    return;
                 }
             }
-
-            state.BuildingsInHand.Clear();
-            state.BuildingsInHand.AddRange(
-                state.BuildingDeck.Deck
-                    .Skip(state.Day * state.HandSize)
-                    .Take(state.HandSize)
-            );
-            view.ShowBuildingsInHand();
-
-            view.GetUI().RefreshAll();
+            else
+            {
+                state.BuildingsInHand.Clear();
+                state.BuildingsInHand.AddRange(
+                    state.BuildingDeck.Deck
+                        .Skip(state.Day * state.HandSize)
+                        .Take(state.HandSize)
+                );
+                view.ShowBuildingsInHand();
+            }
         }
 
         private static void ShowRoundWinScreen(GameState state, IGameView view)
@@ -101,7 +100,7 @@ namespace RogueIslands
         public static void StartRound(this GameState state, IGameView view)
         {
             StaticResolver.Resolve<ResetController>().RestoreProperties();
-            
+
             state.BuildingDeck.Shuffle();
             state.BuildingsInHand = state.BuildingDeck.Deck.Take(state.HandSize).ToList();
             state.CurrentScore = 0;
@@ -112,7 +111,7 @@ namespace RogueIslands
             view.ShowBuildingsInHand();
 
             state.ExecuteEvent(view, new RoundStart());
-            
+
             view.GetUI().RefreshAll();
         }
 

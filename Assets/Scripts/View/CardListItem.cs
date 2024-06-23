@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,6 +12,8 @@ namespace RogueIslands.View
         public bool ShouldAnimateToTarget { get; set; } = false;
         public Vector3 TargetPosition { get; set; }
         public CardListView Owner { get; set; }
+
+        public event Action CardReordered;
 
         public bool AllowReorder
         {
@@ -56,6 +59,8 @@ namespace RogueIslands.View
                 return;
         
             ShouldAnimateToTarget = true;
+            
+            CardReordered?.Invoke();
         }
     }
 }

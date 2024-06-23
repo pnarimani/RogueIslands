@@ -14,16 +14,32 @@ namespace RogueIslands.View.Boosters
         [SerializeField] private Transform _rangeVisuals;
 
         private List<BoosterActionVisualizer> _visualizers;
+        private CardListItem _cardListItem;
 
         public IBooster Data { get; private set; }
 
         private void Awake()
         {
             _visualizers = new List<BoosterActionVisualizer>(GetComponents<BoosterActionVisualizer>());
-            
+
             EffectRangeHighlighter.Register(this);
+            _cardListItem = GetComponent<CardListItem>();
+            if (_cardListItem != null) 
+                _cardListItem.CardReordered += OnBoosterReordered;
         }
-        
+
+        private void OnBoosterReordered()
+        {
+            var boosterOrder = new List<BoosterCard>();
+            foreach (var item in _cardListItem.Owner.Items)
+            {
+                var booster = item.GetComponent<BoosterView>();
+                boosterOrder.Add((BoosterCard)booster.Data);
+            }
+
+            StaticResolver.Resolve<BoosterManagement>().ReorderBoosters(boosterOrder);
+        }
+
         private void OnDestroy()
         {
             EffectRangeHighlighter.Remove(this);
@@ -34,7 +50,7 @@ namespace RogueIslands.View.Boosters
             Assert.IsNotNull(booster);
 
             Data = booster;
-            if (_name != null) 
+            if (_name != null)
                 _name.text = booster.Name;
 
             if (booster is WorldBooster world)
@@ -96,7 +112,6 @@ namespace RogueIslands.View.Boosters
         {
             if (Data is WorldBooster)
             {
-                
             }
         }
 

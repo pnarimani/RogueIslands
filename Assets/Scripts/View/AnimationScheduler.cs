@@ -4,6 +4,8 @@ namespace RogueIslands.View
 {
     public class AnimationScheduler : Singleton<AnimationScheduler>
     {
+        private const float Multiplier = 1;
+
         private float _delay;
         private float _ensureTime;
 
@@ -18,7 +20,7 @@ namespace RogueIslands.View
             if (time < 0)
                 throw new ArgumentOutOfRangeException(nameof(time));
 
-            Instance._delay += time;
+            Instance._delay += time * Multiplier;
         }
 
         public static void EnsureExtraTime(float time)
@@ -26,8 +28,7 @@ namespace RogueIslands.View
             if (time < 0)
                 throw new ArgumentOutOfRangeException(nameof(time));
 
-            Instance._ensureTime = Instance._delay + time;
-            Instance._ensureTime = Instance._delay + time;
+            Instance._ensureTime = Instance._delay + time * Multiplier;
         }
 
         public static float GetAnimationTime()

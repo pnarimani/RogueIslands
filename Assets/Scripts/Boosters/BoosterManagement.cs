@@ -88,5 +88,11 @@ namespace RogueIslands
             _view.GetUI().RefreshAll();
             _state.ExecuteEvent(_view, new BoosterDestroyed() { Booster = booster });
         }
+
+        public void ReorderBoosters(IReadOnlyList<BoosterCard> order)
+        {
+            _state.Boosters.Clear();
+            _state.Boosters.AddRange(order);
+        }
     }
 }

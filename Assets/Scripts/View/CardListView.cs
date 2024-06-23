@@ -20,6 +20,7 @@ namespace RogueIslands.View
         private RectTransform Tx => (RectTransform)transform;
 
         public RectTransform Content => _content;
+        public IReadOnlyList<CardListItem> Items => _items;
 
         public void Add(CardListItem item)
         {

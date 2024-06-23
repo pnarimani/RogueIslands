@@ -29,6 +29,8 @@ namespace RogueIslands.View.Boosters
         {
             var productBoost = state.ScoringState.Products - _previousProduct;
             var finalMult = state.ScoringState.Multiplier;
+            var dividedDelta = finalMult / _previousMult;
+            var delta = finalMult - _previousMult;
 
             var wait = AnimationScheduler.GetAnimationTime();
             AnimationScheduler.AllocateTime(0.2f);
@@ -48,17 +50,11 @@ namespace RogueIslands.View.Boosters
             {
                 GameUI.Instance.MultBoosted(finalMult);
 
-                if (action.XMult != null)
-                {
-                    if (_multAmountText != null)
-                        _multAmountText.text = $"x{finalMult / action.XMult:F1}";
-                }
+                if (action.XMult != null && _multAmountText != null) 
+                    _multAmountText.text = $"x{dividedDelta:F1}";
 
-                if (action.PlusMult != null)
-                {
-                    if (_multAmountText != null)
-                        _multAmountText.text = $"+{finalMult - _previousMult:F1}";
-                }
+                if (action.PlusMult != null && _multAmountText != null) 
+                    _multAmountText.text = $"+{delta:F1}";
 
                 await _multiLabelFeedback.Play();
             }
