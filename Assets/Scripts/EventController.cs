@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using RogueIslands.Boosters;
 using RogueIslands.GameEvents;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace RogueIslands
 {
@@ -10,7 +11,6 @@ namespace RogueIslands
     {
         private readonly GameState _state;
         private readonly GameActionController _gameActionController;
-        private readonly List<IBooster> _buffer = new();
 
         public EventController(GameState state, GameActionController gameActionController)
         {
@@ -22,20 +22,22 @@ namespace RogueIslands
         {
             try
             {
-                _state.CurrentEvent = e;
+                using var _ = ListPool<IBooster>.Get(out var buffer);
 
-                _buffer.Clear();
-                _buffer.AddRange(_state.WorldBoosters);
-                foreach (var booster in _buffer)
+                buffer.Clear();
+                buffer.AddRange(_state.WorldBoosters);
+                foreach (var booster in buffer)
                 {
+                    _state.CurrentEvent = e;
                     if (_state.WorldBoosters.Contains((WorldBooster)booster))
                         ExecuteBooster(booster);
                 }
 
-                _buffer.Clear();
-                _buffer.AddRange(_state.Boosters);
-                foreach (var booster in _buffer)
+                buffer.Clear();
+                buffer.AddRange(_state.Boosters);
+                foreach (var booster in buffer)
                 {
+                    _state.CurrentEvent = e;
                     if (_state.Boosters.Contains((BoosterCard)booster))
                         ExecuteBooster(booster);
                 }

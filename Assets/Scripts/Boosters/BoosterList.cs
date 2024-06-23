@@ -443,6 +443,7 @@ namespace RogueIslands.Boosters
                             new ScoringAction
                             {
                                 Conditions = new[] { GameEventCondition.Create<DayEnd>() },
+                                PlusMult = 0,
                             }
                         }
                     },
