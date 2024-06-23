@@ -908,6 +908,8 @@ GameObject:
   m_Component:
   - component: {fileID: 409051656}
   - component: {fileID: 409051657}
+  - component: {fileID: 409051659}
+  - component: {fileID: 409051658}
   m_Layer: 5
   m_Name: BoosterList
   m_TagString: Untagged
@@ -956,6 +958,46 @@ MonoBehaviour:
   _minSize: {x: 300, y: 210}
   _maxSize: {x: 100000, y: 100000}
   _content: {fileID: 2079154488}
+--- !u!114 &409051658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409051655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!223 &409051659
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409051655}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 10
+  m_TargetDisplay: 0
 --- !u!114 &444714034 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2127982976051780292, guid: 9796a422f6ba9544d9bf09130c55c143, type: 3}
@@ -4126,10 +4168,9 @@ MonoBehaviour:
   _boosterSlots: {fileID: 827344979}
   _playButton: {fileID: 848827690}
   _buildingCardPrefab: {fileID: 4713846699773608087, guid: 26f59d4a891cc2a47b2604504124ec83, type: 3}
-  _boosterPrefab: {fileID: 5531658305617184316, guid: 7e90ea3c470311f40803c8cffbe8c5fd, type: 3}
+  _boosterPrefab: {fileID: 6299732069589057431, guid: 7e90ea3c470311f40803c8cffbe8c5fd, type: 3}
   _buildingCardList: {fileID: 957286663}
   _boosterList: {fileID: 409051657}
-  _notEnoughEnergy: {fileID: 0}
   _productTarget: {fileID: 266370366}
 --- !u!1 &2079154487
 GameObject:
