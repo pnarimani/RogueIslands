@@ -2,20 +2,37 @@ using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.Buildings;
 
-namespace RogueIslands.Boosters
+namespace RogueIslands.Boosters.Evaluators
 {
     public class ColorCheckEvaluator : GameConditionEvaluator<ColorCheckCondition>
     {
         private readonly HashSet<ColorTag> _existingColors = new();
+
         protected override bool Evaluate(GameState state, IBooster booster, ColorCheckCondition condition)
         {
             _existingColors.Clear();
             foreach (var tag in state.Clusters.SelectMany(x => x).Select(b => b.Color))
                 _existingColors.Add(tag);
 
-            var exist = condition.ColorsToExist == null || _existingColors.All(color => condition.ColorsToExist.Contains(color));
-            var nonExist = condition.ColorsToNotExist == null || _existingColors.All(color => !condition.ColorsToNotExist.Contains(color));
-            return exist && nonExist;
+            if (condition.ForcedColors != null)
+            {
+                foreach (var force in condition.ForcedColors)
+                {
+                    if (!_existingColors.Contains(force))
+                        return false;
+                }
+            }
+
+            if (condition.BannedColors != null)
+            {
+                foreach (var color in _existingColors)
+                {
+                    if (condition.BannedColors.Contains(color)) 
+                        return false;
+                }
+            }
+
+            return true;
         }
     }
 }

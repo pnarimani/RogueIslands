@@ -322,7 +322,7 @@ namespace RogueIslands.Boosters
                             GameEventCondition.Create<DayEnd>(),
                             new ColorCheckCondition
                             {
-                                ColorsToExist = ColorTag.All,
+                                ForcedColors = ColorTag.All,
                             },
                         },
                         PlusMult = 10,
@@ -341,8 +341,7 @@ namespace RogueIslands.Boosters
                             GameEventCondition.Create<DayEnd>(),
                             new ColorCheckCondition
                             {
-                                ColorsToExist = new[] { ColorTag.Green, ColorTag.Purple },
-                                ColorsToNotExist = new[] { ColorTag.Red, ColorTag.Blue },
+                                BannedColors = new[] { ColorTag.Red, ColorTag.Blue },
                             },
                         },
                         XMult = 3,
@@ -663,11 +662,11 @@ namespace RogueIslands.Boosters
                         },
                     },
                 },
-                new()
-                {
-                    Name = "Net",
-                    Description = new ScalingBoosterDescription("Gain +1 mult whenever a random event does not happen"),
-                },
+                // new()
+                // {
+                //     Name = "Net",
+                //     Description = new ScalingBoosterDescription("Gain +1 mult whenever a random event does not happen"),
+                // },
             };
         }
 

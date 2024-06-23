@@ -31,7 +31,7 @@ namespace RogueIslands.Buildings
         public static readonly ColorTag Green = new("Green", new Color(0.76f, 1f, 0.65f));
         public static readonly ColorTag Purple = new("Purple", new Color(0.73f, 0.46f, 1f));
         public static readonly ColorTag Red = new("Red", new Color(1f, 0.42f, 0.34f));
-        public static readonly ColorTag Blue = new("Black", new Color(0.46f, 0.74f, 1f));
+        public static readonly ColorTag Blue = new("Blue", new Color(0.46f, 0.74f, 1f));
 
         public static readonly ColorTag[] All = { Green, Purple, Red, Blue };
     }
