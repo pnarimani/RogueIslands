@@ -50,7 +50,10 @@ namespace RogueIslands
         {
             foreach (var point in spawnPoints)
             {
-                var index = _state.WorldBoosterRandom.NextInt(_state.AvailableWorldBoosters.Count);
+                if (_state.WorldBoosterSpawnRandom.NextFloat() > _state.WorldBoosterSpawnChance)
+                    continue;
+                
+                var index = _state.WorldBoosterSelectionRandom.NextInt(_state.AvailableWorldBoosters.Count);
 
                 var booster = _state.AvailableWorldBoosters[index].Clone();
                 booster.Id = new BoosterInstanceId(Guid.NewGuid().GetHashCode());

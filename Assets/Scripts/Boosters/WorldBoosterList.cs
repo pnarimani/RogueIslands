@@ -12,22 +12,6 @@ namespace RogueIslands.Boosters
         {
             return new List<WorldBooster>()
             {
-                // new()
-                // {
-                //     Name = "Simple Product Boost",
-                //     Description = new LiteralDescription("+5 products"),
-                //     Range = 4,
-                //     PrefabAddress = "WorldBoosters/Simple",
-                //     EventAction = new ScoringAction
-                //     {
-                //         Conditions = new IGameCondition[]
-                //         {
-                //             GameEventCondition.Create<BuildingScored>(), 
-                //             new BuildingInRangeCondition(),
-                //         },
-                //         Products = 5,
-                //     },
-                // },
                 new()
                 {
                     Name = "Tree",
@@ -45,24 +29,23 @@ namespace RogueIslands.Boosters
                         Products = 10,
                     },
                 },
-                // new()
-                // {
-                //     Name = "Mine",
-                //     Description =
-                //         new LiteralDescription($"+3 mult for all {Category.Cat4} and {Category.Cat5} buildings"),
-                //     Range = 3,
-                //     PrefabAddress = "WorldBoosters/Mine",
-                //     EventAction = new ScoringAction
-                //     {
-                //         Conditions = new IGameCondition[]
-                //         {
-                //             GameEventCondition.Create<BuildingScored>(),
-                //             new BuildingInRangeCondition(),
-                //             new SelectedBuildingCategory() { Categories = new[] { Category.Cat4, Category.Cat5, } },
-                //         },
-                //         PlusMult = 3,
-                //     },
-                // },
+                new()
+                {
+                    Name = "Mine",
+                    Description = new LiteralDescription($"+3 mult for all {Category.Cat4} and {Category.Cat5} buildings"),
+                    Range = 4,
+                    PrefabAddress = "WorldBoosters/Mine",
+                    EventAction = new ScoringAction
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<BuildingScored>(),
+                            new BuildingInRangeCondition(),
+                            new SelectedBuildingCategory() { Categories = new[] { Category.Cat4, Category.Cat5, } },
+                        },
+                        PlusMult = 3,
+                    },
+                },
             };
         }
     }

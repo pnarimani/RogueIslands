@@ -29,7 +29,8 @@ namespace RogueIslands
                 AvailableBoosters = BoosterList.Get(seedRandom),
                 HandSize = handSize,
                 AvailableWorldBoosters = WorldBoosterList.Get(),
-                WorldBoosterRandom = seedRandom.NextRandom(),
+                WorldBoosterSpawnRandom = seedRandom.NextRandom(),
+                WorldBoosterSelectionRandom = seedRandom.NextRandom(),
                 TotalDays = 4,
                 Shop = new ShopState
                 {
@@ -58,10 +59,10 @@ namespace RogueIslands
             var result = new double[GameState.RoundsPerAct * GameState.TotalActs];
             for (var i = 0; i < GameState.TotalActs; i++)
             {
-                result[i * GameState.RoundsPerAct + 0] = (i + 1) * 10;
-                result[i * GameState.RoundsPerAct + 1] = (i + 1) * 25;
-                result[i * GameState.RoundsPerAct + 2] = (i + 1) * 50;
-                result[i * GameState.RoundsPerAct + 3] = (i + 1) * 100;
+                result[i * GameState.RoundsPerAct + 0] = (i + 1) * 30;
+                result[i * GameState.RoundsPerAct + 1] = (i + 1) * 100;
+                result[i * GameState.RoundsPerAct + 2] = (i + 1) * 400;
+                result[i * GameState.RoundsPerAct + 3] = (i + 1) * 1000;
 
             }
             return result;

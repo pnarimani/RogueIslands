@@ -9,6 +9,7 @@ namespace RogueIslands.Autofac
 {
     public class GameplayLifetimeScope : AutofacScope, IResolver
     {
+        [SerializeField] private bool _useRandomSeed;
         [SerializeField] private string _seed;
         [SerializeField] private GameManager _gameManagerPrefab;
 
@@ -16,7 +17,7 @@ namespace RogueIslands.Autofac
 
         protected override void Configure(ContainerBuilder builder)
         {
-            builder.RegisterInstance(new Random(Seed.GetHashCode()));
+            builder.RegisterInstance(_useRandomSeed ? new Random() : new Random(Seed.GetHashCode()));
 
             builder.RegisterModule<GameplayCoreModule>();
 

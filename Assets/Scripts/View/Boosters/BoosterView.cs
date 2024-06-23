@@ -34,7 +34,8 @@ namespace RogueIslands.View.Boosters
             Assert.IsNotNull(booster);
 
             Data = booster;
-            _name.text = booster.Name;
+            if (_name != null) 
+                _name.text = booster.Name;
 
             if (booster is WorldBooster world)
                 _rangeVisuals.transform.localScale = Vector3.one * (world.Range * 2);

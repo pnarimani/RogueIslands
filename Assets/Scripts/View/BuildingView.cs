@@ -34,6 +34,8 @@ namespace RogueIslands.View
         {
             Data = building;
             _synergyRange.transform.localScale = Vector3.one * (building.Range * 2);
+
+            GetComponent<DescriptionBoxSpawner>().Initialize(building);
         }
 
         public async void BuildingTriggered(bool isRetrigger)

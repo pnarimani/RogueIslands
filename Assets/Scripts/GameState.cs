@@ -42,8 +42,9 @@ namespace RogueIslands
 
         public GameResult Result;
 
-        public Random WorldBoosterRandom;
-
+        public Random WorldBoosterSpawnRandom;
+        public Random WorldBoosterSelectionRandom;
+        public float WorldBoosterSpawnChance = 0.2f;
         public List<WorldBooster> WorldBoosters = new();
         public List<WorldBooster> AvailableWorldBoosters;
     }
