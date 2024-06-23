@@ -18,7 +18,6 @@ namespace RogueIslands.Buildings
                         var legacyColorName = colorName.Replace("Green", "White").Replace("Purple", "Black");
                         var card = new Building()
                         {
-                            Name = $"{colorName}",
                             Color = (colorName, color),
                             Category = cat,
                             Size = (BuildingSize)sizeIndex,

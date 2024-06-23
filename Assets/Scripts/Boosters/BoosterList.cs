@@ -88,7 +88,8 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Base 2",
-                    Description = new ScalingBoosterDescription("If the number of buildings is a power of 2, gains +4 products"),
+                    Description =
+                        new ScalingBoosterDescription("If the number of buildings is a power of 2, gains +4 products"),
                     BuyPrice = 2,
                     EventAction = new CompositeAction
                     {
@@ -330,7 +331,8 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Binary World",
-                    Description = new LiteralDescription($"x3 mult if all buildings are {ColorTag.Green} and {ColorTag.Purple}"),
+                    Description =
+                        new LiteralDescription($"x3 mult if all buildings are {ColorTag.Green} and {ColorTag.Purple}"),
                     BuyPrice = 3,
                     EventAction = new ScoringAction
                     {
@@ -415,7 +417,9 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "The Rat",
-                    Description = new ScalingBoosterDescription("On the start of the round, destroys the booster to the right. Gains +5 mult"),
+                    Description =
+                        new ScalingBoosterDescription(
+                            "On the start of the round, destroys the booster to the right. Gains +5 mult"),
                     BuyPrice = 2,
                     EventAction = new CompositeAction
                     {
@@ -463,10 +467,16 @@ namespace RogueIslands.Boosters
                     Name = "The Collector",
                     Description = new LiteralDescription("+1 mult for each different building"),
                     BuyPrice = 2,
+                    EventAction = new MultipliedScoringAction
+                    {
+                        Conditions = new[] { GameEventCondition.Create<DayEnd>(), },
+                        PlusMult = 1,
+                        MultiplyByUniqueBuildings = true,
+                    }
                 },
                 new()
                 {
-                    Name = "Raised Fist United",
+                    Name = "Cluttered",
                     Description = new LiteralDescription("add double the number of clusters to the mult"),
                     BuyPrice = 2,
                     EventAction = new MultipliedScoringAction

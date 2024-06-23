@@ -17,6 +17,6 @@ namespace RogueIslands.Rollback
         }
 
         private static bool AreEqual(Building b1, Building b2)
-            => b1.Id == b2.Id && b1.Name == b2.Name;
+            => b1.Id == b2.Id && b1.Color == b2.Color && b1.Category == b2.Category && b1.Size == b2.Size;
     }
 }
