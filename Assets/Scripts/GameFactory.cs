@@ -1,8 +1,7 @@
-﻿using System.Linq;
+﻿using System;
 using RogueIslands.Boosters;
 using RogueIslands.Buildings;
 using RogueIslands.GameEvents;
-using RogueIslands.Rollback;
 using Random = Unity.Mathematics.Random;
 
 namespace RogueIslands
@@ -59,10 +58,20 @@ namespace RogueIslands
             var result = new double[GameState.RoundsPerAct * GameState.TotalActs];
             for (var i = 0; i < GameState.TotalActs; i++)
             {
-                result[i * GameState.RoundsPerAct + 0] = i * 1200 + (i + 1) * 30;
-                result[i * GameState.RoundsPerAct + 1] = i * 1200 + (i + 1) * 100;
-                result[i * GameState.RoundsPerAct + 2] = i * 1200 + (i + 1) * 400;
-                result[i * GameState.RoundsPerAct + 3] = i * 1200 + (i + 1) * 1000;
+                for (var j = 0; j < GameState.RoundsPerAct; j++)
+                {
+                    var x = i * GameState.RoundsPerAct + j;
+                    const double a = 47;
+                    const double b = -52.5;
+                    const double c = 112.5;
+                    var score = a + b * x + c * x * x;
+
+                    var digitCount = (int)Math.Log10(score) + 1;
+                    var roundTo = Math.Pow(10, Math.Max(1, digitCount - 2));
+                    score = Math.Round(score / roundTo) * roundTo;
+
+                    result[x] = Math.Round(score);
+                }
             }
 
             return result;
