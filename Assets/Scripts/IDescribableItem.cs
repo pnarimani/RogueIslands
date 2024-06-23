@@ -1,9 +1,7 @@
-﻿using RogueIslands.Boosters.Descriptions;
-
-namespace RogueIslands
+﻿namespace RogueIslands
 {
     public interface IDescribableItem
     {
-        IDescriptionProvider Description { get; set; }
+        IDescriptionProvider Description { get; }
     }
 }

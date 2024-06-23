@@ -7,6 +7,7 @@ namespace RogueIslands.View
     {
         [SerializeField] private Transform _descriptionBoxParent;
         [SerializeField] private DescriptionBox _descriptionBoxPrefab;
+        [SerializeField] private bool _showName;
         
         private DescriptionBox _descriptionBoxInstance;
         
@@ -23,6 +24,9 @@ namespace RogueIslands.View
             {
                 _descriptionBoxInstance = Instantiate(_descriptionBoxPrefab, _descriptionBoxParent);
                 _descriptionBoxInstance.SetDescription(_describableItem.Description.Get(_describableItem));
+
+                if (_showName && _describableItem is INamedItem namedItem) 
+                    _descriptionBoxInstance.ShowName(namedItem.Name);
             }
         }
 

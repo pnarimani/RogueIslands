@@ -306,7 +306,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5a8c4b1c6f4d829ae8916bd4b8a5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: {fileID: 0}
 --- !u!114 &3588666004784718035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,6 +388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _descriptionBoxParent: {fileID: 4699626276341670217}
   _descriptionBoxPrefab: {fileID: 6584765328537110756, guid: d70c4d99d6dab4b448f46152753db9b7, type: 3}
+  _showName: 1
 --- !u!114 &6027579602892299963
 MonoBehaviour:
   m_ObjectHideFlags: 0
