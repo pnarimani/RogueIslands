@@ -15,7 +15,7 @@
         "com.unity.ugui": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
-      "hash": "e8c98732016d7cdba47eb0d283977abd1012741c"
+      "hash": "bc0c2e4e635c6fc31b84679a1ec4a18f29a6bf24"
     },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",

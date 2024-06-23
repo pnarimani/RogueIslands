@@ -1,7 +1,7 @@
 using System;
+using Coffee.UIExtensions;
 using RogueIslands.Boosters;
 using RogueIslands.Buildings;
-using RogueIslands.Particles;
 using RogueIslands.View.Boosters;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,11 +25,10 @@ namespace RogueIslands.View
         [SerializeField] private BuildingCardView _buildingCardPrefab;
         [SerializeField] private BoosterCardView _boosterPrefab;
         [SerializeField] private CardListView _buildingCardList, _boosterList;
-        [SerializeField] private ParticleSystemTarget _productTarget;
 
         public event Action PlayClicked;
 
-        public ParticleSystemTarget ProductTarget => _productTarget;
+        public Transform ProductTarget => _products.transform;
 
         private void Start()
         {

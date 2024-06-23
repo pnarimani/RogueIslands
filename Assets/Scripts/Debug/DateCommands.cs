@@ -17,7 +17,7 @@ namespace RogueIslands.Debug
         public static void SetRemainingDays(int remainingDays)
         {
             if(remainingDays > GameManager.Instance.State.TotalDays)
-                remainingDays = GameManager.Instance.State.TotalDays;
+                GameManager.Instance.State.TotalDays = remainingDays;
             GameManager.Instance.State.Day = GameManager.Instance.State.TotalDays - remainingDays;
             GameManager.Instance.GetUI().RefreshAll();
         }

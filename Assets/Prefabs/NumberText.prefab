@@ -467,7 +467,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9041193780307548942}
   - component: {fileID: 2127982976051780292}
-  - component: {fileID: 3854902028647343472}
   m_Layer: 5
   m_Name: NumberText
   m_TagString: Untagged
@@ -513,20 +512,3 @@ MonoBehaviour:
   _max: 0
   _increaseFeedback:
     _root: {fileID: 6343467020524819022}
---- !u!114 &3854902028647343472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7693947556679107347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faf9a37f2809437fb81919b7d39ce92e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attractionSpeed: 8
-  _isUI: 1
-  _groundMask:
-    serializedVersion: 2
-    m_Bits: 8

@@ -84,7 +84,8 @@ MonoBehaviour:
     _target: {fileID: 2864577134344029207}
   _retriggerLabelFeedback: {fileID: 2257512705592908195}
   _moneyFeedback: {fileID: 8132093505464479429}
-  _productsParticleSystem: {fileID: 3904835384555638356, guid: bb2c289fa32dba542aafc90990d62755, type: 3}
+  _productsParticleSystem: {fileID: 2403484906282881419, guid: 829d91900bb60e749bd17c062bc3ada6, type: 3}
+  _attractorPrefab: {fileID: 4333115071971787847, guid: e42ee8c83ef057c4dbcefb73551ac50b, type: 3}
 --- !u!114 &2943306025945953605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _descriptionBoxParent: {fileID: 5650880130471713474}
   _descriptionBoxPrefab: {fileID: 6584765328537110756, guid: d70c4d99d6dab4b448f46152753db9b7, type: 3}
+  _showName: 0
 --- !u!1 &4207948724428914448
 GameObject:
   m_ObjectHideFlags: 0

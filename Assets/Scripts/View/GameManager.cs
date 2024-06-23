@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Coffee.UIExtensions;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using RogueIslands.Boosters;
 using RogueIslands.Buildings;
-using RogueIslands.Particles;
-using RogueIslands.Rollback;
 using RogueIslands.View.Boosters;
 using RogueIslands.View.RoundSelection;
 using RogueIslands.View.Shop;
@@ -50,11 +49,7 @@ namespace RogueIslands.View
                 timer += Time.deltaTime;
             }
 
-            var particleTargets = FindObjectsOfType<ParticleSystemTarget>();
-            while (particleTargets.Any(t => t.IsTrackingParticles()))
-            {
-                await UniTask.DelayFrame(1);
-            }
+            destroyCancellationToken.ThrowIfCancellationRequested();
 
             GameUI.Instance.RefreshScores();
 

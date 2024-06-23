@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Coffee.UIExtensions;
 using Cysharp.Threading.Tasks;
 using RogueIslands.Buildings;
 using RogueIslands.View.Feedbacks;
@@ -15,8 +16,9 @@ namespace RogueIslands.View
         [SerializeField] private BuildingTriggerFeedback _triggerFeedback;
         [SerializeField] private LabelFeedback _retriggerLabelFeedback;
         [SerializeField] private LabelFeedback _moneyFeedback;
-        [SerializeField] private ParticleSystem _productsParticleSystem;
-
+        [SerializeField] private GameObject _productsParticleSystem;
+        [SerializeField] private UIParticleAttractor _attractorPrefab;
+        
         public Building Data { get; private set; }
 
         private bool IsPlacedDown => !Data.Id.IsDefault();
@@ -44,7 +46,7 @@ namespace RogueIslands.View
         {
             var wait = AnimationScheduler.GetAnimationTime();
             AnimationScheduler.AllocateTime(0.2f);
-            AnimationScheduler.EnsureExtraTime(1.3f);
+            AnimationScheduler.EnsureExtraTime(2.5f);
             var count = Data.Output + Data.OutputUpgrade;
 
             await UniTask.WaitForSeconds(wait);
@@ -56,9 +58,29 @@ namespace RogueIslands.View
                 task = UniTask.WhenAll(task, _retriggerLabelFeedback.Play());
             await task;
 
-            await UniTask.WaitForSeconds(0.6f);
+            _attractorPrefab.gameObject.SetActive(false);
+            var attractor = Instantiate(_attractorPrefab, GameUI.Instance.ProductTarget, false);
+            attractor.particleSystem = ps;
+            attractor.gameObject.SetActive(true);
 
-            await GameUI.Instance.ProductTarget.Attract(ps, () => { GameUI.Instance.ProductBoosted(1); });
+            var hitCount = 0;
+            attractor.onAttracted.AddListener(() =>
+            {
+                GameUI.Instance.ProductBoosted(1);
+                hitCount++;
+            });
+            
+            while(hitCount < count)
+            {
+                var distance = Vector3.Distance(attractor.transform.position, ps.transform.position);
+                var t = Mathf.InverseLerp(500, 2000, distance);
+                var speed = Mathf.Lerp(1f, 3.5f, t);
+                attractor.maxSpeed = speed;
+                await UniTask.DelayFrame(1);
+            }
+            
+            Destroy(attractor.gameObject);
+            Destroy(ps.transform.parent.gameObject);
         }
 
         public async UniTask BuildingMadeMoney(int money)
@@ -69,11 +91,23 @@ namespace RogueIslands.View
 
         private ParticleSystem PlayParticleSystem(double count)
         {
-            var ps = Instantiate(_productsParticleSystem, transform, false);
-            var burst = ps.emission.GetBurst(0);
-            burst.count = (int)(count);
-            ps.emission.SetBurst(0, burst);
-            ps.Play();
+            var obj = Instantiate(_productsParticleSystem, GameUI.Instance.transform, false);
+            obj.GetComponent<PinToWorldObject>().Target = transform;
+            var ps = obj.GetComponentInChildren<ParticleSystem>();
+            var bursts = new ParticleSystem.Burst[(int)count];
+            for (int i = 0; i < bursts.Length; i++)
+            {
+                bursts[i] = new ParticleSystem.Burst
+                {
+                    count = 1,
+                    cycleCount = 1,
+                    probability = 1,
+                    time = 0.1f * i,
+                };
+            }
+
+            ps.emission.SetBursts(bursts, bursts.Length);
+            obj.GetComponent<UIParticle>().Play();
             return ps;
         }
 

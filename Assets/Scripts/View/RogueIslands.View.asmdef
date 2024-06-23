@@ -7,7 +7,7 @@
     "Unity.Mathematics",
     "DOTween.Modules",
     "UniTask",
-    "NaughtyAttributes.Core",
+    "Coffee.UIParticle",
     "Unity.Cinemachine"
   ],
   "overrideReferences": true,
