@@ -204,7 +204,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Sweatshop",
-                    Description = new LiteralDescription("+30 products for each red building"),
+                    Description = new LiteralDescription($"+30 products for each {ColorTag.Red} building"),
                     BuyPrice = 2,
                     EventAction = new ScoringAction
                     {
@@ -265,10 +265,10 @@ namespace RogueIslands.Boosters
                         Change = 4,
                     },
                 },
-                CreateColorBooster("Black Boost", "+3 mult when black buildings score", ColorTag.Purple),
-                CreateColorBooster("White Boost", "+3 mult when white buildings score", ColorTag.Green),
-                CreateColorBooster("Red Boost", "+3 mult when red buildings score", ColorTag.Red),
-                CreateColorBooster("Blue Boost", "+3 mult when blue buildings score", ColorTag.Blue),
+                CreateColorBooster("Black Boost", ColorTag.Purple),
+                CreateColorBooster("White Boost", ColorTag.Green),
+                CreateColorBooster("Red Boost", ColorTag.Red),
+                CreateColorBooster("Blue Boost", ColorTag.Blue),
                 new()
                 {
                     Name = "Crowded",
@@ -330,7 +330,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Binary World",
-                    Description = new LiteralDescription("x3 mult if all buildings are black and white"),
+                    Description = new LiteralDescription($"x3 mult if all buildings are {ColorTag.Green} and {ColorTag.Purple}"),
                     BuyPrice = 3,
                     EventAction = new ScoringAction
                     {
@@ -467,7 +467,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Raised Fist United",
-                    Description = new LiteralDescription("add double the number of groups to the mult"),
+                    Description = new LiteralDescription("add double the number of clusters to the mult"),
                     BuyPrice = 2,
                     EventAction = new MultipliedScoringAction
                     {
@@ -660,11 +660,11 @@ namespace RogueIslands.Boosters
             };
         }
 
-        private static BoosterCard CreateColorBooster(string name, string desc, ColorTag color)
+        private static BoosterCard CreateColorBooster(string name, ColorTag color)
             => new()
             {
                 Name = name,
-                Description = new LiteralDescription(desc),
+                Description = new LiteralDescription($"+3 mult when {color} buildings score"),
                 BuyPrice = 2,
                 EventAction = new ScoringAction()
                 {
