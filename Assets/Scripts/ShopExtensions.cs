@@ -14,7 +14,7 @@ namespace RogueIslands
             state.Shop.CurrentRerollCost = state.Shop.StartingRerollCost;
         }
 
-        public static void RerollShop(this GameState state)
+        public static void RerollShop(this GameState state, IGameView view)
         {
             if (state.Money < state.Shop.CurrentRerollCost)
                 throw new InvalidOperationException();
@@ -24,6 +24,8 @@ namespace RogueIslands
                 (int)MathF.Ceiling(state.Shop.CurrentRerollCost * state.Shop.RerollIncreaseRate);
 
             PopulateBoosterSlots(state);
+            
+            view.GetUI().RefreshAll();
         }
 
         private static void PopulateBoosterSlots(GameState state)

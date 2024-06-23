@@ -238,6 +238,7 @@ GameObject:
   - component: {fileID: 2073519558671473601}
   - component: {fileID: 8589796277664869462}
   - component: {fileID: 7432197659843615729}
+  - component: {fileID: 6395347151529516497}
   m_Layer: 5
   m_Name: BoosterCard
   m_TagString: Untagged
@@ -284,8 +285,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: {fileID: 5730987614014400325}
-  _descriptionBoxPrefab: {fileID: 6584765328537110756, guid: d70c4d99d6dab4b448f46152753db9b7, type: 3}
-  _descriptionBoxParent: {fileID: 3247091001552782063}
   _rangeVisuals: {fileID: 0}
 --- !u!114 &512890588080133066
 MonoBehaviour:
@@ -366,6 +365,20 @@ MonoBehaviour:
     _group: {fileID: 7218322085464868357}
   _productAmountText: {fileID: 6854025761363677972}
   _multAmountText: {fileID: 1292206556265306467}
+--- !u!114 &6395347151529516497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722346700804208564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcad128758d54208ac0112096232e1b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _descriptionBoxParent: {fileID: 3247091001552782063}
+  _descriptionBoxPrefab: {fileID: 6584765328537110756, guid: d70c4d99d6dab4b448f46152753db9b7, type: 3}
 --- !u!1 &2989929526430181353
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,7 +7,6 @@ namespace RogueIslands.View
 {
     public class BuildingCardView : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] private TextMeshProUGUI _name, _description;
         [SerializeField] private RectTransform _animationParent;
         [SerializeField] private Image _colorBg, _colorGradient, _buildingIcon;
         
@@ -28,8 +26,8 @@ namespace RogueIslands.View
 
             _colorBg.color = _colorGradient.color = data.Color.Color;
             _buildingIcon.sprite = Resources.Load<Sprite>(data.IconAddress);
-            // _name.text = data.Name;
-            // _description.text = data.Description;
+
+            GetComponent<DescriptionBoxSpawner>().Initialize(data);
         }
 
         private void Start()

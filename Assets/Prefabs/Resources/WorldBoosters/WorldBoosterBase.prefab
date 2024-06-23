@@ -967,6 +967,7 @@ GameObject:
   - component: {fileID: 778677749984432346}
   - component: {fileID: 8694528284224590484}
   - component: {fileID: 6315929211019996745}
+  - component: {fileID: 6732660818498286617}
   m_Layer: 0
   m_Name: WorldBoosterBase
   m_TagString: Untagged
@@ -1005,8 +1006,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: {fileID: 8069833107685562028}
-  _descriptionBoxPrefab: {fileID: 6584765328537110756, guid: d70c4d99d6dab4b448f46152753db9b7, type: 3}
-  _descriptionBoxParent: {fileID: 4699626276341670217}
   _rangeVisuals: {fileID: 2483511580608959917}
 --- !u!114 &8166853432358193915
 MonoBehaviour:
@@ -1073,6 +1072,20 @@ MonoBehaviour:
     _group: {fileID: 590470432544189657}
   _productAmountText: {fileID: 7791497441482814294}
   _multAmountText: {fileID: 7569209845356652908}
+--- !u!114 &6732660818498286617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5451314061881594509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcad128758d54208ac0112096232e1b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _descriptionBoxParent: {fileID: 4699626276341670217}
+  _descriptionBoxPrefab: {fileID: 6584765328537110756, guid: d70c4d99d6dab4b448f46152753db9b7, type: 3}
 --- !u!1 &6414954534472025185
 GameObject:
   m_ObjectHideFlags: 0

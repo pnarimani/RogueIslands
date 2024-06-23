@@ -6,6 +6,6 @@
 
         public LiteralDescription(string literalText) => _literalText = literalText;
 
-        public string Get(IBooster booster) => _literalText;
+        public string Get(IDescribableItem item) => _literalText;
     }
 }

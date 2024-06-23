@@ -3,11 +3,10 @@ using RogueIslands.Boosters.Descriptions;
 
 namespace RogueIslands.Boosters
 {
-    public interface IBooster
+    public interface IBooster : IDescribableItem
     {
         BoosterInstanceId Id { get; set; }
         string Name { get; set; }
-        IDescriptionProvider Description { get; set; }
         GameAction EventAction { get; set; }
     }
 }

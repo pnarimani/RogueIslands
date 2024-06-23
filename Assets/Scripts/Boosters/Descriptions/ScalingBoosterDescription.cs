@@ -14,8 +14,10 @@ namespace RogueIslands.Boosters.Descriptions
             _prefix = prefix;
         }
 
-        public string Get(IBooster booster)
+        public string Get(IDescribableItem item)
         {
+            if (item is not IBooster booster)
+                return string.Empty;
             var scoringAction = booster.GetEventAction<ScoringAction>();
 
             if (ShowProducts)

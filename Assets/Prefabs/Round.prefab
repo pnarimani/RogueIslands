@@ -340,6 +340,9 @@ MonoBehaviour:
   _requiredScore: {fileID: 3774221582828569912}
   _playButton: {fileID: 8533826652400235321}
   _title: {fileID: 6439002815512879225}
+  _activeRoundColor: {r: 1, g: 0.88235295, b: 0.9263933, a: 1}
+  _inactiveRoundColor: {r: 0.7688679, g: 0.9666865, b: 1, a: 1}
+  _background: {fileID: 4773655895756932267}
 --- !u!1001 &3019847948461219836
 PrefabInstance:
   m_ObjectHideFlags: 0

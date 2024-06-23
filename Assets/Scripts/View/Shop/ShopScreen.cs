@@ -1,5 +1,6 @@
 ﻿using RogueIslands.Boosters;
 using RogueIslands.View.Boosters;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ namespace RogueIslands.View.Shop
         [SerializeField] private BoosterView _boosterPrefab;
         [SerializeField] private Transform _cardParent;
         [SerializeField] private Button _continue, _reroll;
+        [SerializeField] private TextMeshProUGUI _rerollText;
 
         private static ShopState Shop => GameManager.Instance.State.Shop;
 
@@ -25,6 +27,8 @@ namespace RogueIslands.View.Shop
         private void PopulateShop()
         {
             _cardParent.DestroyChildren();
+            
+            UpdateRerollCost();
             
             for (var i = 0; i < Shop.CardCount; i++)
             {
@@ -53,12 +57,17 @@ namespace RogueIslands.View.Shop
             }
         }
 
+        private void UpdateRerollCost()
+        {
+            _rerollText.text = $"Reroll (${Shop.CurrentRerollCost})";
+        }
+
         private void OnRerollClicked()
         {
             if (GameManager.Instance.State.Money < Shop.CurrentRerollCost)
                 return;
             
-            GameManager.Instance.State.RerollShop();
+            GameManager.Instance.State.RerollShop(GameManager.Instance);
             
             PopulateShop();
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RogueIslands.Buildings;
 
 namespace RogueIslands
 {
@@ -28,7 +29,7 @@ namespace RogueIslands
                             IconAddress = "Buildings/Icons/Sample",
                             RemainingTriggers = 1,
                         };
-                        card.Description = $"Output: {card.Output}\nSize: {card.Size}\nCategory: {card.Category}";
+                        card.Description = new BuildingDescriptionProvider();
                         allCards.Add(card);
                     }
                 }

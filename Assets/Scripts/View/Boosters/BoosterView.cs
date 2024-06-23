@@ -11,12 +11,9 @@ namespace RogueIslands.View.Boosters
     public class BoosterView : MonoBehaviour, IBoosterView, IPointerEnterHandler, IPointerExitHandler, IHighlightable
     {
         [SerializeField] private TextMeshProUGUI _name;
-        [SerializeField] private DescriptionBox _descriptionBoxPrefab;
-        [SerializeField] private Transform _descriptionBoxParent;
         [SerializeField] private Transform _rangeVisuals;
 
         private List<BoosterActionVisualizer> _visualizers;
-        private DescriptionBox _descriptionBoxInstance;
 
         public IBooster Data { get; private set; }
 
@@ -41,6 +38,8 @@ namespace RogueIslands.View.Boosters
 
             if (booster is WorldBooster world)
                 _rangeVisuals.transform.localScale = Vector3.one * (world.Range * 2);
+
+            GetComponent<DescriptionBoxSpawner>().Initialize(booster);
         }
 
         public async void OnBeforeActionExecuted(GameState state, GameAction action)
@@ -76,12 +75,6 @@ namespace RogueIslands.View.Boosters
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (_descriptionBoxInstance == null)
-            {
-                _descriptionBoxInstance = Instantiate(_descriptionBoxPrefab, _descriptionBoxParent);
-                _descriptionBoxInstance.SetDescription(Data.Description.Get(Data));
-            }
-            
             if (Data is WorldBooster world)
             {
                 _rangeVisuals.gameObject.SetActive(true);
@@ -91,12 +84,6 @@ namespace RogueIslands.View.Boosters
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (_descriptionBoxInstance != null)
-            {
-                Destroy(_descriptionBoxInstance.gameObject);
-                _descriptionBoxInstance = null;
-            }
-            
             if (Data is WorldBooster)
             {
                 _rangeVisuals.gameObject.SetActive(false);
