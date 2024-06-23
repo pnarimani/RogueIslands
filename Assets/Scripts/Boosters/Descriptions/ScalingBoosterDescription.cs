@@ -5,10 +5,7 @@ namespace RogueIslands.Boosters.Descriptions
     public class ScalingBoosterDescription : IDescriptionProvider
     {
         private readonly string _prefix;
-        public bool ShowProducts { get; set; }
-        public bool ShowPlusMult { get; set; }
-        public bool ShowXMult { get; set; }
-
+        
         public ScalingBoosterDescription(string prefix)
         {
             _prefix = prefix;
@@ -20,11 +17,11 @@ namespace RogueIslands.Boosters.Descriptions
                 return string.Empty;
             var scoringAction = booster.GetEventAction<ScoringAction>();
 
-            if (ShowProducts)
+            if (scoringAction.Products != null)
                 return $"{_prefix}\n<color=blue>Current: {scoringAction.Products} products.";
-            if (ShowPlusMult)
+            if (scoringAction.PlusMult != null)
                 return $"{_prefix}\n<color=red>Current: +{scoringAction.PlusMult} mult.";
-            if (ShowXMult)
+            if (scoringAction.XMult != null)
                 return $"{_prefix}\n<color=red>Current: x{scoringAction.XMult:F2} mult.";
             return _prefix;
         }

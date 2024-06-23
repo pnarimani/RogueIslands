@@ -84,7 +84,7 @@ namespace RogueIslands.View
             {
                 GameUI.Instance.ShowBoosterCard(card);
                 GameUI.Instance.RefreshDate();
-                GameUI.Instance.RefreshMoneyAndEnergy();
+                GameUI.Instance.RefreshMoney();
             }
             else if (instance is WorldBooster world)
             {

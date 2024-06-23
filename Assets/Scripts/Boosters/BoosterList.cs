@@ -88,9 +88,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Base 2",
-                    Description =
-                        new ScalingBoosterDescription("If the number of buildings is a power of 2, gains +4 products")
-                            { ShowProducts = true },
+                    Description = new ScalingBoosterDescription("If the number of buildings is a power of 2, gains +4 products"),
                     BuyPrice = 2,
                     EventAction = new CompositeAction
                     {
@@ -417,12 +415,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "The Rat",
-                    Description =
-                        new ScalingBoosterDescription(
-                            "On the start of the round, destroys the booster to the right. Gains +5 mult")
-                        {
-                            ShowPlusMult = true,
-                        },
+                    Description = new ScalingBoosterDescription("On the start of the round, destroys the booster to the right. Gains +5 mult"),
                     BuyPrice = 2,
                     EventAction = new CompositeAction
                     {
@@ -627,8 +620,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Ice Cream",
-                    Description = new ScalingBoosterDescription("+100 products, loses 5 products every day.")
-                        { ShowProducts = true },
+                    Description = new ScalingBoosterDescription("+100 products, loses 5 products every day."),
                     BuyPrice = 2,
                     EventAction = new CompositeAction
                     {
@@ -657,24 +649,14 @@ namespace RogueIslands.Boosters
                         {
                             GameEventCondition.Create<DayEnd>(),
                             new SameBuildingsCondition(),
-                        }
-                    }
+                        },
+                    },
                 },
                 new()
                 {
                     Name = "Net",
                     Description = new ScalingBoosterDescription("Gain +1 mult whenever a random event does not happen"),
                 },
-                new()
-                {
-                    Name = "Network",
-                    Description = new LiteralDescription("x2 building synergy range"),
-                },
-                new()
-                {
-                    Name = "Isolation",
-                    Description = new LiteralDescription("x0.5 building synergy range"),
-                }
             };
         }
 

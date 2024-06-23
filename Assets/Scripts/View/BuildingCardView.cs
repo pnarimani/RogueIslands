@@ -1,5 +1,8 @@
-﻿using DG.Tweening;
+﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using RogueIslands.Buildings;
+using RogueIslands.View.Feedbacks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,10 +13,11 @@ namespace RogueIslands.View
     {
         [SerializeField] private RectTransform _animationParent;
         [SerializeField] private Image _colorBg, _colorGradient, _buildingIcon;
+        [SerializeField] private LabelFeedback _moneyFeedback;
         
         private GameUI _ui;
         private bool _isSelected;
-        private BuildingView _instance;
+        private BuildingView _buildingPreview;
         private Transform _originalParent;
         private CardListItem _cardListItem;
 
@@ -39,8 +43,8 @@ namespace RogueIslands.View
 
         private void OnDestroy()
         {
-            if (_instance != null)
-                Destroy(_instance.gameObject);
+            if (_buildingPreview != null)
+                Destroy(_buildingPreview.gameObject);
         }
 
         private void Update()
@@ -55,25 +59,25 @@ namespace RogueIslands.View
 
             if (_isSelected && _ui.IsInSpawnRegion(Input.mousePosition))
             {
-                if (_instance == null)
+                if (_buildingPreview == null)
                 {
-                    _instance = _buildingViewFactory.Create(Data);
+                    _buildingPreview = _buildingViewFactory.Create(Data);
                 }
 
-                _instance.transform.position = BuildingViewPlacement.Instance.GetPosition(_instance.transform);
+                _buildingPreview.transform.position = BuildingViewPlacement.Instance.GetPosition(_buildingPreview.transform);
 
-                var isValidPlacement = BuildingViewPlacement.Instance.IsValidPlacement(_instance.transform);
-                foreach (var r in _instance.GetComponentsInChildren<Renderer>(true))
+                var isValidPlacement = BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview.transform);
+                foreach (var r in _buildingPreview.GetComponentsInChildren<Renderer>(true))
                     r.enabled = isValidPlacement;
 
-                EffectRangeHighlighter.Highlight(_instance.transform.position, Data.Range, _instance.gameObject);
-                EffectRangeHighlighter.ShowRanges(true, _instance.gameObject);
+                EffectRangeHighlighter.Highlight(_buildingPreview.transform.position, Data.Range, _buildingPreview.gameObject);
+                EffectRangeHighlighter.ShowRanges(true, _buildingPreview.gameObject);
             }
             else
             {
-                if (_instance != null)
+                if (_buildingPreview != null)
                 {
-                    Destroy(_instance.gameObject);
+                    Destroy(_buildingPreview.gameObject);
                 }
             }
         }
@@ -82,15 +86,15 @@ namespace RogueIslands.View
         {
             InputHandling.Instance.Click -= OnWorldClicked;
 
-            if (_ui.IsInSpawnRegion(Input.mousePosition) && BuildingViewPlacement.Instance.IsValidPlacement(_instance.transform))
+            if (_ui.IsInSpawnRegion(Input.mousePosition) && BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview.transform))
             {
-                GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data, _instance.transform.position,
+                GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data, _buildingPreview.transform.position,
                     Quaternion.identity);
 
                 EffectRangeHighlighter.ShowRanges(false);
                 EffectRangeHighlighter.LowlightAll();
 
-                GameUI.Instance.RefreshMoneyAndEnergy();
+                GameUI.Instance.RefreshMoney();
 
                 Destroy(gameObject);
             }
@@ -132,6 +136,12 @@ namespace RogueIslands.View
                 EffectRangeHighlighter.ShowRanges(false);
                 EffectRangeHighlighter.LowlightAll();
             }
+        }
+
+        public async UniTask BuildingMadeMoney(int money)
+        {
+            _moneyFeedback.GetComponentInChildren<TextMeshProUGUI>().text = "$" + money;
+            await _moneyFeedback.Play();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using RogueIslands.Buildings;
 using RogueIslands.View.Feedbacks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,6 +14,7 @@ namespace RogueIslands.View
         [SerializeField] private GameObject _synergyRange;
         [SerializeField] private BuildingTriggerFeedback _triggerFeedback;
         [SerializeField] private LabelFeedback _retriggerLabelFeedback;
+        [SerializeField] private LabelFeedback _moneyFeedback;
         [SerializeField] private ParticleSystem _productsParticleSystem;
 
         public Building Data { get; private set; }
@@ -57,6 +59,12 @@ namespace RogueIslands.View
             await UniTask.WaitForSeconds(0.6f);
 
             await GameUI.Instance.ProductTarget.Attract(ps, () => { GameUI.Instance.ProductBoosted(1); });
+        }
+
+        public async UniTask BuildingMadeMoney(int money)
+        {
+            _moneyFeedback.GetComponentInChildren<TextMeshProUGUI>().text = "$" + money;
+            await _moneyFeedback.Play();
         }
 
         private ParticleSystem PlayParticleSystem(double count)
@@ -108,7 +116,7 @@ namespace RogueIslands.View
         {
             if (!IsPlacedDown)
                 return;
-            
+
             ShowRange(false);
             EffectRangeHighlighter.LowlightAll();
         }

@@ -87,7 +87,7 @@ namespace RogueIslands.View.Boosters
         {
             Destroy(gameObject);
             GameUI.Instance.RefreshDate();
-            GameUI.Instance.RefreshMoneyAndEnergy();
+            GameUI.Instance.RefreshMoney();
         }
 
         public void OnPointerEnter(PointerEventData eventData)

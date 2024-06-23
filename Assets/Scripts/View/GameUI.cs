@@ -10,7 +10,7 @@ namespace RogueIslands.View
 {
     public class GameUI : SingletonMonoBehaviour<GameUI>, IGameUI
     {
-        [SerializeField] private NumberText 
+        [SerializeField] private NumberText
             _products,
             _multiplier,
             _requiredOutput,
@@ -64,7 +64,7 @@ namespace RogueIslands.View
         public void RefreshAll()
         {
             RefreshScores();
-            RefreshMoneyAndEnergy();
+            RefreshMoney();
             RefreshDate();
             RefreshBoosters();
         }
@@ -75,7 +75,7 @@ namespace RogueIslands.View
             _boosterSlots.SetMax(GameManager.Instance.State.MaxBoosters);
         }
 
-        public void RefreshMoneyAndEnergy()
+        public void RefreshMoney()
         {
             var state = GameManager.Instance.State;
             _budget.UpdateNumber(state.Money);
@@ -84,7 +84,7 @@ namespace RogueIslands.View
         public void RefreshScores()
         {
             var state = GameManager.Instance.State;
-            
+
             if (state.ScoringState != null)
             {
                 _products.UpdateNumber(state.ScoringState.Products);
@@ -108,14 +108,19 @@ namespace RogueIslands.View
             _month.UpdateNumber(state.Act + 1);
         }
 
-        public void ProductBoosted(double count)
+        public void ProductBoosted(double delta)
         {
-            _products.UpdateNumber(_products.CurrentNumber + count);
-        } 
+            _products.UpdateNumber(_products.CurrentNumber + delta);
+        }
 
-        public void MultBoosted(double multBoost)
+        public void MultBoosted(double mult)
         {
-            _multiplier.UpdateNumber(multBoost);
+            _multiplier.UpdateNumber(mult);
+        }
+
+        public void MoneyBoosted(int delta)
+        {
+            _budget.UpdateNumber(_budget.CurrentNumber + delta);
         }
     }
 }
