@@ -55,13 +55,13 @@ namespace RogueIslands
 
         private static double[] GetScoringRequirements()
         {
-            var result = new double[GameState.TotalRounds * GameState.TotalActs];
+            var result = new double[GameState.RoundsPerAct * GameState.TotalActs];
             for (var i = 0; i < GameState.TotalActs; i++)
             {
-                result[i * GameState.TotalRounds + 0] = (i + 1) * 10;
-                result[i * GameState.TotalRounds + 1] = (i + 1) * 25;
-                result[i * GameState.TotalRounds + 2] = (i + 1) * 50;
-                result[i * GameState.TotalRounds + 3] = (i + 1) * 100;
+                result[i * GameState.RoundsPerAct + 0] = (i + 1) * 10;
+                result[i * GameState.RoundsPerAct + 1] = (i + 1) * 25;
+                result[i * GameState.RoundsPerAct + 2] = (i + 1) * 50;
+                result[i * GameState.RoundsPerAct + 3] = (i + 1) * 100;
 
             }
             return result;

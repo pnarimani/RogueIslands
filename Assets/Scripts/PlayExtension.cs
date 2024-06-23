@@ -10,7 +10,7 @@ namespace RogueIslands
         {
             if (state.Day >= state.TotalDays)
                 return false;
-            if (state.CurrentScore >= state.RequiredScore)
+            if (state.CurrentScore >= state.GetCurrentRequiredScore())
                 return false;
             if (state.Result != GameResult.InProgress)
                 return false;
@@ -37,7 +37,7 @@ namespace RogueIslands
                 state.PopulateShop();
 
                 state.Round++;
-                if (state.Round >= GameState.TotalRounds)
+                if (state.Round >= GameState.RoundsPerAct)
                 {
                     state.Round = 0;
                     state.Act++;
@@ -115,11 +115,11 @@ namespace RogueIslands
         }
 
         private static bool HasLost(this GameState state)
-            => state.Day >= state.TotalDays && state.CurrentScore < state.RequiredScore;
+            => state.Day >= state.TotalDays && state.CurrentScore < state.GetCurrentRequiredScore();
 
         private static bool IsRoundFinished(this GameState state)
         {
-            return state.CurrentScore >= state.RequiredScore;
+            return state.CurrentScore >= state.GetCurrentRequiredScore();
         }
     }
 }

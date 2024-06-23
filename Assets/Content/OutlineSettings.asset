@@ -77,7 +77,7 @@ MonoBehaviour:
   useColor: 0
   minColorThreshold: 0.1
   maxColorThreshold: 0.25
-  renderEvent: 550
+  renderEvent: 450
   outlineOnly: 0
   applyInSceneView: 0
   effectMaterial: {fileID: -6392904006371069296}

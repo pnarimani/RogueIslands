@@ -95,7 +95,7 @@ namespace RogueIslands.View
                 _multiplier.SetNumber(1);
             }
 
-            _requiredOutput.UpdateNumber(state.RequiredScore);
+            _requiredOutput.UpdateNumber(state.GetCurrentRequiredScore());
             _currentAmount.UpdateNumber(state.CurrentScore);
         }
 

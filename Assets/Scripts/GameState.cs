@@ -7,7 +7,7 @@ namespace RogueIslands
 {
     public class GameState
     {
-        public const int TotalRounds = 4;
+        public const int RoundsPerAct = 4;
         public const int TotalActs = 5;
 
         public int Day;
@@ -20,7 +20,6 @@ namespace RogueIslands
         public double CurrentScore;
 
         public double[] AllRequiredScores;
-        public double RequiredScore => AllRequiredScores[Act * TotalRounds + Round];
 
         public int Money = 4;
         public int MoneyPayoutPerWeek = 4;

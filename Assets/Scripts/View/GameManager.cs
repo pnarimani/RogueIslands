@@ -7,6 +7,7 @@ using RogueIslands.Boosters;
 using RogueIslands.Particles;
 using RogueIslands.Rollback;
 using RogueIslands.View.Boosters;
+using RogueIslands.View.RoundSelection;
 using RogueIslands.View.Shop;
 using RogueIslands.View.Win;
 using UnityEngine;
@@ -18,6 +19,8 @@ namespace RogueIslands.View
         [SerializeField] private ShopScreen _shopPrefab;
         [SerializeField] private WeekWinScreen _weekWinScreen;
         [SerializeField] private LoseScreen _loseScreen;
+        [SerializeField] private RoundSelectionScreen _roundSelectionScreen;
+        
         private PlayController _playController;
 
         public GameState State { get; private set; }
@@ -179,6 +182,7 @@ namespace RogueIslands.View
         {
             _playController = playController;
             State = state;
+            ShowRoundsSelectionScreen();
             boosterManagement.SpawnWorldBoosters(GetWorldBoosterPositions());
         }
 
@@ -196,6 +200,11 @@ namespace RogueIslands.View
         public Bounds GetBounds(WorldBooster worldBooster)
         {
             return FindObjectsOfType<BoosterView>().First(b => b.Data == worldBooster).transform.GetCollisionBounds();
+        }
+
+        public void ShowRoundsSelectionScreen()
+        {
+            Instantiate(_roundSelectionScreen);
         }
     }
 }

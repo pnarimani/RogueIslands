@@ -8,7 +8,7 @@ namespace RogueIslands.Debug
         [ConsoleMethod("win_week", "Win the week")]
         public static void WeekWin()
         {
-            GameManager.Instance.State.CurrentScore = GameManager.Instance.State.RequiredScore;
+            GameManager.Instance.State.CurrentScore = GameManager.Instance.State.GetCurrentRequiredScore();
             GameManager.Instance.State.ProcessScore(GameManager.Instance);
         }
         

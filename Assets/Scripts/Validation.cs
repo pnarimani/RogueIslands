@@ -27,8 +27,8 @@ namespace RogueIslands
             Assert.AreEqual(state.Shop.CardCount, state.Shop.ItemsForSale.Length);
 
             Assert.IsNotNull(state.AllRequiredScores);
-            Assert.AreEqual(GameState.TotalRounds * GameState.TotalActs, state.AllRequiredScores.Length);
-            Assert.IsTrue(state.RequiredScore > 0);
+            Assert.AreEqual(GameState.RoundsPerAct * GameState.TotalActs, state.AllRequiredScores.Length);
+            Assert.IsTrue(state.GetCurrentRequiredScore() > 0);
         }
     }
 }

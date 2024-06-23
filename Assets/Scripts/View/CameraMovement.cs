@@ -1,7 +1,5 @@
-﻿using System;
-using Unity.Cinemachine;
+﻿using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace RogueIslands.View
 {
@@ -43,9 +41,9 @@ namespace RogueIslands.View
 
         private void OnDrag(Vector2 obj)
         {
-            var xz = new Vector3(obj.x, 0, obj.y);
+            var xz = new Vector3(-obj.x, 0, -obj.y);
             xz = Quaternion.Euler(0, _cinemachineCamera.HorizontalAxis.Value, 0) * xz;
-            _target.position += xz * (Time.deltaTime * -10);
+            _target.position += xz * 0.03f;
         }
     }
 }

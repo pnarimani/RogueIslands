@@ -65,6 +65,7 @@ namespace RogueIslands.View.Shop
 
         private void OnContinueClicked()
         {
+            GameManager.Instance.ShowRoundsSelectionScreen();
             GameManager.Instance.State.StartRound(GameManager.Instance);
             
             Destroy(gameObject);
