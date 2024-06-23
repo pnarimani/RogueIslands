@@ -12,6 +12,10 @@ namespace RogueIslands.Boosters.Executors
             scoringAction.Products += action.ProductChange;
             scoringAction.PlusMult += action.PlusMultChange;
             scoringAction.XMult += action.XMultChange;
+            
+            scoringAction.Products = scoringAction.Products < 0 ? 0 : scoringAction.Products;
+            scoringAction.PlusMult = scoringAction.PlusMult < 0 ? 0 : scoringAction.PlusMult;
+            scoringAction.XMult = scoringAction.XMult < 1 ? 1 : scoringAction.XMult;
         }
     }
 }

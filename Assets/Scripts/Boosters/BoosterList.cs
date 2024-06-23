@@ -14,17 +14,16 @@ namespace RogueIslands.Boosters
             {
                 new()
                 {
-                    Name = "Oops all sixes",
+                    Name = "Rigged",
                     Description = new LiteralDescription("Double all probabilities"),
-                    BuyPrice = 2,
+                    BuyPrice = 4,
                     EventAction = new ModifyProbabilitiesAction(),
                 },
                 new()
                 {
                     Name = "Saw Dust",
-                    Description =
-                        new ProbabilityDescription($"{{0}} to give x2 mult for each {Category.Cat3} building scored"),
-                    BuyPrice = 2,
+                    Description = new ProbabilityDescription($"{{0}} to give x2 mult for each {Category.Cat3} building scored"),
+                    BuyPrice = 6,
                     EventAction = new ScoringAction
                     {
                         Conditions = new IGameCondition[]
@@ -47,7 +46,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Mr Producer",
                     Description = new LiteralDescription("Permanently add +2 product to played buildings"),
-                    BuyPrice = 2,
+                    BuyPrice = 4,
                     EventAction = new PermanentBuildingUpgradeAction
                     {
                         ProductUpgrade = 2,
@@ -61,7 +60,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Maizinator",
                     Description = new LiteralDescription($"Retrigger all `{Category.Cat2}` buildings"),
-                    BuyPrice = 2,
+                    BuyPrice = 7,
                     EventAction = new RetriggerBuildingAction
                     {
                         RetriggerTimes = 1,
@@ -79,7 +78,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Bad Eyesight",
-                    BuyPrice = 2,
+                    BuyPrice = 7,
                     Description =
                         new LiteralDescription(
                             $"{ColorTag.Red} and {ColorTag.Blue} are the same. {ColorTag.Green} and {ColorTag.Purple} are the same."),
@@ -90,7 +89,7 @@ namespace RogueIslands.Boosters
                     Name = "Base 2",
                     Description =
                         new ScalingBoosterDescription("If the number of buildings is a power of 2, gains +4 products"),
-                    BuyPrice = 2,
+                    BuyPrice = 4,
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
@@ -139,7 +138,7 @@ namespace RogueIslands.Boosters
                     Description =
                         new LiteralDescription(
                             "Gains 0.5x mult for each booster sold. Resets at the end of the month."),
-                    BuyPrice = 2,
+                    BuyPrice = 6,
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
@@ -175,7 +174,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Clutch",
                     Description = new LiteralDescription("+10 mult on the last day."),
-                    BuyPrice = 2,
+                    BuyPrice = 5,
                     EventAction = new ScoringAction
                     {
                         PlusMult = 10,
@@ -190,7 +189,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Overtime",
                     Description = new LiteralDescription("On the last day, Retrigger all buildings"),
-                    BuyPrice = 2,
+                    BuyPrice = 7,
                     EventAction = new RetriggerBuildingAction
                     {
                         RetriggerTimes = 1,
@@ -206,7 +205,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Sweatshop",
                     Description = new LiteralDescription($"+30 products for each {ColorTag.Red} building"),
-                    BuyPrice = 2,
+                    BuyPrice = 7,
                     EventAction = new ScoringAction
                     {
                         Products = 30,
@@ -224,7 +223,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Procrastinator",
                     Description = new LiteralDescription("x3 mult. you only have 1 day"),
-                    BuyPrice = 2,
+                    BuyPrice = 4,
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
@@ -274,7 +273,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Crowded",
                     Description = new LiteralDescription("Retrigger all buildings if there are exactly 5 groups"),
-                    BuyPrice = 2,
+                    BuyPrice = 6,
                     EventAction = new RetriggerBuildingAction
                     {
                         Conditions = new IGameCondition[]
@@ -295,7 +294,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Economy of Scale",
                     Description = new LiteralDescription("+100 products if an group has 2 or less buildings"),
-                    BuyPrice = 2,
+                    BuyPrice = 8,
                     EventAction = new ScoringAction
                     {
                         Conditions = new IGameCondition[]
@@ -315,6 +314,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Painting",
                     Description = new LiteralDescription("+10 mult if all colors are present"),
+                    BuyPrice = 5,
                     EventAction = new ScoringAction
                     {
                         Conditions = new IGameCondition[]
@@ -333,7 +333,7 @@ namespace RogueIslands.Boosters
                     Name = "Binary World",
                     Description =
                         new LiteralDescription($"x3 mult if all buildings are {ColorTag.Green} and {ColorTag.Purple}"),
-                    BuyPrice = 3,
+                    BuyPrice = 8,
                     EventAction = new ScoringAction
                     {
                         Conditions = new IGameCondition[]
@@ -351,7 +351,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "10X",
                     Description = new LiteralDescription("Apparently is worth 10 times more than other boosters"),
-                    BuyPrice = 2,
+                    BuyPrice = 4,
                     EventAction = new RandomScoringAction
                     {
                         Conditions = new IGameCondition[]
@@ -365,7 +365,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Simple",
                     Description = new LiteralDescription("+4 mult"),
-                    BuyPrice = 2,
+                    BuyPrice = 3,
                     EventAction = new ScoringAction
                     {
                         Conditions = new[] { GameEventCondition.Create<DayEnd>() },
@@ -376,7 +376,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Sacrifice",
                     Description = new LiteralDescription("+20 mult if 6 or less buildings exist"),
-                    BuyPrice = 2,
+                    BuyPrice = 5,
                     EventAction = new ScoringAction
                     {
                         Conditions = new IGameCondition[]
@@ -396,7 +396,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Big Hands",
                     Description = new LiteralDescription("+2 hand size, -1 day"),
-                    BuyPrice = 2,
+                    BuyPrice = 5,
                     EventAction = new CompositeAction
                     {
                         Conditions = new[] { GameEventCondition.Create<RoundStart>() },
@@ -419,7 +419,7 @@ namespace RogueIslands.Boosters
                     Description =
                         new ScalingBoosterDescription(
                             "On the start of the round, destroys the booster to the right. Gains +5 mult"),
-                    BuyPrice = 2,
+                    BuyPrice = 5,
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
@@ -451,7 +451,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Efficiency",
                     Description = new LiteralDescription("+50 products for each day remaining"),
-                    BuyPrice = 2,
+                    BuyPrice = 5,
                     EventAction = new MultipliedScoringAction
                     {
                         MultiplyByDay = true,
@@ -466,7 +466,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "The Collector",
                     Description = new LiteralDescription("+1 mult for each different building"),
-                    BuyPrice = 2,
+                    BuyPrice = 8,
                     EventAction = new MultipliedScoringAction
                     {
                         Conditions = new[] { GameEventCondition.Create<DayEnd>(), },
@@ -478,7 +478,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Cluttered",
                     Description = new LiteralDescription("add double the number of clusters to the mult"),
-                    BuyPrice = 2,
+                    BuyPrice = 4,
                     EventAction = new MultipliedScoringAction
                     {
                         MultiplyByIslandCount = true,
@@ -494,7 +494,7 @@ namespace RogueIslands.Boosters
                     Name = "The Banana",
                     Description =
                         new LiteralDescription("+15 mult, 1 in 8 chance to get destroyed at the end of the round"),
-                    BuyPrice = 2,
+                    BuyPrice = 4,
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
@@ -561,7 +561,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "City Steven",
                     Description = new LiteralDescription($"+4 mult for each {Category.Cat1} building"),
-                    BuyPrice = 2,
+                    BuyPrice = 5,
                     EventAction = new ScoringAction
                     {
                         PlusMult = 4,
@@ -579,7 +579,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Country Carl",
                     Description = new LiteralDescription($"+50 products for each {Category.Cat2} building"),
-                    BuyPrice = 2,
+                    BuyPrice = 5,
                     EventAction = new ScoringAction
                     {
                         Products = 50,
@@ -598,7 +598,7 @@ namespace RogueIslands.Boosters
                     Name = "Lowkey Larry",
                     Description =
                         new LiteralDescription($"+4 mult for each {Category.Cat5} building remaining in hand"),
-                    BuyPrice = 2,
+                    BuyPrice = 5,
                     EventAction = new ScoringAction
                     {
                         PlusMult = 4,
@@ -616,7 +616,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Investment",
                     Description = new LiteralDescription("$1 for each building remained in hand"),
-                    BuyPrice = 2,
+                    BuyPrice = 6,
                     EventAction = new ChangeMoneyAction
                     {
                         IsImmediate = true,
@@ -631,7 +631,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Ice Cream",
                     Description = new ScalingBoosterDescription("+100 products, loses 5 products every day."),
-                    BuyPrice = 2,
+                    BuyPrice = 4,
                     EventAction = new CompositeAction
                     {
                         Conditions = new[] { GameEventCondition.Create<DayEnd>() },
@@ -652,7 +652,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Normie",
                     Description = new LiteralDescription("x5 mult if all buildings are the same"),
-                    BuyPrice = 2,
+                    BuyPrice = 6,
                     EventAction = new ScoringAction
                     {
                         Conditions = new IGameCondition[]
@@ -675,7 +675,7 @@ namespace RogueIslands.Boosters
             {
                 Name = name,
                 Description = new LiteralDescription($"+3 mult when {color} buildings score"),
-                BuyPrice = 2,
+                BuyPrice = 3,
                 EventAction = new ScoringAction()
                 {
                     PlusMult = 3,
