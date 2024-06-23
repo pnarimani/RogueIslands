@@ -45,8 +45,7 @@ namespace RogueIslands.Autofac
                 {
                     m.Instance.Initialize(
                         m.Context.Resolve<GameState>(),
-                        m.Context.Resolve<PlayController>(),
-                        m.Context.Resolve<BoosterManagement>()
+                        m.Context.Resolve<PlayController>()
                     );
                 })
                 .AsSelf()

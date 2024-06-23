@@ -99,18 +99,25 @@ namespace RogueIslands
 
         public static void StartRound(this GameState state, IGameView view)
         {
+            if (state.Round == 0)
+            {
+                view.DestroyWorldBoosters();
+                state.WorldBoosters.Clear();
+                StaticResolver.Resolve<BoosterManagement>().SpawnWorldBoosters(view.GetWorldBoosterPositions());
+            }
+
             StaticResolver.Resolve<ResetController>().RestoreProperties();
 
             state.BuildingDeck.Shuffle();
-            state.BuildingsInHand = state.BuildingDeck.Deck.Take(state.HandSize).ToList();
             state.CurrentScore = 0;
             state.Day = 0;
             state.Clusters.Clear();
-
-            view.DestroyBuildings();
-            view.ShowBuildingsInHand();
-
+            
             state.ExecuteEvent(view, new RoundStart());
+            
+            view.DestroyBuildings();
+            state.BuildingsInHand = state.BuildingDeck.Deck.Take(state.HandSize).ToList();
+            view.ShowBuildingsInHand();
 
             view.GetUI().RefreshAll();
         }

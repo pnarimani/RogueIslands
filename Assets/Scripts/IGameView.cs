@@ -23,5 +23,7 @@ namespace RogueIslands
         void ShowShopScreen();
         Bounds GetBounds(Building buildingData);
         Bounds GetBounds(WorldBooster worldBooster);
+        IReadOnlyList<Vector3> GetWorldBoosterPositions();
+        void DestroyWorldBoosters();
     }
 }

@@ -6,10 +6,11 @@ namespace RogueIslands.Boosters.Executors
     {
         protected override void Execute(GameState state, IGameView view, IBooster booster, HandModifier action)
         {
-            if (action.Change != 0)
-                state.HandSize += action.Change;
-            else if (action.SetHandSize.HasValue)
-                state.HandSize = action.SetHandSize.Value;
+            if (action.Change is { } change)
+                state.HandSize += change;
+            
+            if (action.SetHandSize is { } size)
+                state.HandSize = size;
         }
     }
 }

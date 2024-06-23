@@ -175,12 +175,20 @@ namespace RogueIslands.View
             return FindObjectsOfType<WorldBoosterSpawnPoint>().Select(booster => booster.transform.position).ToList();
         }
 
-        public void Initialize(GameState state, PlayController playController, BoosterManagement boosterManagement)
+        public void DestroyWorldBoosters()
+        {
+            foreach (var booster in FindObjectsOfType<BoosterView>())
+            {
+                if (booster.Data is WorldBooster)
+                    Destroy(booster.gameObject);
+            }
+        }
+
+        public void Initialize(GameState state, PlayController playController)
         {
             _playController = playController;
             State = state;
             ShowRoundsSelectionScreen();
-            boosterManagement.SpawnWorldBoosters(GetWorldBoosterPositions());
         }
 
         public void Dispose()
