@@ -123,7 +123,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Egg",
-                    Description = new LiteralDescription("Gains 3$ of sell value at the end of every week"),
+                    Description = new LiteralDescription("Gains 3$ of sell value at the end of every round"),
                     BuyPrice = 2,
                     EventAction = new GainSellValueAction
                     {
@@ -419,7 +419,7 @@ namespace RogueIslands.Boosters
                     Name = "The Rat",
                     Description =
                         new ScalingBoosterDescription(
-                            "On the start of the week, destroys the booster to the right. Gains +5 mult")
+                            "On the start of the round, destroys the booster to the right. Gains +5 mult")
                         {
                             ShowPlusMult = true,
                         },
@@ -490,7 +490,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "The Banana",
                     Description =
-                        new LiteralDescription("+15 mult, 1 in 8 chance to get destroyed at the end of the week"),
+                        new LiteralDescription("+15 mult, 1 in 8 chance to get destroyed at the end of the round"),
                     BuyPrice = 2,
                     EventAction = new CompositeAction
                     {
@@ -524,7 +524,7 @@ namespace RogueIslands.Boosters
                 {
                     Name = "Super Banana",
                     Description =
-                        new LiteralDescription("x4 mult, 1 in 1000 chance to get destroyed at the end of the week"),
+                        new LiteralDescription("x4 mult, 1 in 1000 chance to get destroyed at the end of the round"),
                     BuyPrice = 2,
                     EventAction = new CompositeAction
                     {

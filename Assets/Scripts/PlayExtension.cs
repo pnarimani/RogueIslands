@@ -67,11 +67,11 @@ namespace RogueIslands
 
         private static void ShowRoundWinScreen(GameState state, IGameView view)
         {
-            var winScreen = view.ShowWeekWin();
+            var winScreen = view.ShowRoundWin();
             winScreen.AddMoneyChange(new MoneyChange
             {
-                Change = state.MoneyPayoutPerWeek,
-                Reason = "Weekly Payout",
+                Change = state.MoneyPayoutPerRound,
+                Reason = "Round Completion Prize",
             });
 
             winScreen.AddMoneyChange(new MoneyChange
@@ -86,9 +86,9 @@ namespace RogueIslands
             }
         }
 
-        public static void ClaimWeekEndMoney(this GameState state, IGameView view)
+        public static void ClaimRoundEndMoney(this GameState state, IGameView view)
         {
-            state.Money += state.MoneyPayoutPerWeek;
+            state.Money += state.MoneyPayoutPerRound;
             state.Money += state.TotalDays - state.Day;
             foreach (var change in state.MoneyChanges)
                 state.Money += change.Change;

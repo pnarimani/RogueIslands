@@ -43,7 +43,7 @@ namespace RogueIslands
             };
         }
 
-        public static Random NextRandom(this System.Random sysRandom) 
+        public static Random NextRandom(this System.Random sysRandom)
             => new((uint)sysRandom.Next());
 
         public static Random[] CreateRandomArray(this System.Random sysRandom, int length)
@@ -59,12 +59,12 @@ namespace RogueIslands
             var result = new double[GameState.RoundsPerAct * GameState.TotalActs];
             for (var i = 0; i < GameState.TotalActs; i++)
             {
-                result[i * GameState.RoundsPerAct + 0] = (i + 1) * 30;
-                result[i * GameState.RoundsPerAct + 1] = (i + 1) * 100;
-                result[i * GameState.RoundsPerAct + 2] = (i + 1) * 400;
-                result[i * GameState.RoundsPerAct + 3] = (i + 1) * 1000;
-
+                result[i * GameState.RoundsPerAct + 0] = i * 1200 + (i + 1) * 30;
+                result[i * GameState.RoundsPerAct + 1] = i * 1200 + (i + 1) * 100;
+                result[i * GameState.RoundsPerAct + 2] = i * 1200 + (i + 1) * 400;
+                result[i * GameState.RoundsPerAct + 3] = i * 1200 + (i + 1) * 1000;
             }
+
             return result;
         }
     }

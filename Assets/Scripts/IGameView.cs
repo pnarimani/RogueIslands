@@ -14,7 +14,7 @@ namespace RogueIslands
         void LowlightIsland(Cluster cluster);
         void ShowLoseScreen();
         void ShowGameWinScreen();
-        IWeekWinScreen ShowWeekWin();
+        IWeekWinScreen ShowRoundWin();
         void DestroyBuildings();
         void AddBooster(IBooster instance);
         void ShowBuildingsInHand();

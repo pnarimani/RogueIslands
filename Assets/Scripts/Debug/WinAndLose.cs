@@ -5,8 +5,8 @@ namespace RogueIslands.Debug
 {
     public static class WinAndLose
     {
-        [ConsoleMethod("win_week", "Win the week")]
-        public static void WeekWin()
+        [ConsoleMethod("win_round", "Win the round")]
+        public static void RoundWin()
         {
             GameManager.Instance.State.CurrentScore = GameManager.Instance.State.GetCurrentRequiredScore();
             GameManager.Instance.State.ProcessScore(GameManager.Instance);

@@ -23,7 +23,7 @@ namespace RogueIslands
         public double[] AllRequiredScores;
 
         public int Money = 4;
-        public int MoneyPayoutPerWeek = 4;
+        public int MoneyPayoutPerRound = 4;
         public List<MoneyChange> MoneyChanges = new();
 
         public IGameEvent CurrentEvent;

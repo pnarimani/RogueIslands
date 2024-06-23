@@ -18,7 +18,7 @@ namespace RogueIslands.View.Win
         {
             _nextButton.onClick.AddListener(() =>
             {
-                GameManager.Instance.State.ClaimWeekEndMoney(GameManager.Instance);
+                GameManager.Instance.State.ClaimRoundEndMoney(GameManager.Instance);
                 Destroy(gameObject);
             });
         }

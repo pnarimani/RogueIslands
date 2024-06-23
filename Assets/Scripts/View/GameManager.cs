@@ -67,7 +67,7 @@ namespace RogueIslands.View
         {
         }
 
-        public IWeekWinScreen ShowWeekWin()
+        public IWeekWinScreen ShowRoundWin()
         {
             return Instantiate(_weekWinScreen);
         }

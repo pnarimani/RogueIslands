@@ -6,9 +6,12 @@ namespace RogueIslands.Boosters.Executors
     {
         protected override void Execute(GameState state, IGameView view, IBooster booster, ScoringAction action)
         {
-            state.ScoringState.Products += action.Products;
-            state.ScoringState.Multiplier += action.PlusMult;
-            state.ScoringState.Multiplier *= action.XMult;
+            if (action.Products is { } products)
+                state.ScoringState.Products += products;
+            if (action.PlusMult is { } plusMult)
+                state.ScoringState.Multiplier += plusMult;
+            if (action.XMult is { } xMult)
+                state.ScoringState.Multiplier *= xMult;
         }
     }
 }

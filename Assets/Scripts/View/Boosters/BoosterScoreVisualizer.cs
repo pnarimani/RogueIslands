@@ -10,64 +10,64 @@ namespace RogueIslands.View.Boosters
     {
         [SerializeField] private LabelFeedback _productLabelFeedback, _multiLabelFeedback;
         [SerializeField] private TextMeshProUGUI _productAmountText, _multAmountText;
-        
+
         private double _previousProduct, _previousMult;
-        
+
         protected override UniTask OnBeforeBoosterExecuted(GameState state, ScoringAction action, BoosterView booster)
         {
-            if (IsProduct(action)) 
+            if (IsProduct(action))
                 _previousProduct = state.ScoringState.Products;
 
             if (IsMult(action))
                 _previousMult = state.ScoringState.Multiplier;
-            
+
             return UniTask.CompletedTask;
         }
 
-        protected override async UniTask OnAfterBoosterExecuted(GameState state, ScoringAction action, BoosterView booster)
+        protected override async UniTask OnAfterBoosterExecuted(GameState state, ScoringAction action,
+            BoosterView booster)
         {
             var productBoost = state.ScoringState.Products - _previousProduct;
             var finalMult = state.ScoringState.Multiplier;
-            var multBoost = finalMult - _previousMult;
-            
+
             var wait = AnimationScheduler.GetAnimationTime();
             AnimationScheduler.AllocateTime(0.2f);
             await UniTask.WaitForSeconds(wait);
-            
+
             if (IsProduct(action))
             {
                 GameUI.Instance.ProductBoosted(productBoost);
 
-                if (_productAmountText != null) 
+                if (_productAmountText != null)
                     _productAmountText.text = $"+{productBoost:F1}";
 
                 await _productLabelFeedback.Play();
             }
-            
+
             if (IsMult(action))
             {
                 GameUI.Instance.MultBoosted(finalMult);
 
-                if (action.XMult > 1)
+                if (action.XMult != null)
                 {
-                    var xMultAmount = multBoost / action.XMult;
-                    if (_multAmountText != null) 
-                        _multAmountText.text = $"x{xMultAmount:F1}";
+                    if (_multAmountText != null)
+                        _multAmountText.text = $"x{finalMult / action.XMult:F1}";
                 }
-                else
+
+                if (action.PlusMult != null)
                 {
-                    if (_multAmountText != null) 
-                        _multAmountText.text = $"+{multBoost:F1}";
+                    if (_multAmountText != null)
+                        _multAmountText.text = $"+{finalMult - _previousMult:F1}";
                 }
 
                 await _multiLabelFeedback.Play();
             }
         }
-        
-        private static bool IsProduct(ScoringAction action)
-            => action.Products > 0;
 
-        private static bool IsMult(ScoringAction action) 
-            => action.PlusMult > 0 || action.XMult > 1;
+        private static bool IsProduct(ScoringAction action)
+            => action.Products != null;
+
+        private static bool IsMult(ScoringAction action)
+            => action.PlusMult != null || action.XMult != null;
     }
 }

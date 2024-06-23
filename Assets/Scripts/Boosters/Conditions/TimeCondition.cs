@@ -5,8 +5,8 @@ namespace RogueIslands.Boosters
         public enum Mode
         {
             Day,
-            Week,
-            Month,
+            Round,
+            Act,
             TotalDays,
         }
 

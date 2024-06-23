@@ -6,7 +6,7 @@
         {
             current.HandSize = backup.HandSize;
             current.TotalDays = backup.TotalDays;
-            current.MoneyPayoutPerWeek = backup.MoneyPayoutPerWeek;
+            current.MoneyPayoutPerRound = backup.MoneyPayoutPerRound;
         }
     }
 }

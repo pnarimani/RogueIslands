@@ -5,11 +5,11 @@ namespace RogueIslands.Debug
 {
     public static class DateCommands
     {
-        [ConsoleMethod("set_date", "Set the date to the specified month and week. Usage: set_date <month> <week>")]
-        public static void SetDate(int month, int week)
+        [ConsoleMethod("set_stage", "Set the stage to the specified act and round. Usage: set_stage <act> <round>")]
+        public static void SetStage(int act, int round)
         {
-            GameManager.Instance.State.Act = month;
-            GameManager.Instance.State.Round = week;
+            GameManager.Instance.State.Act = act;
+            GameManager.Instance.State.Round = round;
             GameManager.Instance.GetUI().RefreshAll();
         }
         

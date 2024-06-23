@@ -7,26 +7,20 @@ namespace RogueIslands.Boosters.Executors
         protected override void Execute(GameState state, IGameView view, IBooster booster,
             MultipliedScoringAction action)
         {
+            int multiplier;
             if (action.MultiplyByDay)
-            {
-                var remDays = state.TotalDays - state.Day;
-                state.ScoringState.Products += action.Products * remDays;
-                state.ScoringState.Multiplier += action.PlusMult * remDays;
-                state.ScoringState.Multiplier *= action.XMult * remDays;
-            }
+                multiplier = state.TotalDays - state.Day;
             else if (action.MultiplyByIslandCount)
-            {
-                var count = state.Clusters.Count;
-                state.ScoringState.Products += action.Products * count;
-                state.ScoringState.Multiplier += action.PlusMult * count;
-                state.ScoringState.Multiplier *= action.XMult * count;
-            }
+                multiplier = state.Clusters.Count;
             else
-            {
-                state.ScoringState.Products += action.Products;
-                state.ScoringState.Multiplier += action.PlusMult;
-                state.ScoringState.Multiplier *= action.XMult;
-            }
+                multiplier = 1;
+            
+            if (action.Products is { } products)
+                state.ScoringState.Products += products * multiplier;
+            if (action.PlusMult is { } plusMult)
+                state.ScoringState.Multiplier += plusMult * multiplier;
+            if (action.XMult is { } xMult)
+                state.ScoringState.Multiplier *= xMult * multiplier;
         }
     }
 }
