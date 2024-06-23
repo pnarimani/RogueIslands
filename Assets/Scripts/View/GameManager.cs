@@ -30,10 +30,6 @@ namespace RogueIslands.View
         private void Start()
         {
             GameUI.Instance.PlayClicked += OnPlayClicked;
-
-            ShowBuildingsInHand();
-
-            GameUI.Instance.RefreshAll();
         }
 
         private async void OnPlayClicked()
