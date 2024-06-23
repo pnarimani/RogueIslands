@@ -36,7 +36,8 @@ namespace RogueIslands
             }
             catch (Exception e)
             {
-                Debug.LogError($"Failed to evaluate conditions for action `{action.GetType().Name}` on booster {booster.Id}: {e.Message}");
+                Debug.LogError($"Failed to evaluate conditions for action `{action.GetType().Name}` on booster {booster.Id}");
+                Debug.LogException(e);
                 return;
             }
             

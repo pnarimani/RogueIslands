@@ -265,14 +265,14 @@ namespace RogueIslands.Boosters
                 //         Change = 4,
                 //     },
                 // },
-                CreateColorBooster("Black Boost", ColorTag.Purple),
-                CreateColorBooster("White Boost", ColorTag.Green),
+                CreateColorBooster("Purple Boost", ColorTag.Purple),
+                CreateColorBooster("Green Boost", ColorTag.Green),
                 CreateColorBooster("Red Boost", ColorTag.Red),
                 CreateColorBooster("Blue Boost", ColorTag.Blue),
                 new()
                 {
                     Name = "Crowded",
-                    Description = new LiteralDescription("Retrigger all buildings if there are exactly 5 groups"),
+                    Description = new LiteralDescription("Retrigger all buildings if there are exactly 5 clusters"),
                     BuyPrice = 6,
                     EventAction = new RetriggerBuildingAction
                     {
@@ -293,7 +293,7 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Economy of Scale",
-                    Description = new LiteralDescription("+100 products if an group has 2 or less buildings"),
+                    Description = new LiteralDescription("+100 products if a cluster has 2 or less buildings"),
                     BuyPrice = 8,
                     EventAction = new ScoringAction
                     {

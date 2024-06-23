@@ -45,7 +45,11 @@ namespace RogueIslands
         {
             foreach (var building in cluster.Buildings)
             {
-                BuildingScored buildingEvent = new() { Building = building };
+                BuildingScored buildingEvent = new()
+                {
+                    Cluster = cluster,
+                    Building = building,
+                };
 
                 var buildingView = _view.GetBuilding(building);
 
