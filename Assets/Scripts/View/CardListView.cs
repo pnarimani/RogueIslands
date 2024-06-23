@@ -126,6 +126,6 @@ namespace RogueIslands.View
             => new(0, Mathf.Sin(Time.time * 2 + index * 0.5f) * 4);
 
         private Quaternion GetRotationForIndex(int i)
-            => Quaternion.identity * Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 2 + i * 0.5f) * 1);
+            => Quaternion.identity * Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 1 + i * 0.5f) * 1);
     }
 }
