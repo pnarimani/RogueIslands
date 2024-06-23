@@ -255,17 +255,17 @@ namespace RogueIslands.Boosters
                 //     Description = new LiteralDescription("For every 50 buildings placed, gain 1x mult."),
                 //     BuyPrice = 2,
                 // },
-                new()
-                {
-                    Name = "Digger",
-                    Description = new LiteralDescription("Pays $4 at the end of the round"),
-                    BuyPrice = 4,
-                    EventAction = new ChangeMoneyAction
-                    {
-                        Conditions = new IGameCondition[] { GameEventCondition.Create<RoundEnd>() },
-                        Change = 4,
-                    },
-                },
+                // new()
+                // {
+                //     Name = "Digger",
+                //     Description = new LiteralDescription("Pays $4 at the end of the round"),
+                //     BuyPrice = 4,
+                //     EventAction = new ChangeMoneyAction
+                //     {
+                //         Conditions = new IGameCondition[] { GameEventCondition.Create<RoundEnd>() },
+                //         Change = 4,
+                //     },
+                // },
                 CreateColorBooster("Black Boost", ColorTag.Purple),
                 CreateColorBooster("White Boost", ColorTag.Green),
                 CreateColorBooster("Red Boost", ColorTag.Red),
