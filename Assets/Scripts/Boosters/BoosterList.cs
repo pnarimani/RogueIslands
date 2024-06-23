@@ -21,7 +21,7 @@ namespace RogueIslands.Boosters
                 },
                 new()
                 {
-                    Name = "Blood Pact",
+                    Name = "Saw Dust",
                     Description =
                         new ProbabilityDescription($"{{0}} to give x2 mult for each {Category.Cat3} building scored"),
                     BuyPrice = 2,
@@ -45,7 +45,7 @@ namespace RogueIslands.Boosters
                 },
                 new()
                 {
-                    Name = "Hiker",
+                    Name = "Mr Producer",
                     Description = new LiteralDescription("Permanently add +2 product to played buildings"),
                     BuyPrice = 2,
                     EventAction = new PermanentBuildingUpgradeAction
@@ -59,7 +59,7 @@ namespace RogueIslands.Boosters
                 },
                 new()
                 {
-                    Name = "Suck my busking",
+                    Name = "Maizinator",
                     Description = new LiteralDescription($"Retrigger all `{Category.Cat2}` buildings"),
                     BuyPrice = 2,
                     EventAction = new RetriggerBuildingAction
@@ -119,20 +119,20 @@ namespace RogueIslands.Boosters
                         },
                     },
                 },
-                new()
-                {
-                    Name = "Egg",
-                    Description = new LiteralDescription("Gains 3$ of sell value at the end of every round"),
-                    BuyPrice = 2,
-                    EventAction = new GainSellValueAction
-                    {
-                        Amount = 3,
-                        Conditions = new IGameCondition[]
-                        {
-                            GameEventCondition.Create<RoundEnd>(),
-                        },
-                    },
-                },
+                // new()
+                // {
+                //     Name = "Egg",
+                //     Description = new LiteralDescription("Gains 3$ of sell value at the end of every round"),
+                //     BuyPrice = 2,
+                //     EventAction = new GainSellValueAction
+                //     {
+                //         Amount = 3,
+                //         Conditions = new IGameCondition[]
+                //         {
+                //             GameEventCondition.Create<RoundEnd>(),
+                //         },
+                //     },
+                // },
                 new()
                 {
                     Name = "Campfire",
@@ -249,12 +249,12 @@ namespace RogueIslands.Boosters
                         },
                     },
                 },
-                new()
-                {
-                    Name = "Real-State Agent",
-                    Description = new LiteralDescription("For every 50 buildings placed, gain 1x mult."),
-                    BuyPrice = 2,
-                },
+                // new()
+                // {
+                //     Name = "Real-State Agent",
+                //     Description = new LiteralDescription("For every 50 buildings placed, gain 1x mult."),
+                //     BuyPrice = 2,
+                // },
                 new()
                 {
                     Name = "Digger",
@@ -313,7 +313,7 @@ namespace RogueIslands.Boosters
                 },
                 new()
                 {
-                    Name = "Diversity",
+                    Name = "Painting",
                     Description = new LiteralDescription("+10 mult if all colors are present"),
                     EventAction = new ScoringAction
                     {
