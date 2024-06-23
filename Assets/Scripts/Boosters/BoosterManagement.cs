@@ -33,7 +33,8 @@ namespace RogueIslands
 
             var instance = booster.Clone();
             instance.Id = new BoosterInstanceId(Guid.NewGuid().GetHashCode());
-
+            instance.SellPrice = instance.BuyPrice - 1;
+            
             _state.Boosters.Add(instance);
             _view.AddBooster(instance);
 

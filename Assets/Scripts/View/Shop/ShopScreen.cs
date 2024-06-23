@@ -9,7 +9,7 @@ namespace RogueIslands.View.Shop
     public class ShopScreen : MonoBehaviour
     {
         [SerializeField] private ShopItem _itemPrefab;
-        [SerializeField] private BoosterView _boosterPrefab;
+        [SerializeField] private BoosterCardView _boosterPrefab;
         [SerializeField] private Transform _cardParent;
         [SerializeField] private Button _continue, _reroll;
         [SerializeField] private TextMeshProUGUI _rerollText;
@@ -39,7 +39,7 @@ namespace RogueIslands.View.Shop
                 switch (Shop.ItemsForSale[i])
                 {
                     case BoosterCard booster:
-                        Instantiate(_boosterPrefab, item.transform).Initialize(booster);
+                        InstantiateBoosterCard(item, booster);
                         break;
                 }
                 
@@ -55,6 +55,14 @@ namespace RogueIslands.View.Shop
                     Destroy(item.gameObject);
                 };
             }
+        }
+
+        private void InstantiateBoosterCard(ShopItem item, BoosterCard booster)
+        {
+            var card = Instantiate(_boosterPrefab, item.transform);
+            card.Initialize(booster);
+            Destroy(card.GetComponent<BoosterView>());
+            Destroy(card.GetComponent<BoosterCardView>());
         }
 
         private void UpdateRerollCost()

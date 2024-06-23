@@ -88,7 +88,7 @@ namespace RogueIslands.View
             }
             else if (instance is WorldBooster world)
             {
-                var booster = Instantiate(Resources.Load<BoosterView>(world.PrefabAddress), world.Position,
+                var booster = Instantiate(Resources.Load<WorldBoosterView>(world.PrefabAddress), world.Position,
                     world.Rotation);
                 booster.Initialize(world);
             }

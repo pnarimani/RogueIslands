@@ -15,7 +15,6 @@ namespace RogueIslands.View
         [SerializeField] private Image _colorBg, _colorGradient, _buildingIcon;
         [SerializeField] private LabelFeedback _moneyFeedback;
         
-        private GameUI _ui;
         private bool _isSelected;
         private BuildingView _buildingPreview;
         private Transform _originalParent;
@@ -37,7 +36,6 @@ namespace RogueIslands.View
 
         private void Start()
         {
-            _ui = FindFirstObjectByType<GameUI>();
             _cardListItem = GetComponent<CardListItem>();
         }
 
@@ -57,7 +55,7 @@ namespace RogueIslands.View
                 }
             }
 
-            if (_isSelected && _ui.IsInSpawnRegion(Input.mousePosition))
+            if (_isSelected && GameUI.Instance.IsInSpawnRegion(Input.mousePosition))
             {
                 if (_buildingPreview == null)
                 {
@@ -86,7 +84,7 @@ namespace RogueIslands.View
         {
             InputHandling.Instance.Click -= OnWorldClicked;
 
-            if (_ui.IsInSpawnRegion(Input.mousePosition) && BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview.transform))
+            if (GameUI.Instance.IsInSpawnRegion(Input.mousePosition) && BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview.transform))
             {
                 GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data, _buildingPreview.transform.position,
                     Quaternion.identity);

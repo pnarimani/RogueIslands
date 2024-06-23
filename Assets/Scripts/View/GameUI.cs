@@ -23,9 +23,8 @@ namespace RogueIslands.View
 
         [SerializeField] private Button _playButton;
         [SerializeField] private BuildingCardView _buildingCardPrefab;
-        [SerializeField] private BoosterView _boosterPrefab;
+        [SerializeField] private BoosterCardView _boosterPrefab;
         [SerializeField] private CardListView _buildingCardList, _boosterList;
-        [SerializeField] private GameObject _notEnoughEnergy;
         [SerializeField] private ParticleSystemTarget _productTarget;
 
         public event Action PlayClicked;
