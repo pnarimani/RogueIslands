@@ -8,9 +8,12 @@ namespace RogueIslands.View
     {
         [SerializeField] private float _speed = 10;
         [SerializeField] private bool _allowReorder;
-    
+        [SerializeField] private Transform _extraAnimationParent;
+
         public bool ShouldAnimateToTarget { get; set; } = false;
-        public Vector3 TargetPosition { get; set; }
+        public Vector2 TargetPosition { get; set; }
+        public Vector2 ExtraAnimationPositionOffset { get; set; }
+        public Quaternion ExtraAnimationRotationOffset { get; set; }
         public CardListView Owner { get; set; }
 
         public event Action CardReordered;
@@ -25,7 +28,15 @@ namespace RogueIslands.View
         {
             if (ShouldAnimateToTarget)
             {
-                transform.position = Vector3.Lerp(transform.position, TargetPosition, Time.deltaTime * _speed);
+                transform.position = Vector2.Lerp(transform.position, TargetPosition, Time.deltaTime * _speed);
+            }
+
+            if (_extraAnimationParent != null)
+            {
+                _extraAnimationParent.localRotation = Quaternion.Slerp(_extraAnimationParent.localRotation,
+                    ExtraAnimationRotationOffset, Time.deltaTime * _speed);
+                _extraAnimationParent.localPosition = Vector2.Lerp(_extraAnimationParent.localPosition,
+                    ExtraAnimationPositionOffset, Time.deltaTime * _speed);
             }
         }
 
@@ -35,7 +46,7 @@ namespace RogueIslands.View
                 return;
             if (Owner == null)
                 return;
-        
+
             ShouldAnimateToTarget = false;
         }
 
@@ -45,7 +56,7 @@ namespace RogueIslands.View
                 return;
             if (Owner == null)
                 return;
-        
+
             transform.position = eventData.position;
 
             Owner.Reorder(this);
@@ -57,9 +68,9 @@ namespace RogueIslands.View
                 return;
             if (Owner == null)
                 return;
-        
+
             ShouldAnimateToTarget = true;
-            
+
             CardReordered?.Invoke();
         }
     }

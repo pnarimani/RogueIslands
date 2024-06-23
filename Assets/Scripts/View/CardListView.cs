@@ -51,7 +51,12 @@ namespace RogueIslands.View
                 return;
 
             for (var i = _items.Count - 1; i >= 0; i--)
-                _items[i].TargetPosition = GetPositionForIndex(i);
+            {
+                var item = _items[i];
+                item.TargetPosition = GetPositionForIndex(i);
+                item.ExtraAnimationPositionOffset = AnimatePosition(i);
+                item.ExtraAnimationRotationOffset = GetRotationForIndex(i);
+            }
         }
 
         public void Reorder(CardListItem item)
@@ -90,7 +95,7 @@ namespace RogueIslands.View
             var maxSpacePerItem = contentSize.x / _items.Count;
 
             var spacePerItem = _fitContent
-                ? Mathf.Min(maxSpacePerItem, _items[0].transform.GetWorldRect().width + _minPadding)
+                ? Mathf.Min(maxSpacePerItem, GetFirstItemRect().width + _minPadding)
                 : maxSpacePerItem;
 
             var startingPosition = _fitContent
@@ -104,7 +109,7 @@ namespace RogueIslands.View
         {
             if (_items.Count == 0)
                 return _minSize;
-            var itemRect = _items[0].transform.GetWorldRect();
+            var itemRect = GetFirstItemRect();
             var spacePerItem = itemRect.width + _minPadding;
             var size = new Vector2(_items.Count * spacePerItem, itemRect.height) + _padding;
             size.x = Mathf.Max(size.x, _minSize.x);
@@ -113,5 +118,14 @@ namespace RogueIslands.View
             size.y = Mathf.Min(size.y, _maxSize.y);
             return size;
         }
+
+        private Rect GetFirstItemRect()
+            => ((RectTransform)_items[0].transform).rect;
+
+        private Vector2 AnimatePosition(int index)
+            => new(0, Mathf.Sin(Time.time * 2 + index * 0.5f) * 4);
+
+        private Quaternion GetRotationForIndex(int i)
+            => Quaternion.identity * Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 2 + i * 0.5f) * 1);
     }
 }
