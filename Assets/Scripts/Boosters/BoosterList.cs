@@ -29,7 +29,7 @@ namespace RogueIslands.Boosters
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<BuildingScored>(),
-                            new SelectedBuildingCategory
+                            new BuildingCategoryCondition
                             {
                                 Categories = new[] { Category.Cat1 },
                             },
@@ -68,7 +68,7 @@ namespace RogueIslands.Boosters
                         {
                             GameEventCondition.Create<BuildingScored>(),
                             BuildingTriggerCountCondition.FirstTrigger,
-                            new SelectedBuildingCategory
+                            new BuildingCategoryCondition
                             {
                                 Categories = new[] { Category.Cat2 },
                             },
@@ -568,7 +568,7 @@ namespace RogueIslands.Boosters
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<BuildingScored>(),
-                            new SelectedBuildingCategory
+                            new BuildingCategoryCondition
                             {
                                 Categories = new[] { Category.Cat1 },
                             },
@@ -586,7 +586,7 @@ namespace RogueIslands.Boosters
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<BuildingScored>(),
-                            new SelectedBuildingCategory
+                            new BuildingCategoryCondition
                             {
                                 Categories = new[] { Category.Cat2 },
                             },
@@ -605,7 +605,7 @@ namespace RogueIslands.Boosters
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<BuildingRemainedInHand>(),
-                            new SelectedBuildingCategory
+                            new BuildingCategoryCondition
                             {
                                 Categories = new[] { Category.Cat5 },
                             },

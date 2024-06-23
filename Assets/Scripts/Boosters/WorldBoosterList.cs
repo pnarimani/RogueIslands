@@ -24,7 +24,7 @@ namespace RogueIslands.Boosters
                         {
                             GameEventCondition.Create<BuildingScored>(),
                             new BuildingInRangeCondition(),
-                            new SelectedBuildingCategory() { Categories = new[] { Category.Cat3 } },
+                            new BuildingCategoryCondition() { Categories = new[] { Category.Cat3 } },
                         },
                         Products = 10,
                     },
@@ -41,7 +41,7 @@ namespace RogueIslands.Boosters
                         {
                             GameEventCondition.Create<BuildingScored>(),
                             new BuildingInRangeCondition(),
-                            new SelectedBuildingCategory() { Categories = new[] { Category.Cat4, Category.Cat5, } },
+                            new BuildingCategoryCondition() { Categories = new[] { Category.Cat4, Category.Cat5, } },
                         },
                         PlusMult = 3,
                     },

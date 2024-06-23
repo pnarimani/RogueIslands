@@ -2,7 +2,6 @@
 using DG.Tweening;
 using RogueIslands.Buildings;
 using RogueIslands.View.Feedbacks;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,14 +12,14 @@ namespace RogueIslands.View
     {
         [SerializeField] private RectTransform _animationParent;
         [SerializeField] private Image _colorBg, _colorGradient, _buildingIcon;
-        [SerializeField] private LabelFeedback _moneyFeedback;
-        
+        [SerializeField] private LabelFeedback _moneyFeedback, _productFeedback, _multFeedback;
+
         private bool _isSelected;
         private BuildingView _buildingPreview;
         private Transform _originalParent;
         private CardListItem _cardListItem;
 
-        private BuildingViewFactory _buildingViewFactory = new();
+        private readonly BuildingViewFactory _buildingViewFactory = new();
 
         public Building Data { get; private set; }
 
@@ -62,13 +61,15 @@ namespace RogueIslands.View
                     _buildingPreview = _buildingViewFactory.Create(Data);
                 }
 
-                _buildingPreview.transform.position = BuildingViewPlacement.Instance.GetPosition(_buildingPreview.transform);
+                _buildingPreview.transform.position =
+                    BuildingViewPlacement.Instance.GetPosition(_buildingPreview.transform);
 
                 var isValidPlacement = BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview.transform);
                 foreach (var r in _buildingPreview.GetComponentsInChildren<Renderer>(true))
                     r.enabled = isValidPlacement;
 
-                EffectRangeHighlighter.Highlight(_buildingPreview.transform.position, Data.Range, _buildingPreview.gameObject);
+                EffectRangeHighlighter.Highlight(_buildingPreview.transform.position, Data.Range,
+                    _buildingPreview.gameObject);
                 EffectRangeHighlighter.ShowRanges(true, _buildingPreview.gameObject);
                 WorldBoosterBoundCheck.HighlightOverlappingWorldBoosters(_buildingPreview.transform);
             }
@@ -88,9 +89,11 @@ namespace RogueIslands.View
         {
             InputHandling.Instance.Click -= OnWorldClicked;
 
-            if (GameUI.Instance.IsInSpawnRegion(Input.mousePosition) && BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview.transform))
+            if (GameUI.Instance.IsInSpawnRegion(Input.mousePosition) &&
+                BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview.transform))
             {
-                GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data, _buildingPreview.transform.position,
+                GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data,
+                    _buildingPreview.transform.position,
                     Quaternion.identity);
 
                 EffectRangeHighlighter.ShowRanges(false);
@@ -139,8 +142,26 @@ namespace RogueIslands.View
 
         public async UniTask BuildingMadeMoney(int money)
         {
-            _moneyFeedback.GetComponentInChildren<TextMeshProUGUI>().text = "$" + money;
+            _moneyFeedback.SetText("$" + money);
             await _moneyFeedback.Play();
+        }
+
+        public async UniTask BuildingMadeProduct(double delta)
+        {
+            _productFeedback.SetText($"+{delta:F1}");
+            await _productFeedback.Play();
+        }
+
+        public async UniTask BuildingMadeXMult(double delta)
+        {
+            _multFeedback.SetText($"x{delta:F1}");
+            await _multFeedback.Play();
+        }
+
+        public async UniTask BuildingMadePlusMult(double delta)
+        {
+            _multFeedback.SetText($"+{delta:F1}");
+            await _multFeedback.Play();
         }
     }
 }

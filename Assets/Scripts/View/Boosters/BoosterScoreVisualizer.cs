@@ -1,5 +1,8 @@
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using RogueIslands.Boosters.Actions;
+using RogueIslands.Buildings;
+using RogueIslands.GameEvents;
 using RogueIslands.View.Feedbacks;
 using TMPro;
 using UnityEngine;
@@ -9,7 +12,6 @@ namespace RogueIslands.View.Boosters
     public class BoosterScoreVisualizer : BoosterActionVisualizer<ScoringAction>
     {
         [SerializeField] private LabelFeedback _productLabelFeedback, _multiLabelFeedback;
-        [SerializeField] private TextMeshProUGUI _productAmountText, _multAmountText;
 
         private double _previousProduct, _previousMult;
 
@@ -27,10 +29,15 @@ namespace RogueIslands.View.Boosters
         protected override async UniTask OnAfterBoosterExecuted(GameState state, ScoringAction action,
             BoosterView booster)
         {
-            var productBoost = state.ScoringState.Products - _previousProduct;
+            var productDelta = state.ScoringState.Products - _previousProduct;
             var finalMult = state.ScoringState.Multiplier;
             var dividedDelta = finalMult / _previousMult;
             var delta = finalMult - _previousMult;
+
+            Building responsibleBuilding = null;
+
+            if (state.CurrentEvent is BuildingRemainedInHand buildingEvent)
+                responsibleBuilding = buildingEvent.Building;
 
             var wait = AnimationScheduler.GetAnimationTime();
             AnimationScheduler.AllocateTime(0.2f);
@@ -38,26 +45,48 @@ namespace RogueIslands.View.Boosters
 
             if (IsProduct(action))
             {
-                GameUI.Instance.ProductBoosted(productBoost);
+                GameUI.Instance.ProductBoosted(productDelta);
 
-                if (_productAmountText != null)
-                    _productAmountText.text = $"+{productBoost:F1}";
-
-                await _productLabelFeedback.Play();
+                if (responsibleBuilding != null)
+                {
+                    await GetBuildingView(responsibleBuilding).BuildingMadeProduct(productDelta);
+                }
+                else
+                {
+                    _productLabelFeedback.SetText($"+{productDelta:F1}");
+                    await _productLabelFeedback.Play();
+                }
             }
 
             if (IsMult(action))
             {
                 GameUI.Instance.MultBoosted(finalMult);
 
-                if (action.XMult != null && _multAmountText != null) 
-                    _multAmountText.text = $"x{dividedDelta:F1}";
+                if (action.XMult != null)
+                {
+                    if (responsibleBuilding != null)
+                        await GetBuildingView(responsibleBuilding).BuildingMadeXMult(dividedDelta);
+                    else
+                        _multiLabelFeedback.SetText($"x{dividedDelta:F1}");
+                }
 
-                if (action.PlusMult != null && _multAmountText != null) 
-                    _multAmountText.text = $"+{delta:F1}";
+                if (action.PlusMult != null)
+                {
+                    if (responsibleBuilding != null)
+                        await GetBuildingView(responsibleBuilding).BuildingMadePlusMult(delta);
+                    else
+                        _multiLabelFeedback.SetText($"+{delta:F1}");
+                }
 
-                await _multiLabelFeedback.Play();
+                if (responsibleBuilding == null)
+                    await _multiLabelFeedback.Play();
             }
+        }
+
+        private static BuildingCardView GetBuildingView(Building responsibleBuilding)
+        {
+            return FindObjectsByType<BuildingCardView>(FindObjectsSortMode.None)
+                .First(c => c.Data == responsibleBuilding);
         }
 
         private static bool IsProduct(ScoringAction action)

@@ -3,7 +3,7 @@ using RogueIslands.Buildings;
 
 namespace RogueIslands.Boosters
 {
-    public class SelectedBuildingCategory : IGameCondition
+    public class BuildingCategoryCondition : IGameCondition
     {
         public IReadOnlyList<Category> Categories { get; set; }
     }
