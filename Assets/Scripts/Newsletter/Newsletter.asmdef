@@ -1,0 +1,7 @@
+{
+	"name": "Newsletter",
+	"references": [
+		"Unity.TextMeshPro",
+		"UniTask"
+	]
+}
