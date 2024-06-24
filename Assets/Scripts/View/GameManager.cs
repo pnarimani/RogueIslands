@@ -19,7 +19,7 @@ namespace RogueIslands.View
         [SerializeField] private RoundWinScreen _weekWinScreen;
         [SerializeField] private LoseScreen _loseScreen;
         [SerializeField] private RoundSelectionScreen _roundSelectionScreen;
-        
+
         private PlayController _playController;
 
         public GameState State { get; private set; }
@@ -201,32 +201,7 @@ namespace RogueIslands.View
             Instantiate(_roundSelectionScreen);
         }
 
-        public bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, ref Random positionRandom, out Vector3 point)
-        {
-            var all = FindObjectsOfType<WorldBoosterSpawnPoint>()
-                .Select(booster => booster.transform.position)
-                .ToList();
-
-            point = Vector3.zero;
-            if (all.Count == 0)
-                return false;
-
-            var prefab = Resources.Load<GameObject>(blueprint.PrefabAddress);
-            var instance = Instantiate(prefab);
-            var bounds = instance.transform.GetCollisionBounds();
-            Destroy(instance);
-            var mask = LayerMask.GetMask("Building", "WorldBooster");
-            for (var i = all.Count - 1; i >= 0; i--)
-            {
-                if(Physics.OverlapBoxNonAlloc(all[i], bounds.extents, Array.Empty<Collider>(), Quaternion.identity, mask) > 0)
-                    all.RemoveAt(i);
-            }
-
-            if (all.Count == 0)
-                return false;
-            
-            point = all[positionRandom.NextInt(all.Count)];
-            return true;
-        }
+        public bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, ref Random positionRandom, out Vector3 point) =>
+            WorldBoosterSpawnPointProvider.TryGet(blueprint, ref positionRandom, out point);
     }
 }
