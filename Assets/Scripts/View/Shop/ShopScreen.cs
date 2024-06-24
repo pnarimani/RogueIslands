@@ -52,6 +52,8 @@ namespace RogueIslands.View.Shop
 
                     GameManager.Instance.State.PurchaseItemAtShop(GameManager.Instance, shopIndex);
                     
+                    GameUI.Instance.RefreshMoney();
+                    
                     Destroy(item.gameObject);
                 };
             }
