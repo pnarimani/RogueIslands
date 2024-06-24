@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -21,6 +22,9 @@ namespace RogueIslands
                     .Cast<IResolver>()
                     .FirstOrDefault();
 
+                SceneManager.sceneLoaded -= ResetScope;
+                SceneManager.sceneLoaded += ResetScope;
+
                 if (_scope == null)
                 {
                     Debug.LogError("Failed to find resolver");
@@ -29,6 +33,12 @@ namespace RogueIslands
             }
             
             return _scope.Resolve<T>();
+        }
+
+        private static void ResetScope(Scene arg0, LoadSceneMode loadSceneMode)
+        {
+            _scope = null;
+            SceneManager.sceneLoaded -= ResetScope;
         }
 
 #if UNITY_EDITOR

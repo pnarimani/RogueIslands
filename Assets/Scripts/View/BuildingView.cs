@@ -45,7 +45,7 @@ namespace RogueIslands.View
         {
             var wait = AnimationScheduler.GetAnimationTime();
             AnimationScheduler.AllocateTime(0.2f);
-            var extraTime = SettingsPopup.SettingsParticles ? 2.5f : 0.2f;
+            var extraTime = SettingsPopup.SettingsParticles ? 2f : 0.2f;
             AnimationScheduler.EnsureExtraTime(extraTime);
             var count = Data.Output + Data.OutputUpgrade;
 

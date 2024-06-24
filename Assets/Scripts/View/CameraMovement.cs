@@ -8,12 +8,17 @@ namespace RogueIslands.View
         [SerializeField] private Transform _target;
         [SerializeField] private CinemachineOrbitalFollow _cinemachineCamera;
 
+        private Bounds _bounds;
+        
         private const float ScrollMultiplier = 1f;
         private float _radiusTarget;
         private float _horizontalAxisValue;
 
         private void Start()
         {
+            _bounds = new Bounds(Vector3.zero, Vector3.zero);
+            _bounds.extents = new Vector3(30, 50, 30);
+            
             InputHandling.Instance.Drag += OnDrag;
             InputHandling.Instance.Scroll += OnScroll;
             InputHandling.Instance.AltDrag += OnAltDrag;
@@ -43,7 +48,12 @@ namespace RogueIslands.View
         {
             var xz = new Vector3(-obj.x, 0, -obj.y);
             xz = Quaternion.Euler(0, _cinemachineCamera.HorizontalAxis.Value, 0) * xz;
-            _target.position += xz * 0.03f;
+            var pos = _target.position + xz * 0.03f;
+            
+            pos.x = Mathf.Clamp(pos.x, _bounds.min.x, _bounds.max.x);
+            pos.z = Mathf.Clamp(pos.z, _bounds.min.z, _bounds.max.z);
+            
+            _target.position = pos;
         }
     }
 }

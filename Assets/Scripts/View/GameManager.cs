@@ -6,6 +6,7 @@ using RogueIslands.Boosters;
 using RogueIslands.Buildings;
 using RogueIslands.View.Boosters;
 using RogueIslands.View.DeckPreview;
+using RogueIslands.View.Lose;
 using RogueIslands.View.RoundSelection;
 using RogueIslands.View.Shop;
 using RogueIslands.View.Win;
