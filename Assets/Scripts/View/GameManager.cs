@@ -25,6 +25,7 @@ namespace RogueIslands.View
         [SerializeField] private DeckPreviewScreen _deckPreviewScreen;
         [SerializeField] private OptionsPopup _optionsPopup;
         [SerializeField] private SettingsPopup _settingsPopup;
+        [SerializeField] private GameWinScreen _gameWinScreen;
         
         private PlayController _playController;
 
@@ -65,6 +66,7 @@ namespace RogueIslands.View
 
         public void ShowGameWinScreen()
         {
+            Instantiate(_gameWinScreen);
         }
 
         public IWeekWinScreen ShowRoundWin()

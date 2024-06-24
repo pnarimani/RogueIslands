@@ -350,8 +350,8 @@ namespace RogueIslands.Boosters
                 },
                 new()
                 {
-                    Name = "10X",
-                    Description = new LiteralDescription("Apparently is worth 10 times more than other boosters"),
+                    Name = "Gennaro",
+                    Description = new LiteralDescription("Sometimes maybe good..."),
                     BuyPrice = 4,
                     EventAction = new RandomScoringAction
                     {

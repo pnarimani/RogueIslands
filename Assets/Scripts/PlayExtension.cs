@@ -33,9 +33,7 @@ namespace RogueIslands
             if (state.IsRoundFinished())
             {
                 state.ExecuteEvent(view, new RoundEnd());
-
-                ShowRoundWinScreen(state, view);
-
+                
                 state.PopulateShop();
 
                 state.Round++;
@@ -51,6 +49,10 @@ namespace RogueIslands
                 {
                     state.Result = GameResult.Win;
                     view.ShowGameWinScreen();
+                }
+                else
+                {
+                    ShowRoundWinScreen(state, view);
                 }
             }
             else
