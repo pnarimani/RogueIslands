@@ -54,8 +54,8 @@ namespace RogueIslands.View
             {
                 var item = _items[i];
                 item.TargetPosition = GetPositionForIndex(i);
-                item.ExtraAnimationPositionOffset = AnimatePosition(i);
-                item.ExtraAnimationRotationOffset = GetRotationForIndex(i);
+                item.ExtraAnimationPositionOffset = GetPositionAnimation(i);
+                item.ExtraAnimationRotationOffset = GetRotationAnimation(i);
             }
         }
 
@@ -120,10 +120,12 @@ namespace RogueIslands.View
         private Rect GetFirstItemRect()
             => ((RectTransform)_items[0].transform).rect;
 
-        private Vector2 AnimatePosition(int index)
+        private Vector2 GetPositionAnimation(int index)
             => new(0, Mathf.Sin(Time.time * 2 + index * 0.5f) * 4);
 
-        private Quaternion GetRotationForIndex(int i)
-            => Quaternion.identity * Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 1 + i * 0.5f) * 1);
+        private Quaternion GetRotationAnimation(int i)
+        {
+            return Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 1 + i * 0.5f) * 1);
+        }
     }
 }
