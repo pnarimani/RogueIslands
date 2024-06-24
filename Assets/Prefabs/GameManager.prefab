@@ -48,3 +48,4 @@ MonoBehaviour:
   _weekWinScreen: {fileID: -2457985162201193136, guid: 6f3f9e2a654105040b0adabab1325890, type: 3}
   _loseScreen: {fileID: 1160927452507146770, guid: b8770575ef22bdb47964d339969027de, type: 3}
   _roundSelectionScreen: {fileID: 3257633243381103910, guid: e81b591a723dc2d49a24d142a200be88, type: 3}
+  _deckPreviewScreen: {fileID: 1948164369158156646, guid: 83abe0313deaccf4ab469a41f0bc1ef1, type: 3}

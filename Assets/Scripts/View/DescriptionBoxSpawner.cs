@@ -22,7 +22,7 @@ namespace RogueIslands.View
         {
             if (_descriptionBoxInstance == null)
             {
-                _descriptionBoxInstance = Instantiate(_descriptionBoxPrefab, _descriptionBoxParent);
+                _descriptionBoxInstance = Instantiate(_descriptionBoxPrefab, _descriptionBoxParent.position, Quaternion.identity, _descriptionBoxParent.root);
                 _descriptionBoxInstance.SetDescription(_describableItem.Description.Get(_describableItem));
 
                 if (_showName && _describableItem is INamedItem namedItem) 

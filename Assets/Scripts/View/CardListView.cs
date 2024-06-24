@@ -98,9 +98,7 @@ namespace RogueIslands.View
                 ? Mathf.Min(maxSpacePerItem, GetFirstItemRect().width + _minPadding)
                 : maxSpacePerItem;
 
-            var startingPosition = _fitContent
-                ? worldRect.center + Vector2.left * ((_items.Count - 1) / 2f * spacePerItem)
-                : worldRect.min + Vector2.up * worldRect.height / 2;
+            var startingPosition = worldRect.center + Vector2.left * ((_items.Count - 1) / 2f * spacePerItem);
 
             return startingPosition + Vector2.right * (index * spacePerItem) + _offset;
         }

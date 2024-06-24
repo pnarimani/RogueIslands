@@ -5,6 +5,7 @@ using DG.Tweening;
 using RogueIslands.Boosters;
 using RogueIslands.Buildings;
 using RogueIslands.View.Boosters;
+using RogueIslands.View.DeckPreview;
 using RogueIslands.View.RoundSelection;
 using RogueIslands.View.Shop;
 using RogueIslands.View.Win;
@@ -19,6 +20,7 @@ namespace RogueIslands.View
         [SerializeField] private RoundWinScreen _weekWinScreen;
         [SerializeField] private LoseScreen _loseScreen;
         [SerializeField] private RoundSelectionScreen _roundSelectionScreen;
+        [SerializeField] private DeckPreviewScreen _deckPreviewScreen;
 
         private PlayController _playController;
 
@@ -119,7 +121,7 @@ namespace RogueIslands.View
             => FindObjectsOfType<BuildingView>().First(b => b.Data == building);
 
         public IBoosterView GetBooster(IBooster booster)
-            => FindObjectsByType<BoosterView>(FindObjectsSortMode.None).FirstOrDefault(b => b.Data == booster);
+            => FindObjectsByType<BoosterView>(FindObjectsSortMode.None).FirstOrDefault(b => Equals(b.Data, booster));
 
         public async void HighlightIsland(Cluster cluster)
         {
@@ -201,6 +203,11 @@ namespace RogueIslands.View
         public void ShowRoundsSelectionScreen()
         {
             Instantiate(_roundSelectionScreen);
+        }
+
+        public void ShowDeckPreview()
+        {
+            Instantiate(_deckPreviewScreen);
         }
 
         public bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, ref Random positionRandom, out Vector3 point) =>

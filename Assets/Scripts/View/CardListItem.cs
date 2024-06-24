@@ -9,6 +9,7 @@ namespace RogueIslands.View
         [SerializeField] private float _speed = 10;
         [SerializeField] private bool _allowReorder;
         [SerializeField] private Transform _extraAnimationParent;
+        [SerializeField] private GameObject _shadow;
 
         public bool ShouldAnimateToTarget { get; set; } = false;
         public Vector2 TargetPosition { get; set; }
@@ -47,6 +48,9 @@ namespace RogueIslands.View
             if (Owner == null)
                 return;
 
+            if (_shadow != null)
+                _shadow.SetActive(true);
+
             ShouldAnimateToTarget = false;
         }
 
@@ -68,6 +72,9 @@ namespace RogueIslands.View
                 return;
             if (Owner == null)
                 return;
+
+            if (_shadow != null)
+                _shadow.SetActive(false);
 
             ShouldAnimateToTarget = true;
 
