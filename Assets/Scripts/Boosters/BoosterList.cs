@@ -22,7 +22,8 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Saw Dust",
-                    Description = new ProbabilityDescription($"{{0}} to give x2 mult for each {Category.Cat3} building scored"),
+                    Description =
+                        new ProbabilityDescription($"{{0}} to give x2 mult for each {Category.Cat3} building scored"),
                     BuyPrice = 6,
                     EventAction = new ScoringAction
                     {
@@ -667,6 +668,34 @@ namespace RogueIslands.Boosters
                 //     Name = "Net",
                 //     Description = new ScalingBoosterDescription("Gain +1 mult whenever a random event does not happen"),
                 // },
+                new()
+                {
+                    Name = "For Profit",
+                    Description = new LiteralDescription("Double the chance of a world booster spawning"),
+                    BuyPrice = 5,
+                    EventAction = new ModifyWorldBoosterSpawnAction()
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<PropertiesRestored>(),
+                        },
+                        SpawnMultiplier = 2,
+                    },
+                },
+                new()
+                {
+                    Name = "For Fun",
+                    Description = new LiteralDescription("Double the total number of world boosters"),
+                    BuyPrice = 5,
+                    EventAction = new ModifyWorldBoosterSpawnAction()
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<PropertiesRestored>(),
+                        },
+                        CountMultiplier = 2,
+                    }
+                }
             };
         }
 

@@ -17,5 +17,8 @@ namespace RogueIslands
         {
             return random.NextInt(Min, Max);
         }
+
+        public static MinMax operator *(MinMax minMax, int multiplier) =>
+            new(minMax.Min * multiplier, minMax.Max * multiplier);
     }
 }
