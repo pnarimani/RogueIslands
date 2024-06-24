@@ -14,6 +14,7 @@ namespace RogueIslands.View
     public class BuildingView : MonoBehaviour, IBuildingView, IPointerEnterHandler, IPointerExitHandler, IHighlightable
     {
         [SerializeField] private GameObject _synergyRange;
+        [SerializeField] private GameObject _highlight;
         [SerializeField] private BuildingTriggerFeedback _triggerFeedback;
         [SerializeField] private LabelFeedback _retriggerLabelFeedback;
         [SerializeField] private LabelFeedback _moneyFeedback;
@@ -27,12 +28,6 @@ namespace RogueIslands.View
         private void Awake()
         {
             SetLayerRecursively(gameObject, LayerMask.NameToLayer("Building"));
-            EffectRangeHighlighter.Register(this);
-        }
-
-        private void OnDestroy()
-        {
-            EffectRangeHighlighter.Remove(this);
         }
 
         public void Initialize(Building building)
@@ -135,40 +130,19 @@ namespace RogueIslands.View
         {
             if (!IsPlacedDown)
                 return;
-            ShowRange(true);
-            EffectRangeHighlighter.Highlight(transform.position, Data.Range);
-            var island = GameManager.Instance.State.Clusters.Find(x => x.Buildings.Contains(Data));
-            if (island != null)
-            {
-                var allBuildings = FindObjectsOfType<BuildingView>();
-                foreach (var building in island.Buildings)
-                {
-                    var neighbour = allBuildings.First(b => b.Data == building);
-                    neighbour.Highlight(true);
-                    neighbour.ShowRange(true);
-                }
-            }
+            EffectRangeHighlighter.HighlightBuilding(this);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             if (!IsPlacedDown)
                 return;
-
-            ShowRange(false);
+            
             EffectRangeHighlighter.LowlightAll();
         }
 
-        public void Highlight(bool highlight)
-        {
-            var m = transform.FindRecursive("Cube").GetComponent<MeshRenderer>();
-            m.material.EnableKeyword("_EMISSION");
-            m.material.SetColor("_EmissionColor", highlight ? new Color(0f, 0.4f, 0f) : Color.black);
-        }
+        public void Highlight(bool highlight) => _highlight.SetActive(highlight);
 
-        public void ShowRange(bool showRange)
-        {
-            _synergyRange.SetActive(showRange);
-        }
+        public void ShowRange(bool showRange) => _synergyRange.SetActive(showRange);
     }
 }

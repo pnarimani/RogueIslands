@@ -6,20 +6,13 @@ namespace RogueIslands.View.Boosters
 {
     public class WorldBoosterView : MonoBehaviour, IHighlightable, IPointerEnterHandler, IPointerExitHandler
     {
+        [SerializeField] private GameObject _highlight;
         [SerializeField] private Transform _rangeVisuals;
         [SerializeField] private GameObject _deletionWarning;
-        
+
         private WorldBooster _booster;
 
-        private void Awake()
-        {
-            EffectRangeHighlighter.Register(this);
-        }
-
-        private void OnDestroy()
-        {
-            EffectRangeHighlighter.Remove(this);
-        }
+        public WorldBooster Data => _booster;
 
         public void Initialize(WorldBooster booster)
         {
@@ -28,8 +21,15 @@ namespace RogueIslands.View.Boosters
             _rangeVisuals.transform.localScale = Vector3.one * (booster.Range * 2);
         }
 
+        private void Start()
+        {
+            var size = transform.GetCollisionBounds().size;
+            _highlight.transform.localScale = Vector3.one * (Mathf.Max(size.x, size.z) * 1.3f);
+        }
+
         public void Highlight(bool highlight)
         {
+            _highlight.SetActive(highlight);
         }
 
         public void ShowRange(bool showRange)
@@ -39,17 +39,15 @@ namespace RogueIslands.View.Boosters
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _rangeVisuals.gameObject.SetActive(true);
-            EffectRangeHighlighter.Highlight(transform.position, _booster.Range, gameObject);
+            EffectRangeHighlighter.HighlightWorldBooster(this);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            _rangeVisuals.gameObject.SetActive(false);
             EffectRangeHighlighter.LowlightAll();
         }
 
-        public void WarnDeletion(bool shouldWarn) 
+        public void WarnDeletion(bool shouldWarn)
             => _deletionWarning.SetActive(shouldWarn);
     }
 }

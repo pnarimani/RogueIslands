@@ -71,9 +71,7 @@ namespace RogueIslands.View
                 foreach (var r in _buildingPreview.GetComponentsInChildren<Renderer>(true))
                     r.enabled = isValidPlacement;
 
-                EffectRangeHighlighter.Highlight(_buildingPreview.transform.position, Data.Range,
-                    _buildingPreview.gameObject);
-                EffectRangeHighlighter.ShowRanges(true, _buildingPreview.gameObject);
+                EffectRangeHighlighter.HighlightBuilding(_buildingPreview);
                 WorldBoosterBoundCheck.HighlightOverlappingWorldBoosters(_buildingPreview.transform);
             }
             else
@@ -82,7 +80,6 @@ namespace RogueIslands.View
                 {
                     Destroy(_buildingPreview.gameObject);
                     WorldBoosterBoundCheck.HideAllDeletionWarnings();
-                    EffectRangeHighlighter.ShowRanges(false);
                     EffectRangeHighlighter.LowlightAll();
                 }
             }
@@ -102,7 +99,6 @@ namespace RogueIslands.View
                     _buildingPreview.transform.position,
                     Quaternion.identity);
 
-                EffectRangeHighlighter.ShowRanges(false);
                 EffectRangeHighlighter.LowlightAll();
 
                 GameUI.Instance.RefreshMoney();
