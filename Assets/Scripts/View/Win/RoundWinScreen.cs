@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using RogueIslands.View.Audio;
 using TMPro;
 using UnityEngine;
@@ -42,6 +43,12 @@ namespace RogueIslands.View.Win
             var moneyChangeView = Instantiate(_moneyChangePrefab, _moneyChangeParent);
             moneyChangeView.SetChange(change.Change);
             moneyChangeView.SetReason(change.Reason);
+
+            var t = moneyChangeView.transform;
+            t.localScale = Vector3.zero;
+            t.DOScale(1, 0.3f)
+                .SetEase(Ease.OutBack)
+                .SetDelay(0.1f * _moneyChangeParent.childCount);
         }
     }
 }
