@@ -2398,7 +2398,7 @@ MonoBehaviour:
   _minPadding: 15
   _offset: {x: 0, y: 40}
   _padding: {x: 150, y: 0}
-  _minSize: {x: 0, y: 0}
+  _minSize: {x: 300, y: 80}
   _maxSize: {x: 1300, y: 210}
   _content: {fileID: 1948494315}
 --- !u!1 &963194225
