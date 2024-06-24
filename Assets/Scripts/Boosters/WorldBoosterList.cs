@@ -131,7 +131,48 @@ namespace RogueIslands.Boosters
                             },
                         },
                     },
-                }
+                },
+                new()
+                {
+                    Name = "Factory",
+                    Description = new LiteralDescription("When a building is placed in range, double its output"),
+                    Range = 4,
+                    PrefabAddress = "WorldBoosters/Factory",
+                    EventAction = new ModifyBuildingOutputAction
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<BuildingPlaced>(),
+                            new BuildingInRangeCondition(),
+                        },
+                        ProductMultiplier = 2,
+                    },
+                },
+                new()
+                {
+                    Name = "Garbage Dump",
+                    Description = new ScalingBoosterDescription("+1 mult for each building out of range"),
+                    Range = 10,
+                    PrefabAddress = "WorldBoosters/GarbageDump",
+                    EventAction = new CompositeAction()
+                    {
+                        Actions = new GameAction[]
+                        {
+                            new ScoringAction()
+                            {
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<DayEnd>(),
+                                },
+                            },
+                            new WorldBoosterScalingAction()
+                            {
+                                StartingPlusMult = 0,
+                                PlusMultChangePerBuildingOutside = 1,
+                            },
+                        },
+                    },
+                },
             };
         }
     }
