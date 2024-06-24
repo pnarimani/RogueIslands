@@ -1,11 +1,12 @@
 ﻿using System;
+using RogueIslands.View.Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace RogueIslands.View.Win
 {
-    public class WeekWinScreen : MonoBehaviour, IWeekWinScreen
+    public class RoundWinScreen : MonoBehaviour, IWeekWinScreen
     {
         [SerializeField] private Button _nextButton;
         [SerializeField] private TextMeshProUGUI _totalMoneyText, _weeklyPayoutText;
@@ -21,6 +22,11 @@ namespace RogueIslands.View.Win
                 GameManager.Instance.State.ClaimRoundEndMoney(GameManager.Instance);
                 Destroy(gameObject);
             });
+        }
+
+        private void Start()
+        {
+            StaticResolver.Resolve<IStageAudio>().PlayRoundWin();
         }
 
         private void SetTotalMoneyText()

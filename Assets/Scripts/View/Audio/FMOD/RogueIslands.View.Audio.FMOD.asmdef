@@ -1,0 +1,8 @@
+﻿{
+  "name": "RogueIslands.View.Audio.FMOD",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "RogueIslands.View",
+    "FMODUnity"
+  ]
+}

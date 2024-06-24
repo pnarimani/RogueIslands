@@ -7,6 +7,7 @@
 		"RogueIslands.View",
 		"RogueIslands.Debug",
 		"Unity.Mathematics",
-		"IngameDebugConsole.Runtime"
+		"IngameDebugConsole.Runtime",
+		"RogueIslands.View.Audio.FMOD"
 	]
 }

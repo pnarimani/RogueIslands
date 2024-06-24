@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4952488096640293909}
   - component: {fileID: 2417945444864633306}
+  - component: {fileID: 7664838834900106431}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -83,6 +84,25 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7664838834900106431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481522806404143594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0678830741f941568044a8df9fd7e299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip:
+    Guid:
+      Data1: -1538888558
+      Data2: 1106597950
+      Data3: 2078691257
+      Data4: 1220674406
+    Path: event:/SFX/ButtonClicked
 --- !u!1 &1905580218311380276
 GameObject:
   m_ObjectHideFlags: 0

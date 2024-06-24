@@ -8,7 +8,8 @@
     "DOTween.Modules",
     "UniTask",
     "Coffee.UIParticle",
-    "Unity.Cinemachine"
+    "Unity.Cinemachine",
+    "Audoty"
   ],
   "overrideReferences": true,
   "precompiledReferences": [

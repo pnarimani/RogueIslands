@@ -3,6 +3,7 @@ using System.Linq;
 using Coffee.UIExtensions;
 using Cysharp.Threading.Tasks;
 using RogueIslands.Buildings;
+using RogueIslands.View.Audio;
 using RogueIslands.View.Feedbacks;
 using TMPro;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace RogueIslands.View
         [SerializeField] private LabelFeedback _moneyFeedback;
         [SerializeField] private GameObject _productsParticleSystem;
         [SerializeField] private UIParticleAttractor _attractorPrefab;
-        
+
         public Building Data { get; private set; }
 
         private bool IsPlacedDown => !Data.Id.IsDefault();
@@ -40,6 +41,9 @@ namespace RogueIslands.View
             _synergyRange.transform.localScale = Vector3.one * (building.Range * 2);
 
             GetComponent<DescriptionBoxSpawner>().Initialize(building);
+            
+            if(IsPlacedDown)
+                StaticResolver.Resolve<IBuildingAudio>().PlayBuildingPlaced();
         }
 
         public async void BuildingTriggered(bool isRetrigger)
@@ -69,16 +73,16 @@ namespace RogueIslands.View
                 GameUI.Instance.ProductBoosted(1);
                 hitCount++;
             });
-            
-            while(hitCount < count)
+
+            while (hitCount < count)
             {
                 var distance = Vector3.Distance(attractor.transform.position, ps.transform.position);
                 var t = Mathf.InverseLerp(500, 2000, distance);
                 var speed = Mathf.Lerp(1f, 3.5f, t);
                 attractor.maxSpeed = speed;
-                await UniTask.DelayFrame(1);
+                await UniTask.DelayFrame(1, cancellationToken: destroyCancellationToken);
             }
-            
+
             Destroy(attractor.gameObject);
             Destroy(ps.transform.parent.gameObject);
         }

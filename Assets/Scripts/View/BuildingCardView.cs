@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using RogueIslands.Buildings;
+using RogueIslands.View.Audio;
 using RogueIslands.View.Feedbacks;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,13 +14,14 @@ namespace RogueIslands.View
         [SerializeField] private RectTransform _animationParent;
         [SerializeField] private Image _colorBg, _colorGradient, _buildingIcon;
         [SerializeField] private LabelFeedback _moneyFeedback, _productFeedback, _multFeedback;
-
+        
         private bool _isSelected;
         private BuildingView _buildingPreview;
         private Transform _originalParent;
         private CardListItem _cardListItem;
 
         private readonly BuildingViewFactory _buildingViewFactory = new();
+        private IBuildingCardAudio _audio;
 
         public Building Data { get; private set; }
 
@@ -35,6 +37,7 @@ namespace RogueIslands.View
 
         private void Start()
         {
+            _audio = StaticResolver.Resolve<IBuildingCardAudio>();
             _cardListItem = GetComponent<CardListItem>();
         }
 
@@ -87,6 +90,9 @@ namespace RogueIslands.View
 
         private void OnWorldClicked()
         {
+            if(_buildingPreview == null)
+                return;
+            
             InputHandling.Instance.Click -= OnWorldClicked;
 
             if (GameUI.Instance.IsInSpawnRegion(Input.mousePosition) &&
@@ -115,6 +121,8 @@ namespace RogueIslands.View
 
             if (_isSelected)
             {
+                _audio.PlayCardSelected();
+                
                 _cardListItem.ShouldAnimateToTarget = false;
 
                 transform.DOLocalMoveY(50, 0.2f)
@@ -132,6 +140,8 @@ namespace RogueIslands.View
             }
             else
             {
+                _audio.PlayCardDeselected();
+                
                 transform.DOLocalMoveY(-50, 0.2f)
                     .SetRelative(true)
                     .OnComplete(() => _cardListItem.ShouldAnimateToTarget = true);

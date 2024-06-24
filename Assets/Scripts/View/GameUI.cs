@@ -2,6 +2,7 @@ using System;
 using Coffee.UIExtensions;
 using RogueIslands.Boosters;
 using RogueIslands.Buildings;
+using RogueIslands.View.Audio;
 using RogueIslands.View.Boosters;
 using UnityEngine;
 using UnityEngine.UI;
@@ -109,6 +110,9 @@ namespace RogueIslands.View
         public void ProductBoosted(double delta)
         {
             _products.UpdateNumber(_products.CurrentNumber + delta);
+            var t = (_products.CurrentNumber * _multiplier.CurrentNumber) / GameManager.Instance.State.GetCurrentRequiredScore();
+            var scoringAudio = StaticResolver.Resolve<IScoringAudio>();
+            scoringAudio.PlayScoreSound((int)(t * scoringAudio.ClipCount));
         }
 
         public void MultBoosted(double mult)

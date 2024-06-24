@@ -17,7 +17,7 @@ namespace RogueIslands.View
     public class GameManager : SingletonMonoBehaviour<GameManager>, IGameView, IDisposable
     {
         [SerializeField] private ShopScreen _shopPrefab;
-        [SerializeField] private WeekWinScreen _weekWinScreen;
+        [SerializeField] private RoundWinScreen _weekWinScreen;
         [SerializeField] private LoseScreen _loseScreen;
         [SerializeField] private RoundSelectionScreen _roundSelectionScreen;
         
