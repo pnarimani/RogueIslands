@@ -20,7 +20,6 @@ namespace RogueIslands.Autofac
             builder.RegisterInstance(_useRandomSeed ? new Random() : new Random(Seed.GetHashCode()));
 
             builder.RegisterModule<GameplayCoreModule>();
-            builder.RegisterModule<AudioFmodModule>();
 
             builder.RegisterMonoBehaviour<InputHandling>()
                 .AutoActivate()

@@ -777,8 +777,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _play: {fileID: 1498748098}
-  _discord: {fileID: 1676684123}
+  _settingsButton: {fileID: 1676684123}
   _quit: {fileID: 1115396745}
+  _settings: {fileID: -6989604898731638799, guid: 2c138f5c29e5b8644bdadf435875f9a9, type: 3}
 --- !u!1001 &1676684121
 PrefabInstance:
   m_ObjectHideFlags: 0

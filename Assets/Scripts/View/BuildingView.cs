@@ -36,8 +36,8 @@ namespace RogueIslands.View
             _synergyRange.transform.localScale = Vector3.one * (building.Range * 2);
 
             GetComponent<DescriptionBoxSpawner>().Initialize(building);
-            
-            if(IsPlacedDown)
+
+            if (IsPlacedDown)
                 StaticResolver.Resolve<IBuildingAudio>().PlayBuildingPlaced();
         }
 
@@ -45,41 +45,53 @@ namespace RogueIslands.View
         {
             var wait = AnimationScheduler.GetAnimationTime();
             AnimationScheduler.AllocateTime(0.2f);
-            AnimationScheduler.EnsureExtraTime(2.5f);
+            var extraTime = SettingsPopup.SettingsParticles ? 2.5f : 0.2f;
+            AnimationScheduler.EnsureExtraTime(extraTime);
             var count = Data.Output + Data.OutputUpgrade;
 
             await UniTask.WaitForSeconds(wait);
 
-            var ps = PlayParticleSystem(count);
+            ParticleSystem ps = null;
+            if (SettingsPopup.SettingsParticles)
+            {
+                ps = PlayParticleSystem(count);
+            }
 
             var task = _triggerFeedback.Play();
             if (isRetrigger)
                 task = UniTask.WhenAll(task, _retriggerLabelFeedback.Play());
             await task;
 
-            _attractorPrefab.gameObject.SetActive(false);
-            var attractor = Instantiate(_attractorPrefab, GameUI.Instance.ProductTarget, false);
-            attractor.particleSystem = ps;
-            attractor.gameObject.SetActive(true);
-
-            var hitCount = 0;
-            attractor.onAttracted.AddListener(() =>
+            if (ps != null)
             {
-                GameUI.Instance.ProductBoosted(1);
-                hitCount++;
-            });
+                _attractorPrefab.gameObject.SetActive(false);
+                var attractor = Instantiate(_attractorPrefab, GameUI.Instance.ProductTarget, false);
+                attractor.particleSystem = ps;
+                attractor.gameObject.SetActive(true);
 
-            while (hitCount < count)
-            {
-                var distance = Vector3.Distance(attractor.transform.position, ps.transform.position);
-                var t = Mathf.InverseLerp(500, 2000, distance);
-                var speed = Mathf.Lerp(1f, 3.5f, t);
-                attractor.maxSpeed = speed;
-                await UniTask.DelayFrame(1, cancellationToken: destroyCancellationToken);
+                var hitCount = 0;
+                attractor.onAttracted.AddListener(() =>
+                {
+                    GameUI.Instance.ProductBoosted(1);
+                    hitCount++;
+                });
+
+                while (hitCount < count)
+                {
+                    var distance = Vector3.Distance(attractor.transform.position, ps.transform.position);
+                    var t = Mathf.InverseLerp(500, 2000, distance);
+                    var speed = Mathf.Lerp(1f, 3.5f, t);
+                    attractor.maxSpeed = speed;
+                    await UniTask.DelayFrame(1, cancellationToken: destroyCancellationToken);
+                }
+
+                Destroy(attractor.gameObject);
+                Destroy(ps.transform.parent.gameObject);
             }
-
-            Destroy(attractor.gameObject);
-            Destroy(ps.transform.parent.gameObject);
+            else
+            {
+                GameUI.Instance.ProductBoosted(count);
+            }
         }
 
         public async UniTask BuildingMadeMoney(int money)
@@ -137,7 +149,7 @@ namespace RogueIslands.View
         {
             if (!IsPlacedDown)
                 return;
-            
+
             EffectRangeHighlighter.LowlightAll();
         }
 

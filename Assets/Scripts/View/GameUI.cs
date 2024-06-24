@@ -23,7 +23,7 @@ namespace RogueIslands.View
             _month,
             _boosterSlots;
 
-        [SerializeField] private Button _playButton, _deckButton;
+        [SerializeField] private Button _playButton, _deckButton, _optionsButton;
         [SerializeField] private BuildingCardView _buildingCardPrefab;
         [SerializeField] private BoosterCardView _boosterPrefab;
         [SerializeField] private CardListView _buildingCardList, _boosterList;
@@ -37,6 +37,7 @@ namespace RogueIslands.View
         {
             _playButton.onClick.AddListener(() => PlayClicked?.Invoke());
             _deckButton.onClick.AddListener(() => GameManager.Instance.ShowDeckPreview());
+            _optionsButton.onClick.AddListener(() => GameManager.Instance.ShowOptions());
         }
 
         public void ShowBuildingCard(Building building)
