@@ -32,7 +32,7 @@ namespace RogueIslands.Boosters.Executors
             foreach (var b in state.Boosters)
                 ModifySingleBooster(b);
 
-            foreach (var b in state.WorldBoosters)
+            foreach (var b in state.WorldBoosters.SpawnedBoosters)
                 ModifySingleBooster(b);
         }
 

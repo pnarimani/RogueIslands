@@ -56,13 +56,13 @@ namespace RogueIslands.Buildings
         private static void RemoveOverlappingWorldBoosters(GameState state, IGameView view, Building building)
         {
             var bounds = view.GetBounds(building);
-            for (var i = state.WorldBoosters.Count - 1; i >= 0; i--)
+            for (var i = state.WorldBoosters.SpawnedBoosters.Count - 1; i >= 0; i--)
             {
-                var wb = state.WorldBoosters[i];
+                var wb = state.WorldBoosters.SpawnedBoosters[i];
                 var wbBounds = view.GetBounds(wb);
                 if (bounds.Intersects(wbBounds))
                 {
-                    state.WorldBoosters.RemoveAt(i);
+                    state.WorldBoosters.SpawnedBoosters.RemoveAt(i);
 
                     state.ExecuteEvent(view, new WorldBoosterDestroyed { Booster = wb });
 

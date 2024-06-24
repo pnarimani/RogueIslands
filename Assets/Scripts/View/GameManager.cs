@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using Coffee.UIExtensions;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using RogueIslands.Boosters;
@@ -11,6 +9,7 @@ using RogueIslands.View.RoundSelection;
 using RogueIslands.View.Shop;
 using RogueIslands.View.Win;
 using UnityEngine;
+using Random = Unity.Mathematics.Random;
 
 namespace RogueIslands.View
 {
@@ -165,11 +164,6 @@ namespace RogueIslands.View
             Instantiate(_shopPrefab);
         }
 
-        public IReadOnlyList<Vector3> GetWorldBoosterPositions()
-        {
-            return FindObjectsOfType<WorldBoosterSpawnPoint>().Select(booster => booster.transform.position).ToList();
-        }
-
         public void DestroyWorldBoosters()
         {
             foreach (var booster in FindObjectsOfType<BoosterView>())
@@ -205,6 +199,34 @@ namespace RogueIslands.View
         public void ShowRoundsSelectionScreen()
         {
             Instantiate(_roundSelectionScreen);
+        }
+
+        public bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, ref Random positionRandom, out Vector3 point)
+        {
+            var all = FindObjectsOfType<WorldBoosterSpawnPoint>()
+                .Select(booster => booster.transform.position)
+                .ToList();
+
+            point = Vector3.zero;
+            if (all.Count == 0)
+                return false;
+
+            var prefab = Resources.Load<GameObject>(blueprint.PrefabAddress);
+            var instance = Instantiate(prefab);
+            var bounds = instance.transform.GetCollisionBounds();
+            Destroy(instance);
+            var mask = LayerMask.GetMask("Building", "WorldBooster");
+            for (var i = all.Count - 1; i >= 0; i--)
+            {
+                if(Physics.OverlapBoxNonAlloc(all[i], bounds.extents, Array.Empty<Collider>(), Quaternion.identity, mask) > 0)
+                    all.RemoveAt(i);
+            }
+
+            if (all.Count == 0)
+                return false;
+            
+            point = all[positionRandom.NextInt(all.Count)];
+            return true;
         }
     }
 }

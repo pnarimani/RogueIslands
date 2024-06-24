@@ -31,6 +31,7 @@ namespace RogueIslands.Autofac
                 .SingleInstance();
             builder.RegisterType<BoosterManagement>().SingleInstance();
             builder.RegisterType<ResetController>().SingleInstance();
+            builder.RegisterType<WorldBoosterGeneration>().SingleInstance();
         }
     }
 }

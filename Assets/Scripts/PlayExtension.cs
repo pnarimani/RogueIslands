@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using RogueIslands.Boosters;
 using RogueIslands.Buildings;
 using RogueIslands.GameEvents;
 using RogueIslands.Rollback;
@@ -61,6 +62,8 @@ namespace RogueIslands
                         .Take(state.HandSize)
                 );
                 view.ShowBuildingsInHand();
+                
+                StaticResolver.Resolve<WorldBoosterGeneration>().GenerateWorldBoosters();
             }
         }
 
@@ -102,9 +105,10 @@ namespace RogueIslands
             if (state.Round == 0)
             {
                 view.DestroyWorldBoosters();
-                state.WorldBoosters.Clear();
-                StaticResolver.Resolve<BoosterManagement>().SpawnWorldBoosters(view.GetWorldBoosterPositions());
+                state.WorldBoosters.SpawnedBoosters.Clear();
             }
+            
+            StaticResolver.Resolve<WorldBoosterGeneration>().GenerateWorldBoosters();
 
             StaticResolver.Resolve<ResetController>().RestoreProperties();
 

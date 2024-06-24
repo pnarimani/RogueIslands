@@ -2,6 +2,7 @@
 using RogueIslands.Boosters;
 using RogueIslands.Buildings;
 using UnityEngine;
+using Random = Unity.Mathematics.Random;
 
 namespace RogueIslands
 {
@@ -23,7 +24,7 @@ namespace RogueIslands
         void ShowShopScreen();
         Bounds GetBounds(Building buildingData);
         Bounds GetBounds(WorldBooster worldBooster);
-        IReadOnlyList<Vector3> GetWorldBoosterPositions();
         void DestroyWorldBoosters();
+        bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, ref Random positionRandom, out Vector3 point);
     }
 }

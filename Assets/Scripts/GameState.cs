@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using RogueIslands.Boosters;
 using RogueIslands.Buildings;
 using RogueIslands.GameEvents;
-using Unity.Mathematics;
 
 namespace RogueIslands
 {
@@ -42,10 +41,6 @@ namespace RogueIslands
 
         public GameResult Result;
 
-        public Random WorldBoosterSpawnRandom;
-        public Random WorldBoosterSelectionRandom;
-        public float WorldBoosterSpawnChance = 0.2f;
-        public List<WorldBooster> WorldBoosters = new();
-        public List<WorldBooster> AvailableWorldBoosters;
+        public WorldBoostersState WorldBoosters;
     }
 }

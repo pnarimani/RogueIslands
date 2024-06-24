@@ -47,25 +47,6 @@ namespace RogueIslands
             return true;
         }
 
-        public void SpawnWorldBoosters(IReadOnlyList<Vector3> spawnPoints)
-        {
-            foreach (var point in spawnPoints)
-            {
-                if (_state.WorldBoosterSpawnRandom.NextFloat() > _state.WorldBoosterSpawnChance)
-                    continue;
-                
-                var index = _state.WorldBoosterSelectionRandom.NextInt(_state.AvailableWorldBoosters.Count);
-
-                var booster = _state.AvailableWorldBoosters[index].Clone();
-                booster.Id = new BoosterInstanceId(Guid.NewGuid().GetHashCode());
-                booster.Position = point;
-                booster.Rotation = Quaternion.identity;
-
-                _state.WorldBoosters.Add(booster);
-                _view.AddBooster(booster);
-            }
-        }
-
         public void SellBooster(BoosterInstanceId boosterId)
         {
             var booster = _state.Boosters.First(x => x.Id == boosterId);

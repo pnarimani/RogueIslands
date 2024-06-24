@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using RogueIslands.Boosters;
 using RogueIslands.Buildings;
 using RogueIslands.GameEvents;
@@ -27,10 +28,18 @@ namespace RogueIslands
                 },
                 AvailableBoosters = BoosterList.Get(seedRandom),
                 HandSize = handSize,
-                AvailableWorldBoosters = WorldBoosterList.Get(),
-                WorldBoosterSpawnRandom = seedRandom.NextRandom(),
-                WorldBoosterSelectionRandom = seedRandom.NextRandom(),
                 TotalDays = 4,
+                WorldBoosters = new WorldBoostersState
+                {
+                    CountRandom = seedRandom.NextRandom(),
+                    SpawnRandom = seedRandom.NextRandom(),
+                    SelectionRandom = seedRandom.NextRandom(),
+                    PositionRandom = seedRandom.NextRandom(),
+                    SpawnChance = 0.2f,
+                    Count = new MinMax(2, 6),
+                    SpawnedBoosters = new List<WorldBooster>(),
+                    All = WorldBoosterList.Get(),
+                },
                 Shop = new ShopState
                 {
                     BoosterSpawn = seedRandom.CreateRandomArray(GameState.TotalActs),

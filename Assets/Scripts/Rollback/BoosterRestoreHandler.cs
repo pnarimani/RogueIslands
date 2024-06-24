@@ -13,9 +13,9 @@ namespace RogueIslands.Rollback
                     booster.EventAction = backupData.EventAction;
             }
 
-            foreach (var booster in state.WorldBoosters)
+            foreach (var booster in state.WorldBoosters.SpawnedBoosters)
             {
-                var backupData = backup.WorldBoosters.Find(b => AreEqual(b, booster));
+                var backupData = backup.WorldBoosters.SpawnedBoosters.Find(b => AreEqual(b, booster));
                 if (backupData != null)
                     booster.EventAction = backupData.EventAction;
             }

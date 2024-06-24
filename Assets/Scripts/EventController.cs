@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using RogueIslands.Boosters;
 using RogueIslands.GameEvents;
 using UnityEngine;
@@ -25,11 +24,11 @@ namespace RogueIslands
                 using var _ = ListPool<IBooster>.Get(out var buffer);
 
                 buffer.Clear();
-                buffer.AddRange(_state.WorldBoosters);
+                buffer.AddRange(_state.WorldBoosters.SpawnedBoosters);
                 foreach (var booster in buffer)
                 {
                     _state.CurrentEvent = e;
-                    if (_state.WorldBoosters.Contains((WorldBooster)booster))
+                    if (_state.WorldBoosters.SpawnedBoosters.Contains((WorldBooster)booster))
                         ExecuteBooster(booster);
                 }
 
