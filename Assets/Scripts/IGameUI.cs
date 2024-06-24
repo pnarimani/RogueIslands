@@ -5,5 +5,6 @@
         void RefreshScores();
         void RefreshDate();
         void RefreshAll();
+        void RefreshMoney();
     }
 }

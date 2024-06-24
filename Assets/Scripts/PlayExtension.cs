@@ -98,7 +98,7 @@ namespace RogueIslands
                 state.Money += change.Change;
             state.MoneyChanges.Clear();
 
-            view.GetUI().RefreshAll();
+            view.GetUI().RefreshMoney();
             view.ShowShopScreen();
         }
 

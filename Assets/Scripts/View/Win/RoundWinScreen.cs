@@ -48,7 +48,7 @@ namespace RogueIslands.View.Win
             t.localScale = Vector3.zero;
             t.DOScale(1, 0.3f)
                 .SetEase(Ease.OutBack)
-                .SetDelay(0.1f * _moneyChangeParent.childCount);
+                .SetDelay(0.2f * (_moneyChangeParent.childCount + 1));
         }
     }
 }
