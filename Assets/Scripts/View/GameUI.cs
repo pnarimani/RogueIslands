@@ -4,6 +4,7 @@ using RogueIslands.Boosters;
 using RogueIslands.Buildings;
 using RogueIslands.View.Audio;
 using RogueIslands.View.Boosters;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +27,7 @@ namespace RogueIslands.View
         [SerializeField] private BuildingCardView _buildingCardPrefab;
         [SerializeField] private BoosterCardView _boosterPrefab;
         [SerializeField] private CardListView _buildingCardList, _boosterList;
+        [SerializeField] private TextMeshProUGUI _deckCardCount;
 
         public event Action PlayClicked;
 
@@ -66,6 +68,14 @@ namespace RogueIslands.View
             RefreshMoney();
             RefreshDate();
             RefreshBoosters();
+            RefreshDeckText();
+        }
+
+        public void RefreshDeckText()
+        {
+            var state = GameManager.Instance.State;
+            var total = state.BuildingDeck.Deck.Count;
+            _deckCardCount.text = $"{total - (state.Day + 1) * state.HandSize}/{total}";
         }
 
         private void RefreshBoosters()
@@ -110,7 +120,8 @@ namespace RogueIslands.View
         public void ProductBoosted(double delta)
         {
             _products.UpdateNumber(_products.CurrentNumber + delta);
-            var t = (_products.CurrentNumber * _multiplier.CurrentNumber) / GameManager.Instance.State.GetCurrentRequiredScore();
+            var t = (_products.CurrentNumber * _multiplier.CurrentNumber) /
+                    GameManager.Instance.State.GetCurrentRequiredScore();
             var scoringAudio = StaticResolver.Resolve<IScoringAudio>();
             scoringAudio.PlayScoreSound((int)(t * scoringAudio.ClipCount));
         }

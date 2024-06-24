@@ -95,6 +95,8 @@ namespace RogueIslands.View
 
             foreach (var b in State.BuildingsInHand)
                 GameUI.Instance.ShowBuildingCard(b);
+            
+            GameUI.Instance.RefreshDeckText();
         }
 
         public IGameUI GetUI() => GameUI.Instance;
