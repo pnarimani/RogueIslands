@@ -104,7 +104,7 @@ namespace RogueIslands
 
         public static void StartRound(this GameState state, IGameView view)
         {
-            if (state.Round == 0)
+            // if (state.Round == 0)
             {
                 view.DestroyWorldBoosters();
                 state.WorldBoosters.SpawnedBoosters.Clear();

@@ -32,7 +32,8 @@ namespace RogueIslands.Boosters
                 new()
                 {
                     Name = "Mine",
-                    Description = new LiteralDescription($"+3 mult for all {Category.Cat4} and {Category.Cat5} buildings"),
+                    Description =
+                        new LiteralDescription($"+3 mult for all {Category.Cat4} and {Category.Cat5} buildings"),
                     Range = 4,
                     PrefabAddress = "WorldBoosters/Mine",
                     EventAction = new ScoringAction
@@ -63,6 +64,74 @@ namespace RogueIslands.Boosters
                         IsImmediate = true,
                     },
                 },
+                new()
+                {
+                    Name = "Shopping Mall",
+                    Description = new LiteralDescription($"+10 mult for {Category.Cat1} buildings in range"),
+                    Range = 6,
+                    PrefabAddress = "WorldBoosters/ShoppingMall",
+                    EventAction = new ScoringAction
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<BuildingScored>(),
+                            new BuildingInRangeCondition(),
+                            new BuildingCategoryCondition() { Categories = new[] { Category.Cat1 } },
+                        },
+                        PlusMult = 10,
+                    },
+                },
+                new()
+                {
+                    Name = "Museum",
+                    Description =
+                        new ScalingBoosterDescription("Starts at -50 products, +20 for each building in range"),
+                    Range = 5,
+                    PrefabAddress = "WorldBoosters/Museum",
+                    EventAction = new CompositeAction()
+                    {
+                        Actions = new GameAction[]
+                        {
+                            new ScoringAction()
+                            {
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<DayEnd>(),
+                                },
+                            },
+                            new WorldBoosterScalingAction()
+                            {
+                                StartingProducts = -50,
+                                ProductChangePerBuildingInside = 20,
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "Protected Park",
+                    Description = new ScalingBoosterDescription("Starts at +30 mult, -5 for each building in range"),
+                    Range = 10,
+                    PrefabAddress = "WorldBoosters/Park",
+                    EventAction = new CompositeAction()
+                    {
+                        Actions = new GameAction[]
+                        {
+                            new ScoringAction()
+                            {
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<DayEnd>(),
+                                },
+                            },
+                            new WorldBoosterScalingAction()
+                            {
+                                StartingPlusMult = 30,
+                                PlusMultChangePerBuildingInside = -5,
+                            },
+                        },
+                    },
+                }
             };
         }
     }

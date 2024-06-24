@@ -45,6 +45,12 @@ namespace RogueIslands.View
 
             foreach (var booster in Object.FindObjectsOfType<WorldBoosterView>())
             {
+                if (booster == null || booster.Data == null)
+                {
+                    Debug.Log("Weird");
+                    continue;
+                }
+                
                 booster.ShowRange(true);
 
                 var distance = Vector3.Magnitude(center.transform.position - booster.transform.position);

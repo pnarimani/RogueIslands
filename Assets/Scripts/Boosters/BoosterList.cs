@@ -300,7 +300,7 @@ namespace RogueIslands.Boosters
                     {
                         Conditions = new IGameCondition[]
                         {
-                            GameEventCondition.Create<BuildingScored>(),
+                            GameEventCondition.Create<ClusterScored>(),
                             new CountCondition
                             {
                                 TargetType = CountCondition.Target.BuildingsInScoringIsland,
