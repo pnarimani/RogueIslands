@@ -597,10 +597,10 @@ MonoBehaviour:
   m_Name: FMODStudioSettings
   m_EditorClassIdentifier: 
   switchSettingsMigration: 1
-  HasSourceProject: 1
+  HasSourceProject: 0
   HasPlatforms: 1
   sourceProjectPath: ../RogueIslandsFMOD/RogueIslands.fspro
-  sourceBankPath: ../RogueIslandsFMOD/Build
+  sourceBankPath: ContentSource/Audio
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 1
   ShowBankRefreshWindow: 0
