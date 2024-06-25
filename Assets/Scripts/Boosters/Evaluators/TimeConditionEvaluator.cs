@@ -1,4 +1,5 @@
-using static RogueIslands.Boosters.TimeCondition;
+using RogueIslands.Boosters.Conditions;
+using static RogueIslands.Boosters.Conditions.TimeCondition;
 
 namespace RogueIslands.Boosters
 {

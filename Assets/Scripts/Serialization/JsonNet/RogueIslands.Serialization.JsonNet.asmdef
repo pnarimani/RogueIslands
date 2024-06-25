@@ -1,0 +1,13 @@
+﻿{
+  "name": "RogueIslands.Serialization.JsonNet",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "RogueIslands",
+    "RogueIslands.Serialization",
+    "Newtonsoft.Json.UnityConverters"
+  ],
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "Newtonsoft.Json.dll"
+  ]
+}

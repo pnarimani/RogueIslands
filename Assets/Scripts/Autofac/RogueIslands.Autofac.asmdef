@@ -8,6 +8,10 @@
 		"RogueIslands.Debug",
 		"Unity.Mathematics",
 		"IngameDebugConsole.Runtime",
-		"RogueIslands.View.Audio.FMOD"
+		"RogueIslands.View.Audio.FMOD",
+		"RogueIslands.Serialization.YamlDotNetIntegration",
+		"RogueIslands.Serialization.XML",
+		"RogueIslands.Serialization.JsonNet",
+		"RogueIslands.Serialization.DeepClone"
 	]
 }

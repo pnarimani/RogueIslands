@@ -1,3 +1,5 @@
+using RogueIslands.Boosters.Conditions;
+
 namespace RogueIslands.Boosters
 {
     public class OrConditionEvaluator : GameConditionEvaluator<OrCondition>

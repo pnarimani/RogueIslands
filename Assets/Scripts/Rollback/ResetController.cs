@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using RogueIslands.GameEvents;
+using RogueIslands.Serialization;
 using UnityEngine.Profiling;
 
 namespace RogueIslands.Rollback
@@ -9,13 +10,15 @@ namespace RogueIslands.Rollback
         private readonly IReadOnlyList<IStateRestoreHandler> _restoreHandlers;
         private readonly EventController _eventController;
         private readonly GameState _state;
+        private readonly ICloner _cloner;
         
-        private GameState _clone;
+        private GameState _backup;
 
-        public ResetController(GameState state, EventController eventController, IReadOnlyList<IStateRestoreHandler> restoreHandlers)
+        public ResetController(GameState state, ICloner cloner, EventController eventController, IReadOnlyList<IStateRestoreHandler> restoreHandlers)
         {
+            _cloner = cloner;
             _state = state;
-            _clone = _state.Clone();
+            _backup = _cloner.Clone(_state);
             _eventController = eventController;
             _restoreHandlers = restoreHandlers;
         }
@@ -27,7 +30,7 @@ namespace RogueIslands.Rollback
             Profiler.EndSample();
 
             Profiler.BeginSample("BackupProperties");
-            _clone = _state.Clone();
+            _backup = _cloner.Clone(_state);
             Profiler.EndSample();
             
             _eventController.Execute(new PropertiesRestored());
@@ -35,14 +38,14 @@ namespace RogueIslands.Rollback
 
         private void Restore()
         {
-            if (_clone == null)
+            if (_backup == null)
                 return;
 
             foreach (var h in _restoreHandlers)
-                h.Restore(_clone,_state);
+                h.Restore(_backup,_state);
             
 
-            _clone = null;
+            _backup = null;
         }
     }
 }

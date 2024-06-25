@@ -1,4 +1,4 @@
-﻿namespace RogueIslands
+﻿namespace RogueIslands.Boosters.Conditions
 {
     public interface IGameCondition
     {

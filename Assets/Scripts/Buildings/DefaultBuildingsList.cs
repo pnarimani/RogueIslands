@@ -4,7 +4,7 @@ namespace RogueIslands.Buildings
 {
     public class DefaultBuildingsList
     {
-        public static List<Building> GetDefaultDeckBuildings()
+        public static List<Building> Get()
         {
             var allCards = new List<Building>();
 

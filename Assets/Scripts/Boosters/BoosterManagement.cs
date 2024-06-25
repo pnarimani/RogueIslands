@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RogueIslands.Boosters;
 using RogueIslands.GameEvents;
 using RogueIslands.Rollback;
-using UnityEngine;
+using RogueIslands.Serialization;
 
-namespace RogueIslands
+namespace RogueIslands.Boosters
 {
     public class BoosterManagement
     {
@@ -15,10 +14,17 @@ namespace RogueIslands
         private readonly EventController _eventController;
         private readonly GameActionController _gameActionController;
         private readonly ResetController _resetController;
+        private readonly ICloner _cloner;
 
-        public BoosterManagement(GameState state, IGameView view, EventController eventController,
-            GameActionController gameActionController, ResetController resetController)
+        public BoosterManagement(
+            GameState state,
+            IGameView view,
+            EventController eventController,
+            GameActionController gameActionController,
+            ResetController resetController,
+            ICloner cloner)
         {
+            _cloner = cloner;
             _resetController = resetController;
             _gameActionController = gameActionController;
             _eventController = eventController;
@@ -31,10 +37,10 @@ namespace RogueIslands
             if (_state.Boosters.Count >= _state.MaxBoosters)
                 return false;
 
-            var instance = booster.Clone();
+            var instance = _cloner.Clone(booster);
             instance.Id = new BoosterInstanceId(Guid.NewGuid().GetHashCode());
             instance.SellPrice = instance.BuyPrice - 1;
-            
+
             _state.Boosters.Add(instance);
             _view.AddBooster(instance);
 
@@ -68,9 +74,9 @@ namespace RogueIslands
             _state.Boosters.Remove(booster);
             _view.GetBooster(booster).Remove();
             _view.GetUI().RefreshAll();
-            
+
             _resetController.RestoreProperties();
-            
+
             _state.ExecuteEvent(_view, new BoosterDestroyed() { Booster = booster });
         }
 

@@ -11,7 +11,7 @@ namespace RogueIslands
     {
         public static GameState NewGame(System.Random seedRandom)
         {
-            var buildings = DefaultBuildingsList.GetDefaultDeckBuildings();
+            var buildings = DefaultBuildingsList.Get();
             buildings.Shuffle(seedRandom.NextRandom());
 
             const int handSize = 6;
@@ -26,7 +26,7 @@ namespace RogueIslands
                     Deck = buildings,
                     ShufflingRandom = seedRandom.NextRandom(),
                 },
-                AvailableBoosters = BoosterList.Get(seedRandom),
+                AvailableBoosters = BoosterList.Get(),
                 HandSize = handSize,
                 TotalDays = 4,
                 WorldBoosters = new WorldBoostersState

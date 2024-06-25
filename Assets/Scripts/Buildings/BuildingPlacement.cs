@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.GameEvents;
+using RogueIslands.Serialization;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -14,7 +15,7 @@ namespace RogueIslands.Buildings
         {
             Assert.IsTrue(buildingData.Id.IsDefault());
 
-            var building = buildingData.Clone();
+            var building = StaticResolver.Resolve<ICloner>().Clone(buildingData);
             building.Id = new BuildingInstanceId(Guid.NewGuid().GetHashCode());
             building.Position = position;
             building.Rotation = rotation;

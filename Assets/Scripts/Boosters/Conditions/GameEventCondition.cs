@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using RogueIslands.GameEvents;
 
-namespace RogueIslands
+namespace RogueIslands.Boosters.Conditions
 {
     public class GameEventCondition : IGameCondition
     {
-        public IReadOnlyList<Type> TriggeringEvents { get; }
+        public IReadOnlyList<Type> TriggeringEvents { get; set; }
 
-        public GameEventCondition(Type triggeringEvent)
-            => TriggeringEvents = new List<Type> { triggeringEvent };
-
-        [JsonConstructor]
-        public GameEventCondition(IReadOnlyList<Type> triggeringEvents)
-            => TriggeringEvents = triggeringEvents;
-        
-        public static GameEventCondition Create<T>() where T : IGameEvent => new(typeof(T));
+        public static GameEventCondition Create<T>() where T : IGameEvent
+            => new()
+            {
+                TriggeringEvents = new List<Type>() { typeof(T) },
+            };
     }
 }

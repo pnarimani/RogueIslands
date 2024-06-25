@@ -1,22 +1,19 @@
 {
-    "name": "RogueIslands",
-    "rootNamespace": "RogueIslands",
-    "references": [
-        "UniTask",
-        "VContainer",
-        "Newtonsoft.Json.UnityConverters",
-        "Unity.Mathematics"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": true,
-    "precompiledReferences": [
-        "Newtonsoft.Json.dll",
-        "DeepCloner.dll"
-    ],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "RogueIslands",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "UniTask",
+    "RogueIslands.Serialization",
+    "Newtonsoft.Json.UnityConverters",
+    "Unity.Mathematics"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

@@ -3,13 +3,14 @@ using System.Linq;
 using Autofac;
 using RogueIslands.Rollback;
 
-namespace RogueIslands.Autofac
+namespace RogueIslands.Autofac.Modules
 {
     public class RollbackModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
             var allTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(x => x.FullName.Contains("RogueIslands"))
                 .SelectMany(x => x.GetTypes())
                 .Where(t => t.IsClass && !t.IsAbstract)
                 .ToList();

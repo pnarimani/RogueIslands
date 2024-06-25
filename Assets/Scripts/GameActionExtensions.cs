@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using RogueIslands.Boosters;
 using RogueIslands.Boosters.Actions;
+using RogueIslands.Boosters.Conditions;
 
 namespace RogueIslands
 {

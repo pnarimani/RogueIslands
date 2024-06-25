@@ -4,7 +4,7 @@ using Autofac;
 using RogueIslands.Boosters;
 using RogueIslands.Boosters.Executors;
 
-namespace RogueIslands.Autofac
+namespace RogueIslands.Autofac.Modules
 {
     public class BoostersModule : Module
     {

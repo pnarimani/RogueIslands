@@ -1,4 +1,5 @@
 using System.Linq;
+using RogueIslands.Boosters.Conditions;
 
 namespace RogueIslands.Boosters
 {

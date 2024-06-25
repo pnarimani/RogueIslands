@@ -1,0 +1,9 @@
+﻿{
+  "name": "RogueIslands.Serialization.XML",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "RogueIslands",
+    "RogueIslands.Serialization"
+  ],
+  "overrideReferences": true
+}

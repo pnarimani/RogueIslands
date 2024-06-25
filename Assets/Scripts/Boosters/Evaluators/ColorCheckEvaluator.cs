@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using RogueIslands.Boosters.Conditions;
 using RogueIslands.Buildings;
 
 namespace RogueIslands.Boosters.Evaluators

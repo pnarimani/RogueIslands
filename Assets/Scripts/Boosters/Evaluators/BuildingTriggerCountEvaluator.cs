@@ -1,3 +1,4 @@
+using RogueIslands.Boosters.Conditions;
 using RogueIslands.GameEvents;
 
 namespace RogueIslands.Boosters

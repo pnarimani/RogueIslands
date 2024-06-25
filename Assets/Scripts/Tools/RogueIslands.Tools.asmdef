@@ -1,0 +1,17 @@
+﻿{
+  "name": "RogueIslands.Tools",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "RogueIslands",
+    "RogueIslands.Autofac",
+    "RogueIslands.Serialization",
+    "Unity.Mathematics"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "Autofac.dll"
+  ]
+}

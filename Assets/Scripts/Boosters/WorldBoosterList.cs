@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using RogueIslands.Boosters.Actions;
+using RogueIslands.Boosters.Conditions;
 using RogueIslands.Boosters.Descriptions;
 using RogueIslands.Buildings;
 using RogueIslands.GameEvents;

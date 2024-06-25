@@ -1,4 +1,4 @@
-﻿namespace RogueIslands.Boosters
+﻿namespace RogueIslands.Boosters.Conditions
 {
     public class BuildingTriggerCountCondition : IGameCondition
     {

@@ -1,4 +1,5 @@
 ﻿
+using RogueIslands.Serialization;
 using UnityEngine;
 
 namespace RogueIslands.Boosters
@@ -7,9 +8,11 @@ namespace RogueIslands.Boosters
     {
         private readonly GameState _state;
         private readonly IGameView _view;
+        private readonly ICloner _cloner;
 
-        public WorldBoosterGeneration(GameState state, IGameView view)
+        public WorldBoosterGeneration(GameState state, IGameView view, ICloner cloner)
         {
+            _cloner = cloner;
             _view = view;
             _state = state;
         }
@@ -32,7 +35,7 @@ namespace RogueIslands.Boosters
                 if (!_view.TryGetWorldBoosterSpawnPoint(blueprint, ref boosters.PositionRandom, out var point))
                     return;
 
-                var booster = blueprint.Clone();
+                var booster = _cloner.Clone(blueprint);
                 booster.Id = new BoosterInstanceId(System.Guid.NewGuid().GetHashCode());
                 booster.Position = point;
                 booster.Rotation = Quaternion.identity;

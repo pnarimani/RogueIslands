@@ -1,11 +1,11 @@
 ﻿using Force.DeepCloner;
 using UnityEngine.Profiling;
 
-namespace RogueIslands
+namespace RogueIslands.Serialization.DeepClone
 {
-    public static class Cloner
+    public class Cloner : ICloner
     {
-        public static T Clone<T>(this T original)
+        public T Clone<T>(T original)
         {
             Profiler.BeginSample("Clone");
             var deepClone = original.DeepClone();

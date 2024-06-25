@@ -1,0 +1,12 @@
+﻿{
+  "name": "RogueIslands.Serialization.YamlDotNetIntegration",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "RogueIslands.Serialization",
+    "RogueIslands"
+  ],
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "YamlDotNet.dll"
+  ]
+}

@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
+using RogueIslands.Boosters.Conditions;
 using RogueIslands.GameEvents;
-using static RogueIslands.Boosters.CountCondition;
+using static RogueIslands.Boosters.Conditions.CountCondition;
 
 namespace RogueIslands.Boosters.Evaluators
 {

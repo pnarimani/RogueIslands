@@ -1,9 +1,9 @@
-using System.Collections.Generic;
+using System;
 using Autofac;
 using AutofacUnity;
+using RogueIslands.Autofac.Modules;
 using RogueIslands.View;
 using UnityEngine;
-using Random = System.Random;
 
 namespace RogueIslands.Autofac
 {
@@ -13,44 +13,15 @@ namespace RogueIslands.Autofac
         [SerializeField] private string _seed;
         [SerializeField] private GameManager _gameManagerPrefab;
 
-        public string Seed => _seed;
 
         protected override void Configure(ContainerBuilder builder)
         {
-            builder.RegisterInstance(_useRandomSeed ? new Random() : new Random(Seed.GetHashCode()));
-
-            builder.RegisterModule<GameplayCoreModule>();
-
-            builder.RegisterMonoBehaviour<InputHandling>()
-                .AutoActivate()
-                .SingleInstance();
-
-            builder.Register(_ => new AnimationScheduler())
-                .AutoActivate()
-                .SingleInstance();
-
-            builder.Register(_ => new BuildingViewPlacement())
-                .AutoActivate()
-                .SingleInstance()
-                .AsImplementedInterfaces()
-                .AsSelf();
-
-            builder.Register(c => new GameObject().AddComponent<GizmosCaller>())
-                .AutoActivate()
-                .OnActivated(c => c.Instance.Initialize(c.Context.Resolve<IReadOnlyList<IGizmosDrawer>>()));
-
-            builder.Register(_ => Instantiate(_gameManagerPrefab))
-                .AutoActivate()
-                .OnActivated(m =>
-                {
-                    m.Instance.Initialize(
-                        m.Context.Resolve<GameState>(),
-                        m.Context.Resolve<PlayController>()
-                    );
-                })
-                .AsSelf()
-                .AsImplementedInterfaces()
-                .SingleInstance();
+            var seed = new Seed(_useRandomSeed ? Environment.TickCount.ToString() : _seed);
+            builder.RegisterModule(new GameplayCoreModule(seed));
+            builder.RegisterModule(new GameplayViewModule(_gameManagerPrefab));
+            builder.RegisterModule<BoostersModule>();
+            builder.RegisterModule<RollbackModule>();
+            builder.RegisterModule<SerializationModule>();
         }
 
         public T Resolve<T>() => Container.Resolve<T>();

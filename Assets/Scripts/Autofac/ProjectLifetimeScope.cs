@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using AutofacUnity;
 using IngameDebugConsole;
+using RogueIslands.Autofac.Modules;
 using UnityEngine;
 
 namespace RogueIslands.Autofac

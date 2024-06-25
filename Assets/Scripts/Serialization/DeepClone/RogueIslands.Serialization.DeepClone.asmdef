@@ -1,0 +1,11 @@
+﻿{
+  "name": "RogueIslands.Serialization.DeepClone",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "RogueIslands.Serialization"
+  ],
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "DeepCloner.dll"
+  ]
+}

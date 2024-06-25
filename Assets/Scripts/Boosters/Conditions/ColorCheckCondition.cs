@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using RogueIslands.Buildings;
 
-namespace RogueIslands.Boosters
+namespace RogueIslands.Boosters.Conditions
 {
     public class ColorCheckCondition : IGameCondition
     {

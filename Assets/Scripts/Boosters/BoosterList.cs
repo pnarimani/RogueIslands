@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using RogueIslands.Boosters.Actions;
+using RogueIslands.Boosters.Conditions;
 using RogueIslands.Boosters.Descriptions;
 using RogueIslands.Buildings;
 using RogueIslands.GameEvents;
@@ -8,7 +9,7 @@ namespace RogueIslands.Boosters
 {
     public static class BoosterList
     {
-        public static List<BoosterCard> Get(System.Random seedRandom)
+        public static List<BoosterCard> Get()
         {
             return new List<BoosterCard>
             {

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace RogueIslands.Boosters
+﻿namespace RogueIslands.Boosters.Conditions
 {
     public class OrCondition : IGameCondition
     {

@@ -5,17 +5,23 @@ using RogueIslands.Boosters;
 using RogueIslands.Boosters.Executors;
 using RogueIslands.Rollback;
 
-namespace RogueIslands.Autofac
+namespace RogueIslands.Autofac.Modules
 {
     public class GameplayCoreModule : Module
     {
+        private readonly Seed _seed;
+
+        public GameplayCoreModule(Seed seed) => _seed = seed;
+
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterInstance(_seed);
+            
+            builder.Register(c => new Random(_seed.Value.GetHashCode()))
+                .SingleInstance();
+            
             builder.Register((c) => c.Resolve<Random>().NextRandom())
                 .InstancePerDependency();
-            
-            builder.RegisterModule<BoostersModule>();
-            builder.RegisterModule<RollbackModule>();
             
             builder.Register(c => GameFactory.NewGame(c.Resolve<Random>()))
                             .SingleInstance()

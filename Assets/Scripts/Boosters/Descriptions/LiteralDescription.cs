@@ -2,10 +2,10 @@
 {
     public class LiteralDescription : IDescriptionProvider
     {
-        private readonly string _literalText;
+        public LiteralDescription(string text) => Text = text;
 
-        public LiteralDescription(string literalText) => _literalText = literalText;
+        public string Text { get; }
 
-        public string Get(IDescribableItem item) => _literalText;
+        public string Get(IDescribableItem item) => Text;
     }
 }
