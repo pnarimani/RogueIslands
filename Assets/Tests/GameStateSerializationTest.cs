@@ -147,7 +147,6 @@ namespace Tests
         public void GameState_SerializationIntegrationTest()
         {
             var text = _serializer.Serialize(_before);
-            File.WriteAllText(Path.Combine(Application.dataPath, "GameState.yaml"), text);
 
             var after = _deserializer.Deserialize<GameState>(text);
 
