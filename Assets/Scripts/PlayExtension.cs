@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using RogueIslands.Boosters;
+﻿using RogueIslands.Boosters;
 using RogueIslands.Buildings;
 using RogueIslands.GameEvents;
 using RogueIslands.Rollback;
@@ -57,12 +56,7 @@ namespace RogueIslands
             }
             else
             {
-                state.BuildingsInHand.Clear();
-                state.BuildingsInHand.AddRange(
-                    state.BuildingDeck.Deck
-                        .Skip(state.Day * state.HandSize)
-                        .Take(state.HandSize)
-                );
+                state.Buildings.HandPointer += state.HandSize;
                 view.ShowBuildingsInHand();
                 
                 StaticResolver.Resolve<WorldBoosterGeneration>().GenerateWorldBoosters();
@@ -114,7 +108,7 @@ namespace RogueIslands
 
             StaticResolver.Resolve<ResetController>().RestoreProperties();
 
-            state.BuildingDeck.Shuffle();
+            state.ShuffleDeck();
             state.CurrentScore = 0;
             state.Day = 0;
             state.Clusters.Clear();
@@ -122,7 +116,7 @@ namespace RogueIslands
             state.ExecuteEvent(view, new RoundStart());
             
             view.DestroyBuildings();
-            state.BuildingsInHand = state.BuildingDeck.Deck.Take(state.HandSize).ToList();
+            state.Buildings.HandPointer = 0;
             view.ShowBuildingsInHand();
 
             view.GetUI().RefreshAll();

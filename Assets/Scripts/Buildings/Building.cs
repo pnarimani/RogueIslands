@@ -4,7 +4,7 @@ namespace RogueIslands.Buildings
 {
     public class Building : IDescribableItem
     {
-        public BuildingInstanceId Id;
+        public BuildingId Id;
         public Vector3 Position;
         public Quaternion Rotation;
         public int RemainingTriggers;

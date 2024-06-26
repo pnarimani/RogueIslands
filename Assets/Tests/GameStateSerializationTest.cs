@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
@@ -10,6 +12,7 @@ using RogueIslands.Buildings;
 using RogueIslands.DeckBuilding;
 using RogueIslands.GameEvents;
 using RogueIslands.Serialization;
+using UnityEngine;
 using Random = Unity.Mathematics.Random;
 
 namespace Tests
@@ -23,6 +26,20 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
+            var defaultBuildings = DefaultBuildingsList.Get();
+            var inGameBuildings = DefaultBuildingsList.Get();
+            foreach (var b in inGameBuildings)
+            {
+                b.Id = new BuildingId((uint)Guid.NewGuid().GetHashCode());
+            }
+
+            var defaultBoosters = BoosterList.Get();
+            var inGameBoosters = BoosterList.Get();
+            foreach (var b in inGameBoosters)
+            {
+                b.Id = new BoosterInstanceId(Guid.NewGuid().GetHashCode());
+            }
+            
             _before = new GameState
             {
                 Day = 4,
@@ -54,21 +71,32 @@ namespace Tests
                     },
                 },
                 ScoringState = null,
-                Clusters = new List<Cluster>()
+                Buildings = new BuildingsState
                 {
-                    new Cluster() { Buildings = DefaultBuildingsList.Get() },
-                    new Cluster() { Id = Guid.NewGuid().ToString(), Buildings = DefaultBuildingsList.Get() },
+                    ShufflingRandom = new Random[]
+                    {
+                        Random.CreateFromIndex(23),
+                    },
+                    Clusters = new List<Cluster>()
+                    {
+                        new Cluster()
+                        {
+                            Buildings = inGameBuildings
+                        },
+                        new Cluster()
+                        {
+                            Id = Guid.NewGuid()
+                                .ToString(),
+                            Buildings = inGameBuildings,
+                        },
+                    },
+                    Deck = inGameBuildings ,
+                    HandPointer = 0,
+                    All = defaultBuildings,
                 },
-                BuildingsInHand = DefaultBuildingsList.Get(),
-                BuildingDeck = new BuildingDeck
-                {
-                    ShufflingRandom = Random.CreateFromIndex(342342),
-                    Deck = DefaultBuildingsList.Get()
-                },
-                AvailableBuildings = DefaultBuildingsList.Get(),
                 MaxBoosters = 34234,
-                Boosters = BoosterList.Get(),
-                AvailableBoosters = BoosterList.Get(),
+                Boosters = inGameBoosters,
+                AvailableBoosters = defaultBoosters,
                 Shop = new ShopState
                 {
                     StartingRerollCost = 324,
@@ -131,6 +159,7 @@ namespace Tests
         public void GameState_SerializationIntegrationTest()
         {
             var text = _serializer.Serialize(_before);
+            File.WriteAllText(Path.Combine(Application.dataPath, "GameState.yaml"), text);
 
             var after = _deserializer.Deserialize<GameState>(text);
 

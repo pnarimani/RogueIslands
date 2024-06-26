@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac0cc03b14847ef8a5c9984378bb507, type: 3}
   m_Name: Settings
   m_EditorClassIdentifier: 
-  RootScope: {fileID: 5221277317416607329, guid: 92dce202f6bccf34d87ccfab5b588a40, type: 3}
+  _rootScope: {fileID: 5221277317416607329, guid: 92dce202f6bccf34d87ccfab5b588a40, type: 3}

@@ -10,13 +10,9 @@ namespace RogueIslands.Buildings
 {
     public static class BuildingPlacement
     {
-        public static void PlaceBuilding(this GameState state, IGameView view, Building buildingData, Vector3 position,
+        public static void PlaceBuilding(this GameState state, IGameView view, Building building, Vector3 position,
             Quaternion rotation)
         {
-            Assert.IsTrue(buildingData.Id.IsDefault());
-
-            var building = StaticResolver.Resolve<ICloner>().Clone(buildingData);
-            building.Id = new BuildingInstanceId(Guid.NewGuid().GetHashCode());
             building.Position = position;
             building.Rotation = rotation;
 
@@ -25,8 +21,6 @@ namespace RogueIslands.Buildings
             RemoveOverlappingWorldBoosters(state, view, building);
 
             PlaceBuildingInIsland(state, building);
-
-            state.BuildingsInHand.Remove(buildingData);
 
             state.ExecuteEvent(view, new BuildingPlaced { Building = building });
         }

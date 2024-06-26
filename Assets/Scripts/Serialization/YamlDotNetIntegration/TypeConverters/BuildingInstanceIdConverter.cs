@@ -8,16 +8,16 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
 {
     public class BuildingInstanceIdConverter : IYamlTypeConverter
     {
-        public bool Accepts(Type type) => type == typeof(BuildingInstanceId);
+        public bool Accepts(Type type) => type == typeof(BuildingId);
 
         public object ReadYaml(IParser parser, Type type)
         {
-            return new BuildingInstanceId(int.Parse(parser.Consume<Scalar>().Value));
+            return new BuildingId(uint.Parse(parser.Consume<Scalar>().Value));
         }
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {
-            emitter.Emit(new Scalar(((BuildingInstanceId)value!).Value.ToString()));
+            emitter.Emit(new Scalar(((BuildingId)value!).Value.ToString()));
         }
     }
 }

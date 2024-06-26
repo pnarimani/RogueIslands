@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
+using System.IO;
 using UnityEditor;
 #endif
 
@@ -40,7 +41,7 @@ namespace AutofacUnity
         [InitializeOnLoadMethod]
         private static void Initialize()
         {
-            if (AssetDatabase.LoadAssetAtPath<AutofacSettings>(FilePath) != null)
+            if (File.Exists(Path.GetFullPath(FilePath)))
                 return;
 
             var autofacSettings = CreateInstance<AutofacSettings>();

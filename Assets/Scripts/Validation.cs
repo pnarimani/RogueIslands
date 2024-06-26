@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using RogueIslands.Buildings;
 using UnityEngine.Assertions;
 
 namespace RogueIslands
@@ -16,11 +18,12 @@ namespace RogueIslands
             foreach (var booster in state.AvailableBoosters) 
                 Assert.IsTrue(booster.Id.IsDefault());
             
-            foreach (var building in state.AvailableBuildings)
+            foreach (var building in state.Buildings.Deck)
+                Assert.IsFalse(building.Id.IsDefault());
+            
+            foreach (var building in state.Buildings.All)
                 Assert.IsTrue(building.Id.IsDefault());
             
-            state.BuildingsInHand.ForEach(x => Assert.IsTrue(x.Id.IsDefault()));
-
             Assert.IsNotNull(state.Shop);
 
             Assert.IsNotNull(state.Shop.ItemsForSale);

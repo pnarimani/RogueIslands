@@ -80,6 +80,8 @@ namespace RogueIslands
 
             foreach (var building in _state.BuildingsInHand)
             {
+                if (_state.Buildings.Clusters.Exists(c => c.Buildings.Contains(building)))
+                    continue;
                 buildingRemainedInHand.Building = building;
                 buildingRemainedInHand.TriggerCount = 1;
                 _eventController.Execute(buildingRemainedInHand);

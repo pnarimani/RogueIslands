@@ -11,8 +11,13 @@ namespace RogueIslands
     {
         public static GameState NewGame(System.Random seedRandom)
         {
-            var buildings = DefaultBuildingsList.Get();
-            buildings.Shuffle(seedRandom.NextRandom());
+            var buildingBlueprints = DefaultBuildingsList.Get();
+            var deck = DefaultBuildingsList.Get();
+            deck.Shuffle(seedRandom.NextRandom());
+            foreach (var building in deck)
+            {
+                building.Id = new BuildingId((uint)Guid.NewGuid().GetHashCode());
+            }
 
             const int handSize = 6;
 
@@ -20,11 +25,12 @@ namespace RogueIslands
             {
                 AllRequiredScores = GetScoringRequirements(),
                 CurrentEvent = new ActStart(),
-                AvailableBuildings = buildings,
-                BuildingDeck = new BuildingDeck
+                Buildings = new BuildingsState()
                 {
-                    Deck = buildings,
-                    ShufflingRandom = seedRandom.NextRandom(),
+                    Clusters = new List<Cluster>(),
+                    All = buildingBlueprints,
+                    Deck = deck,
+                    ShufflingRandom = CreateRandomArray(seedRandom, GameState.TotalActs),
                 },
                 AvailableBoosters = BoosterList.Get(),
                 HandSize = handSize,

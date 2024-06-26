@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using RogueIslands.Boosters;
 using RogueIslands.Buildings;
 using RogueIslands.GameEvents;
@@ -28,10 +29,10 @@ namespace RogueIslands
         public IGameEvent CurrentEvent;
         public ScoringState ScoringState;
 
-        public List<Cluster> Clusters = new();
-        public List<Building> BuildingsInHand = new();
-        public BuildingDeck BuildingDeck;
-        public List<Building> AvailableBuildings;
+        public BuildingsState Buildings;
+        public List<Cluster> Clusters => Buildings.Clusters;
+        public IEnumerable<Building> BuildingsInHand => Buildings.Deck.Skip(Buildings.HandPointer).Take(HandSize);
+        public BuildingsState BuildingDeck => Buildings;
 
         public int MaxBoosters = 5;
         public List<BoosterCard> Boosters = new();
