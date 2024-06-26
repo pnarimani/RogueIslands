@@ -14,9 +14,12 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {
-            var description = (ProbabilityDescription)value;
-            if (description != null)
-                emitter.Emit(new Scalar(new TagName("!" + nameof(ProbabilityDescription)), description.Format));
+            var description = (ProbabilityDescription)value!;
+            var tagName = new TagName("!" + nameof(ProbabilityDescription));
+            emitter.Emit(new MappingStart(AnchorName.Empty, tagName, false, MappingStyle.Flow));
+            emitter.Emit(new Scalar("Format"));
+            emitter.Emit(new Scalar(description.Format));
+            emitter.Emit(new MappingEnd());
         }
     }
 }

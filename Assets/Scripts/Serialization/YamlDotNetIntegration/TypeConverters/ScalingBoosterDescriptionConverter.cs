@@ -15,9 +15,12 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {
-            var description = (ScalingBoosterDescription)value;
-            if (description != null)
-                emitter.Emit(new Scalar(new TagName("!" + nameof(ScalingBoosterDescription)), description.Prefix));
+            var description = (ScalingBoosterDescription)value!;
+            var tagName = new TagName("!" + nameof(ScalingBoosterDescription));
+            emitter.Emit(new MappingStart(AnchorName.Empty, tagName, false, MappingStyle.Flow));
+            emitter.Emit(new Scalar("Prefix"));
+            emitter.Emit(new Scalar(description.Prefix));
+            emitter.Emit(new MappingEnd());
         }
     }
 }

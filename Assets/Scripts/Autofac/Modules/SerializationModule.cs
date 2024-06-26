@@ -20,7 +20,7 @@ namespace RogueIslands.Autofac.Modules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterInstance(new Cloner()).AsImplementedInterfaces().SingleInstance();
-            RegisterJson(builder);
+            RegisterYaml(builder);
         }
 
         private static void RegisterJson(ContainerBuilder builder)
@@ -48,7 +48,6 @@ namespace RogueIslands.Autofac.Modules
                     jsonSerializer.Converters.Add(converter);
 
                 return new NewtonsoftJsonProxy(jsonSerializer);
-                
             }).AsImplementedInterfaces().SingleInstance();
         }
 
@@ -79,26 +78,53 @@ namespace RogueIslands.Autofac.Modules
             {
                 var serializerBuilder = new SerializerBuilder()
                     .WithNamingConvention(PascalCaseNamingConvention.Instance)
-                    .EnsureRoundtrip();
+                    .EnsureRoundtrip()
+                    .WithIndentedSequences()
+                    .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull);
 
                 var deserializerBuilder = new DeserializerBuilder()
                     .WithNamingConvention(PascalCaseNamingConvention.Instance);
 
-                foreach (var type in types)
+                RegisterTypeTags(types, serializerBuilder, deserializerBuilder);
+                RegisterTypeConverters(c, serializerBuilder, deserializerBuilder);
+                return new YamlDotNetProxy(serializerBuilder.Build(), deserializerBuilder.Build());
+                
+            }).AsImplementedInterfaces().SingleInstance();
+        }
+
+        private static void RegisterTypeConverters(IComponentContext c, SerializerBuilder serializerBuilder,
+            DeserializerBuilder deserializerBuilder)
+        {
+            foreach (var converter in c.Resolve<IReadOnlyList<IYamlTypeConverter>>())
+            {
+                serializerBuilder.WithTypeConverter(converter);
+                deserializerBuilder.WithTypeConverter(converter);
+            }
+        }
+
+        private static void RegisterTypeTags(Type[] types, SerializerBuilder serializerBuilder,
+            DeserializerBuilder deserializerBuilder)
+        {
+            var typeGrouping = types.GroupBy(t => t.FullName!.Replace(t.Namespace! + ".", ""));
+            foreach (var group in typeGrouping)
+            {
+                if (group.Count() > 1)
                 {
-                    var tag = "!" + type.FullName!.Replace(type.Namespace! + ".", "");
+                    foreach (var type in group)
+                    {
+                        var tag = "!" + type.FullName;
+                        serializerBuilder.WithTagMapping(tag, type);
+                        deserializerBuilder.WithTagMapping(tag, type);
+                    }
+                }
+                else
+                {
+                    var type = group.First();
+                    var tag = "!" + group.Key;
                     serializerBuilder.WithTagMapping(tag, type);
                     deserializerBuilder.WithTagMapping(tag, type);
                 }
-
-                foreach (var converter in c.Resolve<IReadOnlyList<IYamlTypeConverter>>())
-                {
-                    serializerBuilder.WithTypeConverter(converter);
-                    deserializerBuilder.WithTypeConverter(converter);
-                }
-
-                return new YamlDotNetProxy(serializerBuilder.Build(), deserializerBuilder.Build());
-            }).AsImplementedInterfaces().SingleInstance();
+            }
         }
     }
 }

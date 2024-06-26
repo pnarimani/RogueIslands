@@ -14,9 +14,12 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {
-            var description = (LiteralDescription)value;
-            if (description != null)
-                emitter.Emit(new Scalar(new TagName("!" + nameof(LiteralDescription)), description.Text));
+            var description = (LiteralDescription)value!;
+            var tagName = new TagName("!" + nameof(LiteralDescription));
+            emitter.Emit(new MappingStart(AnchorName.Empty, tagName, false, MappingStyle.Flow));
+            emitter.Emit(new Scalar("Value"));
+            emitter.Emit(new Scalar(description.Text));
+            emitter.Emit(new MappingEnd());
         }
     }
 }

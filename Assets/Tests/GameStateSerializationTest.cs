@@ -9,17 +9,20 @@ using RogueIslands.Buildings;
 using RogueIslands.DeckBuilding;
 using RogueIslands.GameEvents;
 using RogueIslands.Serialization;
-using UnityEngine;
 using Random = Unity.Mathematics.Random;
 
 namespace Tests
 {
     public class GameStateSerializationTest
     {
-        [Test]
-        public void GameState_SerializationIntegrationTest()
+        private GameState _before;
+        private ISerializer _serializer;
+        private IDeserializer _deserializer;
+
+        [SetUp]
+        public void Setup()
         {
-            var before = new GameState
+            _before = new GameState
             {
                 Day = 4,
                 Round = 5,
@@ -111,18 +114,23 @@ namespace Tests
                     All = WorldBoosterList.Get(),
                 },
             };
-            
+
             var builder = new ContainerBuilder();
             builder.RegisterModule<SerializationModule>();
             var container = builder.Build();
-            var serializer = container.Resolve<ISerializer>();
-            var deserializer = container.Resolve<IDeserializer>();
-            
-            var text = serializer.Serialize(before);
-            
-            var after = deserializer.Deserialize<GameState>(text);
+            _serializer = container.Resolve<ISerializer>();
+            _deserializer = container.Resolve<IDeserializer>();
+        }
 
-            after.Should().BeEquivalentTo(before);
+        [Test]
+        [Timeout(1000)]
+        public void GameState_SerializationIntegrationTest()
+        {
+            var text = _serializer.Serialize(_before);
+
+            var after = _deserializer.Deserialize<GameState>(text);
+
+            after.Should().BeEquivalentTo(_before);
         }
     }
 }

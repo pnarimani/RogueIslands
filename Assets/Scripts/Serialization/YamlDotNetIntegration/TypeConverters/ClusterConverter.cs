@@ -22,15 +22,17 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
 
             if (cluster != null)
             {
-                 emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, "cluster.Id", ScalarStyle.DoubleQuoted, false, false));
+                 emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, cluster.Id, ScalarStyle.DoubleQuoted, false, true));
                  
-                 emitter.Emit(new SequenceStart(AnchorName.Empty, new TagName("Namedfdf"), isImplicit: true, SequenceStyle.Block));
+                 // emitter.Emit(new MappingStart());
+                 emitter.Emit(new SequenceStart(AnchorName.Empty, TagName.Empty, isImplicit: true, SequenceStyle.Block));
                  foreach (var building in cluster.Buildings)
                  {
-                     emitter.Emit(new Scalar(TagName.Empty, building.Id.Value.ToString()));
-                     // emitter.Emit(new AnchorAlias(new AnchorName("building " + building.Id.Value)));
+                     // emitter.Emit(new Scalar(TagName.Empty, building.Id.Value.ToString()));
+                     emitter.Emit(new AnchorAlias(new AnchorName("building " + building.Id.Value)));
                  }
                  emitter.Emit(new SequenceEnd());
+                 // emitter.Emit(new MappingEnd());
             }
 
             // emitter.Emit(new Scalar("Buildings"));

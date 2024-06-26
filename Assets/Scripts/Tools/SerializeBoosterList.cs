@@ -27,13 +27,19 @@ namespace RogueIslands.Tools
         {
             if (GUILayout.Button("Serialize"))
             {
-                var list = BoosterList.Get();
+                // var list = BoosterList.Get();
 
                 var builder = new ContainerBuilder();
                 builder.RegisterModule(new SerializationModule());
                 var container = builder.Build();
                 var serializer = container.Resolve<ISerializer>();
-                _text = serializer.SerializePretty(list);
+                var gameState = GameFactory.NewGame(new System.Random());
+                gameState.Clusters.Add(new Cluster
+                {
+                    Id = "A",
+                    Buildings = new List<Building>(gameState.BuildingDeck.Deck),
+                });
+                _text = serializer.SerializePretty(gameState);
             }
 
             _scrollPos = GUILayout.BeginScrollView(_scrollPos);

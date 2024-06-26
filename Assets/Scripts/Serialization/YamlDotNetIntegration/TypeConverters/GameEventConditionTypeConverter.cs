@@ -26,7 +26,6 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
 
         public bool Accepts(Type type)
         {
-            return false;
             return type == typeof(GameEventCondition);
         }
 
@@ -48,15 +47,18 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {
-            emitter.Emit(new MappingStart(AnchorName.Empty, new TagName("!" + nameof(GameEventCondition)), true,
-                MappingStyle.Block));
-            // emitter.Emit(new SequenceStart(AnchorName.Empty, new TagName("!" + nameof(GameEventCondition)), true, SequenceStyle.Block));
-            foreach (var eventType in ((GameEventCondition)value).TriggeringEvents)
+            var tagName = new TagName("!" + nameof(GameEventCondition));
+            emitter.Emit(new MappingStart(AnchorName.Empty, tagName, false, MappingStyle.Block));
+
+            emitter.Emit(new Scalar("TriggeringEvents"));
+
+            emitter.Emit(new SequenceStart(AnchorName.Empty, TagName.Empty, isImplicit: true, SequenceStyle.Block));
+            foreach (var eventType in ((GameEventCondition)value!).TriggeringEvents)
             {
                 emitter.Emit(new Scalar(_typeToName[eventType]));
             }
 
-            // emitter.Emit(new SequenceEnd());
+            emitter.Emit(new SequenceEnd());
             emitter.Emit(new MappingEnd());
         }
     }
