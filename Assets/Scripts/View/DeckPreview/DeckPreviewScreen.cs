@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using RogueIslands.Buildings;
+using RogueIslands.View.DeckBuilding;
 using UnityEngine;
 using UnityEngine.UI;
 

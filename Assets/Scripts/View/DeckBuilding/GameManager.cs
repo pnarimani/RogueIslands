@@ -12,10 +12,9 @@ using RogueIslands.View.RoundSelection;
 using RogueIslands.View.Shop;
 using RogueIslands.View.Win;
 using UnityEngine;
-using Object = UnityEngine.Object;
 using Random = Unity.Mathematics.Random;
 
-namespace RogueIslands.View
+namespace RogueIslands.View.DeckBuilding
 {
     public class GameManager : SingletonMonoBehaviour<GameManager>, IGameView, IDisposable
     {
@@ -219,6 +218,8 @@ namespace RogueIslands.View
 
         public bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, ref Random positionRandom, out Vector3 point) =>
             WorldBoosterSpawnPointProvider.TryGet(blueprint, ref positionRandom, out point);
+
+        public IDeckBuildingView GetDeckBuildingView() => DeckBuildingView.Instance;
 
         public void ShowSettingsPopup()
         {

@@ -3,6 +3,7 @@ using System.Linq;
 using IngameDebugConsole;
 using RogueIslands.Boosters;
 using RogueIslands.View;
+using RogueIslands.View.DeckBuilding;
 
 namespace RogueIslands.Debug
 {

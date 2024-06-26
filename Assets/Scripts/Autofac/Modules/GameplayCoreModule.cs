@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Autofac;
 using RogueIslands.Boosters;
 using RogueIslands.Boosters.Executors;
+using RogueIslands.DeckBuilding;
 using RogueIslands.Rollback;
 using RogueIslands.Serialization.DeepClone;
 
@@ -41,6 +42,7 @@ namespace RogueIslands.Autofac.Modules
             builder.RegisterType<BoosterManagement>().SingleInstance();
             builder.RegisterType<ResetController>().SingleInstance();
             builder.RegisterType<WorldBoosterGeneration>().SingleInstance();
+            builder.RegisterType<DeckBuildingController>().SingleInstance();
         }
     }
 }

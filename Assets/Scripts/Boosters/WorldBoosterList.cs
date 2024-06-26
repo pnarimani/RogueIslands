@@ -174,6 +174,13 @@ namespace RogueIslands.Boosters
                         },
                     },
                 },
+                new()
+                {
+                    Name = "Lava",
+                    Description = new LiteralDescription("Permanently destroys all buildings in range and then destroys itself at the end of the day."),
+                    Range = 5,
+                    PrefabAddress = "WorldBoosters/Lava",
+                },
             };
         }
     }

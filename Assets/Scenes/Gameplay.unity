@@ -1890,6 +1890,7 @@ MonoBehaviour:
   _useRandomSeed: 1
   _seed: 22
   _gameManagerPrefab: {fileID: 4044781393638143488, guid: aba4ad29692874b41bc990e1699c9f8b, type: 3}
+  _deckBuildingView: {fileID: 559864171464056225, guid: 7a54314496511094497ddcaa92c09a03, type: 3}
 --- !u!4 &768251863
 Transform:
   m_ObjectHideFlags: 0

@@ -13,7 +13,8 @@ namespace RogueIslands
         {
             var buildingBlueprints = DefaultBuildingsList.Get();
             var deck = DefaultBuildingsList.Get();
-            deck.Shuffle(seedRandom.NextRandom());
+            var initialShuffleRandom = seedRandom.NextRandom();
+            deck.Shuffle(ref initialShuffleRandom);
             foreach (var building in deck)
             {
                 building.Id = new BuildingId((uint)Guid.NewGuid().GetHashCode());
@@ -50,6 +51,7 @@ namespace RogueIslands
                     BoosterSpawn = seedRandom.CreateRandomArray(GameState.TotalActs),
                     CardPackSpawn = seedRandom.CreateRandomArray(GameState.TotalActs),
                     BoosterAntiDuplicate = seedRandom.CreateRandomArray(GameState.TotalActs),
+                    SelectionRandom = seedRandom.CreateRandomArray(GameState.TotalActs),
                     CardCount = 2,
                     ItemsForSale = new IPurchasableItem[2],
                 },

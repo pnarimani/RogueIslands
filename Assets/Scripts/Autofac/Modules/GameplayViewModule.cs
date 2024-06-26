@@ -3,16 +3,19 @@ using System.Diagnostics;
 using Autofac;
 using AutofacUnity;
 using RogueIslands.View;
+using RogueIslands.View.DeckBuilding;
 using UnityEngine;
 
 namespace RogueIslands.Autofac.Modules
 {
     public class GameplayViewModule : Module
     {
-        private GameManager _gameManagerPrefab;
+        private readonly GameManager _gameManagerPrefab;
+        private readonly DeckBuildingView _deckBuildingView;
 
-        public GameplayViewModule(GameManager gameManagerPrefab)
+        public GameplayViewModule(GameManager gameManagerPrefab, DeckBuildingView deckBuildingView)
         {
+            _deckBuildingView = deckBuildingView;
             _gameManagerPrefab = gameManagerPrefab;
         }
         
@@ -44,6 +47,15 @@ namespace RogueIslands.Autofac.Modules
                         m.Context.Resolve<GameState>(),
                         m.Context.Resolve<PlayController>()
                     );
+                })
+                .AsSelf()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            
+            builder.Register(_ => Object.Instantiate(_deckBuildingView))
+                .AutoActivate()
+                .OnActivated(m =>
+                {
                 })
                 .AsSelf()
                 .AsImplementedInterfaces()

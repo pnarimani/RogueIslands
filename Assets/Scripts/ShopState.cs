@@ -9,6 +9,7 @@ namespace RogueIslands
         public float RerollIncreaseRate = 1.5f;
         public int CardCount = 2;
         public IPurchasableItem[] ItemsForSale;
+        public Random[] SelectionRandom;
         public Random[] BoosterSpawn;
         public Random[] BoosterAntiDuplicate;
         public Random[] CardPackSpawn;

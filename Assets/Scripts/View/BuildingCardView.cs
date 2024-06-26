@@ -2,6 +2,7 @@
 using DG.Tweening;
 using RogueIslands.Buildings;
 using RogueIslands.View.Audio;
+using RogueIslands.View.DeckBuilding;
 using RogueIslands.View.Feedbacks;
 using UnityEngine;
 using UnityEngine.EventSystems;

@@ -1,5 +1,7 @@
 ﻿using RogueIslands.Boosters;
+using RogueIslands.DeckBuilding;
 using RogueIslands.View.Boosters;
+using RogueIslands.View.DeckBuilding;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +12,7 @@ namespace RogueIslands.View.Shop
     {
         [SerializeField] private ShopItem _itemPrefab;
         [SerializeField] private BoosterCardView _boosterPrefab;
+        [SerializeField] private ConsumableCardView _consumableCardView;
         [SerializeField] private Transform _cardParent;
         [SerializeField] private Button _continue, _reroll;
         [SerializeField] private TextMeshProUGUI _rerollText;
@@ -40,6 +43,9 @@ namespace RogueIslands.View.Shop
                 {
                     case BoosterCard booster:
                         InstantiateBoosterCard(item, booster);
+                        break;
+                    case Consumable consumable:
+                        InstantiateConsumableCard(item, consumable);
                         break;
                 }
                 
@@ -86,6 +92,13 @@ namespace RogueIslands.View.Shop
         {
             GameManager.Instance.ShowRoundsSelectionScreen();
             Destroy(gameObject);
+        }
+
+        private void InstantiateConsumableCard(ShopItem item, Consumable consumable)
+        {
+            var card = Instantiate(_consumableCardView, item.transform);
+            card.Initialize(consumable);
+            Destroy(card.GetComponent<ConsumableCardView>());
         }
     }
 }

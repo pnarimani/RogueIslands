@@ -42,6 +42,7 @@ namespace RogueIslands
         public List<BoosterCard> AvailableBoosters;
 
         public ShopState Shop;
+        public DeckBuildingState DeckBuilding; 
 
         public GameResult Result;
 

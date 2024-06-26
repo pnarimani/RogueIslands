@@ -6,5 +6,6 @@
         public IDescriptionProvider Description { get; set; }
         public int BuyPrice { get; set; }
         public int SellPrice { get; set; }
+        public DeckAction Action { get; set; }
     }
 }

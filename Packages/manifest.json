@@ -1,15 +1,16 @@
 {
   "dependencies": {
+    "com.coffee.softmask-for-ugui": "https://github.com/mob-sakai/SoftMaskForUGUI.git",
     "com.coffee.ui-particle": "https://github.com/mob-sakai/ParticleEffectForUGUI.git",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
     "com.mnarimani.autoassigner": "https://github.com/pnarimani/AutoAssigner.git",
-    "com.coffee.softmask-for-ugui": "https://github.com/mob-sakai/SoftMaskForUGUI.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.cinemachine": "3.1.0",
     "com.unity.collab-proxy": "2.3.1",
     "com.unity.feature.development": "1.0.1",
     "com.unity.nuget.newtonsoft-json": "3.2.1",
+    "com.unity.postprocessing": "3.4.0",
     "com.unity.render-pipelines.universal": "14.0.11",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.6",
