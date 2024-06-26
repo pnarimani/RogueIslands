@@ -10,7 +10,27 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
     {
         public bool Accepts(Type type) => type == typeof(ProbabilityDescription);
 
-        public object ReadYaml(IParser parser, Type type) => new ProbabilityDescription(parser.Consume<Scalar>().Value);
+        public object ReadYaml(IParser parser, Type type)
+        {
+            if (parser.TryConsume(out MappingStart _))
+            {
+                string format = null;
+                while (parser.TryConsume<Scalar>(out var scalar))
+                {
+                    switch (scalar.Value)
+                    {
+                        case "Format":
+                            format = parser.Consume<Scalar>().Value;
+                            break;
+                    }
+                }
+
+                parser.Consume<MappingEnd>();
+                return new ProbabilityDescription(format);
+            }
+
+            return null;
+        }
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {

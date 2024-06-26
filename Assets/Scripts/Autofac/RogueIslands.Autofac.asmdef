@@ -12,6 +12,7 @@
 		"RogueIslands.Serialization.YamlDotNetIntegration",
 		"RogueIslands.Serialization.XML",
 		"RogueIslands.Serialization.JsonNet",
-		"RogueIslands.Serialization.DeepClone"
+		"RogueIslands.Serialization.DeepClone",
+		"RogueIslands.Serialization"
 	]
 }

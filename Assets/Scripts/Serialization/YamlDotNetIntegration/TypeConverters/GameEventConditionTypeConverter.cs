@@ -31,18 +31,30 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
 
         public object ReadYaml(IParser parser, Type type)
         {
-            var types = new List<Type>();
-            parser.Consume<SequenceStart>();
-            while (parser.Current is not SequenceEnd)
+            if (parser.TryConsume(out MappingStart _))
             {
-                var scalar = parser.Consume<Scalar>();
-                types.Add(_nameToType[scalar.Value]);
+                var events = new List<Type>();
+                while (parser.TryConsume(out Scalar scalar))
+                {
+                    switch (scalar.Value)
+                    {
+                        case "TriggeringEvents":
+                            parser.Consume<SequenceStart>();
+                            while (!parser.TryConsume<SequenceEnd>(out _))
+                            {
+                                var eventType = _nameToType[parser.Consume<Scalar>().Value];
+                                events.Add(eventType);
+                            }
+
+                            break;
+                    }
+                }
+
+                parser.Consume<MappingEnd>();
+                return new GameEventCondition() { TriggeringEvents = events };
             }
 
-            return new GameEventCondition()
-            {
-                TriggeringEvents = types,
-            };
+            return null;
         }
 
         public void WriteYaml(IEmitter emitter, object value, Type type)

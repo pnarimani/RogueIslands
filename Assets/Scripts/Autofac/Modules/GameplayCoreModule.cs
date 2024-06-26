@@ -4,6 +4,7 @@ using Autofac;
 using RogueIslands.Boosters;
 using RogueIslands.Boosters.Executors;
 using RogueIslands.Rollback;
+using RogueIslands.Serialization.DeepClone;
 
 namespace RogueIslands.Autofac.Modules
 {
@@ -15,6 +16,8 @@ namespace RogueIslands.Autofac.Modules
 
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterInstance(new Cloner()).AsImplementedInterfaces().SingleInstance();
+            
             builder.RegisterInstance(_seed);
             
             builder.Register(c => new Random(_seed.Value.GetHashCode()))

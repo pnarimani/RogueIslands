@@ -30,7 +30,7 @@ namespace RogueIslands.Tools
                 // var list = BoosterList.Get();
 
                 var builder = new ContainerBuilder();
-                builder.RegisterModule(new SerializationModule());
+                builder.RegisterModule(new YamlSerializationModule());
                 var container = builder.Build();
                 var serializer = container.Resolve<ISerializer>();
                 var gameState = GameFactory.NewGame(new System.Random());

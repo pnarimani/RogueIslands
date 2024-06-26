@@ -10,8 +10,27 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
     {
         public bool Accepts(Type type) => type == typeof(ScalingBoosterDescription);
 
-        public object ReadYaml(IParser parser, Type type) =>
-            new ScalingBoosterDescription(parser.Consume<Scalar>().Value);
+        public object ReadYaml(IParser parser, Type type)
+        {
+            if (parser.TryConsume(out MappingStart _))
+            {
+                string prefix = null;
+                while (parser.TryConsume<Scalar>(out var scalar))
+                {
+                    switch (scalar.Value)
+                    {
+                        case "Prefix":
+                            prefix = parser.Consume<Scalar>().Value;
+                            break;
+                    }
+                }
+
+                parser.Consume<MappingEnd>();
+                return new ScalingBoosterDescription(prefix);
+            }
+
+            return null;
+        }
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {

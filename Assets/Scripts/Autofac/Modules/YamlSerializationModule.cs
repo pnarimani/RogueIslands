@@ -9,56 +9,57 @@ using RogueIslands.Serialization.JsonNet;
 using RogueIslands.Serialization.XML;
 using RogueIslands.Serialization.YamlDotNetIntegration;
 using RogueIslands.Serialization.DeepClone;
+using RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters;
+using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using Module = Autofac.Module;
 
 namespace RogueIslands.Autofac.Modules
 {
-    public class SerializationModule : Module
+    public class YamlSerializationModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterInstance(new Cloner()).AsImplementedInterfaces().SingleInstance();
             RegisterYaml(builder);
-        }
-
-        private static void RegisterJson(ContainerBuilder builder)
-        {
-            var converterTypes = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .SelectMany(x => x.GetTypes())
-                .Where(x =>
-                    !x.IsAbstract &&
-                    x.GetCustomAttribute<CompilerGeneratedAttribute>() == null &&
-                    typeof(JsonConverter).IsAssignableFrom(x)
-                ).ToArray();
-
-            builder.RegisterTypes(converterTypes).As<JsonConverter>();
-
-            builder.Register(c =>
-            {
-                var jsonSerializer = new JsonSerializer
-                {
-                    TypeNameHandling = TypeNameHandling.Auto,
-                    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                };
-
-                foreach (var converter in c.Resolve<IReadOnlyList<JsonConverter>>())
-                    jsonSerializer.Converters.Add(converter);
-
-                return new NewtonsoftJsonProxy(jsonSerializer);
-            }).AsImplementedInterfaces().SingleInstance();
-        }
-
-        private static void RegisterXML(ContainerBuilder builder)
-        {
-            builder.RegisterType<XmlProxy>().AsImplementedInterfaces().SingleInstance();
         }
 
         private static void RegisterYaml(ContainerBuilder builder)
         {
-            var types = AppDomain.CurrentDomain
+            var types = GetProjectTypes();
+            
+            RegisterTypeConverters(builder, types);
+
+            builder.Register(c =>
+            {
+                var serializerBuilder = new SerializerBuilder()
+                    .WithNamingConvention(PascalCaseNamingConvention.Instance)
+                    .EnsureRoundtrip()
+                    .WithIndentedSequences()
+                    .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitDefaults);
+
+                var deserializerBuilder = new DeserializerBuilder()
+                    .WithNamingConvention(PascalCaseNamingConvention.Instance)
+                    .WithNodeTypeResolver(new ReadOnlyCollectionNodeTypeResolver());
+
+                RegisterTypeTags(types, serializerBuilder, deserializerBuilder);
+                AddTypeConvertersToSerializer(c, serializerBuilder, deserializerBuilder);
+
+                var valueSerializer = serializerBuilder.BuildValueSerializer();
+                var valueDeserializer = deserializerBuilder.BuildValueDeserializer();
+                
+                return new YamlDotNetProxy(
+                    Serializer.FromValueSerializer(valueSerializer, EmitterSettings.Default), 
+                    Deserializer.FromValueDeserializer(valueDeserializer), 
+                    valueSerializer,
+                    valueDeserializer
+                );
+            }).AsImplementedInterfaces().AsSelf().SingleInstance();
+        }
+
+        private static Type[] GetProjectTypes()
+        {
+            return AppDomain.CurrentDomain
                 .GetAssemblies()
                 .SelectMany(x => x.GetTypes())
                 .Where(x =>
@@ -68,31 +69,26 @@ namespace RogueIslands.Autofac.Modules
                     x.GetCustomAttribute<CompilerGeneratedAttribute>() == null
                 )
                 .ToArray();
-
-            foreach (var converter in types.Where(t => typeof(IYamlTypeConverter).IsAssignableFrom(t)))
-            {
-                builder.RegisterType(converter).AsImplementedInterfaces();
-            }
-
-            builder.Register(c =>
-            {
-                var serializerBuilder = new SerializerBuilder()
-                    .WithNamingConvention(PascalCaseNamingConvention.Instance)
-                    .EnsureRoundtrip()
-                    .WithIndentedSequences()
-                    .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull);
-
-                var deserializerBuilder = new DeserializerBuilder()
-                    .WithNamingConvention(PascalCaseNamingConvention.Instance);
-
-                RegisterTypeTags(types, serializerBuilder, deserializerBuilder);
-                RegisterTypeConverters(c, serializerBuilder, deserializerBuilder);
-                return new YamlDotNetProxy(serializerBuilder.Build(), deserializerBuilder.Build());
-                
-            }).AsImplementedInterfaces().SingleInstance();
         }
 
-        private static void RegisterTypeConverters(IComponentContext c, SerializerBuilder serializerBuilder,
+        private static void RegisterTypeConverters(ContainerBuilder builder, Type[] types)
+        {
+            foreach (var converter in types.Where(t => typeof(IYamlTypeConverter).IsAssignableFrom(t)))
+            {
+                builder.RegisterType(converter)
+                    .AsImplementedInterfaces()
+                    .OnActivated(c =>
+                    {
+                        if (c.Instance is IRequireYamlSerializer requireYamlSerializer)
+                            requireYamlSerializer.SetSerializer(
+                                c.Context.Resolve<YamlDotNetProxy>().valueSerializer,
+                                c.Context.Resolve<YamlDotNetProxy>().valueDeserializer
+                            );
+                    });
+            }
+        }
+
+        private static void AddTypeConvertersToSerializer(IComponentContext c, SerializerBuilder serializerBuilder,
             DeserializerBuilder deserializerBuilder)
         {
             foreach (var converter in c.Resolve<IReadOnlyList<IYamlTypeConverter>>())

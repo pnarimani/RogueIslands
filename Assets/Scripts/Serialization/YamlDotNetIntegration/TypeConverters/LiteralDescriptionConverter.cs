@@ -10,7 +10,27 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
     {
         public bool Accepts(Type type) => type == typeof(LiteralDescription);
 
-        public object ReadYaml(IParser parser, Type type) => new LiteralDescription(parser.Consume<Scalar>().Value);
+        public object ReadYaml(IParser parser, Type type)
+        {
+            if (parser.TryConsume(out MappingStart _))
+            {
+                string text = null;
+                while (parser.TryConsume<Scalar>(out var scalar))
+                {
+                    switch (scalar.Value)
+                    {
+                        case "Value":
+                            text = parser.Consume<Scalar>().Value;
+                            break;
+                    }
+                }
+
+                parser.Consume<MappingEnd>();
+                return new LiteralDescription(text);
+            }
+
+            return null;
+        }
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {

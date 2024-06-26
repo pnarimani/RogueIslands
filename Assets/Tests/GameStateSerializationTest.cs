@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
@@ -54,7 +55,10 @@ namespace Tests
                 },
                 ScoringState = null,
                 Clusters = new List<Cluster>()
-                    { new Cluster() { Buildings = DefaultBuildingsList.Get() } },
+                {
+                    new Cluster() { Buildings = DefaultBuildingsList.Get() },
+                    new Cluster() { Id = Guid.NewGuid().ToString(), Buildings = DefaultBuildingsList.Get() },
+                },
                 BuildingsInHand = DefaultBuildingsList.Get(),
                 BuildingDeck = new BuildingDeck
                 {
@@ -116,7 +120,7 @@ namespace Tests
             };
 
             var builder = new ContainerBuilder();
-            builder.RegisterModule<SerializationModule>();
+            builder.RegisterModule<YamlSerializationModule>();
             var container = builder.Build();
             _serializer = container.Resolve<ISerializer>();
             _deserializer = container.Resolve<IDeserializer>();
