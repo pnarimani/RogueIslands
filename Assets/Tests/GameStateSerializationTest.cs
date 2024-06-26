@@ -31,6 +31,7 @@ namespace Tests
             foreach (var b in inGameBuildings)
             {
                 b.Id = new BuildingId((uint)Guid.NewGuid().GetHashCode());
+                b.ClusterId = new ClusterId((uint)Guid.NewGuid().GetHashCode());
             }
 
             var defaultBoosters = BoosterList.Get();
@@ -76,19 +77,6 @@ namespace Tests
                     ShufflingRandom = new Random[]
                     {
                         Random.CreateFromIndex(23),
-                    },
-                    Clusters = new List<Cluster>()
-                    {
-                        new Cluster()
-                        {
-                            Buildings = inGameBuildings
-                        },
-                        new Cluster()
-                        {
-                            Id = Guid.NewGuid()
-                                .ToString(),
-                            Buildings = inGameBuildings,
-                        },
                     },
                     Deck = inGameBuildings ,
                     HandPointer = 0,

@@ -27,7 +27,6 @@ namespace RogueIslands
                 CurrentEvent = new ActStart(),
                 Buildings = new BuildingsState()
                 {
-                    Clusters = new List<Cluster>(),
                     All = buildingBlueprints,
                     Deck = deck,
                     ShufflingRandom = CreateRandomArray(seedRandom, GameState.TotalActs),

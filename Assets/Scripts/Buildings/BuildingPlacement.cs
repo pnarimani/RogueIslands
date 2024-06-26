@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using RogueIslands.GameEvents;
-using RogueIslands.Serialization;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace RogueIslands.Buildings
 {
@@ -27,24 +23,13 @@ namespace RogueIslands.Buildings
 
         private static void PlaceBuildingInIsland(GameState state, Building building)
         {
-            if (state.GetClusterForBuilding(building) is { Count: > 0 } islands)
+            if (state.TryGetClusterIdForBuilding(building, out var id))
             {
-                if (islands.Count == 1)
-                {
-                    islands[0].Buildings.Add(building);
-                }
-                else
-                {
-                    MergeIslands(state, islands, building);
-                }
+                building.ClusterId = id;
             }
             else
             {
-                state.Clusters.Add(new Cluster()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Buildings = new List<Building> { building },
-                });
+                building.ClusterId = new ClusterId(Guid.NewGuid().GetHashCode());
             }
         }
 
@@ -66,45 +51,27 @@ namespace RogueIslands.Buildings
             }
         }
 
-        private static void MergeIslands(GameState state, List<Cluster> islands, Building building)
+        private static bool TryGetClusterIdForBuilding(this GameState state, Building building, out ClusterId id)
         {
-            var buildings = islands
-                .SelectMany(island => island.Buildings)
-                .Append(building);
-
-            foreach (var island in islands)
-                state.Clusters.Remove(island);
-
-            state.Clusters.Add(new Cluster()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Buildings = buildings.ToList(),
-            });
+            return TryGetClusterIdAtPosition(state, building.Position, building.Range, out id);
         }
 
-        public static List<Cluster> GetClusterForBuilding(this GameState state, Building building)
+        private static bool TryGetClusterIdAtPosition(this GameState state, Vector3 position, float range,
+            out ClusterId id)
         {
-            return GetClusterAtPosition(state, building.Position, building.Range);
-        }
-
-        public static List<Cluster> GetClusterAtPosition(this GameState state, Vector3 position, float range)
-        {
-            var islands = new List<Cluster>();
-            foreach (var island in state.Clusters)
+            foreach (var other in state.PlacedDownBuildings)
             {
-                foreach (var other in island)
+                var distance = Vector3.Distance(other.Position, position);
+                var biggestRange = Math.Max(other.Range, range);
+                if (distance < biggestRange)
                 {
-                    var distance = Vector3.Distance(other.Position, position);
-                    var biggestRange = Math.Max(other.Range, range);
-                    if (distance < biggestRange)
-                    {
-                        islands.Add(island);
-                        break;
-                    }
+                    id = other.ClusterId;
+                    return true;
                 }
             }
 
-            return islands;
+            id = default;
+            return false;
         }
     }
 }

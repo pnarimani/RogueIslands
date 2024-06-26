@@ -12,7 +12,7 @@ namespace RogueIslands.Boosters.Evaluators
         protected override bool Evaluate(GameState state, IBooster booster, ColorCheckCondition condition)
         {
             _existingColors.Clear();
-            foreach (var tag in state.Clusters.SelectMany(x => x).Select(b => b.Color))
+            foreach (var tag in state.PlacedDownBuildings.Select(b => b.Color))
                 _existingColors.Add(tag);
 
             if (condition.ForcedColors != null)

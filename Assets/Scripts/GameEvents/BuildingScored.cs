@@ -1,9 +1,10 @@
-﻿using RogueIslands.Buildings;
+﻿using System.Collections.Generic;
+using RogueIslands.Buildings;
 
 namespace RogueIslands.GameEvents
 {
     public class BuildingScored : BuildingEvent
     {
-        public Cluster Cluster { get; set; }
+        public List<Building> Cluster { get; set; }
     }
 }

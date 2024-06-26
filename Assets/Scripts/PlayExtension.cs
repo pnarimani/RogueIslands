@@ -1,4 +1,5 @@
-﻿using RogueIslands.Boosters;
+﻿using System.Linq;
+using RogueIslands.Boosters;
 using RogueIslands.Buildings;
 using RogueIslands.GameEvents;
 using RogueIslands.Rollback;
@@ -15,7 +16,7 @@ namespace RogueIslands
                 return false;
             if (state.Result != GameResult.InProgress)
                 return false;
-            if (state.Clusters.Count == 0)
+            if (!state.PlacedDownBuildings.Any())
                 return false;
             return true;
         }
@@ -111,7 +112,6 @@ namespace RogueIslands
             state.ShuffleDeck();
             state.CurrentScore = 0;
             state.Day = 0;
-            state.Clusters.Clear();
             
             state.ExecuteEvent(view, new RoundStart());
             

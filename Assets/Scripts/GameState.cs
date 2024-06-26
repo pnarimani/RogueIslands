@@ -30,9 +30,12 @@ namespace RogueIslands
         public ScoringState ScoringState;
 
         public BuildingsState Buildings;
-        public List<Cluster> Clusters => Buildings.Clusters;
-        public IEnumerable<Building> BuildingsInHand => Buildings.Deck.Skip(Buildings.HandPointer).Take(HandSize);
-        public BuildingsState BuildingDeck => Buildings;
+        public IEnumerable<Building> BuildingsInHand => Buildings.Deck
+            .Skip(Buildings.HandPointer)
+            .Take(HandSize)
+            .Where(b => !b.IsPlacedDown());
+        public IEnumerable<Building> PlacedDownBuildings => Buildings.Deck
+            .Where(b => b.IsPlacedDown());
 
         public int MaxBoosters = 5;
         public List<BoosterCard> Boosters = new();

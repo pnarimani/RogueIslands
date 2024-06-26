@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -129,7 +130,7 @@ namespace RogueIslands.View
         public IBoosterView GetBooster(IBooster booster)
             => FindObjectsByType<BoosterView>(FindObjectsSortMode.None).FirstOrDefault(b => Equals(b.Data, booster));
 
-        public async void HighlightIsland(Cluster cluster)
+        public async void HighlightIsland(List<Building> cluster)
         {
             var wait = AnimationScheduler.GetAnimationTime();
             AnimationScheduler.AllocateTime(0.4f);
@@ -149,7 +150,7 @@ namespace RogueIslands.View
             }
         }
 
-        public async void LowlightIsland(Cluster cluster)
+        public async void LowlightIsland(List<Building> cluster)
         {
             var wait = AnimationScheduler.GetAnimationTime();
             AnimationScheduler.AllocateTime(0.4f);

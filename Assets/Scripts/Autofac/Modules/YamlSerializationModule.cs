@@ -13,6 +13,7 @@ using RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
+using YamlDotNet.Serialization.ObjectGraphVisitors;
 using Module = Autofac.Module;
 
 namespace RogueIslands.Autofac.Modules
@@ -27,7 +28,7 @@ namespace RogueIslands.Autofac.Modules
         private static void RegisterYaml(ContainerBuilder builder)
         {
             var types = GetProjectTypes();
-            
+
             RegisterTypeConverters(builder, types);
 
             builder.Register(c =>
@@ -47,10 +48,10 @@ namespace RogueIslands.Autofac.Modules
 
                 var valueSerializer = serializerBuilder.BuildValueSerializer();
                 var valueDeserializer = deserializerBuilder.BuildValueDeserializer();
-                
+
                 return new YamlDotNetProxy(
-                    Serializer.FromValueSerializer(valueSerializer, EmitterSettings.Default), 
-                    Deserializer.FromValueDeserializer(valueDeserializer), 
+                    Serializer.FromValueSerializer(valueSerializer, EmitterSettings.Default),
+                    Deserializer.FromValueDeserializer(valueDeserializer),
                     valueSerializer,
                     valueDeserializer
                 );
@@ -76,15 +77,7 @@ namespace RogueIslands.Autofac.Modules
             foreach (var converter in types.Where(t => typeof(IYamlTypeConverter).IsAssignableFrom(t)))
             {
                 builder.RegisterType(converter)
-                    .AsImplementedInterfaces()
-                    .OnActivated(c =>
-                    {
-                        if (c.Instance is IRequireYamlSerializer requireYamlSerializer)
-                            requireYamlSerializer.SetSerializer(
-                                c.Context.Resolve<YamlDotNetProxy>().valueSerializer,
-                                c.Context.Resolve<YamlDotNetProxy>().valueDeserializer
-                            );
-                    });
+                    .AsImplementedInterfaces();
             }
         }
 
@@ -117,8 +110,10 @@ namespace RogueIslands.Autofac.Modules
                 {
                     var type = group.First();
                     var tag = "!" + group.Key;
+                    var fullTag = "!" + type.FullName;
                     serializerBuilder.WithTagMapping(tag, type);
                     deserializerBuilder.WithTagMapping(tag, type);
+                    deserializerBuilder.WithTagMapping(fullTag, type);
                 }
             }
         }

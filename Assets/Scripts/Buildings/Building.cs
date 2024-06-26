@@ -5,6 +5,7 @@ namespace RogueIslands.Buildings
     public class Building : IDescribableItem
     {
         public BuildingId Id;
+        public ClusterId ClusterId;
         public Vector3 Position;
         public Quaternion Rotation;
         public int RemainingTriggers;
@@ -17,5 +18,8 @@ namespace RogueIslands.Buildings
         public double Output;
         public double OutputUpgrade;
         public IDescriptionProvider Description { get; set; }
+
+        public bool IsPlacedDown() 
+            => !ClusterId.IsDefault();
     }
 }

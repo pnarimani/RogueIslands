@@ -14,7 +14,7 @@ namespace RogueIslands.Boosters.Executors
             if (action.MultiplyByDay)
                 multiplier = state.TotalDays - state.Day;
             else if (action.MultiplyByIslandCount)
-                multiplier = state.Clusters.Count;
+                multiplier = state.GetClusters().Count;
             else if (action.MultiplyByUniqueBuildings)
                 multiplier = GetUniqueBuildingCount(state);
             else
@@ -30,7 +30,7 @@ namespace RogueIslands.Boosters.Executors
 
         private static int GetUniqueBuildingCount(GameState state)
         {
-            return state.Clusters.SelectMany(x => x)
+            return state.PlacedDownBuildings
                 .GroupBy(GetHash)
                 .Count();
         }

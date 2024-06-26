@@ -76,7 +76,7 @@ namespace RogueIslands.View
         public void RefreshDeckText()
         {
             var state = GameManager.Instance.State;
-            var total = state.BuildingDeck.Deck.Count;
+            var total = state.Buildings.Deck.Count;
             _deckCardCount.text = $"{total - (state.Day + 1) * state.HandSize}/{total}";
         }
 

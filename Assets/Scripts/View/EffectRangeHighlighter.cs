@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using RogueIslands.Buildings;
 using RogueIslands.View.Boosters;
 using UnityEngine;
 
@@ -9,13 +10,13 @@ namespace RogueIslands.View
         public static void HighlightBuilding(BuildingView center)
         {
             var range = center.Data.Range;
-            var clusters = GameManager.Instance.State.Clusters;
+            var clusters = GameManager.Instance.State.GetClusters();
             var buildingViews = Object.FindObjectsOfType<BuildingView>()
                 .ToDictionary(x => x.Data, x => x);
 
             foreach (var cluster in clusters)
             {
-                var closestBuilding = cluster.Buildings
+                var closestBuilding = cluster
                     .Select(x => buildingViews[x])
                     .OrderBy(x => Vector3.SqrMagnitude(center.transform.position - x.transform.position))
                     .FirstOrDefault();

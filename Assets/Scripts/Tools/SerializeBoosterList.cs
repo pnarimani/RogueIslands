@@ -3,6 +3,7 @@ using Autofac;
 using RogueIslands.Serialization;
 using RogueIslands.Autofac.Modules;
 using RogueIslands.Boosters;
+using RogueIslands.Boosters.Descriptions;
 using RogueIslands.Buildings;
 using RogueIslands.DeckBuilding;
 using RogueIslands.GameEvents;
@@ -27,19 +28,34 @@ namespace RogueIslands.Tools
         {
             if (GUILayout.Button("Serialize"))
             {
-                // var list = BoosterList.Get();
+                var building = new Building
+                {
+                    Id = new BuildingId(34),
+                    Position = default,
+                    Rotation = default,
+                    RemainingTriggers = 1,
+                    PrefabAddress = "A",
+                    IconAddress = "B",
+                    Range = 3,
+                    Category = Category.Cat1,
+                    Color = ColorTag.Blue,
+                    Size = BuildingSize.Small,
+                    Output = 34,
+                    OutputUpgrade = 540,
+                    Description = new LiteralDescription("A"),
+                };
+
+                var buildingState = new BuildingsState()
+                {
+                    Deck = new List<Building> { building },
+                    All = new List<Building> { building },
+                };
 
                 var builder = new ContainerBuilder();
                 builder.RegisterModule(new YamlSerializationModule());
                 var container = builder.Build();
                 var serializer = container.Resolve<ISerializer>();
-                var gameState = GameFactory.NewGame(new System.Random());
-                gameState.Clusters.Add(new Cluster
-                {
-                    Id = "A",
-                    Buildings = new List<Building>(gameState.BuildingDeck.Deck),
-                });
-                _text = serializer.SerializePretty(gameState);
+                _text = serializer.SerializePretty(buildingState);
             }
 
             _scrollPos = GUILayout.BeginScrollView(_scrollPos);

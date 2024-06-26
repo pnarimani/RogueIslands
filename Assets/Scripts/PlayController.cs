@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using RogueIslands.Buildings;
 using RogueIslands.GameEvents;
+using UnityEngine.Pool;
 
 namespace RogueIslands
 {
@@ -19,17 +20,15 @@ namespace RogueIslands
 
         public void Play()
         {
-            foreach (var building in _state.Clusters.SelectMany(island => island.Buildings))
+            foreach (var building in _state.Buildings.Deck)
                 building.RemainingTriggers = 1;
 
             _state.ScoringState = new ScoringState();
             _eventController.Execute(new DayStart());
 
-            foreach (var cluster in _state.Clusters) 
-                ProcessCluster(cluster);
-            
+            TriggerPlacedBuildings();
             TriggerBuildingsInHand();
-            
+
             _eventController.Execute(new DayEnd());
 
             _state.CurrentScore += _state.ScoringState.Products * _state.ScoringState.Multiplier;
@@ -41,23 +40,24 @@ namespace RogueIslands
             _state.Validate();
         }
 
-        private void ProcessCluster(Cluster cluster)
+        private void TriggerPlacedBuildings()
         {
-            foreach (var building in cluster.Buildings)
+            foreach (var cluster in _state.GetClusters())
             {
-                BuildingScored buildingEvent = new()
+                foreach (var building in cluster)
                 {
-                    Cluster = cluster,
-                    Building = building,
-                };
+                    BuildingScored buildingEvent = new()
+                    {
+                        Cluster = cluster,
+                        Building = building,
+                    };
 
-                var buildingView = _view.GetBuilding(building);
+                    var buildingView = _view.GetBuilding(building);
 
-                while (building.RemainingTriggers > 0) 
-                    TriggerBuilding(building, buildingView, buildingEvent);
+                    while (building.RemainingTriggers > 0)
+                        TriggerBuilding(building, buildingView, buildingEvent);
+                }
             }
-
-            _eventController.Execute(new ClusterScored { Cluster = cluster });
         }
 
         private void TriggerBuilding(Building building, IBuildingView buildingView, BuildingScored buildingScored)
@@ -80,7 +80,7 @@ namespace RogueIslands
 
             foreach (var building in _state.BuildingsInHand)
             {
-                if (_state.Buildings.Clusters.Exists(c => c.Buildings.Contains(building)))
+                if (building.IsPlacedDown())
                     continue;
                 buildingRemainedInHand.Building = building;
                 buildingRemainedInHand.TriggerCount = 1;

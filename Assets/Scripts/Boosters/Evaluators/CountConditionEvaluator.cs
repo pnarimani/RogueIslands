@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using RogueIslands.Boosters.Conditions;
+using RogueIslands.Buildings;
 using RogueIslands.GameEvents;
 using static RogueIslands.Boosters.Conditions.CountCondition;
 
@@ -20,8 +21,8 @@ namespace RogueIslands.Boosters.Evaluators
             {
                 var count = condition.TargetType switch
                 {
-                    Target.Buildings => state.Clusters.SelectMany(x => x.Buildings).Count(),
-                    Target.Cluster => state.Clusters.Count,
+                    Target.Buildings => state.PlacedDownBuildings.Count(),
+                    Target.Cluster => state.PlacedDownBuildings.GroupBy(b => b.ClusterId).Count(),
                     Target.BuildingsInScoringIsland => GetBuildingsInScoringCluster(state),
                     Target.BuildingsInAnyIsland => throw new ArgumentOutOfRangeException(),
                     _ => throw new ArgumentOutOfRangeException(),
@@ -43,17 +44,17 @@ namespace RogueIslands.Boosters.Evaluators
         private static int GetBuildingsInScoringCluster(GameState state)
         {
             if (state.CurrentEvent is ClusterScored clusterScored)
-                return clusterScored.Cluster.Buildings.Count;
+                return clusterScored.Cluster.Count;
             if (state.CurrentEvent is BuildingScored buildingScored)
-                return buildingScored.Cluster.Buildings.Count;
+                return buildingScored.Cluster.Count;
             throw new ArgumentException("Current event is not a ClusterScored or BuildingScored event.");
         }
 
         private static bool EvaluateBuildingsInAnyIsland(GameState state, CountCondition condition)
         {
-            foreach (var island in state.Clusters)
+            foreach (var island in state.GetClusters())
             {
-                var count = island.Buildings.Count;
+                var count = island.Count;
                 var meetsCondition = condition.ComparisonMode switch
                 {
                     Mode.Less => count < condition.Value,

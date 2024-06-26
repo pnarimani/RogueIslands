@@ -12,11 +12,9 @@ namespace RogueIslands.Boosters.Executors
             var scoring = booster.GetEventAction<ScoringAction>();
 
             // optimize tag
-            var countInside = state.Clusters
-                .SelectMany(x => x)
+            var countInside = state.PlacedDownBuildings
                 .Count(b => (b.Position - worldBooster.Position).magnitude <= worldBooster.Range);
-            var countOutside = state.Clusters
-                .SelectMany(x => x)
+            var countOutside = state.PlacedDownBuildings
                 .Count(b => (b.Position - worldBooster.Position).magnitude <= worldBooster.Range);
 
             SetBoosterToStartingStats(action, scoring);

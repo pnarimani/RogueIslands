@@ -6,9 +6,9 @@ namespace RogueIslands.Rollback
     {
         public void Restore(GameState backup, GameState current)
         {
-            foreach (var building in current.BuildingDeck.Deck)
+            foreach (var building in current.Buildings.Deck)
             {
-                var backupData = backup.BuildingDeck.Deck.Find(b => AreEqual(b, building));
+                var backupData = backup.Buildings.Deck.Find(b => AreEqual(b, building));
                 if (backupData != null)
                 {
                     building.Range = backupData.Range;

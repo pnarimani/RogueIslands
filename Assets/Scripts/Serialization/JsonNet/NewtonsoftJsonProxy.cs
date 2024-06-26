@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.UnityConverters.Math;
-using RogueIslands.Serialization.JsonNet.Converters;
 
 namespace RogueIslands.Serialization.JsonNet
 {

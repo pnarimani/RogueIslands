@@ -16,7 +16,7 @@ namespace RogueIslands.View.DeckPreview
         {
             _close.onClick.AddListener(() => Destroy(gameObject));
             
-            var deck = GameManager.Instance.State.BuildingDeck.Deck
+            var deck = GameManager.Instance.State.Buildings.Deck
                 .OrderBy(building => building, new BuildingComparer())
                 .ToList();
 

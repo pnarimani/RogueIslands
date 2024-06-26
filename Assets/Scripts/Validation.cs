@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using RogueIslands.Buildings;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace RogueIslands
 {
@@ -11,9 +8,6 @@ namespace RogueIslands
         {
             foreach (var booster in state.Boosters) 
                 Assert.IsFalse(booster.Id.IsDefault());
-            
-            foreach (var building in state.Clusters.SelectMany(x => x))
-                Assert.IsFalse(building.Id.IsDefault());
             
             foreach (var booster in state.AvailableBoosters) 
                 Assert.IsTrue(booster.Id.IsDefault());
