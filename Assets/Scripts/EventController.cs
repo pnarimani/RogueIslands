@@ -6,7 +6,12 @@ using UnityEngine.Pool;
 
 namespace RogueIslands
 {
-    public class EventController
+    public interface IEventController
+    {
+        void Execute<T>(T e) where T : IGameEvent;
+    }
+
+    public class EventController : IEventController
     {
         private readonly GameState _state;
         private readonly GameActionController _gameActionController;

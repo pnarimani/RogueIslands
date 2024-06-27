@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Autofac;
 using RogueIslands.Boosters;
 using RogueIslands.Boosters.Executors;
+using RogueIslands.Buildings;
 using RogueIslands.DeckBuilding;
 using RogueIslands.Rollback;
 using RogueIslands.Serialization.DeepClone;
@@ -32,7 +33,7 @@ namespace RogueIslands.Autofac.Modules
                             .AsSelf();
 
             builder.RegisterType<PlayController>().SingleInstance();
-            builder.RegisterType<EventController>().SingleInstance();
+            builder.RegisterType<EventController>().SingleInstance().AsImplementedInterfaces();
             builder.RegisterType<GameActionController>()
                 .OnActivated(c => c.Instance.SetExecutors(c.Context.Resolve<IReadOnlyList<GameActionExecutor>>()))
                 .SingleInstance();
@@ -42,6 +43,7 @@ namespace RogueIslands.Autofac.Modules
             builder.RegisterType<BoosterManagement>().SingleInstance();
             builder.RegisterType<ResetController>().SingleInstance();
             builder.RegisterType<WorldBoosterGeneration>().SingleInstance();
+            builder.RegisterType<BuildingPlacement>().SingleInstance();
             builder.RegisterType<DeckBuildingController>().SingleInstance();
         }
     }

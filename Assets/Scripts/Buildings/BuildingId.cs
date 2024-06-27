@@ -4,6 +4,8 @@ namespace RogueIslands.Buildings
 {
     public readonly struct BuildingId : IEquatable<BuildingId>
     {
+        private static uint _nextId;
+        
         public readonly uint Value;
 
         public BuildingId(uint value) => Value = value;
@@ -14,5 +16,6 @@ namespace RogueIslands.Buildings
         public static bool operator !=(BuildingId left, BuildingId right) => !left.Equals(right);
 
         public bool IsDefault() => Value == default;
+        public static BuildingId NewBuildingId() => new(++_nextId);
     }
 }

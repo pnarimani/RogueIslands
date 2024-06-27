@@ -36,7 +36,7 @@ namespace RogueIslands.Boosters
                     return;
 
                 var booster = _cloner.Clone(blueprint);
-                booster.Id = new BoosterInstanceId(System.Guid.NewGuid().GetHashCode());
+                booster.Id = BoosterInstanceId.New();
                 booster.Position = point;
                 booster.Rotation = Quaternion.identity;
                 

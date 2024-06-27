@@ -1,77 +1,95 @@
 ﻿using System;
+using System.Collections.Generic;
 using RogueIslands.GameEvents;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace RogueIslands.Buildings
 {
-    public static class BuildingPlacement
+    public class BuildingPlacement
     {
-        public static void PlaceBuilding(this GameState state, IGameView view, Building building, Vector3 position,
-            Quaternion rotation)
+        private readonly GameState _state;
+        private readonly IGameView _view;
+        private readonly IEventController _eventController;
+
+        public BuildingPlacement(GameState state, IGameView view, IEventController eventController)
+        {
+            _eventController = eventController;
+            _view = view;
+            _state = state;
+        }
+
+        public void PlaceBuilding(Building building, Vector3 position, Quaternion rotation)
         {
             building.Position = position;
             building.Rotation = rotation;
 
-            view.SpawnBuilding(building);
+            _view.SpawnBuilding(building);
 
-            RemoveOverlappingWorldBoosters(state, view, building);
+            RemoveOverlappingWorldBoosters(building);
 
-            PlaceBuildingInIsland(state, building);
+            PlaceBuildingInIsland(building);
 
-            state.ExecuteEvent(view, new BuildingPlaced { Building = building });
+            _eventController.Execute(new BuildingPlaced { Building = building });
         }
 
-        private static void PlaceBuildingInIsland(GameState state, Building building)
+        private void PlaceBuildingInIsland(Building building)
         {
-            if (state.TryGetClusterIdForBuilding(building, out var id))
+            using var _ = ListPool<ClusterId>.Get(out var idList);
+            foreach (var other in _state.PlacedDownBuildings)
             {
-                building.ClusterId = id;
+                if (idList.Contains(other.ClusterId))
+                    continue;
+
+                var distance = Vector3.Distance(other.Position, building.Position);
+                var biggestRange = Math.Max(other.Range, building.Range);
+                if (distance < biggestRange)
+                    idList.Add(other.ClusterId);
             }
-            else
+
+            if (idList.Count == 0)
             {
-                building.ClusterId = new ClusterId(Guid.NewGuid().GetHashCode());
+                building.ClusterId = ClusterId.NewClusterId();
+                return;
+            }
+
+            if (idList.Count == 1)
+            {
+                building.ClusterId = idList[0];
+                return;
+            }
+
+            MergeClusters(idList, building);
+        }
+
+        private void MergeClusters(List<ClusterId> existingClusters, Building newBuilding)
+        {
+            var newClusterId = ClusterId.NewClusterId();
+            newBuilding.ClusterId = newClusterId;
+
+            foreach (var building in _state.PlacedDownBuildings)
+            {
+                if(existingClusters.Contains(building.ClusterId))
+                    building.ClusterId = newClusterId;
             }
         }
 
-        private static void RemoveOverlappingWorldBoosters(GameState state, IGameView view, Building building)
+        private void RemoveOverlappingWorldBoosters(Building building)
         {
-            var bounds = view.GetBounds(building);
-            for (var i = state.WorldBoosters.SpawnedBoosters.Count - 1; i >= 0; i--)
+            var bounds = _view.GetBounds(building);
+            for (var i = _state.WorldBoosters.SpawnedBoosters.Count - 1; i >= 0; i--)
             {
-                var wb = state.WorldBoosters.SpawnedBoosters[i];
-                var wbBounds = view.GetBounds(wb);
+                var wb = _state.WorldBoosters.SpawnedBoosters[i];
+                var wbBounds = _view.GetBounds(wb);
                 if (bounds.Intersects(wbBounds))
                 {
-                    state.WorldBoosters.SpawnedBoosters.RemoveAt(i);
+                    _state.WorldBoosters.SpawnedBoosters.RemoveAt(i);
 
-                    state.ExecuteEvent(view, new WorldBoosterDestroyed { Booster = wb });
+                    _eventController.Execute(new WorldBoosterDestroyed { Booster = wb });
 
-                    view.GetBooster(wb).Remove();
+                    _view.GetBooster(wb).Remove();
                 }
             }
-        }
-
-        private static bool TryGetClusterIdForBuilding(this GameState state, Building building, out ClusterId id)
-        {
-            return TryGetClusterIdAtPosition(state, building.Position, building.Range, out id);
-        }
-
-        private static bool TryGetClusterIdAtPosition(this GameState state, Vector3 position, float range,
-            out ClusterId id)
-        {
-            foreach (var other in state.PlacedDownBuildings)
-            {
-                var distance = Vector3.Distance(other.Position, position);
-                var biggestRange = Math.Max(other.Range, range);
-                if (distance < biggestRange)
-                {
-                    id = other.ClusterId;
-                    return true;
-                }
-            }
-
-            id = default;
-            return false;
         }
     }
 }

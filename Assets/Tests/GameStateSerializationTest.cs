@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
-using RogueIslands;
 using RogueIslands.Autofac.Modules;
 using RogueIslands.Boosters;
 using RogueIslands.Buildings;
 using RogueIslands.DeckBuilding;
 using RogueIslands.GameEvents;
 using RogueIslands.Serialization;
-using UnityEngine;
 using Random = Unity.Mathematics.Random;
 
-namespace Tests
+namespace RogueIslands.Tests
 {
     public class GameStateSerializationTest
     {
@@ -30,15 +26,15 @@ namespace Tests
             var inGameBuildings = DefaultBuildingsList.Get();
             foreach (var b in inGameBuildings)
             {
-                b.Id = new BuildingId((uint)Guid.NewGuid().GetHashCode());
-                b.ClusterId = new ClusterId((uint)Guid.NewGuid().GetHashCode());
+                b.Id = BuildingId.NewBuildingId();
+                b.ClusterId = ClusterId.NewClusterId();
             }
 
             var defaultBoosters = BoosterList.Get();
             var inGameBoosters = BoosterList.Get();
             foreach (var b in inGameBoosters)
             {
-                b.Id = new BoosterInstanceId(Guid.NewGuid().GetHashCode());
+                b.Id = BoosterInstanceId.New();
             }
             
             _before = new GameState

@@ -2,13 +2,12 @@
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
-using RogueIslands;
 using RogueIslands.Autofac.Modules;
 using RogueIslands.Boosters.Descriptions;
 using RogueIslands.Buildings;
 using RogueIslands.Serialization;
 
-namespace Tests
+namespace RogueIslands.Tests
 {
     public class SerializationIntegrationTest
     {
@@ -30,7 +29,7 @@ namespace Tests
         {
             var building = new Building
             {
-                Id = new BuildingId(34),
+                Id = BuildingId.NewBuildingId(),
                 Position = default,
                 Rotation = default,
                 RemainingTriggers = 1,

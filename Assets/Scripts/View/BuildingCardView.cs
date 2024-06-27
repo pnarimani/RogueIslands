@@ -15,7 +15,7 @@ namespace RogueIslands.View
         [SerializeField] private RectTransform _animationParent;
         [SerializeField] private Image _colorBg, _colorGradient, _buildingIcon;
         [SerializeField] private LabelFeedback _moneyFeedback, _productFeedback, _multFeedback;
-        
+
         private bool _isSelected;
         private BuildingView _buildingPreview;
         private Transform _originalParent;
@@ -88,17 +88,19 @@ namespace RogueIslands.View
 
         private void OnWorldClicked()
         {
-            if(_buildingPreview == null)
+            if (_buildingPreview == null)
                 return;
-            
+
             InputHandling.Instance.Click -= OnWorldClicked;
 
             if (GameUI.Instance.IsInSpawnRegion(Input.mousePosition) &&
                 BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview.transform))
             {
-                GameManager.Instance.State.PlaceBuilding(GameManager.Instance, Data,
+                StaticResolver.Resolve<BuildingPlacement>().PlaceBuilding(
+                    Data,
                     _buildingPreview.transform.position,
-                    Quaternion.identity);
+                    Quaternion.identity
+                );
 
                 EffectRangeHighlighter.LowlightAll();
 
@@ -119,7 +121,7 @@ namespace RogueIslands.View
             if (_isSelected)
             {
                 _audio.PlayCardSelected();
-                
+
                 _cardListItem.ShouldAnimateToTarget = false;
 
                 transform.DOLocalMoveY(50, 0.2f)
@@ -138,7 +140,7 @@ namespace RogueIslands.View
             else
             {
                 _audio.PlayCardDeselected();
-                
+
                 transform.DOLocalMoveY(-50, 0.2f)
                     .SetRelative(true)
                     .OnComplete(() => _cardListItem.ShouldAnimateToTarget = true);

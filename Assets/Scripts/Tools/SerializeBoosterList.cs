@@ -30,7 +30,7 @@ namespace RogueIslands.Tools
             {
                 var building = new Building
                 {
-                    Id = new BuildingId(34),
+                    Id = BuildingId.NewBuildingId(),
                     Position = default,
                     Rotation = default,
                     RemainingTriggers = 1,

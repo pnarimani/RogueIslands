@@ -11,7 +11,7 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
 
         public object ReadYaml(IParser parser, Type type)
         {
-            return new BoosterInstanceId(int.Parse(parser.Consume<Scalar>().Value));
+            return new BoosterInstanceId(uint.Parse(parser.Consume<Scalar>().Value));
         }
 
         public void WriteYaml(IEmitter emitter, object value, Type type)

@@ -38,7 +38,7 @@ namespace RogueIslands.Boosters
                 return false;
 
             var instance = _cloner.Clone(booster);
-            instance.Id = new BoosterInstanceId(Guid.NewGuid().GetHashCode());
+            instance.Id = BoosterInstanceId.New();
             instance.SellPrice = instance.BuyPrice - 1;
 
             _state.Boosters.Add(instance);

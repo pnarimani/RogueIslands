@@ -17,7 +17,7 @@ namespace RogueIslands
             deck.Shuffle(ref initialShuffleRandom);
             foreach (var building in deck)
             {
-                building.Id = new BuildingId((uint)Guid.NewGuid().GetHashCode());
+                building.Id = BuildingId.NewBuildingId();
             }
 
             const int handSize = 6;
