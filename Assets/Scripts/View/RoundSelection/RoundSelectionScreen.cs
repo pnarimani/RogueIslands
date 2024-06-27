@@ -41,7 +41,7 @@ namespace RogueIslands.View.RoundSelection
 
         private void PlayRound()
         {
-            GameManager.Instance.State.StartRound(GameManager.Instance);
+            StaticResolver.Resolve<RoundController>().StartRound();
 
             Destroy(gameObject);
         }

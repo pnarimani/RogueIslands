@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
+using Autofac.Builder;
 using RogueIslands.Boosters;
 using RogueIslands.Boosters.Executors;
 using RogueIslands.Buildings;
@@ -32,19 +33,26 @@ namespace RogueIslands.Autofac.Modules
                             .SingleInstance()
                             .AsSelf();
 
-            builder.RegisterType<PlayController>().SingleInstance();
-            builder.RegisterType<EventController>().SingleInstance().AsImplementedInterfaces();
-            builder.RegisterType<GameActionController>()
-                .OnActivated(c => c.Instance.SetExecutors(c.Context.Resolve<IReadOnlyList<GameActionExecutor>>()))
-                .SingleInstance();
-            builder.RegisterType<GameConditionsController>()
-                .OnActivated(c => c.Instance.SetEvaluators(c.Context.Resolve<IReadOnlyList<GameConditionEvaluator>>()))
-                .SingleInstance();
-            builder.RegisterType<BoosterManagement>().SingleInstance();
-            builder.RegisterType<ResetController>().SingleInstance();
-            builder.RegisterType<WorldBoosterGeneration>().SingleInstance();
-            builder.RegisterType<BuildingPlacement>().SingleInstance();
-            builder.RegisterType<DeckBuildingController>().SingleInstance();
+            RegisterController<PlayController>(builder);
+            RegisterController<EventController>(builder).AsImplementedInterfaces();
+            RegisterController<GameActionController>(builder)
+                .OnActivated(c => c.Instance.SetExecutors(c.Context.Resolve<IReadOnlyList<GameActionExecutor>>()));
+            RegisterController<GameConditionsController>(builder)
+                .OnActivated(c => c.Instance.SetEvaluators(c.Context.Resolve<IReadOnlyList<GameConditionEvaluator>>()));
+            RegisterController<BoosterManagement>(builder);
+            RegisterController<ResetController>(builder);
+            RegisterController<WorldBoosterGeneration>(builder);
+            RegisterController<BuildingPlacement>(builder);
+            RegisterController<DeckBuildingController>(builder);
+            RegisterController<RoundController>(builder);
+        }
+
+        private static IRegistrationBuilder<T, ConcreteReflectionActivatorData, SingleRegistrationStyle> RegisterController<T>(ContainerBuilder builder)
+        {
+            return builder.RegisterType<T>()
+                .SingleInstance()
+                .AsSelf()
+                .AsImplementedInterfaces();
         }
     }
 }

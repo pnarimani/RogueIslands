@@ -28,6 +28,7 @@ namespace RogueIslands.View.DeckBuilding
         [SerializeField] private GameWinScreen _gameWinScreen;
         
         private PlayController _playController;
+        private RoundController _roundController;
 
         public GameState State { get; private set; }
         public bool IsPlaying { get; private set; }
@@ -39,7 +40,7 @@ namespace RogueIslands.View.DeckBuilding
 
         private async void OnPlayClicked()
         {
-            if (!State.CanPlay() || IsPlaying)
+            if (!_playController.CanPlay() || IsPlaying)
                 return;
 
             IsPlaying = true;
@@ -59,7 +60,7 @@ namespace RogueIslands.View.DeckBuilding
 
             GameUI.Instance.RefreshScores();
 
-            _playController.ProcessScore();
+            _roundController.TryEndingRound();
 
             IsPlaying = false;
         }
@@ -183,8 +184,9 @@ namespace RogueIslands.View.DeckBuilding
             }
         }
 
-        public void Initialize(GameState state, PlayController playController)
+        public void Initialize(GameState state, PlayController playController, RoundController roundController)
         {
+            _roundController = roundController;
             _playController = playController;
             State = state;
             ShowRoundsSelectionScreen();

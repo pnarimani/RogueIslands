@@ -17,6 +17,19 @@ namespace RogueIslands
             _state = state;
             _view = view;
         }
+        
+        public bool CanPlay()
+        {
+            if (_state.Day >= _state.TotalDays)
+                return false;
+            if (_state.CurrentScore >= _state.GetCurrentRequiredScore())
+                return false;
+            if (_state.Result != GameResult.InProgress)
+                return false;
+            if (!_state.PlacedDownBuildings.Any())
+                return false;
+            return true;
+        }
 
         public void Play()
         {
@@ -67,11 +80,6 @@ namespace RogueIslands
             buildingView.BuildingTriggered(false);
             buildingScored.TriggerCount++;
             _eventController.Execute(buildingScored);
-        }
-
-        public void ProcessScore()
-        {
-            _state.ProcessScore(_view);
         }
 
         private void TriggerBuildingsInHand()

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.GameEvents;
 using RogueIslands.Rollback;
@@ -11,7 +10,7 @@ namespace RogueIslands.Boosters
     {
         private readonly GameState _state;
         private readonly IGameView _view;
-        private readonly EventController _eventController;
+        private readonly IEventController _eventController;
         private readonly GameActionController _gameActionController;
         private readonly ResetController _resetController;
         private readonly ICloner _cloner;
@@ -19,7 +18,7 @@ namespace RogueIslands.Boosters
         public BoosterManagement(
             GameState state,
             IGameView view,
-            EventController eventController,
+            IEventController eventController,
             GameActionController gameActionController,
             ResetController resetController,
             ICloner cloner)
@@ -65,7 +64,7 @@ namespace RogueIslands.Boosters
 
             _resetController.RestoreProperties();
 
-            _state.ExecuteEvent(_view, new BoosterSold() { Booster = booster });
+            _eventController.Execute(new BoosterSold() { Booster = booster });
         }
 
         public void DestroyBooster(BoosterInstanceId boosterId)
@@ -77,7 +76,7 @@ namespace RogueIslands.Boosters
 
             _resetController.RestoreProperties();
 
-            _state.ExecuteEvent(_view, new BoosterDestroyed() { Booster = booster });
+            _eventController.Execute(new BoosterDestroyed() { Booster = booster });
         }
 
         public void ReorderBoosters(IReadOnlyList<BoosterCard> order)

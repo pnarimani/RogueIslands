@@ -45,7 +45,8 @@ namespace RogueIslands.Autofac.Modules
                 {
                     m.Instance.Initialize(
                         m.Context.Resolve<GameState>(),
-                        m.Context.Resolve<PlayController>()
+                        m.Context.Resolve<PlayController>(),
+                        m.Context.Resolve<RoundController>()
                     );
                 })
                 .AsSelf()

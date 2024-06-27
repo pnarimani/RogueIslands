@@ -10,7 +10,7 @@ namespace RogueIslands.Debug
         public static void RoundWin()
         {
             GameManager.Instance.State.CurrentScore = GameManager.Instance.State.GetCurrentRequiredScore();
-            GameManager.Instance.State.ProcessScore(GameManager.Instance);
+            StaticResolver.Resolve<RoundController>().TryEndingRound();
         }
         
         [ConsoleMethod("lose", "Lose")]
@@ -18,7 +18,7 @@ namespace RogueIslands.Debug
         {
             GameManager.Instance.State.CurrentScore = 0;
             GameManager.Instance.State.Day = GameManager.Instance.State.TotalDays;
-            GameManager.Instance.State.ProcessScore(GameManager.Instance);
+            StaticResolver.Resolve<RoundController>().TryEndingRound();
         }
     }
 }
