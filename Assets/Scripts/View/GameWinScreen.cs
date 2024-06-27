@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using RogueIslands.UISystem;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace RogueIslands.View
 {
-    public class GameWinScreen : MonoBehaviour
+    public class GameWinScreen : MonoBehaviour, IWindow
     {
         [SerializeField] private Button _backToMenu;
         

@@ -4,16 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Autofac;
-using Newtonsoft.Json;
-using RogueIslands.Serialization.JsonNet;
-using RogueIslands.Serialization.XML;
 using RogueIslands.Serialization.YamlDotNetIntegration;
-using RogueIslands.Serialization.DeepClone;
-using RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
-using YamlDotNet.Serialization.ObjectGraphVisitors;
 using Module = Autofac.Module;
 
 namespace RogueIslands.Autofac.Modules

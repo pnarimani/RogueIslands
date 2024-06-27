@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using RogueIslands.Boosters;
 using RogueIslands.Buildings;
+using RogueIslands.DeckBuilding;
 using RogueIslands.GameEvents;
 using Random = Unity.Mathematics.Random;
 
@@ -45,6 +46,10 @@ namespace RogueIslands
                     Count = new MinMax(2, 6),
                     SpawnedBoosters = new List<WorldBooster>(),
                     All = WorldBoosterList.Get(),
+                },
+                DeckBuilding = new DeckBuildingState()
+                {
+                    AllConsumables = ConsumableList.Get(),
                 },
                 Shop = new ShopState
                 {

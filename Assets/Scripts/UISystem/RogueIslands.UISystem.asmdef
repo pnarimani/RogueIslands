@@ -1,0 +1,9 @@
+﻿{
+  "name": "RogueIslands.UISystem",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "RogueIslands.Serialization",
+    "RogueIslands.Assets"
+  ],
+  "overrideReferences": true
+}

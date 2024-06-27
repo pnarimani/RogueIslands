@@ -13,6 +13,7 @@ namespace RogueIslands.Autofac
         protected override void Configure(ContainerBuilder builder)
         {
             builder.RegisterModule<AudioFmodModule>();
+            builder.RegisterModule<YamlSerializationModule>();
 
             builder.Register(_ => Instantiate(_debugConsole))
                 .AutoActivate()

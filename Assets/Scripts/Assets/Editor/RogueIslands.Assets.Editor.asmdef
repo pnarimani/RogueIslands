@@ -1,0 +1,7 @@
+﻿{
+  "name": "RogueIslands.Assets.Editor",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "RogueIslands.Assets"
+  ]
+}

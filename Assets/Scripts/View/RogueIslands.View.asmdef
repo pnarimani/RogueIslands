@@ -9,7 +9,8 @@
     "UniTask",
     "Coffee.UIParticle",
     "Unity.Cinemachine",
-    "Audoty"
+    "Audoty",
+    "RogueIslands.UISystem"
   ],
   "overrideReferences": true,
   "precompiledReferences": [

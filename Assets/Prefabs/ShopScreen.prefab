@@ -154,10 +154,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -196,6 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemPrefab: {fileID: 5517188471021414671, guid: 9ea683b4785db184baf628baef7f665e, type: 3}
   _boosterPrefab: {fileID: 6299732069589057431, guid: 7e90ea3c470311f40803c8cffbe8c5fd, type: 3}
+  _consumableCardView: {fileID: 8063734882615503694, guid: 0752c5ec67fa26f41ace0944f405f348, type: 3}
   _cardParent: {fileID: 1161384811694560018}
   _continue: {fileID: 5206807362216368531}
   _reroll: {fileID: 5525050641940603343}

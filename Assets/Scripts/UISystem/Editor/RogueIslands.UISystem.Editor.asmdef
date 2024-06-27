@@ -1,0 +1,11 @@
+﻿{
+  "name": "RogueIslands.UISystem.Editor",
+  "references": [
+    "RogueIslands.UISystem",
+    "RogueIslands.Tools",
+    "RogueIslands.Assets.Editor",
+    "RogueIslands.Serialization",
+    "RogueIslands.Assets"
+  ],
+  "overrideReferences": true
+}

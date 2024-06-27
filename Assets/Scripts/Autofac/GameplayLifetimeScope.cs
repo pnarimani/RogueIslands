@@ -22,7 +22,6 @@ namespace RogueIslands.Autofac
             builder.RegisterModule(new GameplayViewModule(_gameManagerPrefab, _deckBuildingView));
             builder.RegisterModule<BoostersModule>();
             builder.RegisterModule<RollbackModule>();
-            builder.RegisterModule<YamlSerializationModule>();
         }
 
         public T Resolve<T>() => Container.Resolve<T>();
