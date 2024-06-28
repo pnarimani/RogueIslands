@@ -6,5 +6,6 @@
         void RefreshDate();
         void RefreshAll();
         void RefreshMoney();
+        void RefreshDeckText();
     }
 }

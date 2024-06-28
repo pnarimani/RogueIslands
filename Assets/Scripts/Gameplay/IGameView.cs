@@ -27,5 +27,6 @@ namespace RogueIslands.Gameplay
         void DestroyWorldBoosters();
         bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, ref Random positionRandom, out Vector3 point);
         IDeckBuildingView GetDeckBuildingView();
+        void DestroyBuildingsInHand();
     }
 }

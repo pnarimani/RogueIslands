@@ -2,6 +2,7 @@
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.GameEvents;
 using RogueIslands.Gameplay.Rollback;
+using UnityEngine;
 
 namespace RogueIslands.Gameplay
 {
@@ -43,7 +44,6 @@ namespace RogueIslands.Gameplay
                 {
                     _state.Round = 0;
                     _state.Act++;
-
                     _eventController.Execute(new ActEnd());
                 }
 
@@ -59,8 +59,7 @@ namespace RogueIslands.Gameplay
             }
             else
             {
-                _state.Buildings.HandPointer += _state.HandSize;
-                _view.ShowBuildingsInHand();
+                AddBuildingCardsToHand();
 
                 _worldBoosterGeneration.GenerateWorldBoosters();
             }
@@ -68,6 +67,10 @@ namespace RogueIslands.Gameplay
 
         private void ShowRoundWinScreen()
         {
+            _view.DestroyBuildingsInHand();
+            
+            ResetDeck();
+            
             var winScreen = _view.ShowRoundWin();
             winScreen.AddMoneyChange(new MoneyChange
             {
@@ -107,19 +110,32 @@ namespace RogueIslands.Gameplay
             _worldBoosterGeneration.GenerateWorldBoosters();
 
             _resetController.RestoreProperties();
-
-            _state.ShuffleDeck();
-            RemoveBuildingsClusterId();
+            
             _state.CurrentScore = 0;
             _state.Day = 0;
 
             _eventController.Execute(new RoundStart());
 
             _view.DestroyBuildings();
-            _state.Buildings.HandPointer = 0;
-            _view.ShowBuildingsInHand();
+            
+            AddBuildingCardsToHand();
 
             _view.GetUI().RefreshAll();
+        }
+
+        private void AddBuildingCardsToHand()
+        {
+            _view.DestroyBuildingsInHand();
+            _state.Buildings.HandPointer += _state.HandSize;
+            _view.ShowBuildingsInHand();
+        }
+
+        private void ResetDeck()
+        {
+            RemoveBuildingsClusterId();
+            _state.ShuffleDeck();
+            _state.Buildings.HandPointer = 0;
+            _view.GetUI().RefreshDeckText();
         }
 
         private void RemoveBuildingsClusterId()

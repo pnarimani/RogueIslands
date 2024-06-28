@@ -66,12 +66,12 @@ namespace RogueIslands.Gameplay.View
 
         public void ShowBuildingsInHand()
         {
-            foreach (var v in ObjectRegistry.GetBuildingCards()) 
+            foreach (var v in ObjectRegistry.GetBuildingCards())
                 Object.Destroy(v.gameObject);
 
             foreach (var b in State.BuildingsInHand)
                 GameUI.Instance.ShowBuildingCard(b);
-            
+
             GameUI.Instance.RefreshDeckText();
         }
 
@@ -79,7 +79,8 @@ namespace RogueIslands.Gameplay.View
 
         public void SpawnBuilding(Building data)
         {
-            var building = Object.Instantiate(Resources.Load<BuildingView>(data.PrefabAddress), data.Position, data.Rotation);
+            var building = Object.Instantiate(Resources.Load<BuildingView>(data.PrefabAddress), data.Position,
+                data.Rotation);
             building.transform.position += Vector3.up;
             building.transform.DOMove(data.Position, 0.3f)
                 .SetEase(Ease.OutBounce);
@@ -158,10 +159,17 @@ namespace RogueIslands.Gameplay.View
         public void ShowRoundsSelectionScreen() => _windowOpener.Open<RoundSelectionScreen>();
         public void ShowDeckPreview() => _windowOpener.Open<DeckPreviewScreen>();
 
-        public bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, ref Random positionRandom, out Vector3 point) =>
+        public bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, ref Random positionRandom,
+            out Vector3 point) =>
             WorldBoosterSpawnPointProvider.TryGet(blueprint, ref positionRandom, out point);
 
         public IDeckBuildingView GetDeckBuildingView() => DeckBuildingView.Instance;
+
+        public void DestroyBuildingsInHand()
+        {
+            foreach (var v in ObjectRegistry.GetBuildingCards())
+                Object.Destroy(v.gameObject);
+        }
 
         public void ShowSettingsPopup() => _windowOpener.Open<SettingsPopup>();
 
