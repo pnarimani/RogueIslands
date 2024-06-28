@@ -15,7 +15,8 @@ namespace RogueIslands.Gameplay.Buildings
                     var cat = Category.All[catIndex];
                     for (var sizeIndex = 0; sizeIndex < 3; sizeIndex++)
                     {
-                        var legacyColorName = colorName.Replace("Green", "White").Replace("Purple", "Black");
+                        var prefabAddress = PrefabAddressProvider.GetPrefabAddress(colorName, catIndex, sizeIndex);
+
                         var card = new Building()
                         {
                             Color = (colorName, color),
@@ -23,7 +24,7 @@ namespace RogueIslands.Gameplay.Buildings
                             Size = (BuildingSize)sizeIndex,
                             Output = 3 + (sizeIndex * 2),
                             Range = 5,
-                            PrefabAddress = $"Buildings/{legacyColorName} {(catIndex + sizeIndex * 4 + 1)}",
+                            PrefabAddress = prefabAddress,
                             IconAddress = "Buildings/Icons/Sample",
                             RemainingTriggers = 1,
                         };
