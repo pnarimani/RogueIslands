@@ -42,6 +42,7 @@ namespace RogueIslands.Gameplay.View.RoundSelection
         private void PlayRound()
         {
             StaticResolver.Resolve<RoundController>().StartRound();
+            GameUI.Instance.ShowScoringPanel(true);
 
             Destroy(gameObject);
         }

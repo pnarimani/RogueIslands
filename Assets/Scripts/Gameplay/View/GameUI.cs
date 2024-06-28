@@ -1,4 +1,7 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.View.Boosters;
@@ -28,12 +31,14 @@ namespace RogueIslands.Gameplay.View
         [SerializeField] private BoosterCardView _boosterPrefab;
         [SerializeField] private CardListView _buildingCardList, _boosterList;
         [SerializeField] private TextMeshProUGUI _deckCardCount;
+        [SerializeField] private RectTransform _scoringPanel;
 
         public Transform ProductTarget => _products.transform;
 
         private void Start()
         {
-            _playButton.onClick.AddListener(() => PlayButtonHandler.Instance.OnPlayClicked(destroyCancellationToken).Forget());
+            _playButton.onClick.AddListener(() =>
+                PlayButtonHandler.Instance.OnPlayClicked(destroyCancellationToken).Forget());
             _deckButton.onClick.AddListener(() => GameManager.Instance.ShowDeckPreview());
             _optionsButton.onClick.AddListener(() => GameManager.Instance.ShowOptions());
         }
@@ -136,6 +141,13 @@ namespace RogueIslands.Gameplay.View
         public void MoneyBoosted(int delta)
         {
             _budget.UpdateNumber(_budget.CurrentNumber + delta);
+        }
+
+        public void ShowScoringPanel(bool show)
+        {
+            _scoringPanel.DOComplete();
+            _scoringPanel.DOAnchorPosY(show ? 0 : _scoringPanel.rect.height, 0.5f)
+                .SetEase(show ? Ease.OutBack : Ease.InBack);
         }
     }
 }

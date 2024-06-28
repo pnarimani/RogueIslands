@@ -13,7 +13,7 @@ namespace RogueIslands.Gameplay.View.Win
         [SerializeField] private TextMeshProUGUI _totalMoneyText, _weeklyPayoutText;
         [SerializeField] private Transform _moneyChangeParent;
         [SerializeField] private MoneyChangeView _moneyChangePrefab;
-        
+
         private int _totalChange;
 
         private void Awake()
@@ -27,6 +27,7 @@ namespace RogueIslands.Gameplay.View.Win
 
         private void Start()
         {
+            GameUI.Instance.ShowScoringPanel(false);
             StaticResolver.Resolve<IStageAudio>().PlayRoundWin();
         }
 
@@ -39,7 +40,7 @@ namespace RogueIslands.Gameplay.View.Win
         {
             _totalChange += change.Change;
             SetTotalMoneyText();
-            
+
             var moneyChangeView = Instantiate(_moneyChangePrefab, _moneyChangeParent);
             moneyChangeView.SetChange(change.Change);
             moneyChangeView.SetReason(change.Reason);

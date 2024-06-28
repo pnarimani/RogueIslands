@@ -21,7 +21,7 @@ namespace RogueIslands.Gameplay.View.Boosters
                 responsibleBuilding = buildingEvent.Building;
 
             var wait = AnimationScheduler.GetAnimationTime();
-            AnimationScheduler.AllocateTime(0.2f);
+            AnimationScheduler.AllocateTime(0.3f);
             await UniTask.WaitForSeconds(wait);
 
             UniTask task;

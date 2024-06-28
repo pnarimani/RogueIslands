@@ -32,10 +32,7 @@ namespace RogueIslands.Gameplay.View
         }
 
 
-        public void ShowGameWinScreen()
-        {
-            _windowOpener.Open<GameWinScreen>();
-        }
+        public void ShowGameWinScreen() => _windowOpener.Open<GameWinScreen>();
 
         public IWeekWinScreen ShowRoundWin()
         {
