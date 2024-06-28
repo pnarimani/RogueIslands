@@ -15,7 +15,11 @@ namespace RogueIslands.Gameplay.DeckBuilding
                     Description = new LiteralDescription("Destroy up to 2 buildings"),
                     BuyPrice = 2,
                     SellPrice = 1,
-                    Action = new Demolition(),
+                    Action = new Demolition()
+                    {
+                        MinCardsRequired = 0,
+                        MaxCardsRequired = 2,
+                    },
                 },
             };
         }

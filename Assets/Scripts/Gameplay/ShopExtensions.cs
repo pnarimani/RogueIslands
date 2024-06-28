@@ -54,12 +54,20 @@ namespace RogueIslands.Gameplay
             if (state.Money < item.BuyPrice)
                 throw new InvalidOperationException();
 
-            var success = item switch
+            bool success;
+            switch (item)
             {
-                BoosterCard booster => StaticResolver.Resolve<BoosterManagement>().TryAddBooster(booster),
-                Consumable consumable => view.GetDeckBuildingView().TryShowPopupForConsumable(consumable),
-                _ => false,
-            };
+                case BoosterCard booster:
+                    success = StaticResolver.Resolve<BoosterManagement>().TryAddBooster(booster);
+                    break;
+                case Consumable consumable:
+                    view.GetDeckBuildingView().ShowPopupForConsumable(consumable);
+                    success = true;
+                    break;
+                default:
+                    success = false;
+                    break;
+            }
 
             if (success)
             {

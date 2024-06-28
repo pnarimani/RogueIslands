@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace RogueIslands.UISystem
 {
-    public class WindowRegistry : IWindowRegistry
+    internal class WindowRegistry : IWindowRegistry
     {
         internal const string RegistryPath = "UISystem/WindowRegistry.asset";
 

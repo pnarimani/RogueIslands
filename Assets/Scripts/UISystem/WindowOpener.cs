@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace RogueIslands.UISystem
 {
-    public class WindowOpener : IWindowOpener
+    internal class WindowOpener : IWindowOpener
     {
         private readonly IWindowRegistry _registry;
         private readonly IAssetLoader _assetLoader;

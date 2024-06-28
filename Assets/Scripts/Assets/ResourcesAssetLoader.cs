@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RogueIslands.Assets
 {
-    public class ResourcesAssetLoader : IAssetLoader
+    internal class ResourcesAssetLoader : IAssetLoader
     {
         public T Load<T>(string key) where T : Object
         {

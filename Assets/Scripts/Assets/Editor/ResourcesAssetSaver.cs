@@ -5,7 +5,7 @@ using Object = UnityEngine.Object;
 
 namespace RogueIslands.Assets.Editor
 {
-    public class ResourcesAssetSaver : IAssetSaver
+    internal class ResourcesAssetSaver : IAssetSaver
     {
         private const string ResourcesFolder = "/Resources/";
 

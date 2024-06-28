@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using RogueIslands.Gameplay.Buildings;
+using RogueIslands.Gameplay.DeckBuilding.ActionHandlers;
 
 namespace RogueIslands.Gameplay.DeckBuilding
 {
     public class DeckBuildingController
     {
-        private GameState _state;
+        private readonly IReadOnlyList<DeckActionHandler> _handlers;
 
-        public DeckBuildingController(GameState state)
+        public DeckBuildingController(IReadOnlyList<DeckActionHandler> handlers)
         {
-            _state = state;
+            _handlers = handlers;
         }
         
         public void ExecuteConsumable(Consumable consumable, IReadOnlyList<Building> selectedBuildings)
         {
-            switch (consumable.Action)
+            foreach (var handler in _handlers)
             {
-                case Demolition:
-                    foreach (var b in selectedBuildings) 
-                        _state.Buildings.Deck.Remove(b);
+                if (handler.CanHandle(consumable.Action))
+                {
+                    handler.Execute(consumable.Action, selectedBuildings);
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                }
             }
         }
     }

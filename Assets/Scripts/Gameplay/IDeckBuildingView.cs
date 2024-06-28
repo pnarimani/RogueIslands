@@ -4,6 +4,6 @@ namespace RogueIslands.Gameplay
 {
     public interface IDeckBuildingView
     {
-        bool TryShowPopupForConsumable(Consumable consumable);
+        void ShowPopupForConsumable(Consumable consumable);
     }
 }

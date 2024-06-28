@@ -2,6 +2,7 @@
 {
     public abstract class DeckAction
     {
-        public abstract void Execute(GameState state, IGameView view);
+        public int MinCardsRequired { get; set; }
+        public int MaxCardsRequired { get; set; }
     }
 }

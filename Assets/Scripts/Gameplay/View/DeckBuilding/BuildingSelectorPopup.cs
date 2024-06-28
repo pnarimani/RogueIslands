@@ -18,6 +18,7 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
         [SerializeField] private CardListView _buildingCardList;
 
         private readonly List<Building> _selectedBuildings = new();
+        private Consumable _consumable;
 
         public event Action<IReadOnlyList<Building>> BuildingsSelected;
 
@@ -71,18 +72,21 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
             }
         }
 
-        public void Select(int count)
+        private void Update()
         {
-            for (var i = 0; i < _slots.Length; i++)
-            {
-                _slots[i].gameObject.SetActive(i < count);
-            }
+            _submit.interactable = _selectedBuildings.Count >= _consumable.Action.MinCardsRequired;
         }
 
         public void Show(Consumable consumable)
         {
+            _consumable = consumable;
             _title.text = consumable.Name;
             _description.text = consumable.Description.Get(consumable);
+            
+            for (var i = 0; i < _slots.Length; i++)
+            {
+                _slots[i].gameObject.SetActive(i < consumable.Action.MaxCardsRequired);
+            }
         }
     }
 }

@@ -34,7 +34,6 @@ namespace RogueIslands.Gameplay.Modules
             RegisterController<ResetController>(builder);
             RegisterController<WorldBoosterGeneration>(builder);
             RegisterController<BuildingPlacement>(builder);
-            RegisterController<DeckBuildingController>(builder);
             RegisterController<RoundController>(builder);
         }
 
