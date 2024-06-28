@@ -1,0 +1,5 @@
+﻿{
+  "name": "RogueIslands.DependencyInjection",
+  "rootNamespace": "RogueIslands",
+  "overrideReferences": true
+}

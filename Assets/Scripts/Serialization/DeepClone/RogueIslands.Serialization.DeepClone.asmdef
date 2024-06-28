@@ -2,7 +2,8 @@
   "name": "RogueIslands.Serialization.DeepClone",
   "rootNamespace": "RogueIslands",
   "references": [
-    "RogueIslands.Serialization"
+    "RogueIslands.Serialization",
+    "RogueIslands.DependencyInjection"
   ],
   "overrideReferences": true,
   "precompiledReferences": [

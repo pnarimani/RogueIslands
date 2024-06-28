@@ -1,0 +1,10 @@
+{
+	"name": "RogueIslands.DependencyInjection.Autofac",
+	"rootNamespace": "RogueIslands",
+	"references": [
+		"AutofacUnity",
+		"RogueIslands",
+		"RogueIslands.DependencyInjection",
+		"IngameDebugConsole.Runtime"
+	]
+}

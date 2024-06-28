@@ -1,8 +1,0 @@
-﻿{
-  "name": "RogueIslands.Serialization.YamlDotNetIntegration.Autofac",
-  "rootNamespace": "RogueIslands",
-  "references": [
-    "RogueIslands.Autofac",
-    "RogueIslands.Serialization.YamlDotNetIntegration"
-  ]
-}

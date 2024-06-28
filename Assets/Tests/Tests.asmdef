@@ -7,7 +7,7 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "RogueIslands.Serialization",
-        "RogueIslands.Autofac"
+        "RogueIslands.DependencyInjection"
     ],
     "includePlatforms": [
         "Editor"

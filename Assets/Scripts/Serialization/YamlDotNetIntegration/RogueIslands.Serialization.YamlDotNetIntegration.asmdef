@@ -3,7 +3,8 @@
   "rootNamespace": "RogueIslands",
   "references": [
     "RogueIslands.Serialization",
-    "RogueIslands"
+    "RogueIslands",
+    "RogueIslands.DependencyInjection"
   ],
   "overrideReferences": true,
   "precompiledReferences": [

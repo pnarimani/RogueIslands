@@ -3,7 +3,8 @@
   "rootNamespace": "RogueIslands",
   "references": [
     "RogueIslands.Serialization",
-    "RogueIslands.Assets"
+    "RogueIslands.Assets",
+    "RogueIslands.DependencyInjection"
   ],
   "overrideReferences": true
 }

@@ -2,6 +2,8 @@
   "name": "RogueIslands.Assets.Editor",
   "rootNamespace": "RogueIslands",
   "references": [
-    "RogueIslands.Assets"
-  ]
+    "RogueIslands.Assets",
+    "RogueIslands.DependencyInjection"
+  ],
+  "overrideReferences": true
 }

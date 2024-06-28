@@ -1,8 +1,0 @@
-﻿{
-  "name": "RogueIslands.Assets.Autofac",
-  "references": [
-    "AutofacUnity",
-    "RogueIslands.Assets",
-    "RogueIslands.Assets.Editor"
-  ]
-}

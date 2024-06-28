@@ -3,6 +3,8 @@
   "rootNamespace": "RogueIslands",
   "references": [
     "RogueIslands.View",
-    "FMODUnity"
-  ]
+    "FMODUnity",
+    "RogueIslands.DependencyInjection"
+  ],
+  "overrideReferences": true
 }

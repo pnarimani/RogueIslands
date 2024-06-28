@@ -1,5 +1,6 @@
 ﻿using Autofac;
-using RogueIslands.Autofac;
+using RogueIslands.DependencyInjection;
+using RogueIslands.DependencyInjection.Autofac;
 
 namespace RogueIslands.Tools
 {
@@ -12,9 +13,10 @@ namespace RogueIslands.Tools
             if (_container == null)
             {
                 var builder = new ContainerBuilder();
+                var containerBuilderProxy = new ContainerBuilderProxy(builder);
                 foreach (var projectModule in ModuleFinder.GetProjectModules())
                 {
-                    builder.RegisterModule(projectModule);
+                    projectModule.Load(containerBuilderProxy);
                 }
 
                 _container = builder.Build();

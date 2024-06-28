@@ -3,9 +3,10 @@
   "rootNamespace": "RogueIslands",
   "references": [
     "RogueIslands",
-    "RogueIslands.Autofac",
+    "RogueIslands.DependencyInjection",
     "RogueIslands.Serialization",
-    "Unity.Mathematics"
+    "Unity.Mathematics",
+    "RogueIslands.DependencyInjection.Autofac"
   ],
   "includePlatforms": [
     "Editor"

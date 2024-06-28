@@ -1,8 +1,0 @@
-﻿{
-  "name": "RogueIslands.View.Audio.FMOD.Autofac",
-  "rootNamespace": "RogueIslands",
-  "references": [
-    "RogueIslands.Autofac",
-    "RogueIslands.View.Audio.FMOD"
-  ]
-}
