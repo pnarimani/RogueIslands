@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Autofac;
 using RogueIslands.Serialization;
-using RogueIslands.Autofac.Modules;
-using RogueIslands.Boosters;
-using RogueIslands.Boosters.Descriptions;
-using RogueIslands.Buildings;
-using RogueIslands.DeckBuilding;
-using RogueIslands.GameEvents;
+using RogueIslands.Gameplay;
+using RogueIslands.Gameplay.Boosters.Descriptions;
+using RogueIslands.Gameplay.Buildings;
 using UnityEditor;
 using UnityEngine;
-using Random = Unity.Mathematics.Random;
 
 namespace RogueIslands.Tools
 {
@@ -52,7 +49,7 @@ namespace RogueIslands.Tools
                 };
 
                 var builder = new ContainerBuilder();
-                builder.RegisterModule(new YamlSerializationModule());
+                builder.RegisterAssemblyModules(AppDomain.CurrentDomain.GetAssemblies());
                 var container = builder.Build();
                 var serializer = container.Resolve<ISerializer>();
                 _text = serializer.SerializePretty(buildingState);

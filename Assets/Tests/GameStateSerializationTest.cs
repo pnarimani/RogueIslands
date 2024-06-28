@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
-using RogueIslands.Autofac.Modules;
-using RogueIslands.Boosters;
-using RogueIslands.Buildings;
-using RogueIslands.DeckBuilding;
-using RogueIslands.GameEvents;
+using RogueIslands.Gameplay;
+using RogueIslands.Gameplay.Boosters;
+using RogueIslands.Gameplay.Buildings;
+using RogueIslands.Gameplay.DeckBuilding;
+using RogueIslands.Gameplay.GameEvents;
 using RogueIslands.Serialization;
 using Random = Unity.Mathematics.Random;
 
@@ -132,7 +132,7 @@ namespace RogueIslands.Tests
             };
 
             var builder = new ContainerBuilder();
-            builder.RegisterModule<YamlSerializationModule>();
+            builder.RegisterAssemblyModules(AppDomain.CurrentDomain.GetAssemblies());
             var container = builder.Build();
             _serializer = container.Resolve<ISerializer>();
             _deserializer = container.Resolve<IDeserializer>();

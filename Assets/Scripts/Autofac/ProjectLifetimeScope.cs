@@ -1,7 +1,8 @@
-﻿using Autofac;
+﻿using System;
+using System.Linq;
+using Autofac;
 using AutofacUnity;
 using IngameDebugConsole;
-using RogueIslands.Autofac.Modules;
 using UnityEngine;
 
 namespace RogueIslands.Autofac
@@ -12,8 +13,10 @@ namespace RogueIslands.Autofac
 
         protected override void Configure(ContainerBuilder builder)
         {
-            builder.RegisterModule<AudioFmodModule>();
-            builder.RegisterModule<YamlSerializationModule>();
+            foreach (var instance in ModuleFinder.GetProjectModules())
+            {
+                builder.RegisterModule(instance);
+            }
 
             builder.Register(_ => Instantiate(_debugConsole))
                 .AutoActivate()

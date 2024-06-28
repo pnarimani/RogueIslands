@@ -9,6 +9,6 @@
             Value = value;
         }
         
-        public static UILayer Default => new("Default UI Root");
+        public static UILayer Default => new("UIRoot");
     }
 }

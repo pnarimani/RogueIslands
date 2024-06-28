@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!49 &4900000
+TextAsset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: WindowRegistry
+  m_Script: 'RogueIslands.Gameplay.View.GameWinScreen: Windows/WinScreen.prefab
+
+    RogueIslands.Gameplay.View.Lose.LoseScreen:
+    Windows/LoseScreen.prefab
+
+    RogueIslands.Gameplay.View.SettingsPopup: Windows/SettingsPopup.prefab
+
+    RogueIslands.Gameplay.View.Win.RoundWinScreen:
+    Windows/RoundWinScreen.prefab
+
+    RogueIslands.Gameplay.IWeekWinScreen: Windows/RoundWinScreen.prefab
+
+    RogueIslands.Gameplay.View.OptionsPopup:
+    Windows/OptionsPopup.prefab
+
+    RogueIslands.Gameplay.View.DeckPreview.DeckPreviewScreen:
+    Windows/DeckPreviewScreen.prefab
+
+    RogueIslands.Gameplay.View.Shop.ShopScreen:
+    Windows/ShopScreen.prefab
+
+    RogueIslands.Gameplay.View.RoundSelection.RoundSelectionScreen:
+    Windows/RoundSelectionCanvas.prefab
+
+    LoseScreen: Windows/LoseScreen.prefab
+
+    SettingsPopup:
+    Windows/SettingsPopup.prefab
+
+    RoundWinScreen: Windows/RoundWinScreen.prefab
+
+    IWeekWinScreen:
+    Windows/RoundWinScreen.prefab
+
+    OptionsPopup: Windows/OptionsPopup.prefab
+
+    DeckPreviewScreen:
+    Windows/DeckPreviewScreen.prefab
+
+    ShopScreen: Windows/ShopScreen.prefab
+
+    RoundSelectionScreen:
+    Windows/RoundSelectionCanvas.prefab
+
+    GameWinScreen: Windows/WinScreen.prefab
+
+    RogueIslands.Gameplay.View.GameUI:
+    Windows/GameplayHUD.prefab
+
+    GameUI: Windows/GameplayHUD.prefab
+
+    RogueIslands.Gameplay.IGameUI:
+    Windows/GameplayHUD.prefab
+
+    IGameUI: Windows/GameplayHUD.prefab
+
+'

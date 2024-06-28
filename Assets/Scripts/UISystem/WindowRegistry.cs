@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using RogueIslands.Assets;
 using RogueIslands.Serialization;
 using UnityEngine;
@@ -8,41 +7,33 @@ namespace RogueIslands.UISystem
 {
     public class WindowRegistry : IWindowRegistry
     {
-        internal const string RegistryPath = "UISystem/WindowRegistry";
-        
+        internal const string RegistryPath = "UISystem/WindowRegistry.asset";
+
         private readonly IAssetLoader _assetLoader;
         private readonly IDeserializer _deserializer;
-        private Dictionary<Type, string> _paths;
+        private Dictionary<string, string> _paths;
 
         public WindowRegistry(IAssetLoader assetLoader, IDeserializer deserializer)
         {
             _deserializer = deserializer;
             _assetLoader = assetLoader;
         }
-        
-        public string GetKey<T>() where T : IWindow
+
+        public string GetKey<T>()
         {
             _paths ??= BuildPaths();
-            return _paths[typeof(T)];
+            if (_paths.TryGetValue(typeof(T).Name, out var path))
+                return path;
+            var fullName = typeof(T).FullName;
+            if (fullName != null && _paths.TryGetValue(fullName, out path))
+                return path;
+            return null;
         }
 
-        private Dictionary<Type,string> BuildPaths()
+        private Dictionary<string, string> BuildPaths()
         {
-            var result = new Dictionary<Type, string>();
             var textAsset = _assetLoader.Load<TextAsset>(RegistryPath);
-            var data = _deserializer.Deserialize<Dictionary<string, string>>(textAsset.text);
-            foreach (var (key, value) in data)
-            {
-                var type = Type.GetType(key);
-                if (type == null)
-                {
-                    Debug.LogError($"Could not find type {key}");
-                    continue;
-                }
-                result[type] = value;
-            }
-
-            return result;
+            return _deserializer.Deserialize<Dictionary<string, string>>(textAsset.text);
         }
     }
 }

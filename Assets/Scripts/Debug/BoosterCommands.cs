@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
 using IngameDebugConsole;
-using RogueIslands.Boosters;
-using RogueIslands.View;
-using RogueIslands.View.DeckBuilding;
+using RogueIslands.Gameplay;
+using RogueIslands.Gameplay.Boosters;
+using RogueIslands.Gameplay.View;
+using RogueIslands.Gameplay.View.DeckBuilding;
 
 namespace RogueIslands.Debug
 {

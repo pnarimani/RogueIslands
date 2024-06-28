@@ -1,0 +1,19 @@
+﻿{
+  "name": "RogueIslands.Gameplay.View",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "RogueIslands",
+    "Unity.TextMeshPro",
+    "Unity.Mathematics",
+    "DOTween.Modules",
+    "UniTask",
+    "Coffee.UIParticle",
+    "Unity.Cinemachine",
+    "RogueIslands.UISystem",
+    "RogueIslands.View"
+  ],
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "DOTween.dll"
+  ]
+}

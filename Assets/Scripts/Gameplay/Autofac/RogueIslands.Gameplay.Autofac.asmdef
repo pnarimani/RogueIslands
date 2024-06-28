@@ -1,0 +1,9 @@
+﻿{
+  "name": "RogueIslands.Gameplay.Autofac",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "RogueIslands",
+    "RogueIslands.Serialization",
+    "Unity.Mathematics"
+  ]
+}

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
 
 namespace RogueIslands.Assets
 {
@@ -6,7 +7,10 @@ namespace RogueIslands.Assets
     {
         public T Load<T>(string key) where T : Object
         {
-            return UnityEngine.Resources.Load<T>(key);
+            var extension = Path.GetExtension(key);
+            if (!string.IsNullOrEmpty(extension))
+                key = key.Replace(extension, "");
+            return Resources.Load<T>(key);
         }
     }
 }

@@ -2,8 +2,9 @@
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
-using RogueIslands.Boosters;
-using RogueIslands.Buildings;
+using RogueIslands.Gameplay;
+using RogueIslands.Gameplay.Boosters;
+using RogueIslands.Gameplay.Buildings;
 using UnityEngine;
 
 namespace RogueIslands.Tests

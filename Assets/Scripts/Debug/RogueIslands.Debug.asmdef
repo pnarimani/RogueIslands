@@ -3,7 +3,7 @@
   "rootNamespace": "RogueIslands",
   "references": [
     "RogueIslands",
-    "RogueIslands.View",
+    "RogueIslands.Gameplay.View",
     "IngameDebugConsole.Runtime"
   ]
 }

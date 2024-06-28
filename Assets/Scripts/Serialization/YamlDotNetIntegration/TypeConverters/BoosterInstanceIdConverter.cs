@@ -1,4 +1,5 @@
 ﻿using System;
+using RogueIslands.Gameplay.Boosters;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;

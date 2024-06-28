@@ -1,0 +1,9 @@
+﻿{
+  "name": "RogueIslands.Gameplay.View.Autofac",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "RogueIslands.Gameplay.View",
+    "RogueIslands",
+    "AutofacUnity"
+  ]
+}

@@ -1,5 +1,5 @@
 ﻿using System;
-using RogueIslands.Buildings;
+using RogueIslands.Gameplay.Buildings;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;

@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
-using RogueIslands.Autofac.Modules;
-using RogueIslands.Boosters.Descriptions;
-using RogueIslands.Buildings;
+using RogueIslands.Gameplay;
+using RogueIslands.Gameplay.Boosters.Descriptions;
+using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Serialization;
 
 namespace RogueIslands.Tests
@@ -18,7 +19,7 @@ namespace RogueIslands.Tests
         public void SetUp()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterModule<YamlSerializationModule>();
+            builder.RegisterAssemblyModules(AppDomain.CurrentDomain.GetAssemblies());
             var container = builder.Build();
             _serializer = container.Resolve<ISerializer>();
             _deserializer = container.Resolve<IDeserializer>();

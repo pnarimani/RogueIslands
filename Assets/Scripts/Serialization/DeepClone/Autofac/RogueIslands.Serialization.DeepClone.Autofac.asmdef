@@ -1,0 +1,4 @@
+﻿{
+  "name": "RogueIslands.Serialization.DeepClone.Autofac",
+  "references":[ "RogueIslands.Serialization.DeepClone" ]
+}

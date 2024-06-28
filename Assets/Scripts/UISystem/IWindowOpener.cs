@@ -2,6 +2,6 @@
 {
     public interface IWindowOpener
     {
-        T Open<T>(UILayer layer = default) where T : IWindow;
+        T Open<T>(UILayer layer = default);
     }
 }

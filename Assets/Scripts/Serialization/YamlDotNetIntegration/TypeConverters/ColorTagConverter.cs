@@ -1,5 +1,5 @@
 ﻿using System;
-using RogueIslands.Buildings;
+using RogueIslands.Gameplay.Buildings;
 using UnityEngine;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
