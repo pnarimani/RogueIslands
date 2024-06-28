@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using RogueIslands.Gameplay.Buildings;
+using RogueIslands.Gameplay.DeckBuilding.Actions;
 
 namespace RogueIslands.Gameplay.DeckBuilding.ActionHandlers
 {
-    public class DemolitionActionHandler : DeckActionHandler<Demolition>
+    public class DemolitionActionHandler : DeckActionHandler<DemolitionDeckAction>
     {
         private readonly GameState _state;
 
@@ -12,7 +13,7 @@ namespace RogueIslands.Gameplay.DeckBuilding.ActionHandlers
             _state = state;
         }
         
-        protected override void Execute(Demolition action, IReadOnlyList<Building> selectedBuildings)
+        protected override void Execute(DemolitionDeckAction action, IReadOnlyList<Building> selectedBuildings)
         {
             foreach (var b in selectedBuildings) 
                 _state.Buildings.Deck.Remove(b);

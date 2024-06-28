@@ -1,4 +1,6 @@
-﻿namespace RogueIslands.Gameplay.DeckBuilding
+﻿using RogueIslands.Gameplay.DeckBuilding.Actions;
+
+namespace RogueIslands.Gameplay.DeckBuilding
 {
     public class Consumable : IPurchasableItem, IDescribableItem, INamedItem
     {

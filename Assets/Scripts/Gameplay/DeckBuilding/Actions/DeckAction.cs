@@ -1,4 +1,4 @@
-﻿namespace RogueIslands.Gameplay.DeckBuilding
+﻿namespace RogueIslands.Gameplay.DeckBuilding.Actions
 {
     public abstract class DeckAction
     {
