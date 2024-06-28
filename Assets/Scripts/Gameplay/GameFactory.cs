@@ -49,6 +49,7 @@ namespace RogueIslands.Gameplay
                 },
                 DeckBuilding = new DeckBuildingState()
                 {
+                    BuildingSelectionRandom = seedRandom.NextRandom(),
                     AllConsumables = ConsumableList.Get(),
                 },
                 Shop = new ShopState

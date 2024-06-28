@@ -19,7 +19,7 @@ namespace RogueIslands.Gameplay.View.Boosters
         {
             _cardListItem = GetComponent<CardListItem>();
             if (_cardListItem != null) 
-                _cardListItem.CardReordered += OnBoosterReordered;
+                _cardListItem.DragEnded += OnBoosterReordered;
             
             _sellButton.onClick.AddListener(() =>
             {

@@ -31,9 +31,7 @@ namespace RogueIslands.UISystem
 
         private static void AttachNestedCanvas(GameObject gameObject, Transform layerTransform)
         {
-            var nestedCanvas = gameObject.AddComponent<Canvas>();
-            nestedCanvas.overrideSorting = true;
-            nestedCanvas.sortingOrder = layerTransform.childCount;
+            gameObject.AddComponent<Canvas>();
             gameObject.AddComponent<GraphicRaycaster>();
         }
 

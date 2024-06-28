@@ -28,6 +28,7 @@ namespace RogueIslands.Gameplay.View
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            _target.DOComplete();
             _target.DOPunchScale(0.05f * Vector3.one, 0.2f);
             _entered = true;
         }

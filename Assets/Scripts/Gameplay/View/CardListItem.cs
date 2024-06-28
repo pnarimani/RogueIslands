@@ -16,7 +16,7 @@ namespace RogueIslands.Gameplay.View
         public Quaternion ExtraAnimationRotationOffset { get; set; }
         public CardListView Owner { get; set; }
 
-        public event Action CardReordered;
+        public event Action DragEnded;
 
         public bool AllowReorder
         {
@@ -71,7 +71,7 @@ namespace RogueIslands.Gameplay.View
 
             ShouldAnimateToTarget = true;
 
-            CardReordered?.Invoke();
+            DragEnded?.Invoke();
         }
     }
 }

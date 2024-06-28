@@ -34,7 +34,7 @@ namespace RogueIslands.DependencyInjection.Autofac
             var registrationBuilder = _builder.Register(_ =>
                 prefab != null
                     ? Object.Instantiate(prefab)
-                    : new GameObject().AddComponent<T>()
+                    : new GameObject(typeof(T).Name).AddComponent<T>()
             );
 
             registrationBuilder.AsImplementedInterfaces();
