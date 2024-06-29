@@ -54,12 +54,14 @@ namespace RogueIslands.Gameplay
                 },
                 Shop = new ShopState
                 {
+                    StartingRerollCost = 5,
                     BoosterSpawn = seedRandom.CreateRandomArray(GameState.TotalActs),
                     CardPackSpawn = seedRandom.CreateRandomArray(GameState.TotalActs),
                     BoosterAntiDuplicate = seedRandom.CreateRandomArray(GameState.TotalActs),
                     SelectionRandom = seedRandom.CreateRandomArray(GameState.TotalActs),
-                    CardCount = 2,
-                    ItemsForSale = new IPurchasableItem[2],
+                    CardCount = 3,
+                    ItemsForSale = new IPurchasableItem[3],
+                    CurrentRerollCost = 5,
                 },
             };
         }

@@ -22,8 +22,11 @@ namespace RogueIslands.Gameplay.View
         public RectTransform Content => _content;
         public IReadOnlyList<CardListItem> Items => _items;
 
-        public void Add(CardListItem item)
+        public void Add<T>(T component) where T : Component
         {
+            if (component is not CardListItem item)
+                item = component.GetComponent<CardListItem>();
+            
             if (item.transform.parent != Content)
                 item.transform.SetParent(Content, false);
 
@@ -32,8 +35,11 @@ namespace RogueIslands.Gameplay.View
             _items.Add(item);
         }
 
-        public void Remove(CardListItem item)
+        public void Remove<T>(T component) where T : Component
         {
+            if (component is not CardListItem item)
+                item = component.GetComponent<CardListItem>();
+            
             _items.Remove(item);
         }
 

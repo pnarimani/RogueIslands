@@ -85,7 +85,6 @@ namespace RogueIslands.Tests
                 {
                     StartingRerollCost = 324,
                     CurrentRerollCost = 23,
-                    RerollIncreaseRate = 435,
                     CardCount = 3434,
                     ItemsForSale = new IPurchasableItem[]
                     {

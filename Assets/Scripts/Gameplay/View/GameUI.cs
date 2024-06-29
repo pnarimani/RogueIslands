@@ -148,6 +148,12 @@ namespace RogueIslands.Gameplay.View
             _scoringPanel.DOComplete();
             _scoringPanel.DOAnchorPosY(show ? 0 : _scoringPanel.rect.height, 0.5f)
                 .SetEase(show ? Ease.OutBack : Ease.InBack);
+
+            var btnTransform = (RectTransform)_playButton.transform;
+            var value = btnTransform.anchoredPosition.x;
+            value = Mathf.Abs(value);
+            btnTransform.DOAnchorPosX(show ? -value : value, 0.5f)
+                .SetEase(show ? Ease.OutBack : Ease.InBack);
         }
     }
 }

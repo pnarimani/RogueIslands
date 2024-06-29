@@ -24,6 +24,11 @@ namespace RogueIslands.Gameplay.View
             set => _allowReorder = value;
         }
 
+        private void Awake()
+        {
+            TargetPosition = transform.position;
+        }
+
         private void Update()
         {
             if (ShouldAnimateToTarget)
@@ -38,6 +43,11 @@ namespace RogueIslands.Gameplay.View
                 _extraAnimationParent.localPosition = Vector2.Lerp(_extraAnimationParent.localPosition,
                     ExtraAnimationPositionOffset, Time.deltaTime * _speed);
             }
+        }
+
+        private void OnTransformParentChanged()
+        {
+            TargetPosition = transform.position;
         }
 
         public void OnBeginDrag(PointerEventData eventData)

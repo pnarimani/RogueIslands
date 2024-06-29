@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-using RogueIslands.DependencyInjection;
+﻿using RogueIslands.DependencyInjection;
 
 namespace RogueIslands.Assets.Editor
 {
@@ -11,4 +10,3 @@ namespace RogueIslands.Assets.Editor
         }
     }
 }
-#endif

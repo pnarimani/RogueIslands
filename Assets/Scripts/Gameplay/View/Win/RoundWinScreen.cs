@@ -13,6 +13,7 @@ namespace RogueIslands.Gameplay.View.Win
         [SerializeField] private TextMeshProUGUI _totalMoneyText, _weeklyPayoutText;
         [SerializeField] private Transform _moneyChangeParent;
         [SerializeField] private MoneyChangeView _moneyChangePrefab;
+        [SerializeField] private Transform _bg;
 
         private int _totalChange;
 
@@ -21,7 +22,14 @@ namespace RogueIslands.Gameplay.View.Win
             _nextButton.onClick.AddListener(() =>
             {
                 StaticResolver.Resolve<RoundController>().ClaimRoundEndMoney();
-                Destroy(gameObject);
+                
+                _bg.DOLocalMoveY(-Screen.height, 0.5f)
+                    .SetEase(Ease.InBack)
+                    .OnComplete(() =>
+                    {
+                        GameManager.Instance.ShowShopScreen();
+                        Destroy(gameObject);
+                    });
             });
         }
 
@@ -29,6 +37,10 @@ namespace RogueIslands.Gameplay.View.Win
         {
             GameUI.Instance.ShowScoringPanel(false);
             StaticResolver.Resolve<IStageAudio>().PlayRoundWin();
+
+            _bg.DOLocalMoveY(-Screen.height, 0.5f)
+                .From()
+                .SetEase(Ease.OutBack);
         }
 
         private void SetTotalMoneyText()

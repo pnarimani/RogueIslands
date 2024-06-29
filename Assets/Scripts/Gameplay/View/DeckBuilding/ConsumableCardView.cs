@@ -15,6 +15,8 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
             Card = card;
 
             _name.text = card.Name;
+
+            GetComponent<DescriptionBoxSpawner>().Initialize(card);
         }
     }
 }

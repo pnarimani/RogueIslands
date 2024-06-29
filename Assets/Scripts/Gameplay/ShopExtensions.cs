@@ -1,6 +1,7 @@
 ﻿using System;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.DeckBuilding;
+using UnityEngine;
 
 namespace RogueIslands.Gameplay
 {
@@ -20,9 +21,9 @@ namespace RogueIslands.Gameplay
             if (state.Money < state.Shop.CurrentRerollCost)
                 throw new InvalidOperationException();
 
-            state.Money -= state.Shop.CurrentRerollCost;
+            state.Money -= Mathf.RoundToInt(state.Shop.CurrentRerollCost);
             state.Shop.CurrentRerollCost =
-                (int)MathF.Ceiling(state.Shop.CurrentRerollCost * state.Shop.RerollIncreaseRate);
+                (int)MathF.Ceiling(state.Shop.CurrentRerollCost + 1);
 
             PopulateItemSlots(state);
 
@@ -34,7 +35,7 @@ namespace RogueIslands.Gameplay
             ref var selectionRand = ref state.Shop.SelectionRandom[state.Act];
             for (var i = 0; i < state.Shop.CardCount; i++)
             {
-                var booster = selectionRand.NextInt(0, 2) == 1;
+                var booster = selectionRand.NextDouble() > state.Shop.ConsumableSpawnChance;
                 if (booster)
                 {
                     ref var rand = ref state.Shop.BoosterSpawn[state.Act];

@@ -99,7 +99,6 @@ namespace RogueIslands.Gameplay
             _state.MoneyChanges.Clear();
 
             _view.GetUI().RefreshMoney();
-            _view.ShowShopScreen();
         }
 
         public void StartRound()

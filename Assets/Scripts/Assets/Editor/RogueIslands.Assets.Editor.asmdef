@@ -5,5 +5,8 @@
     "RogueIslands.Assets",
     "RogueIslands.DependencyInjection"
   ],
+  "includePlatforms": [
+    "Editor"
+  ],
   "overrideReferences": true
 }
