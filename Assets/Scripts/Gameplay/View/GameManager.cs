@@ -2,6 +2,7 @@
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using RogueIslands.Assets;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.View.Boosters;
@@ -20,11 +21,13 @@ namespace RogueIslands.Gameplay.View
     public class GameManager : Singleton<GameManager>, IGameView
     {
         private readonly IWindowOpener _windowOpener;
+        private readonly IAssetLoader _assetLoader;
 
         public GameState State { get; private set; }
 
-        public GameManager(GameState state, IWindowOpener windowOpener)
+        public GameManager(GameState state, IWindowOpener windowOpener, IAssetLoader assetLoader )
         {
+            _assetLoader = assetLoader;
             _windowOpener = windowOpener;
             _windowOpener.Open<GameUI>();
             State = state;
@@ -55,7 +58,7 @@ namespace RogueIslands.Gameplay.View
             }
             else if (instance is WorldBooster world)
             {
-                var booster = Object.Instantiate(Resources.Load<WorldBoosterView>(world.PrefabAddress), world.Position,
+                var booster = Object.Instantiate(_assetLoader.Load<WorldBoosterView>(world.PrefabAddress), world.Position,
                     world.Rotation);
                 booster.Initialize(world);
             }
@@ -76,7 +79,7 @@ namespace RogueIslands.Gameplay.View
 
         public void SpawnBuilding(Building data)
         {
-            var building = Object.Instantiate(Resources.Load<BuildingView>(data.PrefabAddress), data.Position,
+            var building = Object.Instantiate(_assetLoader.Load<BuildingView>(data.PrefabAddress), data.Position,
                 data.Rotation);
             building.transform.position += Vector3.up;
             building.transform.DOMove(data.Position, 0.3f)

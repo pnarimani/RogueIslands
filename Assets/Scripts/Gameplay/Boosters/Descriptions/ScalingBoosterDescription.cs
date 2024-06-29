@@ -18,13 +18,15 @@ namespace RogueIslands.Gameplay.Boosters.Descriptions
             if (item is not IBooster booster)
                 return string.Empty;
             var scoringAction = booster.GetEventAction<ScoringAction>();
-            var scalingAction = booster.GetEventAction<BoosterScalingAction>();
             
             var prefix = Prefix;
             
-            if(scalingAction.OneTime && scalingAction.Delay != null && scalingAction.Progress < scalingAction.Delay)
-                prefix = $"{prefix}\n({scalingAction.Progress}/{scalingAction.Delay})";
-            
+            if(booster.GetEventAction<BoosterScalingAction>() is {} scalingAction)
+            {
+                if(scalingAction.OneTime && scalingAction.Delay != null && scalingAction.Progress < scalingAction.Delay)
+                    prefix = $"{prefix}\n({scalingAction.Progress}/{scalingAction.Delay})";
+            }
+
             if (scoringAction.Products != null)
                 return $"{prefix}\n<color=blue>Current: {scoringAction.Products:0.##} products.";
             if (scoringAction.PlusMult != null)

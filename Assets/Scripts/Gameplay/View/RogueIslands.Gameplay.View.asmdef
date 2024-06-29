@@ -11,7 +11,8 @@
     "Unity.Cinemachine",
     "RogueIslands.UISystem",
     "RogueIslands.DependencyInjection",
-    "RogueIslands.View"
+    "RogueIslands.View",
+    "RogueIslands.Assets"
   ],
   "overrideReferences": true,
   "precompiledReferences": [
