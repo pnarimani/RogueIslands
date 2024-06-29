@@ -37,12 +37,12 @@ namespace RogueIslands.UISystem
 
         private Transform GetLayerTransform(UILayer layer)
         {
-            if (!_loadedRoots.TryGetValue(layer, out var layerTransform))
+            if (!_loadedRoots.TryGetValue(layer, out var layerTransform) || layerTransform == null)
             {
                 var root = _assetLoader.Load<GameObject>($"UISystem/{layer.Value}");
                 layerTransform = Object.Instantiate(root).transform;
                 layerTransform.name = layer.Value;
-                _loadedRoots.Add(layer, layerTransform);
+                _loadedRoots[layer] = layerTransform;
             }
 
             return layerTransform;
