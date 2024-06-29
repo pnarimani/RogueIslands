@@ -6,19 +6,22 @@ namespace RogueIslands.Gameplay.Boosters
     {
         public static T GetEventAction<T>(this IBooster booster) where T : GameAction
         {
-            if(booster.EventAction is T action)
+            return GetEvent<T>(booster.EventAction);
+        }
+
+        private static T GetEvent<T>(GameAction boosterEventAction) where T : GameAction
+        {
+            if(boosterEventAction is T action)
             {
                 return action;
             }
 
-            if (booster.EventAction is CompositeAction composite)
+            if (boosterEventAction is CompositeAction composite)
             {
-                foreach (var compositeAction in composite.Actions)
+                foreach (var sub in composite.Actions)
                 {
-                    if(compositeAction is T subAction)
-                    {
-                        return subAction;
-                    }
+                    if (GetEvent<T>(sub) is { } result)
+                        return result;
                 }
             }
 

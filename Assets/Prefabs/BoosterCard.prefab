@@ -165,6 +165,7 @@ MonoBehaviour:
   _descriptionBoxParent: {fileID: 3247091001552782063}
   _descriptionBoxPrefab: {fileID: 6584765328537110756, guid: d70c4d99d6dab4b448f46152753db9b7, type: 3}
   _showName: 0
+  _growToBottom: 1
 --- !u!114 &643227470352206402
 MonoBehaviour:
   m_ObjectHideFlags: 0

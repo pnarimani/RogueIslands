@@ -120,20 +120,34 @@ namespace RogueIslands.Gameplay.Boosters
                         },
                     },
                 },
-                // new()
-                // {
-                //     Name = "Egg",
-                //     Description = new LiteralDescription("Gains 3$ of sell value at the end of every round"),
-                //     BuyPrice = 2,
-                //     EventAction = new GainSellValueAction
-                //     {
-                //         Amount = 3,
-                //         Conditions = new IGameCondition[]
-                //         {
-                //             GameEventCondition.Create<RoundEnd>(),
-                //         },
-                //     },
-                // },
+                new()
+                {
+                    Name = "Rotten Egg",
+                    Description = new LiteralDescription("-20 products, gains 5$ of sell value at the end of the round."),
+                    BuyPrice = 2,
+                    EventAction = new CompositeAction()
+                    {
+                        Actions = new GameAction[]
+                        {
+                            new GainSellValueAction
+                            {
+                                Amount = 5,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<RoundEnd>(),
+                                },
+                            },
+                            new ScoringAction()
+                            {
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<DayEnd>(),
+                                },
+                                Products = -20,
+                            },
+                        }
+                    },
+                },
                 new()
                 {
                     Name = "Campfire",
@@ -695,8 +709,38 @@ namespace RogueIslands.Gameplay.Boosters
                             GameEventCondition.Create<PropertiesRestored>(),
                         },
                         CountMultiplier = 2,
-                    }
-                }
+                    },
+                },
+                new()
+                {
+                    Name = "Late Bloomer",
+                    Description =
+                        new ScalingBoosterDescription(
+                            "0.5x mult at the end of the day. After 5 rounds, turns into x5 mult"),
+                    BuyPrice = 3,
+                    SellPrice = 2,
+                    EventAction = new CompositeAction
+                    {
+                        Actions = new GameAction[]
+                        {
+                            new ScoringAction()
+                            {
+                                Conditions = new[] { GameEventCondition.Create<DayEnd>() },
+                                XMult = 0.5,
+                            },
+                            new BoosterScalingAction()
+                            {
+                                XMultChange = 4.5,
+                                Delay = 5,
+                                OneTime = true,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<RoundEnd>(),
+                                },
+                            },
+                        },
+                    },
+                },
             };
         }
 
