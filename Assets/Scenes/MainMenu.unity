@@ -962,9 +962,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'ROGUE
-
-    ISLANDS'
+  m_text: ROGUE ISLANDS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1d2e38dce3de3a84ca252d7603c40dd9, type: 2}
   m_sharedMaterial: {fileID: 3369255905621584777, guid: 1d2e38dce3de3a84ca252d7603c40dd9, type: 2}

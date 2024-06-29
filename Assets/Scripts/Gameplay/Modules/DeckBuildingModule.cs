@@ -15,13 +15,7 @@ namespace RogueIslands.Gameplay.Modules
                 .AsSelf()
                 .AsImplementedInterfaces();
             
-            var allTypes = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(x => x.FullName.Contains("RogueIslands"))
-                .SelectMany(x => x.GetTypes())
-                .Where(t => t.IsClass && !t.IsAbstract)
-                .ToList();
-
-            foreach (var handlerType in allTypes.Where(t => typeof(DeckActionHandler).IsAssignableFrom(t)))
+            foreach (var handlerType in TypeDatabase.GetProjectTypesOf<DeckActionHandler>())
             {
                 builder.RegisterType(handlerType).As<DeckActionHandler>();
             }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System.Linq;
 using RogueIslands.DependencyInjection;
 using Object = UnityEngine.Object;
 
@@ -11,10 +8,8 @@ namespace RogueIslands.View.Audio.FMOD
     {
         public void Load(IContainerBuilder builder)
         {
-            var types = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(x => x.FullName.Contains("RogueIslands.View.Audio"))
-                .SelectMany(x => x.GetTypes())
-                .Where(x => !x.IsAbstract && x.IsClass && x.GetCustomAttribute<CompilerGeneratedAttribute>() == null)
+            var types = TypeDatabase.GetProjectTypes()
+                .Where(x => x.Assembly.FullName.Contains("RogueIslands.View.Audio"))
                 .Where(x => !typeof(Object).IsAssignableFrom(x));
 
             foreach (var t in types)

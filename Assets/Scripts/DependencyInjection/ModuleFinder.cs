@@ -11,26 +11,16 @@ namespace RogueIslands.DependencyInjection
 
         public static IEnumerable<IModule> GetGameplayModules()
         {
-            return GetModuleTypes()
+            return TypeDatabase.GetProjectTypesOf<IModule>()
                 .Where(IsGameplayModule)
                 .Select(x => (IModule)Activator.CreateInstance(x));
         }
         
         public static IEnumerable<IModule> GetProjectModules()
         {
-            return GetModuleTypes()
+            return TypeDatabase.GetProjectTypesOf<IModule>()
                 .Where(x => !IsGameplayModule(x))
                 .Select(x => (IModule)Activator.CreateInstance(x));
-        }
-
-        private static IEnumerable<Type> GetModuleTypes()
-        {
-#if UNITY_EDITOR
-            return UnityEditor.TypeCache.GetTypesDerivedFrom<IModule>();
-#endif
-            return AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(x => x.GetTypes())
-                .Where(x => x.IsSubclassOf(typeof(IModule)));
         }
     }
 }

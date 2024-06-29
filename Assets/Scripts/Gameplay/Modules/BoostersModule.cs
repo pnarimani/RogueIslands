@@ -10,18 +10,13 @@ namespace RogueIslands.Gameplay.Modules
     {
         public void Load(IContainerBuilder builder)
         {
-            var allTypes = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(x => x.GetTypes())
-                .Where(t => t.IsClass && !t.IsAbstract)
-                .ToList();
-
-            foreach (var evalType in allTypes.Where(t => typeof(GameConditionEvaluator).IsAssignableFrom(t)))
+            foreach (var evalType in TypeDatabase.GetProjectTypesOf<GameConditionEvaluator>())
             {
                 builder.RegisterType(evalType)
                     .As<GameConditionEvaluator>();
             }
 
-            foreach (var execType in allTypes.Where(t => typeof(GameActionExecutor).IsAssignableFrom(t)))
+            foreach (var execType in TypeDatabase.GetProjectTypesOf<GameActionExecutor>())
             {
                 builder.RegisterType(execType)
                     .As<GameActionExecutor>();
