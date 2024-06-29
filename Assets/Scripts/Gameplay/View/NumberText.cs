@@ -30,7 +30,7 @@ namespace RogueIslands.Gameplay.View
             else
             {
                 _text.text = string.IsNullOrEmpty(_format)
-                    ? number.ToString(CultureInfo.InvariantCulture)
+                    ? number.ToString("0.##",CultureInfo.InvariantCulture)
                     : string.Format(_format, number);
             }
         }
