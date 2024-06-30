@@ -51,15 +51,6 @@ namespace RogueIslands.Gameplay.View
         public bool IsValidPlacement(Transform building)
         {
             var bounds = building.GetCollisionBounds();
-
-            foreach (var other in ObjectRegistry.GetBuildings())
-            {
-                if (other.transform == building)
-                    continue;
-
-                if (bounds.Intersects(other.transform.GetCollisionBounds()))
-                    return false;
-            }
             
             var min = bounds.min;
             var max = bounds.max;
@@ -77,10 +68,16 @@ namespace RogueIslands.Gameplay.View
                 new(_bottomRight, Vector3.down),
             };
 
+            float? previousHitDistance = null;
             foreach (var ray in rays)
             {
-                if (!Physics.Raycast(ray, out _, 1, _groundMask | _buildingMask))
+                if (!Physics.Raycast(ray, out var hit, 20, _groundMask | _buildingMask))
                     return false;
+
+                if (previousHitDistance.HasValue && Mathf.Abs(hit.distance - previousHitDistance.Value) > 1f)
+                    return false;
+                
+                previousHitDistance = hit.distance;
             }
 
             return true;
