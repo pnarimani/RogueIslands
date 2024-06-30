@@ -19,7 +19,7 @@ namespace RogueIslands.Gameplay.DeckBuilding.ActionHandlers
                     _ => throw new ArgumentOutOfRangeException(),
                 };
                 
-                building.PrefabAddress = PrefabAddressProvider.GetPrefabAddress(building);
+                building.PrefabAddress = BuildingPrefabAddressProvider.GetPrefabAddress(building);
             }
         }
     }

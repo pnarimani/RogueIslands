@@ -2,7 +2,7 @@
 
 namespace RogueIslands.Gameplay.Buildings
 {
-    public static class PrefabAddressProvider
+    public static class BuildingPrefabAddressProvider
     {
         public static string GetPrefabAddress(string colorName, int catIndex, int sizeIndex)
         {
