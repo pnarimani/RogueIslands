@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DeckBuilding;
+using RogueIslands.Gameplay.View.Feedbacks;
 using RogueIslands.UISystem;
 using TMPro;
 using UnityEngine;
@@ -13,63 +16,29 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
     {
         [SerializeField] private BuildingCardView _buildingCardPrefab;
         [SerializeField] private TextMeshProUGUI _title, _description;
+        [SerializeField] private Transform _selectorParent;
+        [SerializeField] private List<ConsumableTargetSelection> _selectors;
         [SerializeField] private Button _submit;
-        [SerializeField] private RectTransform[] _slots;
         [SerializeField] private CardListView _buildingCardList;
+        [SerializeField] private PopupOpeningFeedback _openingFeedback;
 
         private readonly List<Building> _selectedBuildings = new();
         private Consumable _consumable;
-
-        public event Action<IReadOnlyList<Building>> BuildingsSelected;
+        private ConsumableTargetSelection _currentSelector;
 
         private void Awake()
         {
-            _submit.onClick.AddListener(() =>
-            {
-                BuildingsSelected?.Invoke(_selectedBuildings);
-                GameUI.Instance.RefreshDeckText();
-                Destroy(gameObject);
-            });
+            _submit.onClick.AddListener(() => { OnSubmitClicked().Forget(); });
+            _openingFeedback.PlayOpening();
+        }
 
-            var buildings = new List<Building>();
-            var state = GameManager.Instance.State;
-            ref var rand = ref state.DeckBuilding.BuildingSelectionRandom;
-            var desiredCount = Mathf.Min(state.HandSize, state.Buildings.Deck.Count);
-            while (buildings.Count < desiredCount)
-            {
-                var b = state.Buildings.Deck.SelectRandom(ref rand);
-                if (!buildings.Contains(b))
-                    buildings.Add(b);
-            }
-
-            foreach (var b in buildings)
-            {
-                var card = Instantiate(_buildingCardPrefab, _buildingCardList.Content);
-                card.Initialize(b);
-                var cardListItem = card.GetComponent<CardListItem>();
-                cardListItem.AllowReorder = true;
-                cardListItem.DragEnded += () =>
-                {
-                    foreach (var slot in _slots)
-                    {
-                        if (slot.childCount > 0)
-                        {
-                            continue;
-                        }
-                        
-                        if (slot.GetWorldRect().Overlaps(cardListItem.transform.GetWorldRect()))
-                        {
-                            _buildingCardList.Remove(cardListItem);
-                            cardListItem.transform.SetParent(slot, false);
-                            cardListItem.transform.localPosition = Vector3.zero;
-                            cardListItem.ShouldAnimateToTarget = false;
-                            _selectedBuildings.Add(b);
-                        }
-                    }
-                };
-                Destroy(card);
-                _buildingCardList.Add(cardListItem);
-            }
+        private async UniTask OnSubmitClicked()
+        {
+            _submit.interactable = false;
+            await _currentSelector.PlaySubmitAnimation(_consumable, _selectedBuildings);
+            GameUI.Instance.RefreshDeckText();
+            await _openingFeedback.PlayClosing();
+            Destroy(gameObject);
         }
 
         private void Update()
@@ -82,11 +51,74 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
             _consumable = consumable;
             _title.text = consumable.Name;
             _description.text = consumable.Description.Get(consumable);
-            
-            for (var i = 0; i < _slots.Length; i++)
+
+            InitializeSelector(consumable);
+
+            using var buildings = CreateBuildingList();
+
+            foreach (var building in buildings)
             {
-                _slots[i].gameObject.SetActive(i < consumable.Action.MaxCardsRequired);
+                var cardComponent = Instantiate(_buildingCardPrefab, _buildingCardList.Content);
+                cardComponent.Initialize(building);
+                cardComponent.CanPlaceBuildings = false;
+                var cardListItem = cardComponent.GetComponent<CardListItem>();
+                cardListItem.AllowReorder = true;
+                cardListItem.DragEnded += () => OnCardDragEnded(cardListItem, building);
+                _buildingCardList.Add(cardListItem);
             }
+        }
+
+        private void InitializeSelector(Consumable consumable)
+        {
+            var selectorPrefab = _selectors.Find(x => x.CanHandle(consumable));
+            if (selectorPrefab == null)
+            {
+                Debug.LogError($"No handler found for consumable {consumable.Name}");
+                return;
+            }
+
+            _currentSelector = Instantiate(selectorPrefab, _selectorParent, false);
+        }
+
+        private void OnCardDragEnded(CardListItem cardListItem, Building building)
+        {
+            foreach (var slot in _currentSelector.GetSlots())
+            {
+                if (slot.Transform.childCount > 0)
+                {
+                    continue;
+                }
+
+                if (slot.Transform.GetWorldRect().Overlaps(cardListItem.transform.GetWorldRect()))
+                {
+                    _buildingCardList.Remove(cardListItem);
+                    cardListItem.transform.SetParent(slot.Transform, false);
+                    cardListItem.transform.localPosition = Vector3.zero;
+                    cardListItem.ShouldAnimateToTarget = false;
+                    _selectedBuildings.Add(building);
+                    return;
+                }
+            }
+
+            if (cardListItem.Owner == null)
+                _buildingCardList.Add(cardListItem);
+        }
+
+        private static PooledList<Building> CreateBuildingList()
+        {
+            var state = GameManager.Instance.State;
+            ref var rand = ref state.DeckBuilding.BuildingSelectionRandom;
+            var desiredCount = Mathf.Min(state.HandSize, state.Buildings.Deck.Count);
+
+            var buildings = PooledList<Building>.CreatePooled();
+            while (buildings.Count < desiredCount)
+            {
+                var b = state.Buildings.Deck.SelectRandom(ref rand);
+                if (!buildings.Contains(b))
+                    buildings.Add(b);
+            }
+
+            return buildings;
         }
     }
 }

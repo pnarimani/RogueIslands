@@ -169,7 +169,8 @@ MonoBehaviour:
   _continue: {fileID: 5206807362216368531}
   _reroll: {fileID: 5525050641940603343}
   _rerollText: {fileID: 4516900750533135116}
-  _bg: {fileID: 3568742478759809716}
+  _openingFeedback:
+    _bg: {fileID: 3568742478759809716}
 --- !u!1 &5943528165706821324
 GameObject:
   m_ObjectHideFlags: 0

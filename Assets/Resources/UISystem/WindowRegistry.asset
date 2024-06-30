@@ -64,8 +64,9 @@ TextAsset:
     IGameUI: Windows/GameplayHUD.prefab
 
     RogueIslands.Gameplay.View.DeckBuilding.BuildingSelectorPopup:
-    Windows/BuildingSelectionPopup.prefab
+    Windows/DeckBuilding/BuildingSelectionPopup.prefab
 
-    BuildingSelectorPopup: Windows/BuildingSelectionPopup.prefab
+    BuildingSelectorPopup:
+    Windows/DeckBuilding/BuildingSelectionPopup.prefab
 
 '

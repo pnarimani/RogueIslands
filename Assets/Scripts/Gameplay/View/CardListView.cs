@@ -39,7 +39,8 @@ namespace RogueIslands.Gameplay.View
         {
             if (component is not CardListItem item)
                 item = component.GetComponent<CardListItem>();
-            
+
+            item.Owner = null;
             _items.Remove(item);
         }
 

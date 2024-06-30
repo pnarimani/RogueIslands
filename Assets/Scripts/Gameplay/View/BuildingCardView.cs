@@ -24,6 +24,8 @@ namespace RogueIslands.Gameplay.View
         private readonly BuildingViewFactory _buildingViewFactory = new();
         private IBuildingCardAudio _audio;
 
+        public bool CanPlaceBuildings { get; set; } = true;
+
         public Building Data { get; private set; }
 
         public void Initialize(Building data)
@@ -50,6 +52,9 @@ namespace RogueIslands.Gameplay.View
 
         private void Update()
         {
+            if (!CanPlaceBuildings)
+                return;
+            
             if (Input.GetMouseButtonUp(1))
             {
                 if (_isSelected)
@@ -88,6 +93,9 @@ namespace RogueIslands.Gameplay.View
 
         private void OnWorldClicked()
         {
+            if (!CanPlaceBuildings)
+                return;
+            
             if (_buildingPreview == null)
                 return;
 
@@ -113,6 +121,9 @@ namespace RogueIslands.Gameplay.View
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (!CanPlaceBuildings)
+                return;
+            
             if (PlayButtonHandler.Instance.IsPlaying)
                 return;
 

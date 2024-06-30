@@ -4,6 +4,7 @@ using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.DeckBuilding;
 using RogueIslands.Gameplay.View.Boosters;
 using RogueIslands.Gameplay.View.DeckBuilding;
+using RogueIslands.Gameplay.View.Feedbacks;
 using RogueIslands.UISystem;
 using TMPro;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace RogueIslands.Gameplay.View.Shop
         [SerializeField] private CardListView _cardParent;
         [SerializeField] private Button _continue, _reroll;
         [SerializeField] private TextMeshProUGUI _rerollText;
-        [SerializeField] private RectTransform _bg;
+        [SerializeField] private PopupOpeningFeedback _openingFeedback;
 
         private static ShopState Shop => GameManager.Instance.State.Shop;
 
@@ -33,9 +34,7 @@ namespace RogueIslands.Gameplay.View.Shop
 
         private void Start()
         {
-            _bg.DOLocalMoveY(-Screen.height, 0.5f)
-                .From()
-                .SetEase(Ease.OutBack);
+            _openingFeedback.PlayOpening();
         }
 
         private void PopulateShop()
@@ -103,15 +102,11 @@ namespace RogueIslands.Gameplay.View.Shop
             PopulateShop();
         }
 
-        private void OnContinueClicked()
+        private async void OnContinueClicked()
         {
-            _bg.DOLocalMoveY(-Screen.height, 0.5f)
-                .SetEase(Ease.InBack)
-                .OnComplete(() =>
-                {
-                    GameManager.Instance.ShowRoundsSelectionScreen();
-                    Destroy(gameObject);
-                });
+            await _openingFeedback.PlayClosing();
+            GameManager.Instance.ShowRoundsSelectionScreen();
+            Destroy(gameObject);
         }
 
         private void InstantiateConsumableCard(ShopItem item, Consumable consumable)

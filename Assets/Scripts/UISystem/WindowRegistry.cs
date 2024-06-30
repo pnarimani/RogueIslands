@@ -19,7 +19,7 @@ namespace RogueIslands.UISystem
             _assetLoader = assetLoader;
         }
 
-        public string GetKey<T>()
+        public string GetAssetKey<T>()
         {
             _paths ??= BuildPaths();
             if (_paths.TryGetValue(typeof(T).Name, out var path))

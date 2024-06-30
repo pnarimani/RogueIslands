@@ -31,7 +31,7 @@ namespace RogueIslands.Gameplay.View
 
         private void Update()
         {
-            if (ShouldAnimateToTarget)
+            if (ShouldAnimateToTarget && Owner != null)
             {
                 transform.position = Vector2.Lerp(transform.position, TargetPosition, Time.deltaTime * _speed);
             }
@@ -54,8 +54,6 @@ namespace RogueIslands.Gameplay.View
         {
             if (!AllowReorder)
                 return;
-            if (Owner == null)
-                return;
 
             ShouldAnimateToTarget = false;
         }
@@ -64,19 +62,16 @@ namespace RogueIslands.Gameplay.View
         {
             if (!AllowReorder)
                 return;
-            if (Owner == null)
-                return;
 
             transform.position = eventData.position;
 
-            Owner.Reorder(this);
+            if (Owner != null) 
+                Owner.Reorder(this);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
             if (!AllowReorder)
-                return;
-            if (Owner == null)
                 return;
 
             ShouldAnimateToTarget = true;

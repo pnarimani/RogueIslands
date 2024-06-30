@@ -2,6 +2,6 @@
 {
     public interface IWindowRegistry
     {
-        string GetKey<T>();
+        string GetAssetKey<T>();
     }
 }

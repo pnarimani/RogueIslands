@@ -22,7 +22,7 @@ namespace RogueIslands.UISystem
                 layer = UILayer.Default;
 
             var layerTransform = GetLayerTransform(layer);
-            var path = _registry.GetKey<T>();
+            var path = _registry.GetAssetKey<T>();
             var prefab = _assetLoader.Load<GameObject>(path);
             var gameObject = Object.Instantiate(prefab, layerTransform, false);
             AttachNestedCanvas(gameObject, layerTransform);

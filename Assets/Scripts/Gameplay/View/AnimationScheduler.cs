@@ -20,7 +20,7 @@ namespace RogueIslands.Gameplay.View
             if (time < 0)
                 throw new ArgumentOutOfRangeException(nameof(time));
 
-            Instance._delay += time * Multiplier;
+            Instance._delay += time;
         }
 
         public static void EnsureExtraTime(float time)
@@ -28,7 +28,7 @@ namespace RogueIslands.Gameplay.View
             if (time < 0)
                 throw new ArgumentOutOfRangeException(nameof(time));
 
-            Instance._ensureTime = Instance._delay + time * Multiplier;
+            Instance._ensureTime = Instance._delay + time;
         }
 
         public static float GetAnimationTime()
@@ -36,5 +36,10 @@ namespace RogueIslands.Gameplay.View
 
         public static float GetExtraTime()
             => MathF.Max(Instance._ensureTime, Instance._delay);
+
+        public static float Scale(float f)
+        {
+            return f * Multiplier;
+        }
     }
 }
