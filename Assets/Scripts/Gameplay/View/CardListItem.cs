@@ -1,10 +1,13 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace RogueIslands.Gameplay.View
 {
-    public class CardListItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class CardListItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler,
+        IPointerUpHandler
     {
         [SerializeField] private float _speed = 10;
         [SerializeField] private bool _allowReorder;
@@ -44,6 +47,11 @@ namespace RogueIslands.Gameplay.View
                 return;
 
             ShouldAnimateToTarget = false;
+
+            var canvas = gameObject.AddComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = GetComponentInParent<Canvas>().sortingOrder + 1;
+            gameObject.AddComponent<GraphicRaycaster>();
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -53,7 +61,7 @@ namespace RogueIslands.Gameplay.View
 
             transform.position = eventData.position;
 
-            if (Owner != null) 
+            if (Owner != null)
                 Owner.Reorder(this);
         }
 
@@ -63,8 +71,26 @@ namespace RogueIslands.Gameplay.View
                 return;
 
             ShouldAnimateToTarget = true;
+            
+            Destroy(GetComponent<GraphicRaycaster>());
+            Destroy(GetComponent<Canvas>());
 
             DragEnded?.Invoke();
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (!AllowReorder)
+                return;
+            transform.DOScale(1.2f, 0.2f)
+                .SetEase(Ease.OutBack);
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            if (!AllowReorder)
+                return;
+            transform.DOScale(1f, 0.2f);
         }
     }
 }
