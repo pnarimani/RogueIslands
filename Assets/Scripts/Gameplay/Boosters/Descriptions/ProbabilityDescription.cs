@@ -16,7 +16,8 @@ namespace RogueIslands.Gameplay.Boosters.Descriptions
         {
             if(item is not IBooster booster)
                 return string.Empty;
-            var probability = booster.EventAction.GetAllConditions().OfType<ProbabilityCondition>().First();
+            using var conditions = booster.EventAction.GetAllConditions();
+            var probability = conditions.OfType<ProbabilityCondition>().First();
             var text = $"{probability.FavorableOutcome} in {probability.TotalOutcomes} chance";
             return string.Format(Format, text);
         }

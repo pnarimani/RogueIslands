@@ -15,4 +15,4 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
             });
         }
     }
-}
+} 

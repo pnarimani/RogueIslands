@@ -24,7 +24,8 @@ namespace RogueIslands.Gameplay.Boosters.Executors
 
         private void ModifySingleBooster(IBooster booster)
         {
-            foreach (var c in booster.EventAction.GetAllConditions().OfType<TCondition>()) 
+            using var conditions = booster.EventAction.GetAllConditions();
+            foreach (var c in conditions.OfType<TCondition>()) 
                 ModifyCondition(c);
         }
 

@@ -1,23 +1,28 @@
-﻿using System.Collections.Generic;
-using RogueIslands.Gameplay.Boosters.Actions;
+﻿using RogueIslands.Gameplay.Boosters.Actions;
 using RogueIslands.Gameplay.Boosters.Conditions;
 
 namespace RogueIslands.Gameplay
 {
     public static class GameActionExtensions
     {
-        public static List<IGameCondition> GetAllConditions(this GameAction action)
+        public static PooledList<IGameCondition> GetAllConditions(this GameAction action)
         {
-            var result = new List<IGameCondition>();
-            foreach (var c in action.Conditions)
+            var result = PooledList<IGameCondition>.CreatePooled();
+            if (action == null)
+                return result;
+            
+            if (action.Conditions != null)
             {
-                if (c is OrCondition or)
+                foreach (var c in action.Conditions)
                 {
-                    result.AddRange(or.Conditions);
-                }
-                else
-                {
-                    result.Add(c);
+                    if (c is OrCondition or)
+                    {
+                        result.AddRange(or.Conditions);
+                    }
+                    else
+                    {
+                        result.Add(c);
+                    }
                 }
             }
 
@@ -25,7 +30,8 @@ namespace RogueIslands.Gameplay
             {
                 foreach (var innerAction in composite.Actions)
                 {
-                    result.AddRange(GetAllConditions(innerAction));
+                    using var innerConditions = GetAllConditions(innerAction);
+                    result.AddRange(innerConditions);
                 }
             }
 

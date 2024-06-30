@@ -33,7 +33,7 @@ namespace RogueIslands.Gameplay.Boosters
                             GameEventCondition.Create<BuildingScored>(),
                             new BuildingCategoryCondition
                             {
-                                Categories = new[] { Category.Cat1 },
+                                Categories = new[] { Category.Cat3 },
                             },
                             new ProbabilityCondition
                             {

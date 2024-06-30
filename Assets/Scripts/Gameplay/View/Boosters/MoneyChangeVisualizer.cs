@@ -27,7 +27,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             UniTask task;
             if (responsibleBuilding != null)
             {
-                if (responsibleBuilding.Id.IsDefault())
+                if (responsibleBuilding.ClusterId.IsDefault())
                 {
                     var view = ObjectRegistry.GetBuildingCards().First(b => b.Data == responsibleBuilding);
                     task = view.BuildingMadeMoney(action.Change);

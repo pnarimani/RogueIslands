@@ -15,7 +15,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             var countInside = state.PlacedDownBuildings
                 .Count(b => (b.Position - worldBooster.Position).magnitude <= worldBooster.Range);
             var countOutside = state.PlacedDownBuildings
-                .Count(b => (b.Position - worldBooster.Position).magnitude <= worldBooster.Range);
+                .Count(b => (b.Position - worldBooster.Position).magnitude > worldBooster.Range);
 
             SetBoosterToStartingStats(action, scoring);
             ProcessInsideBuildings(action, scoring, countInside);
