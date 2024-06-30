@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2282b14ac8ba428fa5cb0403fa6a0f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetConsumable: Statue
+  _targetConsumable: Farming
   Slots:
   - ShouldFlipOnSubmit: 1
     Transform: {fileID: 7753058266061015129}

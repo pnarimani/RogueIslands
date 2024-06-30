@@ -8,12 +8,8 @@ namespace RogueIslands.Gameplay.View
     {
         [SerializeField] private float _speed = 10;
         [SerializeField] private bool _allowReorder;
-        [SerializeField] private Transform _extraAnimationParent;
-
         public bool ShouldAnimateToTarget { get; set; } = false;
         public Vector2 TargetPosition { get; set; }
-        public Vector2 ExtraAnimationPositionOffset { get; set; }
-        public Quaternion ExtraAnimationRotationOffset { get; set; }
         public CardListView Owner { get; set; }
 
         public event Action DragEnded;
@@ -34,14 +30,6 @@ namespace RogueIslands.Gameplay.View
             if (ShouldAnimateToTarget && Owner != null)
             {
                 transform.position = Vector2.Lerp(transform.position, TargetPosition, Time.deltaTime * _speed);
-            }
-
-            if (_extraAnimationParent != null)
-            {
-                _extraAnimationParent.localRotation = Quaternion.Slerp(_extraAnimationParent.localRotation,
-                    ExtraAnimationRotationOffset, Time.deltaTime * _speed);
-                _extraAnimationParent.localPosition = Vector2.Lerp(_extraAnimationParent.localPosition,
-                    ExtraAnimationPositionOffset, Time.deltaTime * _speed);
             }
         }
 
