@@ -50,6 +50,7 @@ namespace RogueIslands.Gameplay.View
 
         public bool IsValidPlacement(Transform building)
         {
+            return true;
             var bounds = building.GetCollisionBounds();
             
             var min = bounds.min;
