@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Gameplay
 {
-    public class Seed
+    public sealed class Seed
     {
         public readonly string Value;
 
@@ -17,6 +17,24 @@
                 seed[i] = chars[random.Next(chars.Length)];
             }
             return new Seed(new string(seed));
+        }
+
+        private bool Equals(Seed other)
+        {
+            return Value == other.Value;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Seed)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (Value != null ? Value.GetHashCode() : 0);
         }
     }
 }

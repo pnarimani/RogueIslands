@@ -5,6 +5,7 @@ using DG.Tweening;
 using RogueIslands.Assets;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
+using RogueIslands.Gameplay.Rand;
 using RogueIslands.Gameplay.View.Boosters;
 using RogueIslands.Gameplay.View.DeckBuilding;
 using RogueIslands.Gameplay.View.DeckPreview;
@@ -14,7 +15,6 @@ using RogueIslands.Gameplay.View.Shop;
 using RogueIslands.UISystem;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using Random = Unity.Mathematics.Random;
 
 namespace RogueIslands.Gameplay.View
 {
@@ -159,9 +159,9 @@ namespace RogueIslands.Gameplay.View
         public void ShowRoundsSelectionScreen() => _windowOpener.Open<RoundSelectionScreen>();
         public void ShowDeckPreview() => _windowOpener.Open<DeckPreviewScreen>();
 
-        public bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, ref Random positionRandom,
+        public bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, RogueRandom positionRandom,
             out Vector3 point) =>
-            WorldBoosterSpawnPointProvider.TryGet(blueprint, ref positionRandom, out point);
+            WorldBoosterSpawnPointProvider.TryGet(blueprint, positionRandom.ForAct(State.Act), out point);
 
         public IDeckBuildingView GetDeckBuildingView() => DeckBuildingView.Instance;
 

@@ -32,19 +32,19 @@ namespace RogueIslands.Gameplay
 
         private static void PopulateItemSlots(GameState state)
         {
-            ref var selectionRand = ref state.Shop.SelectionRandom[state.Act];
+            var selectionRand = state.Shop.SelectionRandom.ForAct(state.Act);
             for (var i = 0; i < state.Shop.CardCount; i++)
             {
-                var booster = selectionRand.NextDouble() > state.Shop.ConsumableSpawnChance;
+                var booster = selectionRand.NextFloat() > state.Shop.ConsumableSpawnChance;
                 if (booster)
                 {
-                    ref var rand = ref state.Shop.BoosterSpawn[state.Act];
-                    state.Shop.ItemsForSale[i] = state.AvailableBoosters.SelectRandom(ref rand);
+                    var randomForAct = state.Shop.BoosterSpawn.ForAct(state.Act);
+                    state.Shop.ItemsForSale[i] = state.AvailableBoosters.SelectRandom(randomForAct);
                 }
                 else
                 {
-                    ref var rand = ref state.Shop.CardPackSpawn[state.Act];
-                    state.Shop.ItemsForSale[i] = state.DeckBuilding.AllConsumables.SelectRandom(ref rand);
+                    var randomForAct = state.Shop.CardPackSpawn.ForAct(state.Act);
+                    state.Shop.ItemsForSale[i] = state.DeckBuilding.AllConsumables.SelectRandom(randomForAct);
                 }
             }
         }

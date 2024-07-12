@@ -8,8 +8,8 @@ using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DeckBuilding;
 using RogueIslands.Gameplay.GameEvents;
+using RogueIslands.Gameplay.Rand;
 using RogueIslands.Serialization;
-using Random = Unity.Mathematics.Random;
 
 namespace RogueIslands.Tests
 {
@@ -70,10 +70,7 @@ namespace RogueIslands.Tests
                 ScoringState = null,
                 Buildings = new BuildingsState
                 {
-                    ShufflingRandom = new Random[]
-                    {
-                        Random.CreateFromIndex(23),
-                    },
+                    ShufflingRandom = new RogueRandom(3245),
                     Deck = inGameBuildings ,
                     HandPointer = 0,
                     All = defaultBuildings,
@@ -91,32 +88,18 @@ namespace RogueIslands.Tests
                         new Consumable() { Name = "Consumable" },
                         new BoosterCard() { Name = "Booseter" },
                     },
-                    BoosterSpawn = new Random[]
-                    {
-                        Random.CreateFromIndex(1),
-                        Random.CreateFromIndex(2),
-                        Random.CreateFromIndex(3),
-                    },
-                    BoosterAntiDuplicate = new Random[]
-                    {
-                        Random.CreateFromIndex(4),
-                        Random.CreateFromIndex(5),
-                        Random.CreateFromIndex(6),
-                    },
-                    CardPackSpawn = new Random[]
-                    {
-                        Random.CreateFromIndex(7),
-                        Random.CreateFromIndex(8),
-                        Random.CreateFromIndex(9678),
-                    }
+                    SelectionRandom = new RogueRandom(523),
+                    BoosterSpawn = new RogueRandom(232),
+                    BoosterAntiDuplicate = new RogueRandom(423),
+                    CardPackSpawn = new RogueRandom(234),
                 },
                 Result = GameResult.InProgress,
                 WorldBoosters = new WorldBoostersState
                 {
-                    CountRandom = Random.CreateFromIndex(54),
-                    SpawnRandom = Random.CreateFromIndex(54),
-                    SelectionRandom = Random.CreateFromIndex(54),
-                    PositionRandom = Random.CreateFromIndex(54),
+                    CountRandom = new RogueRandom(324),
+                    SpawnRandom = new RogueRandom(54),
+                    SelectionRandom = new RogueRandom(54),
+                    PositionRandom = new RogueRandom(54),
                     SpawnChance = 23230,
                     Count = new MinMax(324, 3545),
                     SpawnedBoosters = new List<WorldBooster>()

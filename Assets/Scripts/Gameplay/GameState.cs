@@ -3,6 +3,7 @@ using System.Linq;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.GameEvents;
+using RogueIslands.Gameplay.Rand;
 
 namespace RogueIslands.Gameplay
 {
@@ -47,5 +48,7 @@ namespace RogueIslands.Gameplay
         public GameResult Result;
 
         public WorldBoostersState WorldBoosters;
+
+        public Dictionary<string, RogueRandom> KeyedRandoms = new();
     }
 }

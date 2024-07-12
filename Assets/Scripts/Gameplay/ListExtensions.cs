@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Random = Unity.Mathematics.Random;
+using RogueIslands.Gameplay.Rand;
 
 namespace RogueIslands.Gameplay
 {
     public static class ListExtensions
     {
-        public static void Shuffle<T>(this IList<T> list, ref Random random)
+        public static void Shuffle<T>(this IList<T> list, RandomForAct random)
         {
             var n = list.Count;
             while (n > 1)
@@ -16,7 +16,7 @@ namespace RogueIslands.Gameplay
             }
         }
 
-        public static T SelectRandom<T>(this IReadOnlyList<T> list, ref Random rand)
+        public static T SelectRandom<T>(this IReadOnlyList<T> list, RandomForAct rand)
         {
             return list[rand.NextInt(list.Count)];
         }

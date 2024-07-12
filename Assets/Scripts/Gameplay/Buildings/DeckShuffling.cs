@@ -2,7 +2,7 @@
 {
     public static class DeckShuffling
     {
-        public static void ShuffleDeck(this GameState state) 
-            => state.Buildings.Deck.Shuffle(ref state.Buildings.ShufflingRandom[state.Act]);
+        public static void ShuffleDeck(this GameState state)
+            => state.Buildings.Deck.Shuffle(state.Buildings.ShufflingRandom.ForAct(state.Act));
     }
 }

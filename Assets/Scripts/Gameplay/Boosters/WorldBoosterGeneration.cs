@@ -19,19 +19,19 @@ namespace RogueIslands.Gameplay.Boosters
         public void GenerateWorldBoosters()
         {
             var boosters = _state.WorldBoosters;
-            var count = boosters.Count.GetRandom(boosters.CountRandom);
+            var count = boosters.Count.GetInRange(boosters.CountRandom.ForAct(_state.Act));
 
             count -= boosters.SpawnedBoosters.Count;
             
             for (var i = 0; i < count; i++)
             {
-                if (boosters.SpawnRandom.NextFloat() > boosters.SpawnChance)
+                if (boosters.SpawnRandom.ForAct(_state.Act).NextFloat() > boosters.SpawnChance)
                     continue;
                 
-                var index = boosters.SelectionRandom.NextInt(boosters.All.Count);
+                var index = boosters.SelectionRandom.ForAct(_state.Act).NextInt(boosters.All.Count);
                 var blueprint = boosters.All[index];
                 
-                if (!_view.TryGetWorldBoosterSpawnPoint(blueprint, ref boosters.PositionRandom, out var point))
+                if (!_view.TryGetWorldBoosterSpawnPoint(blueprint, boosters.PositionRandom, out var point))
                     return;
 
                 var booster = _cloner.Clone(blueprint);

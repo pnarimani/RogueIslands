@@ -1,4 +1,4 @@
-﻿using Unity.Mathematics;
+﻿using RogueIslands.Gameplay.Rand;
 
 namespace RogueIslands.Gameplay
 {
@@ -9,9 +9,9 @@ namespace RogueIslands.Gameplay
         public int CardCount = 2;
         public float ConsumableSpawnChance = 0.25f;
         public IPurchasableItem[] ItemsForSale;
-        public Random[] SelectionRandom;
-        public Random[] BoosterSpawn;
-        public Random[] BoosterAntiDuplicate;
-        public Random[] CardPackSpawn;
+        public RogueRandom SelectionRandom;
+        public RogueRandom BoosterSpawn;
+        public RogueRandom BoosterAntiDuplicate;
+        public RogueRandom CardPackSpawn;
     }
 }

@@ -5,8 +5,9 @@ using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Boosters.Evaluators;
 using RogueIslands.Gameplay.Boosters.Executors;
 using RogueIslands.Gameplay.Buildings;
-using RogueIslands.Gameplay.DeckBuilding;
+using RogueIslands.Gameplay.Rand;
 using RogueIslands.Gameplay.Rollback;
+using UnityEngine;
 
 namespace RogueIslands.Gameplay.Modules
 {
@@ -16,23 +17,24 @@ namespace RogueIslands.Gameplay.Modules
         {
             builder.RegisterInstance(Seed.GenerateRandom())
                 .IfNotRegistered(typeof(Seed));
-            
-            builder.Register(c => new Random(c.Resolve<Seed>().GetHashCode()))
-                .SingleInstance();
-            
-            builder.Register((c) => c.Resolve<Random>().NextRandom())
-                .InstancePerDependency();
-            
-            builder.Register(c => GameFactory.NewGame(c.Resolve<Random>()))
+
+            builder.Register(c =>
+                {
+                    var seed = (uint)c.Resolve<Seed>().GetHashCode();
+                    var seedRandom = new RogueRandom(seed);
+                    return GameFactory.NewGame(seedRandom);
+                })
                 .SingleInstance()
                 .AsSelf();
 
             RegisterController<PlayController>(builder);
             RegisterController<EventController>(builder).AsImplementedInterfaces();
             RegisterController<GameActionController>(builder)
-                .OnActivated((container, instance) => instance.SetExecutors(container.Resolve<IReadOnlyList<GameActionExecutor>>()));
+                .OnActivated((container, instance) =>
+                    instance.SetExecutors(container.Resolve<IReadOnlyList<GameActionExecutor>>()));
             RegisterController<GameConditionsController>(builder)
-                .OnActivated((container, instance) => instance.SetEvaluators(container.Resolve<IReadOnlyList<GameConditionEvaluator>>()));
+                .OnActivated((container, instance) =>
+                    instance.SetEvaluators(container.Resolve<IReadOnlyList<GameConditionEvaluator>>()));
             RegisterController<BoosterManagement>(builder);
             RegisterController<ResetController>(builder);
             RegisterController<WorldBoosterGeneration>(builder);

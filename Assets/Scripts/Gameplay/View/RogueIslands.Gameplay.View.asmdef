@@ -4,7 +4,6 @@
   "references": [
     "RogueIslands",
     "Unity.TextMeshPro",
-    "Unity.Mathematics",
     "DOTween.Modules",
     "UniTask",
     "Coffee.UIParticle",
@@ -12,7 +11,8 @@
     "RogueIslands.UISystem",
     "RogueIslands.DependencyInjection",
     "RogueIslands.View",
-    "RogueIslands.Assets"
+    "RogueIslands.Assets",
+    "RogueIslands.Gameplay.Rand"
   ],
   "overrideReferences": true,
   "precompiledReferences": [

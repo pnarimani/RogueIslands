@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
+using RogueIslands.Gameplay.Rand;
 using UnityEngine;
-using Random = Unity.Mathematics.Random;
 
 namespace RogueIslands.Gameplay
 {
@@ -25,7 +25,7 @@ namespace RogueIslands.Gameplay
         Bounds GetBounds(Building buildingData);
         Bounds GetBounds(WorldBooster worldBooster);
         void DestroyWorldBoosters();
-        bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, ref Random positionRandom, out Vector3 point);
+        bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, RogueRandom positionRandom, out Vector3 point);
         IDeckBuildingView GetDeckBuildingView();
         void DestroyBuildingsInHand();
     }

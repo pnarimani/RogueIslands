@@ -4,18 +4,18 @@ using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DeckBuilding;
 using RogueIslands.Gameplay.GameEvents;
-using Random = Unity.Mathematics.Random;
+using RogueIslands.Gameplay.Rand;
 
 namespace RogueIslands.Gameplay
 {
     public static class GameFactory
     {
-        public static GameState NewGame(System.Random seedRandom)
+        public static GameState NewGame(RogueRandom rogueRandom)
         {
+            var seedRandom = rogueRandom.ForAct(0);
             var buildingBlueprints = DefaultBuildingsList.Get();
             var deck = DefaultBuildingsList.Get();
-            var initialShuffleRandom = seedRandom.NextRandom();
-            deck.Shuffle(ref initialShuffleRandom);
+            deck.Shuffle(seedRandom);
             foreach (var building in deck)
             {
                 building.Id = BuildingId.NewBuildingId();
@@ -31,7 +31,7 @@ namespace RogueIslands.Gameplay
                 {
                     All = buildingBlueprints,
                     Deck = deck,
-                    ShufflingRandom = CreateRandomArray(seedRandom, GameState.TotalActs),
+                    ShufflingRandom = seedRandom.NextRandom(),
                 },
                 AvailableBoosters = BoosterList.Get(),
                 HandSize = handSize,
@@ -55,10 +55,10 @@ namespace RogueIslands.Gameplay
                 Shop = new ShopState
                 {
                     StartingRerollCost = 5,
-                    BoosterSpawn = seedRandom.CreateRandomArray(GameState.TotalActs),
-                    CardPackSpawn = seedRandom.CreateRandomArray(GameState.TotalActs),
-                    BoosterAntiDuplicate = seedRandom.CreateRandomArray(GameState.TotalActs),
-                    SelectionRandom = seedRandom.CreateRandomArray(GameState.TotalActs),
+                    BoosterSpawn = seedRandom.NextRandom(),
+                    CardPackSpawn = seedRandom.NextRandom(),
+                    BoosterAntiDuplicate = seedRandom.NextRandom(),
+                    SelectionRandom = seedRandom.NextRandom(),
                     CardCount = 3,
                     ItemsForSale = new IPurchasableItem[3],
                     CurrentRerollCost = 5,
@@ -66,16 +66,8 @@ namespace RogueIslands.Gameplay
             };
         }
 
-        public static Random NextRandom(this System.Random sysRandom)
-            => new((uint)sysRandom.Next());
-
-        public static Random[] CreateRandomArray(this System.Random sysRandom, int length)
-        {
-            var randoms = new Random[length];
-            for (var i = 0; i < length; i++)
-                randoms[i] = sysRandom.NextRandom();
-            return randoms;
-        }
+        public static RogueRandom NextRandom(this RandomForAct sysRandom)
+            => new(sysRandom.NextUInt());
 
         private static double[] GetScoringRequirements()
         {

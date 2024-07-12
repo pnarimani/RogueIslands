@@ -5,7 +5,7 @@
     "UniTask",
     "RogueIslands.Serialization",
     "RogueIslands.DependencyInjection",
-    "Unity.Mathematics"
+    "RogueIslands.Gameplay.Rand"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

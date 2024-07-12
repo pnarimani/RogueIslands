@@ -1,7 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using RogueIslands.Gameplay.Boosters;
+using RogueIslands.Gameplay.Rand;
 using UnityEngine;
-using Random = Unity.Mathematics.Random;
 
 namespace RogueIslands.Gameplay.View.Boosters
 {
@@ -9,11 +10,9 @@ namespace RogueIslands.Gameplay.View.Boosters
     {
         private static readonly Collider[] _colliders = new Collider[1000];
 
-        public static bool TryGet(WorldBooster blueprint, ref Random positionRandom, out Vector3 point)
+        public static bool TryGet(WorldBooster blueprint, RandomForAct positionRandom, out Vector3 point)
         {
-            var all = Object.FindObjectsOfType<WorldBoosterSpawnPoint>()
-                .Select(booster => booster.transform.position)
-                .ToList();
+            var all = ObjectRegistry.GetWorldBoosterSpawnPoints();
 
             point = Vector3.zero;
             if (all.Count == 0)
@@ -38,5 +37,6 @@ namespace RogueIslands.Gameplay.View.Boosters
             point = all[positionRandom.NextInt(all.Count)];
             return true;
         }
+
     }
 }
