@@ -45,13 +45,8 @@ namespace RogueIslands.Gameplay.View
 
         public async void BuildingTriggered(bool isRetrigger)
         {
-            var wait = AnimationScheduler.GetAnimationTime();
-            AnimationScheduler.AllocateTime(0.2f);
-            var extraTime = SettingsPopup.SettingsParticles ? 2f : 0.2f;
-            AnimationScheduler.EnsureExtraTime(extraTime);
             var count = Data.Output + Data.OutputUpgrade;
-
-            await UniTask.WaitForSeconds(wait);
+            await AnimationScheduler.ScheduleAndWait(0.2f, SettingsPopup.SettingsParticles ? 1.55f + (float)count * 0.025f : 0.2f);
 
             ParticleSystem ps = null;
             if (SettingsPopup.SettingsParticles)
@@ -116,21 +111,17 @@ namespace RogueIslands.Gameplay.View
             var obj = Instantiate(_productsParticleSystem, GameUI.Instance.transform, false);
             obj.GetComponent<PinToWorldObject>().Target = transform;
             var ps = obj.GetComponentInChildren<ParticleSystem>();
-            var bursts = new ParticleSystem.Burst[(int)count];
-            for (int i = 0; i < bursts.Length; i++)
-            {
-                bursts[i] = new ParticleSystem.Burst
-                {
-                    count = 1,
-                    cycleCount = 1,
-                    probability = 1,
-                    time = 0.1f * i,
-                };
-            }
-
-            ps.emission.SetBursts(bursts, bursts.Length);
-            obj.GetComponent<UIParticle>().Play();
+            Emit(ps, (int)count);
             return ps;
+        }
+
+        private static async void Emit(ParticleSystem ps, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                ps.Emit(1);
+                await UniTask.WaitForSeconds(0.05f);
+            }
         }
 
         private static void SetLayerRecursively(GameObject obj, int newLayer)

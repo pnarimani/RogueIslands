@@ -92,8 +92,6 @@ namespace RogueIslands.Gameplay.Boosters
             {
                 throw new Exception("Failed to find booster with id " + boosterId);
             }
-            
-            _view.GetUI().RefreshAll();
         }
 
         public void ReorderBoosters(IReadOnlyList<BoosterCard> order)

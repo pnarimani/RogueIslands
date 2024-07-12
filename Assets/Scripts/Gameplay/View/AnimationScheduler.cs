@@ -1,4 +1,6 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace RogueIslands.Gameplay.View
 {
@@ -28,7 +30,16 @@ namespace RogueIslands.Gameplay.View
             if (time < 0)
                 throw new ArgumentOutOfRangeException(nameof(time));
 
-            Instance._ensureTime = Instance._delay + time;
+            Instance._ensureTime = Mathf.Max(Instance._ensureTime, Instance._delay + time);
+        }
+
+        public static UniTask ScheduleAndWait(float time, float extraTime = 0)
+        {
+            var wait = GetAnimationTime();
+            AllocateTime(time);
+            if (extraTime > 0)
+                EnsureExtraTime(extraTime);
+            return UniTask.WaitForSeconds(wait);
         }
 
         public static float GetAnimationTime()
