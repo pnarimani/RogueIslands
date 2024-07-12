@@ -45,7 +45,7 @@ namespace RogueIslands.Gameplay.View
                     desiredPosition.x = currentBuildingPosition.x;
             }
 
-            return desiredPosition;
+            return desiredPosition; 
         }
 
         public bool IsValidPlacement(Transform building)
