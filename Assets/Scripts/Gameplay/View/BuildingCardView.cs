@@ -74,8 +74,7 @@ namespace RogueIslands.Gameplay.View
                     BuildingViewPlacement.Instance.GetPosition(_buildingPreview.transform);
 
                 var isValidPlacement = BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview.transform);
-                foreach (var r in _buildingPreview.GetComponentsInChildren<Renderer>(true))
-                    r.enabled = isValidPlacement;
+                _buildingPreview.ShowValidPlacement(isValidPlacement);
 
                 EffectRangeHighlighter.HighlightBuilding(_buildingPreview);
                 WorldBoosterBoundCheck.HighlightOverlappingWorldBoosters(_buildingPreview.transform);

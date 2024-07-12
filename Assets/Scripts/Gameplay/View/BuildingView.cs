@@ -154,5 +154,17 @@ namespace RogueIslands.Gameplay.View
         public void Highlight(bool highlight) => _highlight.SetActive(highlight);
 
         public void ShowRange(bool showRange) => _synergyRange.SetActive(showRange);
+
+        public void ShowValidPlacement(bool isValidPlacement)
+        {
+            foreach (var component in GetComponentsInChildren<MeshRenderer>())
+            {
+                var mat = component.material;
+                var c = mat.color;
+                c.a = isValidPlacement ? 1 : 0.5f;
+                mat.color = c;
+                component.material = mat;
+            }
+        }
     }
 }

@@ -16,7 +16,6 @@ namespace RogueIslands.Gameplay.View
 
         public Vector3 GetPosition(Transform building)
         {
-            var currentBuildingPosition = building.position;
             var bounds = building.GetCollisionBounds();
 
             var ray = _camera!.ScreenPointToRay(Input.mousePosition);
@@ -24,25 +23,40 @@ namespace RogueIslands.Gameplay.View
             if (!Physics.Raycast(ray, out var hit, 100, _groundMask))
                 return Vector3.zero;
 
-            var desiredPosition = hit.point;
+            var desiredPosition = SlideDesiredPosition(building, bounds, hit.point);
 
+            if (Vector3.Distance(desiredPosition, hit.point) > 5f)
+            {
+                desiredPosition = hit.point;
+            }
+
+            return desiredPosition;
+        }
+
+        private static Vector3 SlideDesiredPosition(Transform building, Bounds bounds, Vector3 desiredPosition)
+        {
+            var currentPos = building.position;
             foreach (var other in ObjectRegistry.GetBuildings())
             {
                 if (other.transform == building)
                     continue;
 
                 var otherBounds = other.transform.GetCollisionBounds();
+                bounds.center = currentPos;
+                if(bounds.Intersects(otherBounds))
+                    continue;
+                
                 bounds.center = desiredPosition;
                 if (!bounds.Intersects(otherBounds))
                     continue;
 
-                bounds.center = new Vector3(currentBuildingPosition.x, currentBuildingPosition.y, desiredPosition.z);
+                bounds.center = new Vector3(currentPos.x, currentPos.y, desiredPosition.z);
                 if (bounds.Intersects(otherBounds))
-                    desiredPosition.z = currentBuildingPosition.z;
+                    desiredPosition.z = currentPos.z;
 
-                bounds.center = new Vector3(desiredPosition.x, currentBuildingPosition.y, currentBuildingPosition.z);
+                bounds.center = new Vector3(desiredPosition.x, currentPos.y, currentPos.z);
                 if (bounds.Intersects(otherBounds))
-                    desiredPosition.x = currentBuildingPosition.x;
+                    desiredPosition.x = currentPos.x;
             }
 
             return desiredPosition;
@@ -51,7 +65,32 @@ namespace RogueIslands.Gameplay.View
         public bool IsValidPlacement(Transform building)
         {
             var bounds = building.GetCollisionBounds();
-            
+            var isIntersectingWithAnyBuildings = IsIntersectingWithAnyBuildings(building, bounds);
+            var isOnFlatGround = IsOnFlatGround(bounds);
+
+            // Debug.Log("isIntersectingWithAnyBuildings = " + isIntersectingWithAnyBuildings);
+            // Debug.Log("isOnFlatGround = " + isOnFlatGround);
+
+            return !isIntersectingWithAnyBuildings && isOnFlatGround;
+        }
+
+        private static bool IsIntersectingWithAnyBuildings(Transform building, Bounds bounds)
+        {
+            foreach (var other in ObjectRegistry.GetBuildings())
+            {
+                if (other.transform == building)
+                    continue;
+
+                var otherBounds = other.transform.GetCollisionBounds();
+                if (bounds.Intersects(otherBounds))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private bool IsOnFlatGround(Bounds bounds)
+        {
             var min = bounds.min;
             var max = bounds.max;
 
