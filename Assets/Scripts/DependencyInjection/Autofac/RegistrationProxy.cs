@@ -78,5 +78,11 @@ namespace RogueIslands.DependencyInjection.Autofac
             _inner.InstancePerDependency();
             return this;
         }
+
+        public IRegistration<TImplementer> IfNotRegistered(Type type)
+        {
+            _inner.IfNotRegistered(type);
+            return this;
+        }
     }
 }

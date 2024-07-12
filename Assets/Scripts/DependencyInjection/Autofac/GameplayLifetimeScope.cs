@@ -12,6 +12,9 @@ namespace RogueIslands.DependencyInjection.Autofac
 
         protected override void Configure(ContainerBuilder builder)
         {
+            if (!_useRandomSeed)
+                builder.RegisterInstance(new Seed(_seed));
+            
             var builderProxy = new ContainerBuilderProxy(builder);
             foreach (var instance in ModuleFinder.GetGameplayModules())
             {

@@ -14,7 +14,10 @@ namespace RogueIslands.Gameplay.Modules
     {
         public void Load(IContainerBuilder builder)
         {
-            builder.Register(c => new Random())
+            builder.RegisterInstance(Seed.GenerateRandom())
+                .IfNotRegistered(typeof(Seed));
+            
+            builder.Register(c => new Random(c.Resolve<Seed>().GetHashCode()))
                 .SingleInstance();
             
             builder.Register((c) => c.Resolve<Random>().NextRandom())

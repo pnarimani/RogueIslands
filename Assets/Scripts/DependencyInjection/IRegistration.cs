@@ -11,5 +11,6 @@ namespace RogueIslands.DependencyInjection
         IRegistration<TImplementer> SingleInstance();
         IRegistration<TImplementer> OnActivated(Action<IContainer, TImplementer> onActivated);
         IRegistration<TImplementer> InstancePerDependency();
+        IRegistration<TImplementer> IfNotRegistered(Type type);
     }
 }

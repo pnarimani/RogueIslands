@@ -21,7 +21,6 @@ namespace RogueIslands.DependencyInjection.Autofac
         public IRegistration<T> Register<T>(Func<IContainer, T> factory)
             => new RegistrationProxy<T, SimpleActivatorData>(_builder.Register(c => factory(new ContainerProxy(c))));
 
-
         public IRegistration<object> RegisterType(Type type)
             => new RegistrationProxy<object, ConcreteReflectionActivatorData>(_builder.RegisterType(type));
 
@@ -38,7 +37,7 @@ namespace RogueIslands.DependencyInjection.Autofac
             );
 
             registrationBuilder.AsImplementedInterfaces();
-            
+
             return new RegistrationProxy<T, SimpleActivatorData>(registrationBuilder);
         }
     }
