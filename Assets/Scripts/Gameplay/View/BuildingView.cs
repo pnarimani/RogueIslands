@@ -32,6 +32,10 @@ namespace RogueIslands.Gameplay.View
         {
             Data = building;
             _synergyRange.transform.localScale = Vector3.one * (building.Range * 2);
+            var vector3 = transform.GetCollisionBounds().size;
+            vector3.y = vector3.z;
+            vector3.z = 1;
+            _highlight.transform.localScale = vector3 * 1.5f;
 
             GetComponent<DescriptionBoxSpawner>().Initialize(building);
 
