@@ -11,7 +11,7 @@ namespace RogueIslands.Gameplay.DeckBuilding.ActionHandlers
             foreach (var building in selectedBuildings)
             {
                 building.Category = action.TargetCategory;
-                building.PrefabAddress = PrefabAddressProvider.GetPrefabAddress(building);
+                building.PrefabAddress = BuildingPrefabAddressProvider.GetPrefabAddress(building);
             }
         }
     }

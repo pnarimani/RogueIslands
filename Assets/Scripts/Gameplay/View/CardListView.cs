@@ -26,7 +26,7 @@ namespace RogueIslands.Gameplay.View
         {
             if (component is not CardListItem item)
                 item = component.GetComponent<CardListItem>();
-            
+
             if (item.transform.parent != Content)
                 item.transform.SetParent(Content, false);
 
@@ -60,13 +60,13 @@ namespace RogueIslands.Gameplay.View
             for (var i = _items.Count - 1; i >= 0; i--)
             {
                 var item = _items[i];
-                item.TargetPosition = GetPositionForIndex(i);
+                item.TargetPosition = GetLocalPositionForIndex(i);
             }
         }
 
         public void Reorder(CardListItem item)
         {
-            var index = GetIndexForPosition(item.transform.position);
+            var index = GetIndexForPosition(item.transform.localPosition);
             if (index < 0 || index >= _items.Count)
                 return;
 
@@ -74,15 +74,15 @@ namespace RogueIslands.Gameplay.View
             _items.Insert(index, item);
         }
 
-        private int GetIndexForPosition(Vector3 position)
+        private int GetIndexForPosition(Vector3 localPosition)
         {
             var min = float.MaxValue;
             var index = -1;
 
             for (var i = _items.Count - 1; i >= 0; i--)
             {
-                var target = GetPositionForIndex(i);
-                var distance = Vector3.Distance(position, target);
+                var target = GetLocalPositionForIndex(i);
+                var distance = Vector3.Distance(localPosition, target);
                 if (distance < min)
                 {
                     min = distance;
@@ -93,18 +93,15 @@ namespace RogueIslands.Gameplay.View
             return index;
         }
 
-        private Vector2 GetPositionForIndex(int index)
+        private Vector2 GetLocalPositionForIndex(int index)
         {
-            var worldRect = Tx.GetWorldRect();
             var contentSize = GetContentSize() - _padding;
             var maxSpacePerItem = contentSize.x / _items.Count;
-
             var spacePerItem = _fitContent
                 ? Mathf.Min(maxSpacePerItem, GetFirstItemRect().width + _minPadding)
                 : maxSpacePerItem;
 
-            var startingPosition = worldRect.center + Vector2.left * ((_items.Count - 1) / 2f * spacePerItem);
-
+            var startingPosition = Vector2.left * ((_items.Count - 1) / 2f * spacePerItem);
             return startingPosition + Vector2.right * (index * spacePerItem) + _offset;
         }
 

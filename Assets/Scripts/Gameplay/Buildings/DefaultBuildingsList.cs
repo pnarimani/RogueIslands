@@ -15,7 +15,7 @@ namespace RogueIslands.Gameplay.Buildings
                     var cat = Category.All[catIndex];
                     for (var sizeIndex = 0; sizeIndex < 3; sizeIndex++)
                     {
-                        var prefabAddress = PrefabAddressProvider.GetPrefabAddress(colorName, catIndex, sizeIndex);
+                        var prefabAddress = BuildingPrefabAddressProvider.GetPrefabAddress(colorName, catIndex, sizeIndex);
 
                         var card = new Building()
                         {
@@ -23,7 +23,7 @@ namespace RogueIslands.Gameplay.Buildings
                             Category = cat,
                             Size = (BuildingSize)sizeIndex,
                             Output = 3 + (sizeIndex * 2),
-                            Range = 5,
+                            Range = 15,
                             PrefabAddress = prefabAddress,
                             IconAddress = "Buildings/Icons/Sample",
                             RemainingTriggers = 1,

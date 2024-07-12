@@ -25,20 +25,20 @@ namespace RogueIslands.Gameplay.View
 
         private void Awake()
         {
-            TargetPosition = transform.position;
+            TargetPosition = transform.localPosition;
         }
 
         private void Update()
         {
             if (ShouldAnimateToTarget && Owner != null)
             {
-                transform.position = Vector2.Lerp(transform.position, TargetPosition, Time.deltaTime * _speed);
+                transform.localPosition = Vector2.Lerp(transform.localPosition, TargetPosition, Time.deltaTime * _speed);
             }
         }
 
         private void OnTransformParentChanged()
         {
-            TargetPosition = transform.position;
+            TargetPosition = transform.localPosition;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
