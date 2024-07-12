@@ -6,8 +6,8 @@ namespace RogueIslands.Gameplay.Rollback
     {
         public void Restore(GameState backup, GameState current)
         {
-            current.WorldBoosters.SpawnChance = backup.WorldBoosters.SpawnChance;
-            current.WorldBoosters.Count = backup.WorldBoosters.Count;
+            current.WorldBoosters.SpawnDistribution = backup.WorldBoosters.SpawnDistribution;
+            current.WorldBoosters.SpawnCount = backup.WorldBoosters.SpawnCount;
 
             foreach (var booster in current.WorldBoosters.SpawnedBoosters)
             {

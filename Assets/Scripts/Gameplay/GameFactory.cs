@@ -38,12 +38,15 @@ namespace RogueIslands.Gameplay
                 TotalDays = 4,
                 WorldBoosters = new WorldBoostersState
                 {
-                    CountRandom = seedRandom.NextRandom(),
                     SpawnRandom = seedRandom.NextRandom(),
                     SelectionRandom = seedRandom.NextRandom(),
                     PositionRandom = seedRandom.NextRandom(),
-                    SpawnChance = 0.2f,
-                    Count = new MinMax(0, 6),
+                    SpawnDistribution = new PowerDistribution()
+                    {
+                        Factor = 0.98,
+                        Power = 4.37,
+                    },
+                    SpawnCount = 4,
                     SpawnedBoosters = new List<WorldBooster>(),
                     All = WorldBoosterList.Get(),
                 },

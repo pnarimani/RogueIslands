@@ -6,9 +6,9 @@ namespace RogueIslands.Gameplay
 {
     public class WorldBoostersState
     {
-        public RogueRandom CountRandom, SpawnRandom, SelectionRandom, PositionRandom;
-        public float SpawnChance;
-        public MinMax Count;
+        public RogueRandom SpawnRandom, SelectionRandom, PositionRandom;
+        public PowerDistribution SpawnDistribution;
+        public double SpawnCount;
         public List<WorldBooster> SpawnedBoosters = new();
         public List<WorldBooster> All;
     }

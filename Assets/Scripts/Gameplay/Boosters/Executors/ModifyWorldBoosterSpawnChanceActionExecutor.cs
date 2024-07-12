@@ -7,8 +7,8 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         protected override void Execute(GameState state, IGameView view, IBooster booster,
             ModifyWorldBoosterSpawnAction action)
         {
-            state.WorldBoosters.SpawnChance *= action.SpawnMultiplier;
-            state.WorldBoosters.Count *= action.CountMultiplier;
+            state.WorldBoosters.SpawnDistribution.Factor *= action.FactorMultiplier;
+            state.WorldBoosters.SpawnCount *= action.CountMultiplier;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using RogueIslands.Serialization;
+﻿using System;
+using RogueIslands.Serialization;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.Boosters
@@ -19,7 +20,7 @@ namespace RogueIslands.Gameplay.Boosters
         public void GenerateWorldBoosters()
         {
             var boosters = _state.WorldBoosters;
-            var count = boosters.Count.GetNextIntInRange(boosters.CountRandom.ForAct(_state.Act));
+            var count = (int)Math.Round(boosters.SpawnCount * boosters.SpawnDistribution.GetNextDouble(boosters.SpawnRandom.ForAct(_state.Act)));
 
             count -= boosters.SpawnedBoosters.Count;
             

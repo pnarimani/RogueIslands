@@ -96,12 +96,15 @@ namespace RogueIslands.Tests
                 Result = GameResult.InProgress,
                 WorldBoosters = new WorldBoostersState
                 {
-                    CountRandom = new RogueRandom(324),
                     SpawnRandom = new RogueRandom(54),
                     SelectionRandom = new RogueRandom(54),
                     PositionRandom = new RogueRandom(54),
-                    SpawnChance = 23230,
-                    Count = new MinMax(324, 3545),
+                    SpawnDistribution = new PowerDistribution()
+                    {
+                        Factor = 0.98,
+                        Power = 4.37,
+                    },
+                    SpawnCount = 10,
                     SpawnedBoosters = new List<WorldBooster>()
                     {
                         new WorldBooster()
@@ -110,6 +113,7 @@ namespace RogueIslands.Tests
                         }
                     },
                     All = WorldBoosterList.Get(),
+
                 },
             };
 

@@ -40,6 +40,11 @@
         {
             return _random.GetActRandom(_act).NextDouble(min, max);
         }
+        
+        public double NextDouble()
+        {
+            return _random.GetActRandom(_act).NextDouble();
+        }
 
         public uint NextUInt()
         {

@@ -694,7 +694,7 @@ namespace RogueIslands.Gameplay.Boosters
                         {
                             GameEventCondition.Create<PropertiesRestored>(),
                         },
-                        SpawnMultiplier = 2,
+                        FactorMultiplier = 2,
                     },
                 },
                 new()

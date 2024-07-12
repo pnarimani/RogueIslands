@@ -17,7 +17,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Tree",
                     Description = new LiteralDescription($"+10 products for all {Category.Cat3} buildings"),
-                    Range = 6 * 2,
+                    Range = 12,
                     PrefabAddress = "WorldBoosters/Tree",
                     EventAction = new ScoringAction
                     {
@@ -35,7 +35,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Mine",
                     Description =
                         new LiteralDescription($"+3 mult for all {Category.Cat4} and {Category.Cat5} buildings"),
-                    Range = 2 * 4,
+                    Range = 10,
                     PrefabAddress = "WorldBoosters/Mine",
                     EventAction = new ScoringAction
                     {
@@ -52,7 +52,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Money Tree",
                     Description = new LiteralDescription("$1 for every building in range"),
-                    Range = 2 * 4,
+                    Range = 8,
                     PrefabAddress = "WorldBoosters/MoneyTree",
                     EventAction = new ChangeMoneyAction
                     {
@@ -69,7 +69,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Shopping Mall",
                     Description = new LiteralDescription($"+10 mult for {Category.Cat1} buildings in range"),
-                    Range = 2 * 6,
+                    Range = 16,
                     PrefabAddress = "WorldBoosters/ShoppingMall",
                     EventAction = new ScoringAction
                     {
@@ -87,7 +87,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Museum",
                     Description =
                         new ScalingBoosterDescription("Starts at -50 products, +20 for each building in range"),
-                    Range = 2 * 5,
+                    Range = 15,
                     PrefabAddress = "WorldBoosters/Museum",
                     EventAction = new CompositeAction()
                     {
@@ -137,7 +137,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Factory",
                     Description = new LiteralDescription("When a building is placed in range, double its output"),
-                    Range = 2 * 4,
+                    Range = 10,
                     PrefabAddress = "WorldBoosters/Factory",
                     EventAction = new ModifyBuildingOutputAction
                     {
