@@ -107,7 +107,7 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
         private static PooledList<Building> CreateBuildingList()
         {
             var state = GameManager.Instance.State;
-            var rand = state.DeckBuilding.BuildingSelectionRandom;
+            var rand = state.Consumables.BuildingSelectionRandom;
             var desiredCount = Mathf.Min(state.HandSize, state.Buildings.Deck.Count);
 
             var buildings = PooledList<Building>.CreatePooled();

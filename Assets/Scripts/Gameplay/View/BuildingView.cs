@@ -96,6 +96,15 @@ namespace RogueIslands.Gameplay.View
             }
         }
 
+        public async void Destroy()
+        {
+            var wait = AnimationScheduler.GetExtraTime();
+            AnimationScheduler.EnsureExtraTime(0.2f);
+            await UniTask.WaitForSeconds(wait);
+            
+            Destroy(gameObject);
+        }
+
         public async UniTask BuildingMadeMoney(int money)
         {
             _moneyFeedback.GetComponentInChildren<TextMeshProUGUI>().text = "$" + money;

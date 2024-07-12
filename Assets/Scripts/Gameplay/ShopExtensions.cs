@@ -44,7 +44,7 @@ namespace RogueIslands.Gameplay
                 else
                 {
                     var randomForAct = state.Shop.CardPackSpawn.ForAct(state.Act);
-                    state.Shop.ItemsForSale[i] = state.DeckBuilding.AllConsumables.SelectRandom(randomForAct);
+                    state.Shop.ItemsForSale[i] = state.Consumables.AllConsumables.SelectRandom(randomForAct);
                 }
             }
         }

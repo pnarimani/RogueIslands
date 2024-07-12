@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Boosters.Actions;
 using UnityEngine;
@@ -50,8 +51,12 @@ namespace RogueIslands.Gameplay.View.Boosters
             }
         }
 
-        public void Remove()
+        public async void Remove()
         {
+            var wait = AnimationScheduler.GetExtraTime();
+            AnimationScheduler.EnsureExtraTime(0.2f);
+            await UniTask.WaitForSeconds(wait);
+            
             Destroy(gameObject);
             GameUI.Instance.RefreshDate();
             GameUI.Instance.RefreshMoney();

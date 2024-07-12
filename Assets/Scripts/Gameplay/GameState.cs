@@ -43,7 +43,7 @@ namespace RogueIslands.Gameplay
         public List<BoosterCard> AvailableBoosters;
 
         public ShopState Shop;
-        public DeckBuildingState DeckBuilding; 
+        public ConsumablesState Consumables; 
 
         public GameResult Result;
 

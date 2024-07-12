@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.Gameplay.GameEvents;
 using RogueIslands.Gameplay.Rollback;
@@ -69,14 +70,30 @@ namespace RogueIslands.Gameplay.Boosters
 
         public void DestroyBooster(BoosterInstanceId boosterId)
         {
-            var booster = _state.Boosters.First(x => x.Id == boosterId);
-            _state.Boosters.Remove(booster);
-            _view.GetBooster(booster).Remove();
+            if (_state.Boosters.FirstOrDefault(x => x.Id == boosterId) is { } card)
+            {
+                _state.Boosters.Remove(card);
+                _view.GetBooster(card).Remove();
+
+                _resetController.RestoreProperties();
+
+                _eventController.Execute(new BoosterDestroyed() { Booster = card });
+            }
+            else if (_state.WorldBoosters.SpawnedBoosters.FirstOrDefault(x => x.Id == boosterId) is { } worldBooster)
+            {
+                _state.WorldBoosters.SpawnedBoosters.Remove(worldBooster);
+                _view.GetBooster(worldBooster).Remove();
+
+                _resetController.RestoreProperties();
+
+                _eventController.Execute(new BoosterDestroyed() { Booster = worldBooster });
+            }
+            else
+            {
+                throw new Exception("Failed to find booster with id " + boosterId);
+            }
+            
             _view.GetUI().RefreshAll();
-
-            _resetController.RestoreProperties();
-
-            _eventController.Execute(new BoosterDestroyed() { Booster = booster });
         }
 
         public void ReorderBoosters(IReadOnlyList<BoosterCard> order)

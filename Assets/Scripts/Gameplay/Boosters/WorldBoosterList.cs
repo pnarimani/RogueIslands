@@ -177,9 +177,29 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Lava",
-                    Description = new LiteralDescription("Permanently destroys all buildings in range and then destroys itself at the end of the day."),
+                    Description =
+                        new LiteralDescription(
+                            "Permanently destroys all buildings in range and then destroys itself at the end of the day."),
                     Range = 2 * 5,
                     PrefabAddress = "WorldBoosters/Lava",
+                    EventAction = new CompositeAction()
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<DayEnd>(),
+                        },
+                        Actions = new GameAction[]
+                        {
+                            new DestroyBuildingsAction
+                            {
+                                DestroyBuildingsInRange = true,
+                            },
+                            new DestroyBoosterAction()
+                            {
+                                Self = true,
+                            },
+                        }
+                    },
                 },
             };
         }

@@ -43,11 +43,11 @@ namespace RogueIslands.Gameplay
                     SelectionRandom = seedRandom.NextRandom(),
                     PositionRandom = seedRandom.NextRandom(),
                     SpawnChance = 0.2f,
-                    Count = new MinMax(2, 6),
+                    Count = new MinMax(0, 6),
                     SpawnedBoosters = new List<WorldBooster>(),
                     All = WorldBoosterList.Get(),
                 },
-                DeckBuilding = new DeckBuildingState()
+                Consumables = new ConsumablesState()
                 {
                     BuildingSelectionRandom = seedRandom.NextRandom(),
                     AllConsumables = ConsumableList.Get(),

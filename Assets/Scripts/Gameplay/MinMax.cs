@@ -1,20 +1,24 @@
-﻿using RogueIslands.Gameplay.Rand;
+﻿using System;
+using RogueIslands.Gameplay.Rand;
 
 namespace RogueIslands.Gameplay
 {
     public readonly struct MinMax
     {
-        public readonly int Min;
-        public readonly int Max;
+        public readonly double Min;
+        public readonly double Max;
 
-        public MinMax(int min, int max)
+        public MinMax(double min, double max)
         {
             Min = min;
             Max = max;
         }
 
-        public int GetInRange(RandomForAct random) 
-            => random.NextInt(Min, Max);
+        public double GetNextDoubleInRange(RandomForAct random)
+            => random.NextDouble(Min, Max);
+
+        public int GetNextIntInRange(RandomForAct random)
+            => (int)Math.Round(random.NextDouble(Min, Max));
 
         public static MinMax operator *(MinMax minMax, int multiplier) =>
             new(minMax.Min * multiplier, minMax.Max * multiplier);
