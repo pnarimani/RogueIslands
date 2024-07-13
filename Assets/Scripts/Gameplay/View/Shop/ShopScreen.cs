@@ -68,11 +68,11 @@ namespace RogueIslands.Gameplay.View.Shop
                     if (GameManager.Instance.State.Money < Shop.ItemsForSale[shopIndex].BuyPrice)
                         return;
 
-                    StaticResolver.Resolve<ShopPurchaseController>().PurchaseItemAtShop(shopIndex);
-
-                    GameUI.Instance.RefreshMoney();
-
-                    Destroy(item.gameObject);
+                    if (StaticResolver.Resolve<ShopPurchaseController>().PurchaseItemAtShop(shopIndex))
+                    {
+                        GameUI.Instance.RefreshMoney();
+                        Destroy(item.gameObject);
+                    }
                 };
 
                 item.GetComponent<DescriptionBoxSpawner>().Initialize((IDescribableItem)Shop.ItemsForSale[i]);

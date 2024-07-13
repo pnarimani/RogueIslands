@@ -17,11 +17,11 @@ namespace RogueIslands.Gameplay.Shop
             _state = state;
         }
         
-        public void PurchaseItemAtShop(int index)
+        public bool PurchaseItemAtShop(int index)
         {
             var item = _state.Shop.ItemsForSale[index];
             if (_state.Money < item.BuyPrice)
-                throw new InvalidOperationException();
+                return false;
 
             bool success;
             switch (item)
@@ -43,6 +43,8 @@ namespace RogueIslands.Gameplay.Shop
                 _state.Money -= item.BuyPrice;
                 _state.Shop.ItemsForSale[index] = null;
             }
+
+            return success;
         }
     }
 }

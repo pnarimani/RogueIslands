@@ -55,6 +55,10 @@ namespace RogueIslands.Gameplay.View
             var card = Instantiate(_boosterPrefab, _boosterList.Content);
             card.Initialize(booster);
             _boosterList.Add(card.GetComponent<CardListItem>());
+            
+            RefreshBoosters();
+            RefreshDate();
+            RefreshMoney();
         }
 
         public bool IsInSpawnRegion(Vector3 screenPosition)
