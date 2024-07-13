@@ -152,8 +152,8 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Campfire",
                     Description =
-                        new LiteralDescription(
-                            "Gains 0.5x mult for each booster sold. Resets at the end of the month."),
+                        new ScalingBoosterDescription(
+                            "Gains 0.5x mult for each booster sold. Resets at the end of the act."),
                     BuyPrice = 6,
                     EventAction = new CompositeAction
                     {
