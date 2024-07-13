@@ -130,6 +130,14 @@ MonoBehaviour:
     m_Localized: Round {0}
     m_Metadata:
       m_Items: []
+  - m_Id: 55160729493504
+    m_Localized: ${0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55347120168960
+    m_Localized: Sell ${0}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

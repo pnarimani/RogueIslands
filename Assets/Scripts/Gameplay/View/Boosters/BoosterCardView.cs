@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters;
+using RogueIslands.Localization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -49,7 +50,7 @@ namespace RogueIslands.Gameplay.View.Boosters
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _sellText.text = $"Sell ${_booster.SellPrice}";
+            _sellText.text = StaticResolver.Resolve<ILocalization>().Get("Sell-Price-Button", _booster.SellPrice);
             _sellButton.gameObject.SetActive(!_sellButton.gameObject.activeSelf);
         }
     }

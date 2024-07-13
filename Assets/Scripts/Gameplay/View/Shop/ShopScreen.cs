@@ -64,7 +64,8 @@ namespace RogueIslands.Gameplay.View.Shop
                 }
 
 
-                item.SetPrice($"${Shop.ItemsForSale[i].BuyPrice}");
+                item.SetPrice(StaticResolver.Resolve<ILocalization>().Get("Buy-Price-Button", Shop.ItemsForSale[i].BuyPrice));
+                
                 item.BuyClicked += () =>
                 {
                     if (GameManager.Instance.State.Money < Shop.ItemsForSale[shopIndex].BuyPrice)
