@@ -1,6 +1,9 @@
 ﻿using Autofac;
+using RogueIslands.Assets;
+using RogueIslands.Assets.Editor;
 using RogueIslands.DependencyInjection;
 using RogueIslands.DependencyInjection.Autofac;
+using RogueIslands.Serialization.YamlDotNetIntegration;
 
 namespace RogueIslands.Tools
 {
@@ -14,11 +17,9 @@ namespace RogueIslands.Tools
             {
                 var builder = new ContainerBuilder();
                 var containerBuilderProxy = new ContainerBuilderProxy(builder);
-                foreach (var projectModule in ModuleFinder.GetProjectModules())
-                {
-                    projectModule.Load(containerBuilderProxy);
-                }
-
+                new AssetsModule().Load(containerBuilderProxy);
+                new EditorAssetsModule().Load(containerBuilderProxy);
+                new YamlSerializationModule().Load(containerBuilderProxy);
                 _container = builder.Build();
             }
 

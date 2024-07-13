@@ -3,6 +3,7 @@ using System.Linq;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.View.DeckBuilding;
 using RogueIslands.UISystem;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ namespace RogueIslands.Gameplay.View.DeckPreview
     {
         [SerializeField] private BuildingCardView _buildingCard;
         [SerializeField] private CardListView _blue, _red, _green, _purple;
+        [SerializeField] private TextMeshProUGUI _blueCount, _redCount, _greenCount, _purpleCount;
         [SerializeField] private Button _close;
         
         private void Start()
@@ -35,6 +37,11 @@ namespace RogueIslands.Gameplay.View.DeckPreview
                 else
                     throw new ArgumentOutOfRangeException();
             }
+            
+            _blueCount.text = _blue.Content.childCount.ToString();
+            _redCount.text = _red.Content.childCount.ToString();
+            _greenCount.text = _green.Content.childCount.ToString();
+            _purpleCount.text = _purple.Content.childCount.ToString();
         }
 
         private void AddCard(Building building, CardListView list)

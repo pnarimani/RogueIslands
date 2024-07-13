@@ -6,7 +6,10 @@
     "RogueIslands.DependencyInjection",
     "RogueIslands.Serialization",
     "Unity.Mathematics",
-    "RogueIslands.DependencyInjection.Autofac"
+    "RogueIslands.DependencyInjection.Autofac",
+    "RogueIslands.Assets",
+    "RogueIslands.Serialization.YamlDotNetIntegration",
+    "RogueIslands.Assets.Editor"
   ],
   "includePlatforms": [
     "Editor"
