@@ -1051,6 +1051,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Newsletter
       objectReference: {fileID: 0}
+    - target: {fileID: 246227820196601976, guid: 2a0ecfac70b653d499ed5e59445c146e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2389288957103074660, guid: 2a0ecfac70b653d499ed5e59445c146e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

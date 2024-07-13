@@ -48,6 +48,8 @@ namespace RogueIslands.Gameplay.View
         {
             if (_buildingPreview != null)
                 Destroy(_buildingPreview.gameObject);
+            
+            InputHandling.Instance.Click -= OnWorldClicked;
         }
 
         private void Update()
@@ -97,8 +99,6 @@ namespace RogueIslands.Gameplay.View
             
             if (_buildingPreview == null)
                 return;
-
-            InputHandling.Instance.Click -= OnWorldClicked;
 
             if (GameUI.Instance.IsInSpawnRegion(Input.mousePosition) &&
                 BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview.transform))
