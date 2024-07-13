@@ -90,7 +90,7 @@ namespace RogueIslands.Tests
                     },
                     SelectionRandom = new RogueRandom(523),
                     BoosterSpawn = new RogueRandom(232),
-                    BoosterAntiDuplicate = new RogueRandom(423),
+                    DeduplicationRandom = new RogueRandom(423),
                     CardPackSpawn = new RogueRandom(234),
                 },
                 Result = GameResult.InProgress,

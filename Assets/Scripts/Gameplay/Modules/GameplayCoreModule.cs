@@ -7,6 +7,7 @@ using RogueIslands.Gameplay.Boosters.Executors;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.Rand;
 using RogueIslands.Gameplay.Rollback;
+using RogueIslands.Gameplay.Shop;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.Modules
@@ -40,6 +41,9 @@ namespace RogueIslands.Gameplay.Modules
             RegisterController<WorldBoosterGeneration>(builder);
             RegisterController<BuildingPlacement>(builder);
             RegisterController<RoundController>(builder);
+            RegisterController<ShopRerollController>(builder);
+            RegisterController<ShopPurchaseController>(builder);
+            RegisterController<ShopItemSpawner>(builder);
         }
 
         private static IRegistration<T> RegisterController<T>(IContainerBuilder builder)

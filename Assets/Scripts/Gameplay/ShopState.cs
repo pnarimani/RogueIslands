@@ -11,7 +11,7 @@ namespace RogueIslands.Gameplay
         public IPurchasableItem[] ItemsForSale;
         public RogueRandom SelectionRandom;
         public RogueRandom BoosterSpawn;
-        public RogueRandom BoosterAntiDuplicate;
+        public RogueRandom DeduplicationRandom;
         public RogueRandom CardPackSpawn;
     }
 }

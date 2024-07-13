@@ -60,7 +60,7 @@ namespace RogueIslands.Gameplay
                     StartingRerollCost = 5,
                     BoosterSpawn = seedRandom.NextRandom(),
                     CardPackSpawn = seedRandom.NextRandom(),
-                    BoosterAntiDuplicate = seedRandom.NextRandom(),
+                    DeduplicationRandom = seedRandom.NextRandom(),
                     SelectionRandom = seedRandom.NextRandom(),
                     CardCount = 3,
                     ItemsForSale = new IPurchasableItem[3],

@@ -2,6 +2,7 @@
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.GameEvents;
 using RogueIslands.Gameplay.Rollback;
+using RogueIslands.Gameplay.Shop;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay
@@ -13,10 +14,17 @@ namespace RogueIslands.Gameplay
         private readonly IEventController _eventController;
         private readonly WorldBoosterGeneration _worldBoosterGeneration;
         private readonly ResetController _resetController;
+        private readonly ShopItemSpawner _shopItemSpawner;
 
-        public RoundController(GameState state, IGameView view, IEventController eventController,
-            WorldBoosterGeneration worldBoosterGeneration, ResetController resetController)
+        public RoundController(
+            GameState state,
+            IGameView view,
+            IEventController eventController,
+            WorldBoosterGeneration worldBoosterGeneration,
+            ResetController resetController,
+            ShopItemSpawner shopItemSpawner)
         {
+            _shopItemSpawner = shopItemSpawner;
             _resetController = resetController;
             _worldBoosterGeneration = worldBoosterGeneration;
             _eventController = eventController;
@@ -37,7 +45,7 @@ namespace RogueIslands.Gameplay
             {
                 _eventController.Execute(new RoundEnd());
 
-                _state.PopulateShop();
+                _shopItemSpawner.PopulateShop();
 
                 _state.Round++;
                 if (_state.Round >= GameState.RoundsPerAct)

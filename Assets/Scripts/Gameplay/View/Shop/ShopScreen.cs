@@ -2,6 +2,7 @@
 using DG.Tweening;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.DeckBuilding;
+using RogueIslands.Gameplay.Shop;
 using RogueIslands.Gameplay.View.Boosters;
 using RogueIslands.Gameplay.View.DeckBuilding;
 using RogueIslands.Gameplay.View.Feedbacks;
@@ -67,7 +68,7 @@ namespace RogueIslands.Gameplay.View.Shop
                     if (GameManager.Instance.State.Money < Shop.ItemsForSale[shopIndex].BuyPrice)
                         return;
 
-                    GameManager.Instance.State.PurchaseItemAtShop(GameManager.Instance, shopIndex);
+                    StaticResolver.Resolve<ShopPurchaseController>().PurchaseItemAtShop(shopIndex);
 
                     GameUI.Instance.RefreshMoney();
 
@@ -97,7 +98,7 @@ namespace RogueIslands.Gameplay.View.Shop
             if (GameManager.Instance.State.Money < Shop.CurrentRerollCost)
                 return;
 
-            GameManager.Instance.State.RerollShop(GameManager.Instance);
+            StaticResolver.Resolve<ShopRerollController>().RerollShop();
 
             PopulateShop();
         }
