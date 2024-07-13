@@ -1,10 +1,11 @@
-﻿#if UNITY_EDITOR
+﻿using System;
+#if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 namespace RogueIslands.Gameplay.View
 {
-    public abstract class Singleton<T> where T : Singleton<T>
+    public abstract class Singleton<T> : IDisposable where T : Singleton<T>
     {
         public static T Instance { get; private set; }
 
@@ -24,6 +25,11 @@ namespace RogueIslands.Gameplay.View
                 }
             }
 #endif
+        }
+
+        public virtual void Dispose()
+        {
+            Instance = null;
         }
     }
 }
