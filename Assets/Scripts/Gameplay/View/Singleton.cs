@@ -10,9 +10,6 @@ namespace RogueIslands.Gameplay.View
 
         protected Singleton()
         {
-            if (Instance != null)
-                UnityEngine.Debug.LogError(typeof(T).FullName);
-
             Instance = (T)this;
 
 #if UNITY_EDITOR
