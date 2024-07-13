@@ -1,7 +1,7 @@
 ﻿using IngameDebugConsole;
+using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay;
 using RogueIslands.Gameplay.View;
-using RogueIslands.Gameplay.View.DeckBuilding;
 
 namespace RogueIslands.Debug
 {

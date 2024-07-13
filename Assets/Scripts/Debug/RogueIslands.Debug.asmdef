@@ -4,6 +4,7 @@
   "references": [
     "RogueIslands",
     "RogueIslands.Gameplay.View",
-    "IngameDebugConsole.Runtime"
+    "IngameDebugConsole.Runtime",
+    "RogueIslands.DependencyInjection"
   ]
 }

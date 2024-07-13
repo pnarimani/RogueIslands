@@ -239,6 +239,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Continue
       objectReference: {fileID: 0}
+    - target: {fileID: 2758823755071549049, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
+      propertyPath: _key
+      value: Continue-Button
+      objectReference: {fileID: 0}
     - target: {fileID: 4952488096640293909, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -440,7 +444,8 @@ PrefabInstance:
       propertyPath: m_text
       value: Reroll
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2758823755071549049, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

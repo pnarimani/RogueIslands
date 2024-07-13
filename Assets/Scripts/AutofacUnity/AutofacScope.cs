@@ -1,12 +1,16 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using UnityEngine;
 
 namespace AutofacUnity
 {
+    [DefaultExecutionOrder(-99999)]
     public class AutofacScope : MonoBehaviour
     {
         [SerializeField] private bool _autoRun = true;
 
+        private bool _isBuilding;
+        
         public bool AutoRun
         {
             get => _autoRun;
@@ -27,6 +31,10 @@ namespace AutofacUnity
         {
             if (Container != null)
                 return;
+
+            if (_isBuilding)
+                throw new InvalidOperationException("Cannot access container while it's building");
+            _isBuilding = true;
 
             if (AutofacSettings.Instance == null)
                 AutofacSettings.LoadInstanceFromResources();

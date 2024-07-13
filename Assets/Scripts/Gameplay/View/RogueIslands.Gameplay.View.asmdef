@@ -12,7 +12,8 @@
     "RogueIslands.DependencyInjection",
     "RogueIslands.View",
     "RogueIslands.Assets",
-    "RogueIslands.Gameplay.Rand"
+    "RogueIslands.Gameplay.Rand",
+    "RogueIslands.Localization"
   ],
   "overrideReferences": true,
   "precompiledReferences": [

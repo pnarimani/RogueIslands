@@ -9,7 +9,8 @@
     "RogueIslands.DependencyInjection.Autofac",
     "RogueIslands.Assets",
     "RogueIslands.Serialization.YamlDotNetIntegration",
-    "RogueIslands.Assets.Editor"
+    "RogueIslands.Assets.Editor",
+    "RogueIslands.Localization.UnityLocalization"
   ],
   "includePlatforms": [
     "Editor"

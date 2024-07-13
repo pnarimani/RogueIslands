@@ -354,6 +354,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Leave
       objectReference: {fileID: 0}
+    - target: {fileID: 2758823755071549049, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
+      propertyPath: _key
+      value: Abandon-Run-Button
+      objectReference: {fileID: 0}
     - target: {fileID: 4952488096640293909, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -471,6 +475,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Settings
       objectReference: {fileID: 0}
+    - target: {fileID: 2758823755071549049, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
+      propertyPath: _key
+      value: Settings-Button
+      objectReference: {fileID: 0}
     - target: {fileID: 4952488096640293909, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -587,6 +595,10 @@ PrefabInstance:
     - target: {fileID: 1481522806404143594, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Name
       value: Continue
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758823755071549049, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
+      propertyPath: _key
+      value: Continue-Button
       objectReference: {fileID: 0}
     - target: {fileID: 4952488096640293909, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Pivot.x

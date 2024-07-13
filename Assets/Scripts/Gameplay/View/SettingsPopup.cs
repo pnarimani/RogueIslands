@@ -1,4 +1,5 @@
-﻿using RogueIslands.UISystem;
+﻿using RogueIslands.DependencyInjection;
+using RogueIslands.UISystem;
 using RogueIslands.View.Audio;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: RogueIslands Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: RogueIslands
+  m_TableCollectionNameGuidString: c3a7db77f887595459ae3977d7eaf39f
+  m_Entries:
+  - m_Id: 462756503552
+    m_Key: Settings-Button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 436336582656
+    m_Key: Play-Game-Button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 297299599360
+    m_Key: Play-Hand-Button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15243584462848
+    m_Key: Quit-Button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15365265416192
+    m_Key: Deck-Preview
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41720757608448
+    m_Key: Game-Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42177408262144
+    m_Key: Required-Products
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42229996445696
+    m_Key: Total-Products
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42273394909184
+    m_Key: Deck-Button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42447341084672
+    m_Key: Options-Button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42527351627776
+    m_Key: Act
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42555843534848
+    m_Key: Round
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42581491703808
+    m_Key: Remaining-Days
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42625502535680
+    m_Key: Money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43402178584576
+    m_Key: You-Lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43403764031488
+    m_Key: Back-To-Menu-Button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43468066906112
+    m_Key: Abandon-Run-Button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43627433680896
+    m_Key: Continue-Button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44231090495488
+    m_Key: Act-Number
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44398590025728
+    m_Key: Round-Completed-Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44582661251072
+    m_Key: Settings-Music-Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44628072980480
+    m_Key: Settings-SFX-Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44738957795328
+    m_Key: Ok-Button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44836823490560
+    m_Key: Reroll-Button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45129653018624
+    m_Key: You-Win
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45271017840640
+    m_Key: Select-Buildings-Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45354815840256
+    m_Key: Submit-Button
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 7369530874099138584
+  references:
+    version: 2
+    RefIds:
+    - rid: 7369530874099138584
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1720899303993

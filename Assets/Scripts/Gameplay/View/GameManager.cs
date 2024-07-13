@@ -29,12 +29,9 @@ namespace RogueIslands.Gameplay.View
         {
             _assetLoader = assetLoader;
             _windowOpener = windowOpener;
-            _windowOpener.Open<GameUI>();
             State = state;
-            ShowRoundsSelectionScreen();
         }
-
-
+        
         public void ShowGameWinScreen() => _windowOpener.Open<GameWinScreen>();
 
         public IWeekWinScreen ShowRoundWin()

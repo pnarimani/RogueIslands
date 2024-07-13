@@ -16,6 +16,10 @@ namespace RogueIslands.Gameplay.View
             builder.RegisterMonoBehaviour<CardIdleAnimationManager>()
                 .AutoActivate()
                 .SingleInstance();
+            
+            builder.RegisterMonoBehaviour<GameplayStartupWindowOpener>()
+                .AutoActivate()
+                .SingleInstance();
 
             builder.Register(_ => new AnimationScheduler())
                 .AutoActivate()

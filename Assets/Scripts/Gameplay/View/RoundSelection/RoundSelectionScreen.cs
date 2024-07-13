@@ -1,5 +1,7 @@
 ﻿using DG.Tweening;
+using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.View.DeckBuilding;
+using RogueIslands.Localization;
 using RogueIslands.UISystem;
 using TMPro;
 using UnityEngine;
@@ -18,8 +20,8 @@ namespace RogueIslands.Gameplay.View.RoundSelection
         private void Start()
         {
             var state = GameManager.Instance.State;
-            
-            _title.text = $"Act {state.Act + 1}";
+
+            _title.text = StaticResolver.Resolve<ILocalization>().Get("Act-Number", state.Act + 1);
             _back.onClick.AddListener(() => SceneManager.LoadScene("MainMenu"));
 
             for (var round = 0; round < GameState.RoundsPerAct; round++)

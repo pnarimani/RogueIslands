@@ -918,6 +918,7 @@ GameObject:
   - component: {fileID: 4608138806632774055}
   - component: {fileID: 6439377699527558003}
   - component: {fileID: 2742845278133328539}
+  - component: {fileID: 6707689965682109375}
   m_Layer: 5
   m_Name: Music
   m_TagString: Untagged
@@ -1041,6 +1042,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6707689965682109375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5881048819496084618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 766f38f8893a4a4e8fa26fce96577dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: Settings-Music-Volume
 --- !u!1 &6152240990723450170
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,7 +1095,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000015259, y: 0.000022888}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 696.3732, y: 448.1501}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5622125334659244859
@@ -1244,6 +1258,7 @@ GameObject:
   - component: {fileID: 7044043949162998062}
   - component: {fileID: 5349967905767136032}
   - component: {fileID: 7787804651840226148}
+  - component: {fileID: 4923611974550722782}
   m_Layer: 5
   m_Name: SFX
   m_TagString: Untagged
@@ -1367,6 +1382,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4923611974550722782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7104038043301755514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 766f38f8893a4a4e8fa26fce96577dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: Settings-SFX-Volume
 --- !u!1 &7380340686065189111
 GameObject:
   m_ObjectHideFlags: 0
@@ -1635,6 +1663,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ok
       objectReference: {fileID: 0}
+    - target: {fileID: 2758823755071549049, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
+      propertyPath: _key
+      value: Ok-Button
+      objectReference: {fileID: 0}
     - target: {fileID: 4952488096640293909, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1717,7 +1749,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6020725107331089177, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_text
-      value: OK
+      value: Ok
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

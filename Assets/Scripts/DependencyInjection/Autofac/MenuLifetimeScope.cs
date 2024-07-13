@@ -6,6 +6,12 @@ namespace RogueIslands.DependencyInjection.Autofac
 {
     public class MenuLifetimeScope : AutofacScope, IResolver
     {
-        public T Resolve<T>() => Container.Resolve<T>();
+        public T Resolve<T>()
+        {
+            if(Container == null)
+                Build();
+            
+            return Container!.Resolve<T>();
+        }
     }
 }

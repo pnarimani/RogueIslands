@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 951070665}
   - component: {fileID: 951070666}
   m_Layer: 0
-  m_Name: LifetimeScope
+  m_Name: MenuLifetimeScope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -464,6 +464,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Quit
       objectReference: {fileID: 0}
+    - target: {fileID: 2758823755071549049, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
+      propertyPath: _key
+      value: Quit
+      objectReference: {fileID: 0}
     - target: {fileID: 4952488096640293909, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -588,6 +592,10 @@ PrefabInstance:
     - target: {fileID: 1481522806404143594, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Name
       value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758823755071549049, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
+      propertyPath: _key
+      value: Play-Game-Button
       objectReference: {fileID: 0}
     - target: {fileID: 4952488096640293909, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Pivot.x
@@ -836,6 +844,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Settings
       objectReference: {fileID: 0}
+    - target: {fileID: 2758823755071549049, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
+      propertyPath: _key
+      value: Settings-Button
+      objectReference: {fileID: 0}
     - target: {fileID: 4952488096640293909, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -960,6 +972,7 @@ GameObject:
   - component: {fileID: 2131488100}
   - component: {fileID: 2131488102}
   - component: {fileID: 2131488101}
+  - component: {fileID: 2131488103}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -1083,6 +1096,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131488099}
   m_CullTransparentMesh: 1
+--- !u!114 &2131488103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131488099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 766f38f8893a4a4e8fa26fce96577dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: Game-Title
 --- !u!1001 &5833762894737215700
 PrefabInstance:
   m_ObjectHideFlags: 0

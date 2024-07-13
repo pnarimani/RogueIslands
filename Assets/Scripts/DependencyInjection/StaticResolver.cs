@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace RogueIslands.Gameplay
+namespace RogueIslands.DependencyInjection
 {
     public static class StaticResolver
     {

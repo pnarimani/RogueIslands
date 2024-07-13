@@ -1,3 +1,4 @@
+using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters.Actions;
 
 namespace RogueIslands.Gameplay.Boosters.Executors

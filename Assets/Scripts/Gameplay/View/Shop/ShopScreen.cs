@@ -1,11 +1,13 @@
 ﻿using System;
 using DG.Tweening;
+using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.DeckBuilding;
 using RogueIslands.Gameplay.Shop;
 using RogueIslands.Gameplay.View.Boosters;
 using RogueIslands.Gameplay.View.DeckBuilding;
 using RogueIslands.Gameplay.View.Feedbacks;
+using RogueIslands.Localization;
 using RogueIslands.UISystem;
 using TMPro;
 using UnityEngine;
@@ -90,7 +92,7 @@ namespace RogueIslands.Gameplay.View.Shop
 
         private void UpdateRerollCost()
         {
-            _rerollText.text = $"Reroll (${Shop.CurrentRerollCost})";
+            _rerollText.text = StaticResolver.Resolve<ILocalization>().Get("Reroll-Button", Shop.CurrentRerollCost);
         }
 
         private void OnRerollClicked()

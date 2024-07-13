@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 2683924539945762362}
   - component: {fileID: 6078863782319674710}
   - component: {fileID: 4862857989639158696}
+  - component: {fileID: 5734280054351367707}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -337,6 +338,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5734280054351367707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9043730221206116530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 766f38f8893a4a4e8fa26fce96577dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: You-Lost
 --- !u!1001 &6599025054423253576
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -348,6 +362,10 @@ PrefabInstance:
     - target: {fileID: 1481522806404143594, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Name
       value: Continue
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758823755071549049, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
+      propertyPath: _key
+      value: Back-To-Menu-Button
       objectReference: {fileID: 0}
     - target: {fileID: 4952488096640293909, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Pivot.x
@@ -431,7 +449,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6020725107331089177, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_text
-      value: Back to Menu
+      value: Back to menu
       objectReference: {fileID: 0}
     - target: {fileID: 6020725107331089177, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_fontSize

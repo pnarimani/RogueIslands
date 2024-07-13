@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: RogueIslands_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: c3a7db77f887595459ae3977d7eaf39f, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 297299599360
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 436336582656
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15243584462848
+    m_Localized: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15365265416192
+    m_Localized: Deck Preview
+    m_Metadata:
+      m_Items: []
+  - m_Id: 462756503552
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41720757608448
+    m_Localized: Rogue Islands
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42177408262144
+    m_Localized: Required Products
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42229996445696
+    m_Localized: Total Products
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42273394909184
+    m_Localized: Deck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42447341084672
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42527351627776
+    m_Localized: Act
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42555843534848
+    m_Localized: Round
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42581491703808
+    m_Localized: Rem Days
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42625502535680
+    m_Localized: Money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43402178584576
+    m_Localized: You Lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43403764031488
+    m_Localized: Back to menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43468066906112
+    m_Localized: Abandon Run
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43627433680896
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44231090495488
+    m_Localized: Act {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44398590025728
+    m_Localized: Round Completed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44582661251072
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44628072980480
+    m_Localized: SFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44738957795328
+    m_Localized: Ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44836823490560
+    m_Localized: Reroll {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45129653018624
+    m_Localized: You Win!!!!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45271017840640
+    m_Localized: Select Buildings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45354815840256
+    m_Localized: Submit
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

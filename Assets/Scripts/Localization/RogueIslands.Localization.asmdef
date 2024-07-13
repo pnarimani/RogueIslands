@@ -1,0 +1,10 @@
+﻿{
+  "name": "RogueIslands.Localization",
+  "rootNamespace": "RogueIslands",
+  "overrideReferences": true,
+  "references": [
+    "RogueIslands.DependencyInjection",
+    "Unity.TextMeshPro",
+    "UniTask"
+  ]
+}

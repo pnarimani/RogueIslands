@@ -1,4 +1,5 @@
 ﻿using IngameDebugConsole;
+using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay;
 
 namespace RogueIslands.Debug

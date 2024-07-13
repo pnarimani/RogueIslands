@@ -1,3 +1,4 @@
+using RogueIslands.DependencyInjection;
 using RogueIslands.UISystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;

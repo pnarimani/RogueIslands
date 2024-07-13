@@ -1,0 +1,16 @@
+﻿{
+  "name": "RogueIslands.Localization.UnityLocalization.Editor",
+  "references": [
+    "RogueIslands.Localization.UnityLocalization",
+    "Unity.Localization",
+    "Unity.Localization.Editor",
+    "RogueIslands.Localization",
+    "Unity.ResourceManager",
+    "Unity.TextMeshPro",
+    "RogueIslands.Tools",
+    "UniTask"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

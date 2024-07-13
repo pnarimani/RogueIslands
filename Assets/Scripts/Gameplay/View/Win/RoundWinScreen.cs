@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using RogueIslands.DependencyInjection;
 using RogueIslands.UISystem;
 using RogueIslands.View.Audio;
 using TMPro;

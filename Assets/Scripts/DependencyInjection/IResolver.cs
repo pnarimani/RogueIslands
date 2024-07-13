@@ -1,4 +1,4 @@
-﻿namespace RogueIslands.Gameplay
+﻿namespace RogueIslands.DependencyInjection
 {
     public interface IResolver
     {

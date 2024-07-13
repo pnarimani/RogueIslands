@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters;
 using TMPro;
 using UnityEngine;

@@ -1,3 +1,4 @@
+using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters.Conditions;
 
 namespace RogueIslands.Gameplay.Boosters.Evaluators

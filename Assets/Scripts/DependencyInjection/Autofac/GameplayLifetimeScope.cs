@@ -22,6 +22,11 @@ namespace RogueIslands.DependencyInjection.Autofac
             }
         }
 
-        public T Resolve<T>() => Container.Resolve<T>();
+        public T Resolve<T>()
+        {
+            if (Container == null)
+                Build();
+            return Container!.Resolve<T>();
+        }
     }
 }

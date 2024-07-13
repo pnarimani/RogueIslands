@@ -2,6 +2,7 @@
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DeckBuilding;
 using UnityEngine;

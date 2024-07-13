@@ -3,6 +3,7 @@ using RogueIslands.Assets;
 using RogueIslands.Assets.Editor;
 using RogueIslands.DependencyInjection;
 using RogueIslands.DependencyInjection.Autofac;
+using RogueIslands.Localization.UnityLocalization;
 using RogueIslands.Serialization.YamlDotNetIntegration;
 
 namespace RogueIslands.Tools

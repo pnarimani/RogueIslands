@@ -1,4 +1,5 @@
-﻿using RogueIslands.Gameplay.View.DeckBuilding;
+﻿using RogueIslands.DependencyInjection;
+using RogueIslands.Gameplay.View.DeckBuilding;
 using RogueIslands.UISystem;
 using TMPro;
 using UnityEngine;
