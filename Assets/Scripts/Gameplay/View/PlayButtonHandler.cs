@@ -37,6 +37,8 @@ namespace RogueIslands.Gameplay.View
             destroyCancellationToken.ThrowIfCancellationRequested();
 
             GameUI.Instance.RefreshScores();
+            
+            AnimationScheduler.ResetTime();
 
             _roundController.TryEndingRound();
 

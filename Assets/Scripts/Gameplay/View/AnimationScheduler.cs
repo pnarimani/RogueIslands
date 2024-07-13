@@ -14,7 +14,7 @@ namespace RogueIslands.Gameplay.View
         public static void ResetTime()
         {
             Instance._delay = 0;
-            Instance._ensureTime = 1;
+            Instance._ensureTime = 0;
         }
 
         public static void AllocateTime(float time)

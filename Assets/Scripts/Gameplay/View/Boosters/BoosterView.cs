@@ -53,9 +53,7 @@ namespace RogueIslands.Gameplay.View.Boosters
 
         public async void Remove()
         {
-            var wait = AnimationScheduler.GetExtraTime();
-            AnimationScheduler.EnsureExtraTime(0.2f);
-            await UniTask.WaitForSeconds(wait);
+            await UniTask.WaitForSeconds(AnimationScheduler.GetExtraTime());
             
             Destroy(gameObject);
             GameUI.Instance.RefreshDate();

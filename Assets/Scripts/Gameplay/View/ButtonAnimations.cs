@@ -20,7 +20,8 @@ namespace RogueIslands.Gameplay.View
 
         private void OnDestroy()
         {
-            transform.DOKill();
+            if (transform != null) 
+                transform.DOKill();
         }
     }
 }

@@ -60,17 +60,15 @@ namespace RogueIslands.Gameplay
             else
             {
                 AddBuildingCardsToHand();
-
-                _worldBoosterGeneration.GenerateWorldBoosters();
             }
         }
 
         private void ShowRoundWinScreen()
         {
             _view.DestroyBuildingsInHand();
-            
+
             ResetDeck();
-            
+
             var winScreen = _view.ShowRoundWin();
             winScreen.AddMoneyChange(new MoneyChange
             {
@@ -109,14 +107,14 @@ namespace RogueIslands.Gameplay
             _worldBoosterGeneration.GenerateWorldBoosters();
 
             _resetController.RestoreProperties();
-            
+
             _state.CurrentScore = 0;
             _state.Day = 0;
 
             _eventController.Execute(new RoundStart());
 
             _view.DestroyBuildings();
-            
+
             AddBuildingCardsToHand();
 
             _view.GetUI().RefreshAll();
