@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using RogueIslands.DependencyInjection;
+using RogueIslands.Localization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +22,7 @@ namespace RogueIslands.Gameplay.View.RoundSelection
 
         public void SetRound(int round)
         {
-            _title.text = $"Round {round}";
+            _title.text = StaticResolver.Resolve<ILocalization>().Get("Round-Number", round);
         }
 
         public void SetRequiredScore(double score)

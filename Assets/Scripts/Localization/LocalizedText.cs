@@ -12,7 +12,7 @@ namespace RogueIslands.Localization
         private ILocalization _localization;
         private TextMeshProUGUI _textMeshProUGUI;
 
-        private void Awake()
+        private void Start()
         {
             _localization = StaticResolver.Resolve<ILocalization>();
             _textMeshProUGUI = GetComponent<TextMeshProUGUI>();
@@ -30,7 +30,7 @@ namespace RogueIslands.Localization
         private void OnLocaleChanged(string obj) 
             => UpdateText();
 
-        private void UpdateText() 
+        public void UpdateText() 
             => _textMeshProUGUI.text = _localization.Get(_key);
     }
 }

@@ -155,6 +155,7 @@ GameObject:
   - component: {fileID: 6038004019464731905}
   - component: {fileID: 8437102741321255297}
   - component: {fileID: 6686193477586658407}
+  - component: {fileID: 4224280635009469073}
   m_Layer: 0
   m_Name: Placeholder
   m_TagString: Untagged
@@ -298,6 +299,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &4224280635009469073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252542902758141006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 766f38f8893a4a4e8fa26fce96577dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: Email-TextBox-Hint
 --- !u!1 &2268625960387702901
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,7 +406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &467426790694773677
 RectTransform:
   m_ObjectHideFlags: 0
@@ -875,6 +889,7 @@ GameObject:
   - component: {fileID: 5721176982701371905}
   - component: {fileID: 8863773903362292212}
   - component: {fileID: 9074527532939073904}
+  - component: {fileID: 5830442699580497667}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -998,6 +1013,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5830442699580497667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5079299159722943193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 766f38f8893a4a4e8fa26fce96577dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: Signup-Title
 --- !u!1 &6333135947356813385
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,7 +1043,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2551992895901512408
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1511,6 +1539,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2758823755071549049, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
+      propertyPath: _key
+      value: Ok-Button
+      objectReference: {fileID: 0}
     - target: {fileID: 4952488096640293909, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1624,6 +1656,10 @@ PrefabInstance:
     - target: {fileID: 1481522806404143594, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Name
       value: Signup
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758823755071549049, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
+      propertyPath: _key
+      value: Signup-Button
       objectReference: {fileID: 0}
     - target: {fileID: 4952488096640293909, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Pivot.x
@@ -1769,6 +1805,10 @@ PrefabInstance:
     - target: {fileID: 2417945444864633306, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758823755071549049, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
+      propertyPath: _key
+      value: Ok-Button
       objectReference: {fileID: 0}
     - target: {fileID: 4952488096640293909, guid: e16ad48405e10b1469669d8663bae18b, type: 3}
       propertyPath: m_Pivot.x
