@@ -13,18 +13,12 @@ namespace RogueIslands.Gameplay.View
         private DescriptionBox _descriptionBoxInstance;
 
         private IDescribableItem _describableItem;
-        private Transform _rootCanvas;
 
         public void Initialize(IDescribableItem describableItem)
         {
             _describableItem = describableItem;
         }
-
-        private void Start()
-        {
-            _rootCanvas = _descriptionBoxParent.GetComponentInParent<Canvas>().transform;
-        }
-
+        
         private void OnDestroy()
         {
             if (_descriptionBoxInstance != null)
@@ -45,7 +39,6 @@ namespace RogueIslands.Gameplay.View
                     _descriptionBoxPrefab,
                     _descriptionBoxParent
                 );
-                _descriptionBoxInstance.transform.SetAsLastSibling();
                 _descriptionBoxInstance.SetDescription(_describableItem.Description.Get(_describableItem));
 
                 if (_showName && _describableItem is INamedItem namedItem)
