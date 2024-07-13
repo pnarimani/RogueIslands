@@ -667,7 +667,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Normie",
-                    Description = new LiteralDescription("x5 mult if all buildings are the same"),
+                    Description = new LiteralDescription("x5 mult if all buildings are EXACTLY the same"),
                     BuyPrice = 6,
                     EventAction = new ScoringAction
                     {
