@@ -2,6 +2,7 @@ using Coffee.UIExtensions;
 using Cysharp.Threading.Tasks;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.View.Feedbacks;
+using RogueIslands.View;
 using RogueIslands.View.Audio;
 using TMPro;
 using UnityEngine;
@@ -46,10 +47,10 @@ namespace RogueIslands.Gameplay.View
         public async void BuildingTriggered(bool isRetrigger)
         {
             var count = Data.Output + Data.OutputUpgrade;
-            await AnimationScheduler.ScheduleAndWait(0.2f, SettingsPopup.SettingsParticles ? 1.55f + (float)count * 0.025f : 0.2f);
+            await AnimationScheduler.ScheduleAndWait(0.2f, GameSettings.SettingsParticles ? 1.55f + (float)count * 0.025f : 0.2f);
 
             ParticleSystem ps = null;
-            if (SettingsPopup.SettingsParticles)
+            if (GameSettings.SettingsParticles)
             {
                 ps = PlayParticleSystem(count);
             }

@@ -2,6 +2,7 @@
 using RogueIslands.View.Audio;
 using UnityEngine;
 using UnityEngine.UI;
+using static RogueIslands.View.GameSettings;
 
 namespace RogueIslands.Gameplay.View
 {
@@ -11,35 +12,7 @@ namespace RogueIslands.Gameplay.View
         [SerializeField] private Slider _music, _sfx;
         [SerializeField] private Toggle _enableParticles;
         
-        private static float SettingsMusicVolume
-        {
-            get => PlayerPrefs.GetFloat("SettingsMusicVolume", 1);
-            set
-            {
-                PlayerPrefs.SetFloat("SettingsMusicVolume", value);
-                PlayerPrefs.Save();
-            }
-        }
-        
-        public static bool SettingsParticles
-        {
-            get => PlayerPrefs.GetInt("SettingsParticles", 1) == 1;
-            set
-            {
-                PlayerPrefs.SetInt("SettingsParticles", value ? 1 : 0);
-                PlayerPrefs.Save();
-            }
-        }
-        
-        private static float SettingsSfxVolume
-        {
-            get => PlayerPrefs.GetFloat("SettingsSfxVolume", 1);
-            set
-            {
-                PlayerPrefs.SetFloat("SettingsSfxVolume", value );
-                PlayerPrefs.Save();
-            }
-        }
+
         
         private void Awake()
         {

@@ -10,7 +10,8 @@
     "Coffee.UIParticle",
     "Unity.Cinemachine",
     "Audoty",
-    "RogueIslands.UISystem"
+    "RogueIslands.UISystem",
+    "RogueIslands.DependencyInjection"
   ],
   "overrideReferences": true,
   "precompiledReferences": [
