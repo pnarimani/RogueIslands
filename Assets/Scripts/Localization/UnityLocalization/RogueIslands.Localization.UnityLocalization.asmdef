@@ -7,6 +7,7 @@
     "RogueIslands.Localization",
     "Unity.Localization",
     "Unity.ResourceManager",
-    "UniTask"
+    "UniTask",
+    "RogueIslands.Initialization"
   ]
 }

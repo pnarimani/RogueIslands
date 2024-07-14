@@ -1,14 +1,13 @@
 ﻿using Autofac;
-using AutofacUnity;
 using IngameDebugConsole;
 using UnityEngine;
 
 namespace RogueIslands.DependencyInjection.Autofac
 {
-    public class ProjectLifetimeScope : AutofacScope
+    public class ProjectLifetimeScope : StaticallyResolvableLifetimeScope
     {
         [SerializeField] private DebugLogManager _debugConsole;
-
+        
         protected override void Configure(ContainerBuilder builder)
         {
             var builderProxy = new ContainerBuilderProxy(builder);

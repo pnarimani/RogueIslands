@@ -4,14 +4,7 @@ using RogueIslands.Gameplay;
 
 namespace RogueIslands.DependencyInjection.Autofac
 {
-    public class MenuLifetimeScope : AutofacScope, IResolver
+    public class MenuLifetimeScope : StaticallyResolvableLifetimeScope
     {
-        public T Resolve<T>()
-        {
-            if(Container == null)
-                Build();
-            
-            return Container!.Resolve<T>();
-        }
     }
 }

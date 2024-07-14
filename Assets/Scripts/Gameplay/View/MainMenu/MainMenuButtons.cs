@@ -12,7 +12,7 @@ namespace RogueIslands.Gameplay.View.MainMenu
 
         private void Start()
         {
-            _play.onClick.AddListener(() => SceneManager.LoadScene(1));
+            _play.onClick.AddListener(() => SceneManager.LoadScene("Gameplay"));
             _settingsButton.onClick.AddListener(() => StaticResolver.Resolve<IWindowOpener>().Open<SettingsPopup>());
             _quit.onClick.AddListener(Application.Quit);
         }

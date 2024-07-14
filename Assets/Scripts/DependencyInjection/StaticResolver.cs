@@ -1,47 +1,35 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+
+#if UNITY_EDITOR
 using UnityEditor;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+#endif
 
 namespace RogueIslands.DependencyInjection
 {
     public static class StaticResolver
     {
-        private static IResolver _scope;
+        private static readonly List<IContainer> _containers = new();
         
         public static T Resolve<T>()
         {
-            if (_scope == null)
-            {
-                _scope = Object.FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
-                    .Where(c => c is IResolver)
-                    .Cast<IResolver>()
-                    .FirstOrDefault();
-
-                SceneManager.sceneLoaded -= ResetScope;
-                SceneManager.sceneLoaded += ResetScope;
-
-                if (_scope == null)
-                {
-                    Debug.LogError("Failed to find resolver");
-                    return default;
-                }
-            }
+            if (_containers.Count == 0)
+                throw new Exception("No container has been registered");
             
-            return _scope.Resolve<T>();
+            return _containers[^1].Resolve<T>();
         }
 
-        private static void ResetScope(Scene arg0, LoadSceneMode loadSceneMode)
-        {
-            _scope = null;
-            SceneManager.sceneLoaded -= ResetScope;
-        }
+        public static void AddContainer(IContainer container) 
+            => _containers.Add(container);
+
+        public static void RemoveContainer(IContainer container) 
+            => _containers.Remove(container);
 
 #if UNITY_EDITOR
         [InitializeOnEnterPlayMode]
         private static void Reset()
         {
-            _scope = null;
+            _containers.Clear();
         }
 #endif
     }

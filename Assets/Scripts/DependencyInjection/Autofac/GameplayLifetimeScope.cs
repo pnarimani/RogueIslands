@@ -1,11 +1,10 @@
 using Autofac;
-using AutofacUnity;
 using RogueIslands.Gameplay;
 using UnityEngine;
 
 namespace RogueIslands.DependencyInjection.Autofac
 {
-    public class GameplayLifetimeScope : AutofacScope, IResolver
+    public class GameplayLifetimeScope : StaticallyResolvableLifetimeScope
     {
         [SerializeField] private bool _useRandomSeed;
         [SerializeField] private string _seed;

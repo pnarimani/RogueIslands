@@ -11,7 +11,8 @@
     "Unity.Cinemachine",
     "Audoty",
     "RogueIslands.UISystem",
-    "RogueIslands.DependencyInjection"
+    "RogueIslands.DependencyInjection",
+    "RogueIslands.Initialization"
   ],
   "overrideReferences": true,
   "precompiledReferences": [

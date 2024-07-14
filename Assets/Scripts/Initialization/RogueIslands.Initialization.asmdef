@@ -1,0 +1,9 @@
+﻿{
+  "name": "RogueIslands.Initialization",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "UniTask",
+    "RogueIslands.DependencyInjection"
+  ],
+  "overrideReferences": true
+}

@@ -27,7 +27,7 @@ namespace AutofacUnity
                 Build();
         }
 
-        public void Build()
+        public virtual void Build()
         {
             if (Container != null)
                 return;
