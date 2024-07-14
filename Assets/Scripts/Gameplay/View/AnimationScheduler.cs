@@ -45,12 +45,15 @@ namespace RogueIslands.Gameplay.View
         public static float GetAnimationTime()
             => Instance._delay;
 
-        public static float GetExtraTime()
+        public static float GetTotalTime()
             => MathF.Max(Instance._ensureTime, Instance._delay);
 
         public static float Scale(float f)
         {
             return f * Multiplier;
         }
+
+        public static void WaitForTotalTime() 
+            => Instance._delay = GetTotalTime();
     }
 }

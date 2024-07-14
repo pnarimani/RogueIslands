@@ -28,7 +28,7 @@ namespace RogueIslands.Gameplay.View
             _playController.Play();
 
             var timer = 0f;
-            while (timer < AnimationScheduler.GetExtraTime())
+            while (timer < AnimationScheduler.GetTotalTime())
             {
                 await UniTask.DelayFrame(1, cancellationToken: destroyCancellationToken);
                 timer += Time.deltaTime;

@@ -95,7 +95,7 @@ namespace RogueIslands.Gameplay.View
 
         public async void Destroy()
         {
-            var wait = AnimationScheduler.GetExtraTime();
+            var wait = AnimationScheduler.GetTotalTime();
             AnimationScheduler.EnsureExtraTime(0.2f);
             await UniTask.WaitForSeconds(wait);
             

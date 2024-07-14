@@ -631,7 +631,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Investment",
-                    Description = new LiteralDescription("$1 for each building remained in hand"),
+                    Description = new LiteralDescription("$1 for each building remained in hand at the end of the day."),
                     BuyPrice = 6,
                     EventAction = new ChangeMoneyAction
                     {

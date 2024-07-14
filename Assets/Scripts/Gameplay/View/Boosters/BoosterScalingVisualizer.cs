@@ -12,7 +12,7 @@ namespace RogueIslands.Gameplay.View.Boosters
 
         protected override async UniTask OnBeforeBoosterExecuted(GameState state, BoosterScalingAction action, BoosterView booster)
         {
-            var wait = AnimationScheduler.GetExtraTime();
+            var wait = AnimationScheduler.GetTotalTime();
             AnimationScheduler.AllocateTime(0.4f);
             AnimationScheduler.EnsureExtraTime(0.3f);
             await UniTask.WaitForSeconds(wait);

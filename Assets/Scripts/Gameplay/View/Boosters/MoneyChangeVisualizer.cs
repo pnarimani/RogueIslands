@@ -20,21 +20,22 @@ namespace RogueIslands.Gameplay.View.Boosters
             if (state.CurrentEvent is BuildingEvent buildingEvent)
                 responsibleBuilding = buildingEvent.Building;
 
-            var wait = AnimationScheduler.GetAnimationTime();
-            AnimationScheduler.AllocateTime(0.3f);
-            await UniTask.WaitForSeconds(wait);
+            if (responsibleBuilding == null || !responsibleBuilding.IsPlacedDown())
+                AnimationScheduler.WaitForTotalTime();
+
+            await AnimationScheduler.ScheduleAndWait(0.3f);
 
             UniTask task;
             if (responsibleBuilding != null)
             {
-                if (responsibleBuilding.ClusterId.IsDefault())
+                if (responsibleBuilding.IsPlacedDown())
                 {
-                    var view = ObjectRegistry.GetBuildingCards().First(b => b.Data == responsibleBuilding);
+                    var view = ObjectRegistry.GetBuildings().First(b => b.Data == responsibleBuilding);
                     task = view.BuildingMadeMoney(action.Change);
                 }
                 else
                 {
-                    var view = ObjectRegistry.GetBuildings().First(b => b.Data == responsibleBuilding);
+                    var view = ObjectRegistry.GetBuildingCards().First(b => b.Data == responsibleBuilding);
                     task = view.BuildingMadeMoney(action.Change);
                 }
             }
