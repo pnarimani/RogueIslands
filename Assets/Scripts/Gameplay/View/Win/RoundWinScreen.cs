@@ -51,6 +51,9 @@ namespace RogueIslands.Gameplay.View.Win
 
         public void AddMoneyChange(MoneyChange change)
         {
+            if (change.Change == 0)
+                return;
+            
             _totalChange += change.Change;
             SetTotalMoneyText();
 

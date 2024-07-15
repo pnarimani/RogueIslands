@@ -90,16 +90,26 @@ namespace RogueIslands.Gameplay
                 Reason = "Days Left (1$ per day)",
             });
 
+            winScreen.AddMoneyChange(new MoneyChange()
+            {
+                Change = GetInterestMoney(),
+                Reason = "Interest (1$ interest per 5$ in the bank)",
+            });
+
             foreach (var change in _state.MoneyChanges)
             {
                 winScreen.AddMoneyChange(change);
             }
         }
 
+        private int GetInterestMoney() 
+            => Mathf.Clamp(_state.Money, 0, 25) / 5;
+
         public void ClaimRoundEndMoney()
         {
             _state.Money += _state.MoneyPayoutPerRound;
             _state.Money += _state.TotalDays - _state.Day;
+            _state.Money += GetInterestMoney();
             foreach (var change in _state.MoneyChanges)
                 _state.Money += change.Change;
             _state.MoneyChanges.Clear();
