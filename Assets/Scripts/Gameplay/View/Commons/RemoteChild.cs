@@ -20,6 +20,7 @@ namespace RogueIslands.Gameplay.View.Commons
             _parent = parent;
             _localPosition = localPosition;
             _isWorldSpaceUI = _parent.GetComponentInParent<Canvas>().renderMode == RenderMode.WorldSpace;
+            SetPosition();
         }
 
         private void Update()
@@ -30,10 +31,15 @@ namespace RogueIslands.Gameplay.View.Commons
                 return;
             }
 
+            SetPosition();
+        }
+
+        private void SetPosition()
+        {
             var parentPosition = _isWorldSpaceUI
                 ? _camera.WorldToScreenPoint(_parent.position)
                 : _parent.position;
-            
+
             transform.position = parentPosition + _localPosition;
         }
     }
