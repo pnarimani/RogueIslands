@@ -1,4 +1,5 @@
-﻿using Unity.Cinemachine;
+﻿using System.Linq;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.View
@@ -35,6 +36,8 @@ namespace RogueIslands.Gameplay.View
 
         private void OnScroll(float obj)
         {
+            if (ObjectRegistry.GetBuildingCards().Any(c => c.IsSelected))
+                return;
             _radiusTarget = Mathf.Clamp(_radiusTarget + -obj * ScrollMultiplier, 10, 50);
         }
 

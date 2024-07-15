@@ -141,16 +141,6 @@ namespace RogueIslands.Gameplay.View
             }
         }
 
-        public Bounds GetBounds(Building buildingData)
-        {
-            return ObjectRegistry.GetBuildings().First(b => b.Data == buildingData).transform.GetCollisionBounds();
-        }
-
-        public Bounds GetBounds(WorldBooster worldBooster)
-        {
-            return ObjectRegistry.GetBoosters().First(b => Equals(b.Data, worldBooster)).transform.GetCollisionBounds();
-        }
-
         public void ShowRoundsSelectionScreen() => _windowOpener.Open<RoundSelectionScreen>();
         public void ShowDeckPreview() => _windowOpener.Open<DeckPreviewScreen>();
 
@@ -164,6 +154,13 @@ namespace RogueIslands.Gameplay.View
         {
             foreach (var v in ObjectRegistry.GetBuildingCards())
                 Object.Destroy(v.gameObject);
+        }
+
+        public bool IsOverlapping(Building building, WorldBooster worldBooster)
+        {
+            var buildingTransform = ObjectRegistry.GetBuildings().First(b => b.Data == building).transform;
+            var boosters = WorldBoosterBoundCheck.GetOverlappingWorldBoosters(buildingTransform);
+            return boosters.Any(b => b.Data.Id == worldBooster.Id);
         }
 
         public void ShowSettingsPopup() => _windowOpener.Open<SettingsPopup>();

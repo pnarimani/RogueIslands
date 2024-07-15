@@ -23,7 +23,7 @@ namespace RogueIslands.Gameplay.View.Boosters
 
         private void Start()
         {
-            var size = transform.GetCollisionBounds().size;
+            var size = transform.GetBounds().size;
             _highlight.transform.localScale = Vector3.one * (Mathf.Max(size.x, size.z) * 1.3f);
         }
 

@@ -38,6 +38,11 @@ namespace RogueIslands.Gameplay.View
                 _lastClickState = IsValidMouseEvent() ? ClickState.ValidRight : ClickState.Invalid;
                 _previousMousePosition = Input.mousePosition;
             }
+            
+            if (Input.mouseScrollDelta.y != 0)
+            {
+                Scroll?.Invoke(Input.mouseScrollDelta.y);
+            }
 
             if (_lastClickState == ClickState.Invalid)
                 return;
@@ -68,11 +73,6 @@ namespace RogueIslands.Gameplay.View
                 }
 
                 _mouseMoved = false;
-            }
-            
-            if (Input.mouseScrollDelta.y != 0)
-            {
-                Scroll?.Invoke(Input.mouseScrollDelta.y);
             }
         }
 

@@ -69,19 +69,17 @@ namespace RogueIslands.Gameplay.Buildings
 
             foreach (var building in _state.PlacedDownBuildings)
             {
-                if(existingClusters.Contains(building.ClusterId))
+                if (existingClusters.Contains(building.ClusterId))
                     building.ClusterId = newClusterId;
             }
         }
 
         private void RemoveOverlappingWorldBoosters(Building building)
         {
-            var bounds = _view.GetBounds(building);
             for (var i = _state.WorldBoosters.SpawnedBoosters.Count - 1; i >= 0; i--)
             {
                 var wb = _state.WorldBoosters.SpawnedBoosters[i];
-                var wbBounds = _view.GetBounds(wb);
-                if (bounds.Intersects(wbBounds))
+                if (_view.IsOverlapping(building, wb))
                 {
                     _state.WorldBoosters.SpawnedBoosters.RemoveAt(i);
 

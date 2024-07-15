@@ -21,7 +21,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             // can cache
             var prefab = Resources.Load<GameObject>(blueprint.PrefabAddress);
             var instance = Object.Instantiate(prefab);
-            var bounds = instance.transform.GetCollisionBounds();
+            var bounds = instance.transform.GetBounds();
             Object.Destroy(instance);
             
             var mask = LayerMask.GetMask("Building", "WorldBooster");

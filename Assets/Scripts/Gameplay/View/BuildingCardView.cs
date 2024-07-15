@@ -13,11 +13,12 @@ namespace RogueIslands.Gameplay.View
 {
     public class BuildingCardView : MonoBehaviour, IPointerClickHandler
     {
+        private const float BuildingRotationStep = 45 * 0.5f;
+        
         [SerializeField] private RectTransform _animationParent;
         [SerializeField] private Image _colorBg, _colorGradient, _buildingIcon;
         [SerializeField] private LabelFeedback _moneyFeedback, _productFeedback, _multFeedback;
 
-        private bool _isSelected;
         private BuildingView _buildingPreview;
         private Transform _originalParent;
         private CardListItem _cardListItem;
@@ -28,6 +29,7 @@ namespace RogueIslands.Gameplay.View
         public bool CanPlaceBuildings { get; set; } = true;
 
         public Building Data { get; private set; }
+        public bool IsSelected { get; private set; }
 
         public void Initialize(Building data)
         {
@@ -51,6 +53,7 @@ namespace RogueIslands.Gameplay.View
                 Destroy(_buildingPreview.gameObject);
             
             InputHandling.Instance.Click -= OnWorldClicked;
+            InputHandling.Instance.Scroll -= OnInputRotateBuilding;
         }
 
         private void Update()
@@ -60,13 +63,13 @@ namespace RogueIslands.Gameplay.View
             
             if (Input.GetMouseButtonUp(1))
             {
-                if (_isSelected)
+                if (IsSelected)
                 {
                     OnPointerClick(default);
                 }
             }
 
-            if (_isSelected && GameUI.Instance.IsInSpawnRegion(Input.mousePosition))
+            if (IsSelected && GameUI.Instance.IsInSpawnRegion(Input.mousePosition))
             {
                 if (_buildingPreview == null)
                 {
@@ -107,7 +110,7 @@ namespace RogueIslands.Gameplay.View
                 StaticResolver.Resolve<BuildingPlacement>().PlaceBuilding(
                     Data,
                     _buildingPreview.transform.position,
-                    Quaternion.identity
+                    _buildingPreview.transform.rotation
                 );
 
                 EffectRangeHighlighter.LowlightAll();
@@ -127,9 +130,9 @@ namespace RogueIslands.Gameplay.View
             if (PlayButtonHandler.Instance.IsPlaying)
                 return;
 
-            _isSelected = !_isSelected;
+            IsSelected = !IsSelected;
 
-            if (_isSelected)
+            if (IsSelected)
             {
                 _audio.PlayCardSelected();
 
@@ -137,13 +140,17 @@ namespace RogueIslands.Gameplay.View
 
                 transform.DOLocalMoveY(50, 0.2f)
                     .SetRelative(true)
-                    .OnComplete(() => { InputHandling.Instance.Click += OnWorldClicked; });
+                    .OnComplete(() =>
+                    {
+                        InputHandling.Instance.Scroll += OnInputRotateBuilding;
+                        InputHandling.Instance.Click += OnWorldClicked;
+                    });
 
                 foreach (var c in ObjectRegistry.GetBuildingCards())
                 {
                     if (c == this) continue;
 
-                    if (c._isSelected)
+                    if (c.IsSelected)
                         c.OnPointerClick(default);
                 }
             }
@@ -156,7 +163,16 @@ namespace RogueIslands.Gameplay.View
                     .OnComplete(() => _cardListItem.ShouldAnimateToTarget = true);
 
                 InputHandling.Instance.Click -= OnWorldClicked;
+                InputHandling.Instance.Scroll -= OnInputRotateBuilding;
             }
+        }
+
+        private void OnInputRotateBuilding(float obj)
+        {
+            if (_buildingPreview == null)
+                return;
+            
+            _buildingPreview.transform.Rotate(new Vector3(0, obj * BuildingRotationStep, 0));
         }
 
         public async UniTask BuildingMadeMoney(int money)

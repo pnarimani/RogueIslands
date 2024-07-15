@@ -44,14 +44,25 @@ namespace RogueIslands.Gameplay.View
             return new Rect(min, max - min);
         }
 
-        public static Bounds GetCollisionBounds(this Transform transform)
+        public static Bounds GetBounds(this Transform transform)
         {
-            using var _ = ListPool<Collider>.Get(out var list);
+            using var _ = ListPool<MeshRenderer>.Get(out var list);
             transform.GetComponentsInChildren(list);
 
             var bounds = new Bounds(transform.position, Vector3.zero);
             foreach (var ren in list)
-                bounds.Encapsulate(ren.bounds);
+            {
+                var rendererBounds = ren.localBounds;
+                rendererBounds.center = ren.transform.position;
+                var size = rendererBounds.size;
+                var scale = ren.transform.lossyScale;
+                size.x *= scale.x;
+                size.y *= scale.y;
+                size.z *= scale.z;
+                rendererBounds.size = size;
+                bounds.Encapsulate(rendererBounds);
+            }
+
             return bounds;
         }
     }

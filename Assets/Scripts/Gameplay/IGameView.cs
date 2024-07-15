@@ -22,11 +22,10 @@ namespace RogueIslands.Gameplay
         IGameUI GetUI();
         void SpawnBuilding(Building building);
         void ShowShopScreen();
-        Bounds GetBounds(Building buildingData);
-        Bounds GetBounds(WorldBooster worldBooster);
         void DestroyWorldBoosters();
         bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, RogueRandom positionRandom, out Vector3 point);
         IDeckBuildingView GetDeckBuildingView();
         void DestroyBuildingsInHand();
+        bool IsOverlapping(Building building, WorldBooster worldBooster);
     }
 }

@@ -7,6 +7,7 @@ namespace RogueIslands.Gameplay.View
         private readonly Camera _camera = Camera.main;
         private readonly int _buildingMask = LayerMask.GetMask("Building");
         private readonly int _groundMask = LayerMask.GetMask("Ground");
+        private readonly Collider[] _colliderBuffer = new Collider[1000];
 
         private Vector3 _gizmosCenter, _gizmosSize;
         private Vector3 _bottomLeft;
@@ -16,7 +17,10 @@ namespace RogueIslands.Gameplay.View
 
         public Vector3 GetPosition(Transform building)
         {
-            var bounds = building.GetCollisionBounds();
+            var bounds = building.GetBounds();
+
+            _gizmosCenter = bounds.center;
+            _gizmosSize = bounds.size;
 
             var ray = _camera!.ScreenPointToRay(Input.mousePosition);
 
@@ -25,7 +29,7 @@ namespace RogueIslands.Gameplay.View
 
             var desiredPosition = SlideDesiredPosition(building, bounds, hit.point);
 
-            if (Vector3.Distance(desiredPosition, hit.point) > 5f)
+            if (Vector3.Distance(desiredPosition, hit.point) > 10f)
             {
                 desiredPosition = hit.point;
             }
@@ -33,40 +37,52 @@ namespace RogueIslands.Gameplay.View
             return desiredPosition;
         }
 
-        private static Vector3 SlideDesiredPosition(Transform building, Bounds bounds, Vector3 desiredPosition)
+        private Vector3 SlideDesiredPosition(Transform building, Bounds bounds, Vector3 desiredPosition)
         {
             var currentPos = building.position;
-            foreach (var other in ObjectRegistry.GetBuildings())
+
+            bounds.center = currentPos;
+            if (IntersectsAnyBuilding(building, bounds))
+                return desiredPosition;
+
+            bounds.center = desiredPosition;
+            if (!IntersectsAnyBuilding(building, bounds))
+                return desiredPosition;
+
+            var delta = desiredPosition - currentPos;
+            var deltaNormalized = delta.normalized;
+            Physics.BoxCast(
+                currentPos,
+                bounds.extents,
+                deltaNormalized,
+                out var hit,
+                building.rotation,
+                100,
+                _buildingMask
+            );
+            var leftOver = (delta.magnitude - hit.distance) * deltaNormalized;
+            var projected = Vector3.ProjectOnPlane(leftOver, hit.normal);
+            return currentPos + projected;
+        }
+
+        private bool IntersectsAnyBuilding(Transform building, Bounds bounds)
+        {
+            var count = Physics.OverlapBoxNonAlloc(bounds.center, bounds.extents, _colliderBuffer, building.rotation,
+                _buildingMask);
+            for (var i = 0; i < count; i++)
             {
-                if (other.transform == building)
-                    continue;
-
-                var otherBounds = other.transform.GetCollisionBounds();
-                bounds.center = currentPos;
-                if(bounds.Intersects(otherBounds))
-                    continue;
-                
-                bounds.center = desiredPosition;
-                if (!bounds.Intersects(otherBounds))
-                    continue;
-
-                bounds.center = new Vector3(currentPos.x, currentPos.y, desiredPosition.z);
-                if (bounds.Intersects(otherBounds))
-                    desiredPosition.z = currentPos.z;
-
-                bounds.center = new Vector3(desiredPosition.x, currentPos.y, currentPos.z);
-                if (bounds.Intersects(otherBounds))
-                    desiredPosition.x = currentPos.x;
+                if (_colliderBuffer[i].transform.root != building)
+                    return true;
             }
 
-            return desiredPosition;
+            return false;
         }
 
         public bool IsValidPlacement(Transform building)
         {
-            var bounds = building.GetCollisionBounds();
-            var isIntersectingWithAnyBuildings = IsIntersectingWithAnyBuildings(building, bounds);
-            var isOnFlatGround = IsOnFlatGround(bounds);
+            var bounds = building.GetBounds();
+            var isIntersectingWithAnyBuildings = IntersectsAnyBuilding(building, bounds);
+            var isOnFlatGround = IsOnFlatGround(building,bounds);
 
             // Debug.Log("isIntersectingWithAnyBuildings = " + isIntersectingWithAnyBuildings);
             // Debug.Log("isOnFlatGround = " + isOnFlatGround);
@@ -74,30 +90,20 @@ namespace RogueIslands.Gameplay.View
             return !isIntersectingWithAnyBuildings && isOnFlatGround;
         }
 
-        private static bool IsIntersectingWithAnyBuildings(Transform building, Bounds bounds)
+        private bool IsOnFlatGround(Transform building, Bounds bounds)
         {
-            foreach (var other in ObjectRegistry.GetBuildings())
-            {
-                if (other.transform == building)
-                    continue;
-
-                var otherBounds = other.transform.GetCollisionBounds();
-                if (bounds.Intersects(otherBounds))
-                    return true;
-            }
-
-            return false;
-        }
-
-        private bool IsOnFlatGround(Bounds bounds)
-        {
-            var min = bounds.min;
-            var max = bounds.max;
+            var min = -bounds.extents;
+            var max = bounds.extents;
 
             _bottomLeft = new Vector3(min.x, bounds.center.y, min.z);
             _topLeft = new Vector3(min.x, bounds.center.y, max.z);
             _topRight = new Vector3(max.x, bounds.center.y, max.z);
             _bottomRight = new Vector3(max.x, bounds.center.y, min.z);
+
+            _bottomLeft = building.TransformPoint(_bottomLeft);
+            _topLeft = building.TransformPoint(_topLeft);
+            _topRight = building.TransformPoint(_topRight);
+            _bottomRight = building.TransformPoint(_bottomRight);
 
             var rays = new Ray[]
             {
@@ -115,7 +121,7 @@ namespace RogueIslands.Gameplay.View
 
                 if (previousHitDistance.HasValue && Mathf.Abs(hit.distance - previousHitDistance.Value) > 1f)
                     return false;
-                
+
                 previousHitDistance = hit.distance;
             }
 
