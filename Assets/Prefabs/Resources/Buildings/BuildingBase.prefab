@@ -103,7 +103,7 @@ MonoBehaviour:
   _descriptionBoxParent: {fileID: 5650880130471713474}
   _descriptionBoxPrefab: {fileID: 6584765328537110756, guid: d70c4d99d6dab4b448f46152753db9b7, type: 3}
   _showName: 0
-  _growToBottom: 1
+  _growToBottom: 0
 --- !u!1 &4207948724428914448
 GameObject:
   m_ObjectHideFlags: 0

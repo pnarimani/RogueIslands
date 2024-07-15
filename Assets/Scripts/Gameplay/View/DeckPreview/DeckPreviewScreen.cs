@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.View.DeckBuilding;
@@ -13,13 +14,14 @@ namespace RogueIslands.Gameplay.View.DeckPreview
     {
         [SerializeField] private BuildingCardView _buildingCard;
         [SerializeField] private CardListView _blue, _red, _green, _purple;
-        [SerializeField] private TextMeshProUGUI _blueCount, _redCount, _greenCount, _purpleCount;
+        [SerializeField] private TextMeshProUGUI _blueCount, _redCount, _greenCount, _purpleCount, _deckStatPrefab;
+        [SerializeField] private Transform _deckStatParent;
         [SerializeField] private Button _close;
-        
+
         private void Start()
         {
             _close.onClick.AddListener(() => Destroy(gameObject));
-            
+
             var deck = GameManager.Instance.State.Buildings.Deck
                 .OrderBy(building => building, new BuildingComparer())
                 .ToList();
@@ -37,11 +39,36 @@ namespace RogueIslands.Gameplay.View.DeckPreview
                 else
                     throw new ArgumentOutOfRangeException();
             }
-            
+
             _blueCount.text = _blue.Content.childCount.ToString();
             _redCount.text = _red.Content.childCount.ToString();
             _greenCount.text = _green.Content.childCount.ToString();
             _purpleCount.text = _purple.Content.childCount.ToString();
+
+            foreach (var category in Category.All)
+            {
+                ShowStat(category.Value, deck.Count(building => building.Category == category));
+            }
+
+            Instantiate(_deckStatPrefab, _deckStatParent).text = "---";
+            
+            ShowStat("Small", deck.Count(building => building.Size == BuildingSize.Small));
+            ShowStat("Medium", deck.Count(building => building.Size == BuildingSize.Medium));
+            ShowStat("Big", deck.Count(building => building.Size == BuildingSize.Big));
+
+            Instantiate(_deckStatPrefab, _deckStatParent).text = "---";
+            
+            ShowStat("Total", deck.Count);
+        }
+
+        private void ShowCategoryStat(List<Building> deck, Category category)
+        {
+        }
+
+        private void ShowStat(string title, int count)
+        {
+            var stat = Instantiate(_deckStatPrefab, _deckStatParent);
+            stat.text = $"{title}: {count}";
         }
 
         private void AddCard(Building building, CardListView list)
