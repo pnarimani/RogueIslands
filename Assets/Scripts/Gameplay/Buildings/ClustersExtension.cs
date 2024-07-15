@@ -7,8 +7,7 @@ namespace RogueIslands.Gameplay.Buildings
     {
         public static List<List<Building>> GetClusters(this GameState state)
         {
-            return state.Buildings.Deck
-                .Where(b => b.IsPlacedDown())
+            return state.PlacedDownBuildings
                 .GroupBy(b => b.ClusterId)
                 .Select(b => b.ToList())
                 .ToList();
