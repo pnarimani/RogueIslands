@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using RogueIslands.DependencyInjection;
+using RogueIslands.Gameplay.View.Commons;
+using RogueIslands.UISystem;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace RogueIslands.Gameplay.View
@@ -9,20 +12,23 @@ namespace RogueIslands.Gameplay.View
         [SerializeField] private DescriptionBox _descriptionBoxPrefab;
         [SerializeField] private bool _showName;
         [SerializeField] private bool _growToBottom = true;
-        
-        private DescriptionBox _descriptionBoxInstance;
 
+        private static readonly UILayer _descriptionBoxLayer = new("DescriptionBoxLayer");
+
+        private DescriptionBox _descBox;
         private IDescribableItem _describableItem;
+        private IUIRootProvider _uiRootProvider;
 
         public void Initialize(IDescribableItem describableItem)
         {
+            _uiRootProvider = StaticResolver.Resolve<IUIRootProvider>();
             _describableItem = describableItem;
         }
-        
+
         private void OnDestroy()
         {
-            if (_descriptionBoxInstance != null)
-                Destroy(_descriptionBoxInstance.gameObject);
+            if (_descBox != null)
+                Destroy(_descBox.gameObject);
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
@@ -33,30 +39,42 @@ namespace RogueIslands.Gameplay.View
                 return;
             }
 
-            if (_descriptionBoxInstance == null)
+            if (_descBox == null)
             {
-                _descriptionBoxInstance = Instantiate(
-                    _descriptionBoxPrefab,
-                    _descriptionBoxParent
+                var root = _uiRootProvider.GetRoot(_descriptionBoxLayer);
+                _descBox = Instantiate(_descriptionBoxPrefab,
+                    _descriptionBoxParent.position,
+                    Quaternion.identity,
+                    root
                 );
-                _descriptionBoxInstance.SetDescription(_describableItem.Description.Get(_describableItem));
-
-                if (_showName && _describableItem is INamedItem namedItem)
-                    _descriptionBoxInstance.ShowName(namedItem.Name);
-
-                if (_describableItem is IHasAlternateDescriptionTitle alternateDescriptionTitle)
-                    _descriptionBoxInstance.ShowName(alternateDescriptionTitle.AlternateTitle);
-                
-                _descriptionBoxInstance.SetGrowToBottom(_growToBottom);
+                var remoteChild = _descBox.gameObject.AddComponent<RemoteChild>();
+                remoteChild.SetParent(_descriptionBoxParent, Vector3.zero);
+                _descBox.SetGrowToBottom(_growToBottom);
+                _descBox.SetDescription(GetDescriptionText());
+                ShowName();
             }
+        }
+
+        private void ShowName()
+        {
+            if (_showName && _describableItem is INamedItem namedItem)
+                _descBox.ShowName(namedItem.Name);
+
+            if (_describableItem is IHasAlternateDescriptionTitle alternateDescriptionTitle)
+                _descBox.ShowName(alternateDescriptionTitle.AlternateTitle);
+        }
+
+        private string GetDescriptionText()
+        {
+            return _describableItem.Description.Get(_describableItem);
         }
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
         {
-            if (_descriptionBoxInstance != null)
+            if (_descBox != null)
             {
-                Destroy(_descriptionBoxInstance.gameObject);
-                _descriptionBoxInstance = null;
+                Destroy(_descBox.gameObject);
+                _descBox = null;
             }
         }
     }

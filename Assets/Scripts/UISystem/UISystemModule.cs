@@ -8,6 +8,7 @@ namespace RogueIslands.UISystem
         {
             builder.RegisterType<WindowOpener>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<WindowRegistry>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<UIRootProvider>().AsImplementedInterfaces().SingleInstance();
         }
     }
 }

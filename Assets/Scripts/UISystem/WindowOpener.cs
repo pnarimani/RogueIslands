@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using RogueIslands.Assets;
+﻿using RogueIslands.Assets;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,19 +8,18 @@ namespace RogueIslands.UISystem
     {
         private readonly IWindowRegistry _registry;
         private readonly IAssetLoader _assetLoader;
-        private readonly Dictionary<UILayer, Transform> _loadedRoots = new();
-        public WindowOpener(IWindowRegistry registry, IAssetLoader assetLoader)
+        private readonly IUIRootProvider _rootProvider;
+
+        public WindowOpener(IWindowRegistry registry, IAssetLoader assetLoader, IUIRootProvider rootProvider)
         {
+            _rootProvider = rootProvider;
             _assetLoader = assetLoader;
             _registry = registry;
         }
 
         public T Open<T>(UILayer layer = default)
         {
-            if(string.IsNullOrEmpty(layer.Value))
-                layer = UILayer.Default;
-
-            var layerTransform = GetLayerTransform(layer);
+            var layerTransform = _rootProvider.GetRoot(layer);
             var path = _registry.GetAssetKey<T>();
             var prefab = _assetLoader.Load<GameObject>(path);
             var gameObject = Object.Instantiate(prefab, layerTransform, false);
@@ -33,19 +31,6 @@ namespace RogueIslands.UISystem
         {
             gameObject.AddComponent<Canvas>();
             gameObject.AddComponent<GraphicRaycaster>();
-        }
-
-        private Transform GetLayerTransform(UILayer layer)
-        {
-            if (!_loadedRoots.TryGetValue(layer, out var layerTransform) || layerTransform == null)
-            {
-                var root = _assetLoader.Load<GameObject>($"UISystem/{layer.Value}");
-                layerTransform = Object.Instantiate(root).transform;
-                layerTransform.name = layer.Value;
-                _loadedRoots[layer] = layerTransform;
-            }
-
-            return layerTransform;
         }
     }
 }
