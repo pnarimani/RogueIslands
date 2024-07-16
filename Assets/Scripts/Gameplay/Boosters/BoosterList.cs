@@ -433,28 +433,15 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "The Rat",
-                    Description =
-                        new ScalingBoosterDescription(
-                            "On the start of the round, destroys the booster to the right. Gains +5 mult"),
+                    Description = new ScalingBoosterDescription("On the start of the round, destroys the booster to the right. Adds double the sell value to mult."),
                     BuyPrice = 5,
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
                         {
-                            new CompositeAction
+                            new RatAttack()
                             {
-                                Conditions = new IGameCondition[]
-                                {
-                                    GameEventCondition.Create<RoundStart>(),
-                                },
-                                Actions = new GameAction[]
-                                {
-                                    new DestroyBoosterAction(),
-                                    new BoosterScalingAction
-                                    {
-                                        PlusMultChange = 5,
-                                    },
-                                },
+                                Conditions = new []{ GameEventCondition.Create<RoundStart>() },
                             },
                             new ScoringAction
                             {
