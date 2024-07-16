@@ -23,8 +23,6 @@ namespace RogueIslands.Gameplay.View
 
             IsPlaying = true;
 
-            AnimationScheduler.ResetTime();
-
             _playController.Play();
 
             var timer = 0f;
@@ -37,8 +35,6 @@ namespace RogueIslands.Gameplay.View
             destroyCancellationToken.ThrowIfCancellationRequested();
 
             GameUI.Instance.RefreshScores();
-            
-            AnimationScheduler.ResetTime();
 
             _roundController.TryEndingRound();
 

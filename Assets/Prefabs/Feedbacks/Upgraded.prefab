@@ -62,11 +62,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4103895624811479830, guid: c0aea4b331822be4db6929679bfe5583, type: 3}
       propertyPath: m_text
-      value: Upgraded
+      value: Upgraded!
       objectReference: {fileID: 0}
     - target: {fileID: 4103895624811479830, guid: c0aea4b331822be4db6929679bfe5583, type: 3}
       propertyPath: m_fontSize
-      value: 11.35
+      value: 23.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 4103895624811479830, guid: c0aea4b331822be4db6929679bfe5583, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 23.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 4103895624811479830, guid: c0aea4b331822be4db6929679bfe5583, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4103895624811479830, guid: c0aea4b331822be4db6929679bfe5583, type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7670802002386022046, guid: c0aea4b331822be4db6929679bfe5583, type: 3}
       propertyPath: m_Color.a

@@ -10,11 +10,24 @@ namespace RogueIslands.Gameplay.View
 
         private float _delay;
         private float _ensureTime;
+        private float _lastAutoResetTime;
+        private float _nextAutoResetTime;
 
-        public static void ResetTime()
+        private static void AutoResetIfNeeded()
         {
-            Instance._delay = 0;
-            Instance._ensureTime = 0;
+            if (Instance._nextAutoResetTime < Time.time)
+            {
+                Instance._delay = 0;
+                Instance._ensureTime = 0;
+
+                Instance._lastAutoResetTime = Time.time;
+                Instance._nextAutoResetTime = Time.time;
+            }
+        }
+
+        private static void SetAutoResetTime()
+        {
+            Instance._nextAutoResetTime = Instance._lastAutoResetTime + GetTotalTime();
         }
 
         public static void AllocateTime(float time)
@@ -22,7 +35,11 @@ namespace RogueIslands.Gameplay.View
             if (time < 0)
                 throw new ArgumentOutOfRangeException(nameof(time));
 
+            AutoResetIfNeeded();
+
             Instance._delay += time;
+            
+            SetAutoResetTime();
         }
 
         public static void EnsureExtraTime(float time)
@@ -30,7 +47,11 @@ namespace RogueIslands.Gameplay.View
             if (time < 0)
                 throw new ArgumentOutOfRangeException(nameof(time));
 
+            AutoResetIfNeeded();
+            
             Instance._ensureTime = Mathf.Max(Instance._ensureTime, Instance._delay + time);
+            
+            SetAutoResetTime();
         }
 
         public static UniTask ScheduleAndWait(float time, float extraTime = 0)
@@ -43,17 +64,31 @@ namespace RogueIslands.Gameplay.View
         }
 
         public static float GetAnimationTime()
-            => Instance._delay;
+        {
+            AutoResetIfNeeded();
+            
+            return Instance._delay;
+        }
 
         public static float GetTotalTime()
-            => MathF.Max(Instance._ensureTime, Instance._delay);
+        {
+            AutoResetIfNeeded();
+            
+            return MathF.Max(Instance._ensureTime, Instance._delay);
+        }
 
         public static float Scale(float f)
         {
             return f * Multiplier;
         }
 
-        public static void WaitForTotalTime() 
-            => Instance._delay = GetTotalTime();
+        public static void WaitForTotalTime()
+        {
+            AutoResetIfNeeded();
+            
+            Instance._delay = GetTotalTime();
+            
+            SetAutoResetTime();
+        }
     }
 }

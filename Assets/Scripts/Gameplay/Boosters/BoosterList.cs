@@ -977,6 +977,34 @@ namespace RogueIslands.Gameplay.Boosters
                         Products = 2,
                         MultiplyByRemainingCards = true,
                     },
+                },
+                new()
+                {
+                    Name = "Explorer",
+                    Description = new ScalingBoosterDescription("Gains 0.1x mult every time you reroll in the shop"),
+                    BuyPrice = 8,
+                    EventAction = new CompositeAction()
+                    {
+                        Actions = new GameAction[]
+                        {
+                            new ScoringAction
+                            {
+                                XMult = 1,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<DayEnd>(),
+                                },
+                            },
+                            new BoosterScalingAction
+                            {
+                                XMultChange = 0.1,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<ShopRerolledEvent>(),
+                                },
+                            },
+                        },
+                    },
                 }
             };
         }
