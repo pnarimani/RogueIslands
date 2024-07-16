@@ -685,34 +685,34 @@ namespace RogueIslands.Gameplay.Boosters
                 //     Name = "Net",
                 //     Description = new ScalingBoosterDescription("Gain +1 mult whenever a random event does not happen"),
                 // },
-                new()
-                {
-                    Name = "For Profit",
-                    Description = new LiteralDescription("Double the chance of a world booster spawning"),
-                    BuyPrice = 5,
-                    EventAction = new ModifyWorldBoosterSpawnAction()
-                    {
-                        Conditions = new IGameCondition[]
-                        {
-                            GameEventCondition.Create<PropertiesRestored>(),
-                        },
-                        FactorMultiplier = 2,
-                    },
-                },
-                new()
-                {
-                    Name = "For Fun",
-                    Description = new LiteralDescription("Double the total number of world boosters"),
-                    BuyPrice = 5,
-                    EventAction = new ModifyWorldBoosterSpawnAction()
-                    {
-                        Conditions = new IGameCondition[]
-                        {
-                            GameEventCondition.Create<PropertiesRestored>(),
-                        },
-                        CountMultiplier = 2,
-                    },
-                },
+                // new()
+                // {
+                //     Name = "For Profit",
+                //     Description = new LiteralDescription("Double the chance of a world booster spawning"),
+                //     BuyPrice = 5,
+                //     EventAction = new ModifyWorldBoosterSpawnAction()
+                //     {
+                //         Conditions = new IGameCondition[]
+                //         {
+                //             GameEventCondition.Create<PropertiesRestored>(),
+                //         },
+                //         FactorMultiplier = 2,
+                //     },
+                // },
+                // new()
+                // {
+                //     Name = "For Fun",
+                //     Description = new LiteralDescription("Double the total number of world boosters"),
+                //     BuyPrice = 5,
+                //     EventAction = new ModifyWorldBoosterSpawnAction()
+                //     {
+                //         Conditions = new IGameCondition[]
+                //         {
+                //             GameEventCondition.Create<PropertiesRestored>(),
+                //         },
+                //         CountMultiplier = 2,
+                //     },
+                // },
                 new()
                 {
                     Name = "Late Bloomer",
@@ -1020,35 +1020,35 @@ namespace RogueIslands.Gameplay.Boosters
                 //         },
                 //     },
                 // },
-                new()
-                {
-                    Name = "Lucky Cat",
-                    Description = new ScalingBoosterDescription("Gains 0.5x mult when a lucky event happens"),
-                    BuyPrice = 5,
-                    EventAction = new CompositeAction()
-                    {
-                        Actions = new GameAction[]
-                        {
-                            new ScoringAction
-                            {
-                                XMult = 1,
-                                Conditions = new IGameCondition[]
-                                {
-                                    GameEventCondition.Create<DayEnd>(),
-                                },
-                            },
-                            new BoosterScalingAction
-                            {
-                                XMultChange = 0.5,
-                                Conditions = new IGameCondition[]
-                                {
-                                    GameEventCondition.Create<BoosterScoredEvent>(), 
-                                    new ProbabilityBoosterScoredCondition(),
-                                },
-                            },
-                        },
-                    },
-                },
+                // new()
+                // {
+                //     Name = "Lucky Cat",
+                //     Description = new ScalingBoosterDescription("Gains 0.5x mult when a lucky event happens"),
+                //     BuyPrice = 5,
+                //     EventAction = new CompositeAction()
+                //     {
+                //         Actions = new GameAction[]
+                //         {
+                //             new ScoringAction
+                //             {
+                //                 XMult = 1,
+                //                 Conditions = new IGameCondition[]
+                //                 {
+                //                     GameEventCondition.Create<DayEnd>(),
+                //                 },
+                //             },
+                //             new BoosterScalingAction
+                //             {
+                //                 XMultChange = 0.5,
+                //                 Conditions = new IGameCondition[]
+                //                 {
+                //                     GameEventCondition.Create<BoosterScoredEvent>(), 
+                //                     new ProbabilityBoosterScoredCondition(),
+                //                 },
+                //             },
+                //         },
+                //     },
+                // },
                 new()
                 {
                     Name = "Blueprint",

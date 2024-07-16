@@ -63,7 +63,7 @@ namespace RogueIslands.Gameplay
 
             if (_gameActionController.Execute(b, b.EventAction))
             {
-                Execute(new BoosterScoredEvent { Booster = b });
+                // Execute(new BoosterScoredEvent { Booster = b });
             }
         }
     }

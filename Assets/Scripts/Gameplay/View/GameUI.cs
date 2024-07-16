@@ -155,9 +155,7 @@ namespace RogueIslands.Gameplay.View
                 .SetEase(show ? Ease.OutBack : Ease.InBack);
 
             var btnTransform = (RectTransform)_playButton.transform;
-            var value = btnTransform.anchoredPosition.x;
-            value = Mathf.Abs(value);
-            btnTransform.DOAnchorPosX(show ? -value : value, 0.5f)
+            btnTransform.DOAnchorPosX(show ? -150 : 150, 0.5f)
                 .SetEase(show ? Ease.OutBack : Ease.InBack);
         }
     }
