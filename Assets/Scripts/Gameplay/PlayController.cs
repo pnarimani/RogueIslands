@@ -32,7 +32,7 @@ namespace RogueIslands.Gameplay
 
         public void Play()
         {
-            foreach (var building in _state.Buildings.Deck)
+            foreach (var building in _state.PlacedDownBuildings)
                 building.RemainingTriggers = 1;
 
             _state.ScoringState = new ScoringState();

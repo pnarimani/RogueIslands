@@ -138,6 +138,10 @@ MonoBehaviour:
     m_Localized: Sell ${0}
     m_Metadata:
       m_Items: []
+  - m_Id: 1057262905843712
+    m_Localized: Discard All
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

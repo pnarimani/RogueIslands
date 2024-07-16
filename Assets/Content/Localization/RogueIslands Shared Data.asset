@@ -135,6 +135,10 @@ MonoBehaviour:
     m_Key: Sell-Price-Button
     m_Metadata:
       m_Items: []
+  - m_Id: 1057262905843712
+    m_Key: Discard-All-Button
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

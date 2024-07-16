@@ -102,7 +102,7 @@ namespace RogueIslands.Gameplay
             }
         }
 
-        private int GetInterestMoney() 
+        private int GetInterestMoney()
             => Mathf.Clamp(_state.Money, 0, 25) / 5;
 
         public void ClaimRoundEndMoney()
@@ -155,8 +155,15 @@ namespace RogueIslands.Gameplay
 
         private void RemoveBuildingsClusterId()
         {
-            foreach (var building in _state.Buildings.Deck)
-                building.ClusterId = default;
+            if (GameParameters.ShouldDiscardPlayedBuildings)
+            {
+                _state.Buildings.Deck.RemoveAll(b => b.IsPlacedDown());
+            }
+            else
+            {
+                foreach (var building in _state.Buildings.Deck)
+                    building.ClusterId = default;
+            }
         }
 
         private bool HasLost()

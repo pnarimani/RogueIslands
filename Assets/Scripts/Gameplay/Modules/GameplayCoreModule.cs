@@ -44,6 +44,7 @@ namespace RogueIslands.Gameplay.Modules
             RegisterController<ShopRerollController>(builder);
             RegisterController<ShopPurchaseController>(builder);
             RegisterController<ShopItemSpawner>(builder);
+            RegisterController<DiscardController>(builder);
         }
 
         private static IRegistration<T> RegisterController<T>(IContainerBuilder builder)
