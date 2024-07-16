@@ -23,7 +23,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             if (responsibleBuilding == null || !responsibleBuilding.IsPlacedDown())
                 AnimationScheduler.WaitForTotalTime();
 
-            await AnimationScheduler.ScheduleAndWait(0.3f);
+            await AnimationScheduler.ScheduleAndWait(0.3f, 0.1f);
 
             UniTask task;
             if (responsibleBuilding != null)
