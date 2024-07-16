@@ -26,7 +26,7 @@ namespace RogueIslands.Gameplay
 
             var allBoosters = BoosterList.Get();
 
-            Debug.Log("allBoosters.Count = " + allBoosters.Count);
+            Debug.Log("Booster Count = " + allBoosters.Count);
             
             return new GameState()
             {

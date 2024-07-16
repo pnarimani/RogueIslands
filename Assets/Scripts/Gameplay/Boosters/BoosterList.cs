@@ -146,7 +146,7 @@ namespace RogueIslands.Gameplay.Boosters
                                 },
                                 Products = -20,
                             },
-                        }
+                        },
                     },
                 },
                 new()
@@ -460,8 +460,8 @@ namespace RogueIslands.Gameplay.Boosters
                             {
                                 Conditions = new[] { GameEventCondition.Create<DayEnd>() },
                                 PlusMult = 0,
-                            }
-                        }
+                            },
+                        },
                     },
                 },
                 new()
@@ -486,10 +486,10 @@ namespace RogueIslands.Gameplay.Boosters
                     BuyPrice = 8,
                     EventAction = new MultipliedScoringAction
                     {
-                        Conditions = new[] { GameEventCondition.Create<DayEnd>(), },
+                        Conditions = new[] { GameEventCondition.Create<DayEnd>() },
                         PlusMult = 1,
                         MultiplyByUniqueBuildings = true,
-                    }
+                    },
                 },
                 new()
                 {
@@ -662,7 +662,7 @@ namespace RogueIslands.Gameplay.Boosters
                             new BoosterScalingAction
                             {
                                 ProductChange = -5,
-                            }
+                            },
                         },
                     },
                 },
@@ -818,7 +818,7 @@ namespace RogueIslands.Gameplay.Boosters
                         },
                         PlusMult = 2,
                         PerMoney = 5,
-                    }
+                    },
                 },
                 new()
                 {
@@ -1005,7 +1005,50 @@ namespace RogueIslands.Gameplay.Boosters
                             },
                         },
                     },
-                }
+                },
+                // new()
+                // {
+                //     Name = "Consolation Prize",
+                //     Description = new LiteralDescription("+10 mult when a lucky event does not happen"),
+                //     BuyPrice = 5,
+                //     EventAction = new ScoringAction
+                //     {
+                //         PlusMult = 10,
+                //         Conditions = new IGameCondition[]
+                //         {
+                //             GameEventCondition.Create<ProbabilityConditionBlockedEvent>(),
+                //         },
+                //     },
+                // },
+                new()
+                {
+                    Name = "Lucky Cat",
+                    Description = new ScalingBoosterDescription("Gains 0.5x mult when a lucky event happens"),
+                    BuyPrice = 5,
+                    EventAction = new CompositeAction()
+                    {
+                        Actions = new GameAction[]
+                        {
+                            new ScoringAction
+                            {
+                                XMult = 1,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<DayEnd>(),
+                                },
+                            },
+                            new BoosterScalingAction
+                            {
+                                XMultChange = 0.5,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<BoosterScoredEvent>(), 
+                                    new ProbabilityBoosterScoredCondition(),
+                                },
+                            },
+                        },
+                    },
+                },
             };
         }
 

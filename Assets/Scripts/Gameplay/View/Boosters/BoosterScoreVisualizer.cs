@@ -28,19 +28,26 @@ namespace RogueIslands.Gameplay.View.Boosters
         protected override async UniTask OnAfterBoosterExecuted(GameState state, ScoringAction action,
             BoosterView booster)
         {
-            var productDelta = state.ScoringState.Products - _previousProduct;
+            var productDelta = action is MultipliedScoringAction
+                ? state.ScoringState.Products - _previousProduct
+                : action.Products ?? 0;
+
             var finalMult = state.ScoringState.Multiplier;
-            var dividedDelta = finalMult / _previousMult;
-            var delta = finalMult - _previousMult;
+
+            var dividedDelta = action is MultipliedScoringAction
+                ? finalMult / _previousMult
+                : action.XMult ?? 1;
+
+            var delta = action is MultipliedScoringAction
+                ? finalMult - _previousMult
+                : action.PlusMult ?? 0;
 
             Building responsibleBuilding = null;
 
             if (state.CurrentEvent is BuildingRemainedInHand buildingEvent)
                 responsibleBuilding = buildingEvent.Building;
 
-            var wait = AnimationScheduler.GetAnimationTime();
-            AnimationScheduler.AllocateTime(0.2f);
-            await UniTask.WaitForSeconds(wait);
+            await AnimationScheduler.ScheduleAndWait(0.2f);
 
             if (IsProduct(action))
             {
