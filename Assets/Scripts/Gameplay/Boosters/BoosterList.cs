@@ -61,7 +61,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Maizinator",
-                    Description = new LiteralDescription($"Retrigger all `{Category.Cat2}` buildings"),
+                    Description = new LiteralDescription($"Retrigger all {Category.Cat2} buildings"),
                     BuyPrice = 7,
                     EventAction = new RetriggerBuildingAction
                     {
@@ -123,7 +123,8 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Rotten Egg",
-                    Description = new LiteralDescription("-20 products, gains 5$ of sell value at the end of the round."),
+                    Description =
+                        new LiteralDescription("-20 products, gains 5$ of sell value at the end of the round."),
                     BuyPrice = 2,
                     EventAction = new CompositeAction()
                     {
@@ -631,7 +632,8 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Investment",
-                    Description = new LiteralDescription("$1 for each building remained in hand at the end of the day."),
+                    Description =
+                        new LiteralDescription("$1 for each building remained in hand at the end of the day."),
                     BuyPrice = 6,
                     EventAction = new ChangeMoneyAction
                     {
@@ -741,6 +743,241 @@ namespace RogueIslands.Gameplay.Boosters
                         },
                     },
                 },
+                new()
+                {
+                    Name = "Acrobat",
+                    Description = new LiteralDescription("x3 mult on the final day of the round"),
+                    BuyPrice = 5,
+                    EventAction = new ScoringAction
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<DayEnd>(),
+                            TimeCondition.LastDay(),
+                        },
+                        XMult = 3,
+                    },
+                },
+                new()
+                {
+                    Name = "Stuntman",
+                    Description = new LiteralDescription("+250 products, -2 hand size"),
+                    BuyPrice = 6,
+                    EventAction = new CompositeAction
+                    {
+                        Actions = new GameAction[]
+                        {
+                            new ScoringAction
+                            {
+                                Products = 250,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<DayEnd>(),
+                                },
+                            },
+                            new HandModifier
+                            {
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<RoundStart>(),
+                                },
+                                Change = -2,
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "Shoot the moon",
+                    Description =
+                        new LiteralDescription($"+10 mult for each {Category.Cat4} building remaining in hand"),
+                    BuyPrice = 5,
+                    EventAction = new ScoringAction
+                    {
+                        PlusMult = 10,
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<BuildingRemainedInHand>(),
+                            new BuildingCategoryCondition
+                            {
+                                Categories = new[] { Category.Cat4 },
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "Capitalist",
+                    Description = new ScalingBoosterDescription("+2 mult for every $5 you have"),
+                    BuyPrice = 7,
+                    EventAction = new MultipliedScoringAction()
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<DayEnd>(),
+                        },
+                        PlusMult = 2,
+                        PerMoney = 5,
+                    }
+                },
+                new()
+                {
+                    Name = "Bull",
+                    Description = new ScalingBoosterDescription("+5 products for every $5 you have"),
+                    BuyPrice = 7,
+                    EventAction = new MultipliedScoringAction()
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<DayEnd>(),
+                        },
+                        Products = 5,
+                        PerMoney = 5,
+                    },
+                },
+                new()
+                {
+                    Name = "Rural",
+                    Description = new ScalingBoosterDescription(
+                        $"Gains 0.5x mult for every {Category.Cat1} building remained in hand. Resets at the end of the round"),
+                    BuyPrice = 5,
+                    EventAction = new CompositeAction
+                    {
+                        Actions = new GameAction[]
+                        {
+                            new ScoringAction
+                            {
+                                XMult = 1,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<DayEnd>(),
+                                },
+                            },
+                            new BoosterScalingAction
+                            {
+                                XMultChange = 0.5,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<BuildingRemainedInHand>(),
+                                    new BuildingCategoryCondition
+                                    {
+                                        Categories = new[] { Category.Cat1 },
+                                    },
+                                },
+                            },
+                            new BoosterResetAction
+                            {
+                                XMult = 1,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<RoundEnd>(),
+                                },
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "Gems",
+                    Description = new LiteralDescription($"{Category.Cat4} buildings earn $1 when scored"),
+                    BuyPrice = 4,
+                    EventAction = new ChangeMoneyAction()
+                    {
+                        Change = 1,
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<BuildingScored>(),
+                            new BuildingCategoryCondition()
+                            {
+                                Categories = new[] { Category.Cat4 },
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "Swash",
+                    Description =
+                        new ScalingBoosterDescription("Adds the sell value of all other owned boosters to the mult"),
+                    BuyPrice = 4,
+                    EventAction = new MultipliedScoringAction()
+                    {
+                        Conditions = new[] { GameEventCondition.Create<DayEnd>() },
+                        PlusMult = 0,
+                        MultiplyBySellValueOfBoosters = true,
+                    },
+                },
+                new()
+                {
+                    Name = "Popcorn",
+                    Description = new ScalingBoosterDescription("+20 mult, -4 mult per round played"),
+                    BuyPrice = 5,
+                    EventAction = new CompositeAction
+                    {
+                        Actions = new GameAction[]
+                        {
+                            new ScoringAction
+                            {
+                                PlusMult = 20,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<DayEnd>(),
+                                },
+                            },
+                            new BoosterScalingAction
+                            {
+                                PlusMultChange = -4,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<RoundEnd>(),
+                                },
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "Juggler",
+                    Description = new LiteralDescription("+1 hand size"),
+                    BuyPrice = 4,
+                    EventAction = new HandModifier
+                    {
+                        Change = 1,
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<RoundStart>(),
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "Lenient",
+                    Description = new LiteralDescription("+1 day"),
+                    BuyPrice = 4,
+                    EventAction = new DayModifier
+                    {
+                        Change = 1,
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<RoundStart>(),
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "Way too blue",
+                    Description = new ScalingBoosterDescription("+2 products for each remaining card in the deck"),
+                    BuyPrice = 5,
+                    EventAction = new MultipliedScoringAction
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<DayEnd>(),
+                        },
+                        Products = 2,
+                        MultiplyByRemainingCards = true,
+                    },
+                }
             };
         }
 

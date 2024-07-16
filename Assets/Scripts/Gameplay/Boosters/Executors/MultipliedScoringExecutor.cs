@@ -17,6 +17,12 @@ namespace RogueIslands.Gameplay.Boosters.Executors
                 multiplier = state.GetClusters().Count;
             else if (action.MultiplyByUniqueBuildings)
                 multiplier = GetUniqueBuildingCount(state);
+            else if(action.PerMoney is {} perMoney)
+                multiplier = state.Money / perMoney;
+            else if (action.MultiplyBySellValueOfBoosters)
+                multiplier = state.Boosters.Sum(b => b.SellPrice);
+            else if (action.MultiplyByRemainingCards)
+                multiplier = state.Buildings.Deck.Count - state.Buildings.HandPointer;
             else
                 multiplier = 1;
             

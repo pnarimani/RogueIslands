@@ -5,6 +5,7 @@ using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DeckBuilding;
 using RogueIslands.Gameplay.GameEvents;
 using RogueIslands.Gameplay.Rand;
+using UnityEngine;
 
 namespace RogueIslands.Gameplay
 {
@@ -23,6 +24,10 @@ namespace RogueIslands.Gameplay
 
             const int handSize = 6;
 
+            var allBoosters = BoosterList.Get();
+
+            Debug.Log("allBoosters.Count = " + allBoosters.Count);
+            
             return new GameState()
             {
                 AllRequiredScores = GetScoringRequirements(),
@@ -33,7 +38,7 @@ namespace RogueIslands.Gameplay
                     Deck = deck,
                     ShufflingRandom = seedRandom.NextRandom(),
                 },
-                AvailableBoosters = BoosterList.Get(),
+                AvailableBoosters = allBoosters,
                 HandSize = handSize,
                 TotalDays = 4,
                 WorldBoosters = new WorldBoostersState
