@@ -1,5 +1,6 @@
 ﻿using System;
 using RogueIslands.Gameplay.Boosters;
+using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DeckBuilding;
 
 namespace RogueIslands.Gameplay.Shop
@@ -31,6 +32,11 @@ namespace RogueIslands.Gameplay.Shop
                     break;
                 case Consumable consumable:
                     _view.GetDeckBuildingView().ShowPopupForConsumable(consumable);
+                    success = true;
+                    break;
+                case Building building:
+                    _state.Buildings.Deck.Add(building);
+                    _view.GetUI().RefreshDeckText();
                     success = true;
                     break;
                 default:

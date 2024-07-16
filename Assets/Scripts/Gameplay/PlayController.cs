@@ -48,8 +48,6 @@ namespace RogueIslands.Gameplay
             _state.ScoringState = null;
 
             _view.GetUI().RefreshDate();
-
-            _state.Validate();
         }
 
         private void TriggerPlacedBuildings()

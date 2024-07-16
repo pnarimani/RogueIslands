@@ -884,6 +884,7 @@ namespace RogueIslands.Gameplay.Boosters
                     EventAction = new ChangeMoneyAction()
                     {
                         Change = 1,
+                        IsImmediate = true,
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<BuildingScored>(),

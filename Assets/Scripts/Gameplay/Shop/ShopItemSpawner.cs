@@ -1,4 +1,7 @@
-﻿using RogueIslands.Gameplay.Boosters;
+﻿using System;
+using RogueIslands.Gameplay.Boosters;
+using RogueIslands.Gameplay.Buildings;
+using RogueIslands.Gameplay.DeckBuilding;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.Shop
@@ -24,20 +27,31 @@ namespace RogueIslands.Gameplay.Shop
             var selectionRand = _state.Shop.SelectionRandom.ForAct(_state.Act);
             for (var i = 0; i < _state.Shop.CardCount; i++)
             {
-                var booster = selectionRand.NextFloat() > _state.Shop.ConsumableSpawnChance;
                 IPurchasableItem item;
-                if (booster)
+                if (selectionRand.NextFloat() < _state.Shop.BuildingSpawnChance)
                 {
-                    var randomForAct = _state.Shop.BoosterSpawn.ForAct(_state.Act);
-                    item = _state.AvailableBoosters.SelectRandom(randomForAct);
+                    var random = _state.Shop.BuildingSpawn.ForAct(_state.Act);
+                    item = DefaultBuildingsList.Get().SelectRandom(random);
+                    item.BuyPrice = 2;
                 }
                 else
                 {
-                    var randomForAct = _state.Shop.CardPackSpawn.ForAct(_state.Act);
-                    item = _state.Consumables.AllConsumables.SelectRandom(randomForAct);
+                    var booster = selectionRand.NextFloat() > _state.Shop.ConsumableSpawnChance;
+                    if (booster)
+                    {
+                        var randomForAct = _state.Shop.BoosterSpawn.ForAct(_state.Act);
+                        item = _state.AvailableBoosters.SelectRandom(randomForAct);
+                    }
+                    else
+                    {
+                        var randomForAct = _state.Shop.CardPackSpawn.ForAct(_state.Act);
+                        item = _state.Consumables.AllConsumables.SelectRandom(randomForAct);
+                    }
+
+                    item = Deduplicate(item);
                 }
 
-                _state.Shop.ItemsForSale[i] = Deduplicate(item);
+                _state.Shop.ItemsForSale[i] = item;
             }
         }
 
@@ -48,7 +62,7 @@ namespace RogueIslands.Gameplay.Shop
                 if (existingItem?.Name == item.Name)
                     return ReplaceItem(item);
             }
-            
+
             foreach (var booster in _state.Boosters)
             {
                 if (booster.Name == item.Name)
@@ -63,8 +77,10 @@ namespace RogueIslands.Gameplay.Shop
             var dupeRandom = _state.Shop.DeduplicationRandom.ForAct(_state.Act);
             if (item is IBooster)
                 item = _state.AvailableBoosters.SelectRandom(dupeRandom);
-            else
+            else if (item is Consumable)
                 item = _state.Consumables.AllConsumables.SelectRandom(dupeRandom);
+            else
+                throw new InvalidOperationException();
             return Deduplicate(item);
         }
     }

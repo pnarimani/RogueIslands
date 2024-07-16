@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Localization;
@@ -27,6 +28,12 @@ namespace RogueIslands.Gameplay.View.Boosters
             {
                 StaticResolver.Resolve<BoosterManagement>().SellBooster(_booster.Id);
             });
+        }
+
+        private void OnDestroy()
+        {
+            if (_cardListItem != null) 
+                _cardListItem.DragEnded -= OnBoosterReordered;
         }
 
         public void Initialize(BoosterCard card)

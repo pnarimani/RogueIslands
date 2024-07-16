@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RogueIslands.Gameplay.Buildings
 {
-    public class Building : IDescribableItem
+    public class Building : IDescribableItem, IPurchasableItem
     {
         public BuildingId Id;
         public ClusterId ClusterId;
@@ -22,5 +22,9 @@ namespace RogueIslands.Gameplay.Buildings
 
         public bool IsPlacedDown() 
             => !ClusterId.IsDefault();
+
+        public string Name { get; set; }
+        public int BuyPrice { get; set; }
+        public int SellPrice { get; set; }
     }
 }
