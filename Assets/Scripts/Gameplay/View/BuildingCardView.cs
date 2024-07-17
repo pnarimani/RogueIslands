@@ -1,10 +1,12 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.View.DeckBuilding;
 using RogueIslands.Gameplay.View.Feedbacks;
 using RogueIslands.View.Audio;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,6 +20,7 @@ namespace RogueIslands.Gameplay.View
         [SerializeField] private RectTransform _animationParent;
         [SerializeField] private Image _colorBg, _colorGradient, _buildingIcon;
         [SerializeField] private LabelFeedback _moneyFeedback, _productFeedback, _multFeedback;
+        [SerializeField] private TextMeshProUGUI _size, _category;
 
         private BuildingView _buildingPreview;
         private Transform _originalParent;
@@ -37,6 +40,16 @@ namespace RogueIslands.Gameplay.View
 
             _colorBg.color = _colorGradient.color = data.Color.Color;
             _buildingIcon.sprite = Resources.Load<Sprite>(data.IconAddress);
+
+            _size.text = data.Size switch
+            {
+                BuildingSize.Small => "S",
+                BuildingSize.Medium => "M",
+                BuildingSize.Large => "L",
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            _category.text = data.Category.Value;
 
             GetComponent<DescriptionBoxSpawner>().Initialize(data);
         }

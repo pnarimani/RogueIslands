@@ -54,7 +54,7 @@ namespace RogueIslands.Gameplay.View.DeckPreview
             
             ShowStat("Small", deck.Count(building => building.Size == BuildingSize.Small));
             ShowStat("Medium", deck.Count(building => building.Size == BuildingSize.Medium));
-            ShowStat("Big", deck.Count(building => building.Size == BuildingSize.Big));
+            ShowStat("Big", deck.Count(building => building.Size == BuildingSize.Large));
 
             Instantiate(_deckStatPrefab, _deckStatParent).text = "---";
             

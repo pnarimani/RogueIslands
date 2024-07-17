@@ -14,8 +14,8 @@ namespace RogueIslands.Gameplay.DeckBuilding.ActionHandlers
                 building.Size = building.Size switch
                 {
                     BuildingSize.Small => BuildingSize.Medium,
-                    BuildingSize.Medium => BuildingSize.Big,
-                    BuildingSize.Big => BuildingSize.Small,
+                    BuildingSize.Medium => BuildingSize.Large,
+                    BuildingSize.Large => BuildingSize.Small,
                     _ => throw new ArgumentOutOfRangeException(),
                 };
                 
