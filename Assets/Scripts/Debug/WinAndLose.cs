@@ -1,4 +1,5 @@
-﻿using IngameDebugConsole;
+﻿using Cysharp.Threading.Tasks;
+using IngameDebugConsole;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay;
 using RogueIslands.Gameplay.View;
@@ -20,6 +21,12 @@ namespace RogueIslands.Debug
             GameManager.Instance.State.CurrentScore = 0;
             GameManager.Instance.State.Day = GameManager.Instance.State.TotalDays;
             StaticResolver.Resolve<RoundController>().TryEndingRound();
+        }
+        
+        [ConsoleMethod("play", "Play")]
+        public static void Play()
+        {
+            StaticResolver.Resolve<PlayButtonHandler>().OnPlayClicked(default).Forget();
         }
     }
 }
