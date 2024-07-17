@@ -1,12 +1,15 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using RogueIslands.View;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.View
 {
     public class AnimationScheduler : Singleton<AnimationScheduler>
     {
-        private const float Multiplier = 1;
+        public static float Multiplier 
+            => GameSettings.AnimationSpeedMultiplier;
 
         private float _delay;
         private float _ensureTime;
@@ -22,6 +25,8 @@ namespace RogueIslands.Gameplay.View
 
                 Instance._lastAutoResetTime = Time.time;
                 Instance._nextAutoResetTime = Time.time;
+
+                DOTween.timeScale = Multiplier;
             }
         }
 
@@ -37,7 +42,7 @@ namespace RogueIslands.Gameplay.View
 
             AutoResetIfNeeded();
 
-            Instance._delay += time;
+            Instance._delay += time * Multiplier;
             
             SetAutoResetTime();
         }
@@ -49,7 +54,7 @@ namespace RogueIslands.Gameplay.View
 
             AutoResetIfNeeded();
             
-            Instance._ensureTime = Mathf.Max(Instance._ensureTime, Instance._delay + time);
+            Instance._ensureTime = Mathf.Max(Instance._ensureTime, Instance._delay + time * Multiplier);
             
             SetAutoResetTime();
         }
@@ -75,11 +80,6 @@ namespace RogueIslands.Gameplay.View
             AutoResetIfNeeded();
             
             return MathF.Max(Instance._ensureTime, Instance._delay);
-        }
-
-        public static float Scale(float f)
-        {
-            return f * Multiplier;
         }
 
         public static void WaitForTotalTime()

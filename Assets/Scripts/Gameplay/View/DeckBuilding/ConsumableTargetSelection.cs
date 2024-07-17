@@ -29,7 +29,7 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
                 return;
             }
 
-            var duration = AnimationScheduler.Scale(0.5f);
+            var duration = 0.5f * AnimationScheduler.Multiplier;
 
             foreach (var slot in Slots)
             {

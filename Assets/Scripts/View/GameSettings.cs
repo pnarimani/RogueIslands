@@ -14,6 +14,16 @@ namespace RogueIslands.View
             }
         }
         
+        public static float AnimationSpeedMultiplier
+        {
+            get => PlayerPrefs.GetFloat("AnimationSpeedMultiplier", 1);
+            set
+            {
+                PlayerPrefs.SetFloat("AnimationSpeedMultiplier", value);
+                PlayerPrefs.Save();
+            }
+        }
+        
         public static bool SettingsParticles
         {
             get => PlayerPrefs.GetInt("SettingsParticles", 1) == 1;

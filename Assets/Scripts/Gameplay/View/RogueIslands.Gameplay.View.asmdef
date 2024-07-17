@@ -6,6 +6,7 @@
     "Unity.TextMeshPro",
     "DOTween.Modules",
     "UniTask",
+    "UniTask.DOTween",
     "Coffee.UIParticle",
     "Unity.Cinemachine",
     "RogueIslands.UISystem",
