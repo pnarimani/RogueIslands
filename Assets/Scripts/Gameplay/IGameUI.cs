@@ -7,5 +7,6 @@
         void RefreshAll();
         void RefreshMoney();
         void RefreshDeckText();
+        void UpdateDiscards();
     }
 }

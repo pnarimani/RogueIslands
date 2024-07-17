@@ -17,6 +17,8 @@ namespace RogueIslands.Gameplay
 
         public int TotalDays = 4;
         public int HandSize = 4;
+        public int TotalDiscards = 3;
+        public int DiscardsLeft = 3;
 
         public double CurrentScore;
 

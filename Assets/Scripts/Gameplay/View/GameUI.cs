@@ -25,7 +25,8 @@ namespace RogueIslands.Gameplay.View
             _days,
             _week,
             _month,
-            _boosterSlots;
+            _boosterSlots,
+            _discards;
 
         [SerializeField] private Button _playButton, _deckButton, _optionsButton, _discardAll;
         [SerializeField] private BuildingCardView _buildingCardPrefab;
@@ -80,6 +81,7 @@ namespace RogueIslands.Gameplay.View
             RefreshDate();
             RefreshBoosters();
             RefreshDeckText();
+            UpdateDiscards();
         }
 
         public void RefreshDeckText()
@@ -89,6 +91,11 @@ namespace RogueIslands.Gameplay.View
             var rem = total - state.Buildings.HandPointer;
             rem = Mathf.Max(rem, 0);
             _deckCardCount.text = $"{rem}/{total}";
+        }
+
+        public void UpdateDiscards()
+        {
+            _discards.UpdateNumber(GameManager.Instance.State.DiscardsLeft);
         }
 
         private void RefreshBoosters()

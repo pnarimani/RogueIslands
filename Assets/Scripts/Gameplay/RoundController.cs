@@ -128,6 +128,7 @@ namespace RogueIslands.Gameplay
 
             _state.CurrentScore = 0;
             _state.Day = 0;
+            _state.DiscardsLeft = _state.TotalDiscards;
 
             _eventController.Execute(new RoundStart());
 

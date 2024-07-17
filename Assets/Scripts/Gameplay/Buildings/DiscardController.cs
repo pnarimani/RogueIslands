@@ -13,6 +13,10 @@
         
         public void DiscardAll()
         {
+            if(_state.DiscardsLeft <= 0)
+                return;
+            _state.DiscardsLeft--;
+            _view.GetUI(). UpdateDiscards();
             _view.DestroyBuildingsInHand();
             _state.Buildings.HandPointer += _state.HandSize;
             _view.ShowBuildingsInHand();
