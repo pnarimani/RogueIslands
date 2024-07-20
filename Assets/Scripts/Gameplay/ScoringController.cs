@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.GameEvents;
-using UnityEngine;
 
 namespace RogueIslands.Gameplay
 {
@@ -28,7 +24,22 @@ namespace RogueIslands.Gameplay
                 Building = building,
             });
 
-            var buildingTriggered = new BuildingTriggered()
+            TriggerBuilding(building, true);
+
+            _state.TransientScore = Math.Ceiling(_state.TransientScore);
+
+            _eventController.Execute(new AfterAllBuildingTriggers { Building = building, });
+
+            _state.CurrentScore += _state.TransientScore;
+
+            _state.TransientScore = 0;
+
+            _view.CheckForRoundEnd();
+        }
+
+        private void TriggerBuilding(Building building, bool shouldScoreBonus)
+        {
+            var buildingTriggered = new BuildingTriggered
             {
                 Building = building,
                 TriggerCount = 0,
@@ -42,35 +53,33 @@ namespace RogueIslands.Gameplay
                 _state.TransientScore = Math.Ceiling(building.Output + building.OutputUpgrade);
                 _view.GetBuilding(building).BuildingTriggered((int)_state.TransientScore);
 
-                if (buildingTriggered.TriggerCount == 1)
-                {
-                    foreach (var other in _state.GetInRangeBuildings(building))
-                    {
-                        var bonus = GetScoreBonus(building, other);
-
-                        if (bonus > 0)
-                        {
-                            _view.GetBuilding(other).BuildingTriggered((int)bonus);
-                            _state.TransientScore += bonus;
-                        }
-                    }
-                }
+                if (shouldScoreBonus)
+                    ScoreBonusForBuilding(building);
 
                 _eventController.Execute(buildingTriggered);
             }
+        }
 
-            _state.TransientScore = Math.Ceiling(_state.TransientScore);
-
-            _eventController.Execute(new AfterAllBuildingTriggers
+        private void ScoreBonusForBuilding(Building building)
+        {
+            foreach (var other in _state.GetInRangeBuildings(building))
             {
-                Building = building,
-            });
+                var bonus = GetScoreBonus(building, other);
 
-            _state.CurrentScore += _state.TransientScore;
-
-            _state.TransientScore = 0;
-
-            _view.CheckForRoundEnd();
+                if (bonus > 0)
+                {
+                    var otherBuildingView = _view.GetBuilding(other);
+                    if (_state.HasSensitive())
+                    {
+                        TriggerBuilding(other, false);
+                    }
+                    else
+                    {
+                        otherBuildingView.BonusTriggered((int)bonus);
+                        _state.TransientScore += bonus;
+                    }
+                }
+            }
         }
 
         public double GetScoreBonus(Building building, Building other)
@@ -81,9 +90,7 @@ namespace RogueIslands.Gameplay
 
             if (building.Color == other.Color ||
                 (_state.HasBadEyesight() && BadEyesightColorCheck(building.Color, other.Color)))
-            {
                 output = Math.Ceiling(output * 1.1);
-            }
 
             if (building.Category == other.Category) output = Math.Ceiling(output * 1.2);
 

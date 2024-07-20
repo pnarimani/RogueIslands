@@ -4,5 +4,6 @@ namespace RogueIslands.Gameplay.Buildings
     {
         void BuildingTriggered(int count);
         void Destroy();
+        void BonusTriggered(int count);
     }
 }

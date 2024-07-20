@@ -26,6 +26,12 @@ namespace RogueIslands.Gameplay.Boosters
                 },
                 new()
                 {
+                    Name = "Sensitive",
+                    Description = new LiteralDescription("All bonus scores count as normal triggers"),
+                    BuyPrice = 5,
+                },
+                new()
+                {
                     Name = "Mr Producer",
                     Description = new LiteralDescription("Permanently add +2 product to placed buildings"),
                     BuyPrice = 4,
@@ -837,7 +843,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Multiplier = 3,
                     Conditions = new IGameCondition[]
                     {
-                        GameEventCondition.Create<AfterAllBuildingTriggers>(),
+                        GameEventCondition.Create<BuildingTriggered>(),
                         new BuildingColorCondition
                         {
                             Colors = new[] { color },

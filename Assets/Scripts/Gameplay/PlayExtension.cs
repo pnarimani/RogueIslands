@@ -18,6 +18,11 @@ namespace RogueIslands.Gameplay
             return state.Boosters.Any(b => b.Name == "Bad Eyesight");
         }
         
+        public static bool HasSensitive(this GameState state)
+        {
+            return state.Boosters.Any(b => b.Name == "Sensitive");
+        }
+        
         public static int GetRiggedCount(this GameState state)
         {
             return state.Boosters.Count(b => b.Name == "Rigged");

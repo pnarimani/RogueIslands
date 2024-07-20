@@ -5,27 +5,14 @@ using UnityEngine;
 
 namespace RogueIslands.Gameplay.View.Boosters
 {
-    public class BoosterRetriggerVisualizer : BoosterActionVisualizer
+    public class BoosterRetriggerVisualizer : MonoBehaviour
     {
         [SerializeField] private LabelFeedback _labelFeedback;
-
-        public override bool CanVisualize(GameAction action)
+        
+        public async UniTask Play()
         {
-            return action is RetriggerBuildingAction;
-        }
-
-        public override async UniTask OnBeforeBoosterExecuted(GameState state, GameAction action, BoosterView booster)
-        {
-            var wait = AnimationScheduler.GetAnimationTime();
-            AnimationScheduler.AllocateTime(0.2f);
-            await UniTask.WaitForSeconds(wait);
-
+            await AnimationScheduler.ScheduleAndWait(1);
             await _labelFeedback.Play();
-        }
-
-        public override UniTask OnAfterBoosterExecuted(GameState state, GameAction action, BoosterView booster)
-        {
-            return UniTask.CompletedTask;
         }
     }
 }

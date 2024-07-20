@@ -42,20 +42,6 @@ namespace RogueIslands.Gameplay
                 AvailableBoosters = allBoosters,
                 HandSize = handSize,
                 TotalDays = 4,
-                WorldBoosters = new WorldBoostersState
-                {
-                    SpawnRandom = seedRandom.NextRandom(),
-                    SelectionRandom = seedRandom.NextRandom(),
-                    PositionRandom = seedRandom.NextRandom(),
-                    SpawnDistribution = new PowerDistribution()
-                    {
-                        Factor = 0.98,
-                        Power = 4.37,
-                    },
-                    SpawnCount = 4,
-                    SpawnedBoosters = new List<WorldBooster>(),
-                    All = WorldBoosterList.Get(),
-                },
                 Consumables = new ConsumablesState()
                 {
                     BuildingSelectionRandom = seedRandom.NextRandom(),
@@ -69,7 +55,6 @@ namespace RogueIslands.Gameplay
                     DeduplicationRandom = seedRandom.NextRandom(),
                     BuildingSpawn = seedRandom.NextRandom(),
                     SelectionRandom = seedRandom.NextRandom(),
-                    ItemsForSale = new IPurchasableItem[3],
                     CurrentRerollCost = 5,
                 },
             };

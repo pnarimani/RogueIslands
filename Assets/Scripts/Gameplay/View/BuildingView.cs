@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Buildings;
@@ -20,7 +21,9 @@ namespace RogueIslands.Gameplay.View
         [SerializeField] private LabelFeedback _retriggerLabelFeedback;
         [SerializeField] private LabelFeedback _moneyFeedback;
         [SerializeField] private LabelFeedback _outputFeedback;
-        [SerializeField] private GameObject _bonusContainer;
+        [SerializeField] private LabelFeedback _bonusContainer;
+
+        private LabelFeedback _bonusInstance;
 
         public Building Data { get; private set; }
 
@@ -33,11 +36,21 @@ namespace RogueIslands.Gameplay.View
 
         public async void BuildingTriggered(int count)
         {
+            await ShowScoringFeedback(count, _outputFeedback);
+        }
+
+        public async void BonusTriggered(int count)
+        {
+            await ShowScoringFeedback(count, _bonusContainer);
+        }
+
+        private async UniTask ShowScoringFeedback(int count, LabelFeedback feedbackSource)
+        {
             await AnimationScheduler.ScheduleAndWait(1f, 0.5f);
-            var overlay = StaticResolver.Resolve<IUIRootProvider>().GetRoot(new UILayer("OverlayLayer"));
-            var feedback = Instantiate(_outputFeedback, overlay);
+            var overlay = GetOverlayRoot();
+            var feedback = Instantiate(feedbackSource, overlay);
             feedback.SetText($"+{count}");
-            feedback.gameObject.AddComponent<RemoteChild>().SetParent(_outputFeedback.transform, Vector3.zero); 
+            feedback.gameObject.AddComponent<RemoteChild>().SetParent(feedbackSource.transform, Vector3.zero);
             GameUI.Instance.ProductBoosted(count);
             await UniTask.WhenAll(_triggerFeedback.Play(), feedback.Play());
             Destroy(feedback);
@@ -119,13 +132,26 @@ namespace RogueIslands.Gameplay.View
 
         public void ShowBonus(double bonus)
         {
-            _bonusContainer.SetActive(true);
-            _bonusContainer.GetComponentInChildren<TextMeshProUGUI>().text = "+" + bonus;
+            if (_bonusInstance == null)
+            {
+                var feedbackSource = GameManager.Instance.State.HasSensitive() ? _outputFeedback : _bonusContainer;
+                _bonusInstance = Instantiate(feedbackSource, GetOverlayRoot());
+                _bonusInstance.gameObject.AddComponent<RemoteChild>().SetParent(feedbackSource.transform, Vector3.zero);
+                _bonusInstance.Show();
+            }
+
+            _bonusInstance.SetText($"+{bonus:0.#}");
+        }
+
+        private static Transform GetOverlayRoot()
+        {
+            return StaticResolver.Resolve<IUIRootProvider>().GetRoot(new UILayer("OverlayLayer"));
         }
 
         public void HideBonus()
         {
-            _bonusContainer.SetActive(false);
+            if (_bonusInstance != null)
+                Destroy(_bonusInstance.gameObject);
         }
     }
 }

@@ -28,9 +28,9 @@ namespace RogueIslands.Gameplay.Boosters.Descriptions
             }
 
             if (scoringAction.Products != null)
-                return $"{prefix}\n<color=blue>Current: {scoringAction.Products:0.##} products.";
+                return $"{prefix}\n<color=blue>Current: {scoringAction.Products:0.##}";
             if (scoringAction.Multiplier != null)
-                return $"{prefix}\n<color=red>Current: x{scoringAction.Multiplier:0.##} mult.";
+                return $"{prefix}\n<color=red>Current: x{scoringAction.Multiplier:0.##}";
             
             return prefix;
         }

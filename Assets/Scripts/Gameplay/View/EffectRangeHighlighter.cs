@@ -19,14 +19,17 @@ namespace RogueIslands.Gameplay.View
                 {
                     continue;
                 }
-                
+
                 var distance = Vector3.Magnitude(center.transform.position - building.transform.position);
                 building.Highlight(distance <= range);
 
                 if (distance <= range)
                 {
                     var bonus = StaticResolver.Resolve<ScoringController>().GetScoreBonus(center.Data, building.Data);
-                    building.ShowBonus(bonus);
+                    if (bonus > 0)
+                        building.ShowBonus(bonus);
+                    else
+                        building.HideBonus();
                 }
                 else
                 {

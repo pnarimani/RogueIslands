@@ -63,5 +63,10 @@ namespace RogueIslands.Gameplay.View.Boosters
         {
             return GetComponent<IBoosterScoreVisualizer>();
         }
+
+        public void ShowRetriggerEffect()
+        {
+            GetComponent<BoosterRetriggerVisualizer>().Play().Forget();
+        }
     }
 }

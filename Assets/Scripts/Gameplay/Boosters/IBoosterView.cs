@@ -9,5 +9,6 @@ namespace RogueIslands.Gameplay.Boosters
 
         void Remove();
         IBoosterScoreVisualizer GetScoringVisualizer();
+        void ShowRetriggerEffect();
     }
 }

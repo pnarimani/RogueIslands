@@ -29,15 +29,6 @@ namespace RogueIslands.Gameplay
                 using var _ = ListPool<IBooster>.Get(out var buffer);
 
                 buffer.Clear();
-                buffer.AddRange(_state.WorldBoosters.SpawnedBoosters);
-                foreach (var booster in buffer)
-                {
-                    _state.CurrentEvent = e;
-                    if (_state.WorldBoosters.SpawnedBoosters.Contains((WorldBooster)booster))
-                        ExecuteBooster(booster);
-                }
-
-                buffer.Clear();
                 buffer.AddRange(_state.Boosters);
                 foreach (var booster in buffer)
                 {

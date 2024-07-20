@@ -9,7 +9,10 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             RetriggerBuildingAction action)
         {
             if (state.CurrentEvent is BuildingEvent e)
+            {
                 e.Building.RemainingTriggers += action.RetriggerTimes;
+                view.GetBooster(booster).ShowRetriggerEffect();
+            }
         }
     }
 }

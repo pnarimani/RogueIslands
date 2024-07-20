@@ -6,7 +6,7 @@ namespace RogueIslands.Gameplay
     {
         public int StartingRerollCost = 5;
         public int CurrentRerollCost = 5;
-        public int CardCount = 8;
+        public int CardCount = 4;
         public float ConsumableSpawnChance = 0.25f;
         public float BuildingSpawnChance = 0.5f;
         public IPurchasableItem[] ItemsForSale;
