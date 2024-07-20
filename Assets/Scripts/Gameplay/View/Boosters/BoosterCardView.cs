@@ -23,37 +23,15 @@ namespace RogueIslands.Gameplay.View.Boosters
                 if (_buySellPanel.gameObject.activeSelf)
                 {
                     _buySellPanel.gameObject.SetActive(false);
-                    RemoveCanvas();
+                    gameObject.ResetOrder();
                 }
                 else
                 {
                     _buySellPanel.gameObject.SetActive(true);
                     // _buySellPanel.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f);
-                    AddCanvas();
+                    gameObject.BringToFront();
                 }
             });
-        }
-
-        private void RemoveCanvas()
-        {
-            Destroy(GetComponent<GraphicRaycaster>());
-            Destroy(GetComponent<Canvas>());
-        }
-
-        private void AddCanvas()
-        {
-            var source = gameObject.GetComponentInParent<Canvas>();
-            var canvas = gameObject.AddComponent<Canvas>();
-            gameObject.AddComponent<GraphicRaycaster>();
-            canvas.overrideSorting = true;
-            canvas.sortingOrder = source.sortingOrder + 1;
-            canvas.vertexColorAlwaysGammaSpace = source.vertexColorAlwaysGammaSpace;
-            canvas.additionalShaderChannels = source.additionalShaderChannels;
-        }
-
-        private void OnDestroy()
-        {
-            
         }
 
         public void Initialize(BoosterCard card)
