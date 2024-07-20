@@ -45,6 +45,11 @@ namespace RogueIslands.Gameplay
                     _state.Round = 0;
                     _state.Act++;
                     _eventController.Execute(new ActEnd());
+
+                    _view.DestroyAllBuildings();
+                    _view.RemoveAllCardsFromHand();
+                    _state.Buildings.PlacedDownBuildings.Clear();
+                    ResetDeck();
                 }
 
                 if (_state.Act >= GameState.TotalActs)
@@ -56,10 +61,6 @@ namespace RogueIslands.Gameplay
                 {
                     ShowRoundWinScreen();
                 }
-            }
-            else
-            {
-                // AddBuildingCardsToHand();
             }
         }
 
@@ -131,14 +132,8 @@ namespace RogueIslands.Gameplay
             _view.GetUI().RefreshScores();
         }
 
-        private void AddBuildingCardsToHand()
-        {
-            
-        }
-
         private void ResetDeck()
         {
-            _state.Buildings.Deck.RemoveAll(b => _state.Buildings.PlacedDownBuildings.Exists(p => p.Id == b.Id));
             _state.ShuffleDeck();
             _state.Buildings.HandPointer = 0;
             _view.GetUI().RefreshDeckText();

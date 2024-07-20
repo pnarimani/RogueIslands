@@ -38,7 +38,13 @@ namespace RogueIslands.Gameplay.View
             return _windowOpener.Open<IWeekWinScreen>();
         }
 
-        public void DestroyBuildings()
+        public void RemoveAllCardsFromHand()
+        {
+            foreach (var card in ObjectRegistry.GetBuildingCards())
+                Object.Destroy(card.gameObject);
+        }
+
+        public void DestroyAllBuildings()
         {
             foreach (var building in ObjectRegistry.GetBuildings())
                 Object.Destroy(building.gameObject);
@@ -74,7 +80,7 @@ namespace RogueIslands.Gameplay.View
         public void ShowLoseScreen() => _windowOpener.Open<LoseScreen>();
 
         public IBuildingView GetBuilding(Building building)
-            => ObjectRegistry.GetBuildings().First(b => b.Data == building);
+            => ObjectRegistry.GetBuildings().FirstOrDefault(b => b.Data == building);
 
         public IBoosterView GetBooster(IBooster booster)
             => ObjectRegistry.GetBoosters().FirstOrDefault(b => Equals(b.Data, booster));

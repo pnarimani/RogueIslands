@@ -90,7 +90,8 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Saw Dust",
                     Description =
-                        new ProbabilityDescription($"{{0}} to give x2 mult for each {Category.Cat3} building triggered"),
+                        new ProbabilityDescription(
+                            $"{{0}} to give x2 mult for each {Category.Cat3} building triggered"),
                     BuyPrice = 6,
                     EventAction = new ScoringAction
                     {
@@ -530,6 +531,11 @@ namespace RogueIslands.Gameplay.Boosters
                             {
                                 ProductChange = -5,
                             },
+                            new DestroyBoosterAction()
+                            {
+                                Conditions = new[] { new IsBoosterDepleted() },
+                                Self = true,
+                            },
                         },
                     },
                 },
@@ -621,7 +627,8 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Capitalist",
-                    Description = new ScalingBoosterDescription("+20% score for every $5 you have when a building is triggered"),
+                    Description =
+                        new ScalingBoosterDescription("+20% score for every $5 you have when a building is triggered"),
                     BuyPrice = 7,
                     EventAction = new MultipliedScoringAction()
                     {
@@ -636,7 +643,8 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Bull",
-                    Description = new ScalingBoosterDescription("+10 score for every $2 you have when a building is placed down"),
+                    Description =
+                        new ScalingBoosterDescription("+10 score for every $2 you have when a building is placed down"),
                     BuyPrice = 7,
                     EventAction = new MultipliedScoringAction()
                     {
@@ -722,7 +730,7 @@ namespace RogueIslands.Gameplay.Boosters
                                 Multiplier = 4,
                                 Conditions = new IGameCondition[]
                                 {
-                                    GameEventCondition.Create<BuildingPlaced>(),
+                                    GameEventCondition.Create<AfterAllBuildingTriggers>(),
                                 },
                             },
                             new BoosterScalingAction
@@ -732,6 +740,11 @@ namespace RogueIslands.Gameplay.Boosters
                                 {
                                     GameEventCondition.Create<RoundEnd>(),
                                 },
+                            },
+                            new DestroyBoosterAction()
+                            {
+                                Conditions = new[] { new IsBoosterDepleted() },
+                                Self = true,
                             },
                         },
                     },

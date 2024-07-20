@@ -14,7 +14,7 @@ namespace RogueIslands.Gameplay
         public static GameState NewGame(RogueRandom rogueRandom)
         {
             const int handSize = 6;
-            
+
             var seedRandom = rogueRandom.ForAct(0);
             var buildingBlueprints = DefaultBuildingsList.Get();
             var deck = DefaultBuildingsList.Get();
@@ -28,7 +28,7 @@ namespace RogueIslands.Gameplay
             var allBoosters = BoosterList.Get();
 
             Debug.Log("Booster Count = " + allBoosters.Count);
-            
+
             return new GameState()
             {
                 AllRequiredScores = GetScoringRequirements(),
@@ -65,20 +65,23 @@ namespace RogueIslands.Gameplay
 
         private static double[] GetScoringRequirements()
         {
+            var reqPerAct = new double[]
+            {
+                40,
+                400,
+                1000,
+                5000,
+                10000,
+            };
+
             var result = new double[GameState.RoundsPerAct * GameState.TotalActs];
             for (var i = 0; i < GameState.TotalActs; i++)
             {
                 for (var j = 0; j < GameState.RoundsPerAct; j++)
                 {
                     var x = i * GameState.RoundsPerAct + j;
-                    const double a = 10;
-                    const double b = -52.5;
-                    const double c = 112.5;
-                    var score = a + b * x + c * x * x;
 
-                    var digitCount = (int)Math.Log10(score) + 1;
-                    var roundTo = Math.Pow(10, Math.Max(1, digitCount - 2));
-                    score = Math.Round(score / roundTo) * roundTo;
+                    var score = reqPerAct[i] * (j + 1);
 
                     result[x] = Math.Round(score);
                 }
