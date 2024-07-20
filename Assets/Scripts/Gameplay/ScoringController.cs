@@ -53,10 +53,10 @@ namespace RogueIslands.Gameplay
                 _state.TransientScore += buildingScore;
                 _view.GetBuilding(building).BuildingTriggered((int)buildingScore);
 
+                _eventController.Execute(buildingTriggered);
+                
                 if (shouldScoreBonus)
                     ScoreBonusForBuilding(building);
-
-                _eventController.Execute(buildingTriggered);
             }
         }
 
