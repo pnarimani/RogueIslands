@@ -434,7 +434,7 @@ MonoBehaviour:
   _interpolationSpeed: 12
   _animatePosition: 1
   _animateRotation: 1
-  _animateScale: 1
+  _animateScale: 0
 --- !u!114 &-5122526968389277728
 MonoBehaviour:
   m_ObjectHideFlags: 0

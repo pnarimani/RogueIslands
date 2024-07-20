@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Flexalon;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.View.DeckBuilding;
 using RogueIslands.UISystem;
@@ -17,6 +18,7 @@ namespace RogueIslands.Gameplay.View.DeckPreview
         [SerializeField] private TextMeshProUGUI _blueCount, _redCount, _greenCount, _purpleCount, _deckStatPrefab;
         [SerializeField] private Transform _deckStatParent;
         [SerializeField] private Button _close;
+        private static readonly Vector3 _cardScale = Vector3.one * 0.6f;
 
         private void Start()
         {
@@ -59,10 +61,25 @@ namespace RogueIslands.Gameplay.View.DeckPreview
             Instantiate(_deckStatPrefab, _deckStatParent).text = "---";
             
             ShowStat("Total", deck.Count);
+
+            ContainAllItems(_blue);
+            ContainAllItems(_red);
+            ContainAllItems(_green);
+            ContainAllItems(_purple);
         }
 
-        private void ShowCategoryStat(List<Building> deck, Category category)
+        private void ContainAllItems(Transform content)
         {
+            var layout = content.GetComponent<FlexalonFlexibleLayout>();
+            Canvas.ForceUpdateCanvases();
+            layout.ForceUpdate();
+
+            var width = ((RectTransform)layout.transform).sizeDelta.x - 50;
+            var spaceAvailablePerItem = width / content.childCount;
+            var child = (RectTransform)content.GetChild(0);
+            var itemWidth = child.rect.width * _cardScale.x;
+
+            layout.Gap = spaceAvailablePerItem - itemWidth;
         }
 
         private void ShowStat(string title, int count)
@@ -75,7 +92,8 @@ namespace RogueIslands.Gameplay.View.DeckPreview
         {
             var card = Instantiate(_buildingCard, list);
             card.Initialize(building);
-            card.transform.localScale = Vector3.one * 0.6f;
+            card.CanPlaceBuildings = false;
+            card.GetComponent<FlexalonObject>().Scale = _cardScale;
         }
     }
 }
