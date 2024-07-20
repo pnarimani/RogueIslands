@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Buildings;
+using RogueIslands.View.Audio;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.View
@@ -38,6 +39,9 @@ namespace RogueIslands.Gameplay.View
 
             GameUI.Instance.RefreshScores();
 
+            BuildingView.TriggerCount = 0;
+            StaticResolver.Resolve<IScoringAudio>().PlayScoringFinished();
+            
             _roundController.TryEndingRound();
 
             IsPlaying = false;

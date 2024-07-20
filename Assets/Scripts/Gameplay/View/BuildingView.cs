@@ -23,6 +23,8 @@ namespace RogueIslands.Gameplay.View
         [SerializeField] private LabelFeedback _outputFeedback;
         [SerializeField] private LabelFeedback _bonusContainer;
 
+        public static int TriggerCount;
+
         private LabelFeedback _bonusInstance;
 
         public Building Data { get; private set; }
@@ -52,6 +54,11 @@ namespace RogueIslands.Gameplay.View
             feedback.SetText($"+{count}");
             feedback.gameObject.AddComponent<RemoteChild>().SetParent(feedbackSource.transform, Vector3.zero);
             GameUI.Instance.ProductBoosted(count);
+
+            var scoringAudio = StaticResolver.Resolve<IScoringAudio>();
+            scoringAudio.PlayScoreSound(Mathf.Clamp(TriggerCount, 0, scoringAudio.ClipCount - 1));
+            TriggerCount++;
+            
             await UniTask.WhenAll(_triggerFeedback.Play(), feedback.Play());
             Destroy(feedback);
         }
