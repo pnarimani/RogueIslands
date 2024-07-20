@@ -5,16 +5,15 @@ using UnityEngine;
 
 namespace RogueIslands.Gameplay.View.Boosters
 {
-    public class BoosterResetVisualizer : BoosterActionVisualizer<BoosterResetAction>
+    public class BoosterResetVisualizer : MonoBehaviour
     {
         [SerializeField] private LabelFeedback _labelFeedback;
-        
-        protected override async UniTask OnBeforeBoosterExecuted(GameState state, BoosterResetAction action, BoosterView booster)
-        {
-            var wait = AnimationScheduler.GetAnimationTime();
-            AnimationScheduler.AllocateTime(0.2f);
-            await UniTask.WaitForSeconds(wait);
+        [SerializeField] private CardTriggerFeedback _triggerFeedback;
 
+        public async UniTask Play()
+        {
+            await AnimationScheduler.ScheduleAndWait(1);
+            _triggerFeedback.Play().Forget();
             await _labelFeedback.Play();
         }
     }

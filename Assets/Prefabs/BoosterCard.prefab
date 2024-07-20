@@ -94,6 +94,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _labelFeedback: {fileID: 4118251954186607994}
+  _triggerFeedback:
+    _target: {fileID: 762280049221854103}
+    _duration: 0.5
 --- !u!114 &2073519558671473601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,6 +110,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _labelFeedback: {fileID: 282138600974860478}
+  _triggerFeedback:
+    _target: {fileID: 762280049221854103}
+    _duration: 0.5
 --- !u!114 &8589796277664869462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +126,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _labelFeedback: {fileID: 5928266940171128144}
+  _scaleDownFeedback: {fileID: 0}
+  _triggerFeedback:
+    _target: {fileID: 762280049221854103}
+    _duration: 0.5
 --- !u!114 &7432197659843615729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +144,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _productLabelFeedback: {fileID: 4569727075844658880}
   _multiLabelFeedback: {fileID: 7837742793606476619}
+  _triggerFeedback:
+    _target: {fileID: 762280049221854103}
+    _duration: 0.5
 --- !u!114 &6395347151529516497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,6 +177,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _money: {fileID: 7004401942252250677}
+  _cardTriggerFeedback:
+    _target: {fileID: 762280049221854103}
+    _duration: 0.5
 --- !u!114 &1558885376245855436
 MonoBehaviour:
   m_ObjectHideFlags: 0

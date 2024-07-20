@@ -9,13 +9,10 @@ namespace RogueIslands.Gameplay.View.Boosters
 {
     public class BoosterView : MonoBehaviour, IBoosterView
     {
-        private List<BoosterActionVisualizer> _visualizers;
-
         public IBooster Data { get; private set; }
 
         private void Awake()
         {
-            _visualizers = new List<BoosterActionVisualizer>(GetComponents<BoosterActionVisualizer>());
         }
 
         public void Initialize(IBooster booster)
@@ -24,30 +21,6 @@ namespace RogueIslands.Gameplay.View.Boosters
 
             Data = booster;
             GetComponent<DescriptionBoxSpawner>().Initialize(booster);
-        }
-
-        public async void OnBeforeActionExecuted(GameState state, GameAction action)
-        {
-            foreach (var visualizer in _visualizers)
-            {
-                if (visualizer.CanVisualize(action))
-                {
-                    await visualizer.OnBeforeBoosterExecuted(state, action, this);
-                    break;
-                }
-            }
-        }
-
-        public async void OnAfterActionExecuted(GameState state, GameAction action)
-        {
-            foreach (var visualizer in _visualizers)
-            {
-                if (visualizer.CanVisualize(action))
-                {
-                    await visualizer.OnAfterBoosterExecuted(state, action, this);
-                    break;
-                }
-            }
         }
 
         public async void Remove()
@@ -67,6 +40,11 @@ namespace RogueIslands.Gameplay.View.Boosters
         public void ShowRetriggerEffect()
         {
             GetComponent<BoosterRetriggerVisualizer>().Play().Forget();
+        }
+
+        public IBoosterScalingVisualizer GetScalingVisualizer()
+        {
+            return GetComponent<IBoosterScalingVisualizer>();
         }
     }
 }

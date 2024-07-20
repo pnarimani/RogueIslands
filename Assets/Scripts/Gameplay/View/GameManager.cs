@@ -151,7 +151,6 @@ namespace RogueIslands.Gameplay.View
             
             GameUI.Instance.RefreshScores();
             StaticResolver.Resolve<RoundController>().TryEndingRound();
-            GameUI.Instance.RefreshScores();
         }
 
         public void DestroyBuildingsInHand()

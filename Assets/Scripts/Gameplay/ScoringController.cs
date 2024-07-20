@@ -24,7 +24,7 @@ namespace RogueIslands.Gameplay
                 Building = building,
             });
 
-            TriggerBuilding(building, true);
+            TriggerBuilding(building, true, Math.Ceiling(building.Output + building.OutputUpgrade));
 
             _state.TransientScore = Math.Ceiling(_state.TransientScore);
 
@@ -37,8 +37,10 @@ namespace RogueIslands.Gameplay
             _view.CheckForRoundEnd();
         }
 
-        private void TriggerBuilding(Building building, bool shouldScoreBonus)
+        private void TriggerBuilding(Building building, bool shouldScoreBonus, double buildingScore)
         {
+            building.RemainingTriggers = 1;
+            
             var buildingTriggered = new BuildingTriggered
             {
                 Building = building,
@@ -50,8 +52,8 @@ namespace RogueIslands.Gameplay
                 building.RemainingTriggers--;
                 buildingTriggered.TriggerCount++;
 
-                _state.TransientScore = Math.Ceiling(building.Output + building.OutputUpgrade);
-                _view.GetBuilding(building).BuildingTriggered((int)_state.TransientScore);
+                _state.TransientScore += buildingScore;
+                _view.GetBuilding(building).BuildingTriggered((int)buildingScore);
 
                 if (shouldScoreBonus)
                     ScoreBonusForBuilding(building);
@@ -71,7 +73,7 @@ namespace RogueIslands.Gameplay
                     var otherBuildingView = _view.GetBuilding(other);
                     if (_state.HasSensitive())
                     {
-                        TriggerBuilding(other, false);
+                        TriggerBuilding(other, false, bonus);
                     }
                     else
                     {

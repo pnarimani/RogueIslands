@@ -8,10 +8,12 @@ namespace RogueIslands.Gameplay.View.Boosters
     public class BoosterRetriggerVisualizer : MonoBehaviour
     {
         [SerializeField] private LabelFeedback _labelFeedback;
-        
+        [SerializeField] private CardTriggerFeedback _triggerFeedback;
+
         public async UniTask Play()
         {
             await AnimationScheduler.ScheduleAndWait(1);
+            _triggerFeedback.Play().Forget();
             await _labelFeedback.Play();
         }
     }

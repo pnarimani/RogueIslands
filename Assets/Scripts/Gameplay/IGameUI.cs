@@ -6,6 +6,7 @@ namespace RogueIslands.Gameplay
     {
         void RefreshDate();
         void RefreshMoney();
+        void RefreshScores();
         void RefreshDeckText();
         void ShowBuildingCard(Building building);
         void ShowBuildingCardPeek(Building building);

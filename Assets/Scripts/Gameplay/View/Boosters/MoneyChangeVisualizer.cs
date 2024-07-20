@@ -8,13 +8,15 @@ using UnityEngine;
 
 namespace RogueIslands.Gameplay.View.Boosters
 {
-    public class MoneyChangeVisualizer : BoosterActionVisualizer<ChangeMoneyAction>
+    public class MoneyChangeVisualizer : MonoBehaviour
     {
         [SerializeField] private LabelFeedback _money;
-
-        protected override async UniTask OnAfterBoosterExecuted(GameState state, ChangeMoneyAction action,
-            BoosterView booster)
+        [SerializeField] private CardTriggerFeedback _cardTriggerFeedback;
+        
+        public async void Play(int money)
         {
+            var state = GameManager.Instance.State;
+            _cardTriggerFeedback.Play().Forget();
             Building responsibleBuilding = null;
 
             if (state.CurrentEvent is BuildingEvent buildingEvent)
@@ -23,7 +25,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             if (responsibleBuilding == null || !responsibleBuilding.IsPlacedDown(state))
                 AnimationScheduler.WaitForTotalTime();
 
-            await AnimationScheduler.ScheduleAndWait(0.3f, 0.1f);
+            await AnimationScheduler.ScheduleAndWait(1, 0.1F);
 
             UniTask task;
             if (responsibleBuilding != null)
@@ -31,23 +33,23 @@ namespace RogueIslands.Gameplay.View.Boosters
                 if (responsibleBuilding.IsPlacedDown(state))
                 {
                     var view = ObjectRegistry.GetBuildings().First(b => b.Data == responsibleBuilding);
-                    task = view.BuildingMadeMoney(action.Change);
+                    task = view.BuildingMadeMoney(money);
                 }
                 else
                 {
                     var view = ObjectRegistry.GetBuildingCards().First(b => b.Data == responsibleBuilding);
-                    task = view.BuildingMadeMoney(action.Change);
+                    task = view.BuildingMadeMoney(money);
                 }
             }
             else
             {
-                _money.SetText("$" + action.Change);
+                _money.SetText($"${money}");
                 task = _money.Play();
             }
 
             await UniTask.WaitForSeconds(0.2f);
 
-            GameUI.Instance.MoneyBoosted(action.Change);
+            GameUI.Instance.MoneyBoosted(money);
 
             await task;
         }

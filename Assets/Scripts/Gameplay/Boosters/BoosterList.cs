@@ -736,20 +736,20 @@ namespace RogueIslands.Gameplay.Boosters
                         },
                     },
                 },
-                new()
-                {
-                    Name = "Juggler",
-                    Description = new LiteralDescription("+1 hand size"),
-                    BuyPrice = 4,
-                    EventAction = new HandModifier
-                    {
-                        Change = 1,
-                        Conditions = new IGameCondition[]
-                        {
-                            GameEventCondition.Create<RoundStart>(),
-                        },
-                    },
-                }, 
+                // new()
+                // {
+                //     Name = "Juggler",
+                //     Description = new LiteralDescription("+1 hand size"),
+                //     BuyPrice = 4,
+                //     EventAction = new HandModifier
+                //     {
+                //         Change = 1,
+                //         Conditions = new IGameCondition[]
+                //         {
+                //             GameEventCondition.Create<RoundStart>(),
+                //         },
+                //     },
+                // }, 
                 new()
                 {
                     Name = "Explorer",

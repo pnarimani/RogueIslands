@@ -39,7 +39,6 @@ namespace RogueIslands.Gameplay
 
                 _shopItemSpawner.PopulateShop();
 
-                _state.CurrentScore = 0;
                 _state.Round++;
                 if (_state.Round >= GameState.RoundsPerAct)
                 {
@@ -108,6 +107,7 @@ namespace RogueIslands.Gameplay
 
         public void StartRound()
         {
+            _state.CurrentScore = 0;
             _state.Day = 0;
             _state.DiscardsLeft = _state.TotalDiscards;
 
@@ -128,6 +128,7 @@ namespace RogueIslands.Gameplay
 
             _view.GetUI().RefreshDate();
             _view.GetUI().RefreshMoney();
+            _view.GetUI().RefreshScores();
         }
 
         private void AddBuildingCardsToHand()

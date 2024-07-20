@@ -12,10 +12,21 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
 
         protected override bool Evaluate(GameState state, IBooster booster, ColorCheckCondition condition)
         {
-            throw new NotImplementedException();
             _existingColors.Clear();
             foreach (var tag in state.PlacedDownBuildings.Select(b => b.Color))
                 _existingColors.Add(tag);
+
+            if (state.HasBadEyesight())
+            {
+                if (_existingColors.Contains(ColorTag.Red))
+                    _existingColors.Add(ColorTag.Blue);
+                if (_existingColors.Contains(ColorTag.Blue))
+                    _existingColors.Add(ColorTag.Red);
+                if (_existingColors.Contains(ColorTag.Green))
+                    _existingColors.Add(ColorTag.Purple);
+                if (_existingColors.Contains(ColorTag.Purple))
+                    _existingColors.Add(ColorTag.Green);
+            }
 
             if (condition.ForcedColors != null)
             {
@@ -30,7 +41,7 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
             {
                 foreach (var color in _existingColors)
                 {
-                    if (condition.BannedColors.Contains(color)) 
+                    if (condition.BannedColors.Contains(color))
                         return false;
                 }
             }

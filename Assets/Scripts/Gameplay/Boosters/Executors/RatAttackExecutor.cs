@@ -22,7 +22,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             }
 
             booster.GetEventAction<ScoringAction>().Multiplier += 4;
-            view.GetBooster(booster).OnAfterActionExecuted(state, new BoosterScalingAction());
+            view.GetBooster(booster).GetScalingVisualizer().PlayScaleUp();
         }
     }
 }
