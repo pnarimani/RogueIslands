@@ -48,24 +48,22 @@ namespace RogueIslands.Gameplay.View
             if (IntersectsAnyBuilding(building, bounds))
                 return desiredPosition;
 
-            bounds.center = desiredPosition;
-            if (!IntersectsAnyBuilding(building, bounds))
-                return desiredPosition;
+            for (var i = 0; i < 5; i++)
+            {
+                bounds.center = desiredPosition;
+                if (!IntersectsAnyBuilding(building, bounds)) 
+                    return desiredPosition;
 
-            var delta = desiredPosition - currentPos;
-            var deltaNormalized = delta.normalized;
-            Physics.BoxCast(
-                currentPos,
-                bounds.extents,
-                deltaNormalized,
-                out var hit,
-                building.rotation,
-                100,
-                _buildingMask
-            );
-            var leftOver = (delta.magnitude - hit.distance) * deltaNormalized;
-            var projected = Vector3.ProjectOnPlane(leftOver, hit.normal);
-            return currentPos + projected;
+                var desiredDirection = desiredPosition - currentPos;
+                var normalizedDirection = desiredDirection.normalized;
+                Physics.BoxCast(currentPos, bounds.extents, normalizedDirection, out var hit, building.rotation, 100,
+                    _buildingMask);
+                var leftOver = (desiredDirection.magnitude - hit.distance) * normalizedDirection;
+                var projected = Vector3.ProjectOnPlane(leftOver, hit.normal);
+                desiredPosition = currentPos + projected;
+            }
+            
+            return desiredPosition;
         }
 
         private bool IntersectsAnyBuilding(Transform building, Bounds bounds)
