@@ -3,6 +3,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using RogueIslands.Assets;
+using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.Rand;
@@ -25,13 +26,13 @@ namespace RogueIslands.Gameplay.View
 
         public GameState State { get; private set; }
 
-        public GameManager(GameState state, IWindowOpener windowOpener, IAssetLoader assetLoader )
+        public GameManager(GameState state, IWindowOpener windowOpener, IAssetLoader assetLoader)
         {
             _assetLoader = assetLoader;
             _windowOpener = windowOpener;
             State = state;
         }
-        
+
         public void ShowGameWinScreen() => _windowOpener.Open<GameWinScreen>();
 
         public IWeekWinScreen ShowRoundWin()
@@ -53,21 +54,11 @@ namespace RogueIslands.Gameplay.View
             }
             else if (instance is WorldBooster world)
             {
-                var booster = Object.Instantiate(_assetLoader.Load<WorldBoosterView>(world.PrefabAddress), world.Position,
+                var booster = Object.Instantiate(_assetLoader.Load<WorldBoosterView>(world.PrefabAddress),
+                    world.Position,
                     world.Rotation);
                 booster.Initialize(world);
             }
-        }
-
-        public void ShowBuildingsInHand()
-        {
-            foreach (var v in ObjectRegistry.GetBuildingCards())
-                Object.Destroy(v.gameObject);
-
-            foreach (var b in State.BuildingsInHand)
-                GameUI.Instance.ShowBuildingCard(b);
-
-            GameUI.Instance.RefreshDeckText();
         }
 
         public IGameUI GetUI() => GameUI.Instance;
@@ -141,7 +132,6 @@ namespace RogueIslands.Gameplay.View
             }
         }
 
-        public void ShowRoundsSelectionScreen() => _windowOpener.Open<RoundSelectionScreen>();
         public void ShowDeckPreview() => _windowOpener.Open<DeckPreviewScreen>();
 
         public bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, RogueRandom positionRandom,
@@ -149,6 +139,20 @@ namespace RogueIslands.Gameplay.View
             WorldBoosterSpawnPointProvider.TryGet(blueprint, positionRandom.ForAct(State.Act), out point);
 
         public IDeckBuildingView GetDeckBuildingView() => DeckBuildingView.Instance;
+
+        public async void CheckForRoundEnd()
+        {
+            var timer = 0f;
+            while (timer < AnimationScheduler.GetTotalTime())
+            {
+                await UniTask.DelayFrame(1);
+                timer += Time.deltaTime;
+            }
+            
+            GameUI.Instance.RefreshScores();
+            StaticResolver.Resolve<RoundController>().TryEndingRound();
+            GameUI.Instance.RefreshScores();
+        }
 
         public void DestroyBuildingsInHand()
         {
@@ -158,9 +162,7 @@ namespace RogueIslands.Gameplay.View
 
         public bool IsOverlapping(Building building, WorldBooster worldBooster)
         {
-            var buildingTransform = ObjectRegistry.GetBuildings().First(b => b.Data == building).transform;
-            var boosters = WorldBoosterBoundCheck.GetOverlappingWorldBoosters(buildingTransform);
-            return boosters.Any(b => b.Data.Id == worldBooster.Id);
+            return false;
         }
 
         public void ShowSettingsPopup() => _windowOpener.Open<SettingsPopup>();

@@ -19,7 +19,7 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
         [SerializeField] private Transform _selectorParent;
         [SerializeField] private List<ConsumableTargetSelection> _selectors;
         [SerializeField] private Button _submit;
-        [SerializeField] private CardListView _buildingCardList;
+        [SerializeField] private Transform _buildingCardList;
         [SerializeField] private PopupOpeningFeedback _openingFeedback;
 
         private readonly List<Building> _selectedBuildings = new();
@@ -50,7 +50,7 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
         {
             _consumable = consumable;
             _title.text = consumable.Name;
-            _description.text = consumable.Description.Get(consumable);
+            _description.text = consumable.Description.Get(GameManager.Instance.State, consumable);
 
             InitializeSelector(consumable);
 
@@ -58,13 +58,10 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
 
             foreach (var building in buildings)
             {
-                var cardComponent = Instantiate(_buildingCardPrefab, _buildingCardList.Content);
+                var cardComponent = Instantiate(_buildingCardPrefab, _buildingCardList);
                 cardComponent.Initialize(building);
                 cardComponent.CanPlaceBuildings = false;
-                var cardListItem = cardComponent.GetComponent<CardListItem>();
-                cardListItem.AllowReorder = true;
-                cardListItem.DragEnded += () => OnCardDragEnded(cardListItem, building);
-                _buildingCardList.Add(cardListItem);
+                throw new NotImplementedException();
             }
         }
 
@@ -80,29 +77,29 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
             _currentSelector = Instantiate(selectorPrefab, _selectorParent, false);
         }
 
-        private void OnCardDragEnded(CardListItem cardListItem, Building building)
-        {
-            foreach (var slot in _currentSelector.GetSlots())
-            {
-                if (slot.Transform.childCount > 0)
-                {
-                    continue;
-                }
-
-                if (slot.Transform.GetWorldRect().Overlaps(cardListItem.transform.GetWorldRect()))
-                {
-                    _buildingCardList.Remove(cardListItem);
-                    cardListItem.transform.SetParent(slot.Transform, false);
-                    cardListItem.transform.localPosition = Vector3.zero;
-                    cardListItem.ShouldAnimateToTarget = false;
-                    _selectedBuildings.Add(building);
-                    return;
-                }
-            }
-
-            if (cardListItem.Owner == null)
-                _buildingCardList.Add(cardListItem);
-        }
+        // private void OnCardDragEnded(CardListItem cardListItem, Building building)
+        // {
+        //     foreach (var slot in _currentSelector.GetSlots())
+        //     {
+        //         if (slot.Transform.childCount > 0)
+        //         {
+        //             continue;
+        //         }
+        //
+        //         if (slot.Transform.GetWorldRect().Overlaps(cardListItem.transform.GetWorldRect()))
+        //         {
+        //             _buildingCardList.Remove(cardListItem);
+        //             cardListItem.transform.SetParent(slot.Transform, false);
+        //             cardListItem.transform.localPosition = Vector3.zero;
+        //             cardListItem.ShouldAnimateToTarget = false;
+        //             _selectedBuildings.Add(building);
+        //             return;
+        //         }
+        //     }
+        //
+        //     if (cardListItem.Owner == null)
+        //         _buildingCardList.Add(cardListItem);
+        // }
 
         private static PooledList<Building> CreateBuildingList()
         {

@@ -24,16 +24,6 @@ namespace RogueIslands.View
             }
         }
         
-        public static bool SettingsParticles
-        {
-            get => PlayerPrefs.GetInt("SettingsParticles", 1) == 1;
-            set
-            {
-                PlayerPrefs.SetInt("SettingsParticles", value ? 1 : 0);
-                PlayerPrefs.Save();
-            }
-        }
-        
         public static float SettingsSfxVolume
         {
             get => PlayerPrefs.GetFloat("SettingsSfxVolume", 1);

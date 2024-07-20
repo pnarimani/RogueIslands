@@ -2,7 +2,7 @@ namespace RogueIslands.Gameplay.Buildings
 {
     public interface IBuildingView
     {
-        void BuildingTriggered(bool isRetrigger);
+        void BuildingTriggered(int count);
         void Destroy();
     }
 }

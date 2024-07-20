@@ -27,7 +27,6 @@ namespace RogueIslands.Tests
             foreach (var b in inGameBuildings)
             {
                 b.Id = BuildingId.NewBuildingId();
-                b.ClusterId = ClusterId.NewClusterId();
             }
 
             var defaultBoosters = BoosterList.Get();
@@ -67,7 +66,6 @@ namespace RogueIslands.Tests
                         Name = "BCDC",
                     },
                 },
-                ScoringState = null,
                 Buildings = new BuildingsState
                 {
                     ShufflingRandom = new RogueRandom(3245),

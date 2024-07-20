@@ -13,6 +13,8 @@ namespace RogueIslands.Gameplay
     {
         public static GameState NewGame(RogueRandom rogueRandom)
         {
+            const int handSize = 6;
+            
             var seedRandom = rogueRandom.ForAct(0);
             var buildingBlueprints = DefaultBuildingsList.Get();
             var deck = DefaultBuildingsList.Get();
@@ -22,7 +24,6 @@ namespace RogueIslands.Gameplay
                 building.Id = BuildingId.NewBuildingId();
             }
 
-            const int handSize = 6;
 
             var allBoosters = BoosterList.Get();
 
@@ -85,7 +86,7 @@ namespace RogueIslands.Gameplay
                 for (var j = 0; j < GameState.RoundsPerAct; j++)
                 {
                     var x = i * GameState.RoundsPerAct + j;
-                    const double a = 47;
+                    const double a = 10;
                     const double b = -52.5;
                     const double c = 112.5;
                     var score = a + b * x + c * x * x;

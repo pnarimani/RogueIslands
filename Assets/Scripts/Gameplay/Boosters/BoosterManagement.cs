@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.Gameplay.GameEvents;
-using RogueIslands.Gameplay.Rollback;
 using RogueIslands.Serialization;
 
 namespace RogueIslands.Gameplay.Boosters
@@ -13,7 +12,6 @@ namespace RogueIslands.Gameplay.Boosters
         private readonly IGameView _view;
         private readonly IEventController _eventController;
         private readonly GameActionController _gameActionController;
-        private readonly ResetController _resetController;
         private readonly ICloner _cloner;
 
         public BoosterManagement(
@@ -21,11 +19,9 @@ namespace RogueIslands.Gameplay.Boosters
             IGameView view,
             IEventController eventController,
             GameActionController gameActionController,
-            ResetController resetController,
             ICloner cloner)
         {
             _cloner = cloner;
-            _resetController = resetController;
             _gameActionController = gameActionController;
             _eventController = eventController;
             _view = view;
@@ -44,8 +40,6 @@ namespace RogueIslands.Gameplay.Boosters
             _state.Boosters.Add(instance);
             _view.AddBooster(instance);
 
-            _resetController.RestoreProperties();
-
             if (instance.BuyAction != null)
                 _gameActionController.Execute(instance, instance.BuyAction);
 
@@ -61,9 +55,7 @@ namespace RogueIslands.Gameplay.Boosters
                 _gameActionController.Execute(booster, booster.SellAction);
             _state.Money += booster.SellPrice;
             _view.GetBooster(booster).Remove();
-            _view.GetUI().RefreshAll();
-
-            _resetController.RestoreProperties();
+            _view.GetUI().RefreshMoney();
 
             _eventController.Execute(new BoosterSold() { Booster = booster });
         }
@@ -75,16 +67,12 @@ namespace RogueIslands.Gameplay.Boosters
                 _state.Boosters.Remove(card);
                 _view.GetBooster(card).Remove();
 
-                _resetController.RestoreProperties();
-
                 _eventController.Execute(new BoosterDestroyed() { Booster = card });
             }
             else if (_state.WorldBoosters.SpawnedBoosters.FirstOrDefault(x => x.Id == boosterId) is { } worldBooster)
             {
                 _state.WorldBoosters.SpawnedBoosters.Remove(worldBooster);
                 _view.GetBooster(worldBooster).Remove();
-
-                _resetController.RestoreProperties();
 
                 _eventController.Execute(new BoosterDestroyed() { Booster = worldBooster });
             }

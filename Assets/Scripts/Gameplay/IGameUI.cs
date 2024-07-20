@@ -1,12 +1,15 @@
-﻿namespace RogueIslands.Gameplay
+﻿using RogueIslands.Gameplay.Buildings;
+
+namespace RogueIslands.Gameplay
 {
     public interface IGameUI
     {
-        void RefreshScores();
         void RefreshDate();
-        void RefreshAll();
         void RefreshMoney();
         void RefreshDeckText();
-        void UpdateDiscards();
+        void ShowBuildingCard(Building building);
+        void ShowBuildingCardPeek(Building building);
+        void MoveCardToHand(Building building);
+        void RemoveCard(Building building);
     }
 }

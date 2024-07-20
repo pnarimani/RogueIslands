@@ -6,6 +6,6 @@
 
         public string Text { get; }
 
-        public string Get(IDescribableItem item) => Text;
+        public string Get(GameState state, IDescribableItem item) => Text;
     }
 }

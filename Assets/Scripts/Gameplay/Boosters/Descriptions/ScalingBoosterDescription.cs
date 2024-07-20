@@ -13,7 +13,7 @@ namespace RogueIslands.Gameplay.Boosters.Descriptions
 
         public string Prefix => _prefix;
 
-        public string Get(IDescribableItem item)
+        public string Get(GameState state, IDescribableItem item)
         {
             if (item is not IBooster booster)
                 return string.Empty;
@@ -29,10 +29,8 @@ namespace RogueIslands.Gameplay.Boosters.Descriptions
 
             if (scoringAction.Products != null)
                 return $"{prefix}\n<color=blue>Current: {scoringAction.Products:0.##} products.";
-            if (scoringAction.PlusMult != null)
-                return $"{prefix}\n<color=red>Current: +{scoringAction.PlusMult:0.##} mult.";
-            if (scoringAction.XMult != null)
-                return $"{prefix}\n<color=red>Current: x{scoringAction.XMult:0.##} mult.";
+            if (scoringAction.Multiplier != null)
+                return $"{prefix}\n<color=red>Current: x{scoringAction.Multiplier:0.##} mult.";
             
             return prefix;
         }

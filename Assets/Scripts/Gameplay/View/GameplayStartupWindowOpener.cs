@@ -11,7 +11,8 @@ namespace RogueIslands.Gameplay.View
         {
             var windowOpener = StaticResolver.Resolve<IWindowOpener>();
             windowOpener.Open<GameUI>();
-            windowOpener.Open<RoundSelectionScreen>();
+            
+            StaticResolver.Resolve<RoundController>().StartRound();
         }
     }
 }

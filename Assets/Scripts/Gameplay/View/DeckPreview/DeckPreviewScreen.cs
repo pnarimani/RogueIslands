@@ -13,7 +13,7 @@ namespace RogueIslands.Gameplay.View.DeckPreview
     public class DeckPreviewScreen : MonoBehaviour, IWindow
     {
         [SerializeField] private BuildingCardView _buildingCard;
-        [SerializeField] private CardListView _blue, _red, _green, _purple;
+        [SerializeField] private Transform _blue, _red, _green, _purple;
         [SerializeField] private TextMeshProUGUI _blueCount, _redCount, _greenCount, _purpleCount, _deckStatPrefab;
         [SerializeField] private Transform _deckStatParent;
         [SerializeField] private Button _close;
@@ -40,10 +40,10 @@ namespace RogueIslands.Gameplay.View.DeckPreview
                     throw new ArgumentOutOfRangeException();
             }
 
-            _blueCount.text = _blue.Content.childCount.ToString();
-            _redCount.text = _red.Content.childCount.ToString();
-            _greenCount.text = _green.Content.childCount.ToString();
-            _purpleCount.text = _purple.Content.childCount.ToString();
+            _blueCount.text = _blue.childCount.ToString();
+            _redCount.text = _red.childCount.ToString();
+            _greenCount.text = _green.childCount.ToString();
+            _purpleCount.text = _purple.childCount.ToString();
 
             foreach (var category in Category.All)
             {
@@ -71,12 +71,11 @@ namespace RogueIslands.Gameplay.View.DeckPreview
             stat.text = $"{title}: {count}";
         }
 
-        private void AddCard(Building building, CardListView list)
+        private void AddCard(Building building, Transform list)
         {
-            var card = Instantiate(_buildingCard, list.Content);
+            var card = Instantiate(_buildingCard, list);
             card.Initialize(building);
             card.transform.localScale = Vector3.one * 0.6f;
-            list.Add(card.GetComponent<CardListItem>());
         }
     }
 }

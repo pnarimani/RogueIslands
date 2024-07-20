@@ -2,7 +2,7 @@
 {
     public class BuildingDescriptionProvider : IDescriptionProvider
     {
-        public string Get(IDescribableItem item)
+        public string Get(GameState state, IDescribableItem item)
         {
             if (item is not Building building)
                 return string.Empty;

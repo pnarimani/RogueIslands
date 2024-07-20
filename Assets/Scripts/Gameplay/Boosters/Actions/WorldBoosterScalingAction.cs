@@ -3,7 +3,7 @@
     public class WorldBoosterScalingAction : GameAction
     {
         public double? StartingProducts { get; set; }
-        public double? StartingPlusMult { get; set; }
+        public double? StartingMultiplier { get; set; }
         public double? StartingXMult { get; set; }
         
         public double? ProductChangePerBuildingInside { get; set; }

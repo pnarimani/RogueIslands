@@ -2,6 +2,10 @@
 using IngameDebugConsole;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace RogueIslands.DependencyInjection.Autofac
 {
     public class ProjectLifetimeScope : StaticallyResolvableLifetimeScope
@@ -16,7 +20,14 @@ namespace RogueIslands.DependencyInjection.Autofac
                 instance.Load(builderProxy);
             }
 
-            builder.Register(_ => Instantiate(_debugConsole))
+            builder.Register(_ =>
+                {
+                    var debugLogManager = Instantiate(_debugConsole);
+#if UNITY_EDITOR
+                    SceneVisibilityManager.instance.DisablePicking(debugLogManager.gameObject, true);
+#endif
+                    return debugLogManager;
+                })
                 .AutoActivate()
                 .SingleInstance();
         }

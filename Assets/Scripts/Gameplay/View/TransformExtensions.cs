@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Buffers;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 using Object = UnityEngine.Object;
 
 namespace RogueIslands.Gameplay.View
@@ -44,13 +44,10 @@ namespace RogueIslands.Gameplay.View
             return new Rect(min, max - min);
         }
 
-        public static Bounds GetBounds(this Transform transform)
+        public static Bounds GetBounds(this Transform root, IEnumerable<MeshRenderer> renderers)
         {
-            using var _ = ListPool<MeshRenderer>.Get(out var list);
-            transform.GetComponentsInChildren(list);
-
-            var bounds = new Bounds(transform.position, Vector3.zero);
-            foreach (var ren in list)
+            var bounds = new Bounds(root.position, Vector3.zero);
+            foreach (var ren in renderers)
             {
                 var rendererBounds = ren.localBounds;
                 rendererBounds.center = ren.transform.position;

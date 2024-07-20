@@ -10,8 +10,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         private static void ScaleScoringAction(BoosterResetAction action, ScoringAction scoringAction)
         {
             scoringAction.Products = action.Product;
-            scoringAction.PlusMult = action.PlusMult;
-            scoringAction.XMult = action.XMult;
+            scoringAction.Multiplier = action.Multiplier;
         }
     }
 }

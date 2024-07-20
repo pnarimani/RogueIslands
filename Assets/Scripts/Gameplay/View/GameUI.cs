@@ -1,13 +1,12 @@
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
-using RogueIslands.DependencyInjection;
+using Flexalon;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.View.Boosters;
+using RogueIslands.Gameplay.View.Feedbacks;
 using RogueIslands.UISystem;
-using RogueIslands.View.Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,49 +16,66 @@ namespace RogueIslands.Gameplay.View
     public class GameUI : SingletonMonoBehaviour<GameUI>, IGameUI, IWindow
     {
         [SerializeField] private NumberText
-            _products,
-            _multiplier,
-            _requiredOutput,
-            _currentAmount,
             _budget,
-            _days,
             _week,
-            _month,
-            _boosterSlots,
-            _discards;
+            _month;
 
-        [SerializeField] private Button _playButton, _deckButton, _optionsButton, _discardAll;
+        [SerializeField] private Button _deckButton, _optionsButton;
         [SerializeField] private BuildingCardView _buildingCardPrefab;
         [SerializeField] private BoosterCardView _boosterPrefab;
-        [SerializeField] private CardListView _buildingCardList, _boosterList;
-        [SerializeField] private TextMeshProUGUI _deckCardCount;
-        [SerializeField] private RectTransform _scoringPanel;
-
-        public Transform ProductTarget => _products.transform;
+        [SerializeField] private Transform _buildingCardList, _deckPeekList;
+        [SerializeField] private Transform _boosterList;
+        [SerializeField] private TextMeshProUGUI _deckCardCount, _scoreRequirements;
+        [SerializeField] private Image _scoreFill;
+        [SerializeField] private Transform _scoreParent;
+        [SerializeField] private LabelFeedback _productFeedback;
+        
+        private double _currentScore;
 
         private void Start()
         {
-            _playButton.onClick.AddListener(() =>
-                PlayButtonHandler.Instance.OnPlayClicked(destroyCancellationToken).Forget());
             _deckButton.onClick.AddListener(() => GameManager.Instance.ShowDeckPreview());
             _optionsButton.onClick.AddListener(() => GameManager.Instance.ShowOptions());
-            _discardAll.onClick.AddListener(() => StaticResolver.Resolve<DiscardController>().DiscardAll());
         }
 
         public void ShowBuildingCard(Building building)
         {
-            var card = Instantiate(_buildingCardPrefab, _buildingCardList.Content);
+            var card = Instantiate(_buildingCardPrefab, _buildingCardList);
             card.Initialize(building);
-            _buildingCardList.Add(card.GetComponent<CardListItem>());
+        }
+
+        public void ShowBuildingCardPeek(Building building)
+        {
+            var card = Instantiate(_buildingCardPrefab, _deckPeekList);
+            card.Initialize(building);
+            card.CanPlaceBuildings = false;
+            card.transform.SetAsFirstSibling();
+        }
+
+        public async void MoveCardToHand(Building building)
+        {
+            var card = ObjectRegistry.GetBuildingCards().First(b => b.Data == building);
+            card.CanPlaceBuildings = true;
+            card.transform.SetParent(_buildingCardList, true);
+
+            var item = card.GetComponent<FlexalonLerpAnimator>();
+            item.InterpolationSpeed *= 0.5f;
+
+            await UniTask.WaitForSeconds(1f);
+
+            item.InterpolationSpeed *= 2;
+        }
+
+        public void RemoveCard(Building building)
+        {
+            Destroy(ObjectRegistry.GetBuildingCards().First(b => b.Data == building).gameObject);
         }
 
         public void ShowBoosterCard(BoosterCard booster)
         {
-            var card = Instantiate(_boosterPrefab, _boosterList.Content);
+            var card = Instantiate(_boosterPrefab, _boosterList);
             card.Initialize(booster);
-            _boosterList.Add(card.GetComponent<CardListItem>());
-            
-            RefreshBoosters();
+
             RefreshDate();
             RefreshMoney();
         }
@@ -73,17 +89,7 @@ namespace RogueIslands.Gameplay.View
             var viewRect = new Rect(bl, tr - bl);
             return !viewRect.Contains(screenPosition);
         }
-
-        public void RefreshAll()
-        {
-            RefreshScores();
-            RefreshMoney();
-            RefreshDate();
-            RefreshBoosters();
-            RefreshDeckText();
-            UpdateDiscards();
-        }
-
+        
         public void RefreshDeckText()
         {
             var state = GameManager.Instance.State;
@@ -91,17 +97,6 @@ namespace RogueIslands.Gameplay.View
             var rem = total - state.Buildings.HandPointer;
             rem = Mathf.Max(rem, 0);
             _deckCardCount.text = $"{rem}/{total}";
-        }
-
-        public void UpdateDiscards()
-        {
-            _discards.UpdateNumber(GameManager.Instance.State.DiscardsLeft);
-        }
-
-        private void RefreshBoosters()
-        {
-            _boosterSlots.UpdateNumber(GameManager.Instance.State.Boosters.Count);
-            _boosterSlots.SetMax(GameManager.Instance.State.MaxBoosters);
         }
 
         public void RefreshMoney()
@@ -112,43 +107,42 @@ namespace RogueIslands.Gameplay.View
 
         public void RefreshScores()
         {
-            var state = GameManager.Instance.State;
+            _currentScore = 0;
 
-            if (state.ScoringState != null)
-            {
-                _products.UpdateNumber(state.ScoringState.Products);
-                _multiplier.UpdateNumber(state.ScoringState.Multiplier);
-            }
-            else
-            {
-                _products.SetNumber(0);
-                _multiplier.SetNumber(1);
-            }
+            _productFeedback.gameObject.SetActive(false);
 
-            _requiredOutput.UpdateNumber(state.GetCurrentRequiredScore());
-            _currentAmount.UpdateNumber(state.CurrentScore);
+            var total = GameManager.Instance.State.GetCurrentRequiredScore();
+            var current = GameManager.Instance.State.CurrentScore;
+            _scoreRequirements.text = $"{current:0.#}/{total}";
+            _scoreFill.fillAmount = (float)(current / total);
+            Bump(_scoreParent);
         }
 
         public void RefreshDate()
         {
             var state = GameManager.Instance.State;
-            _days.UpdateNumber(state.TotalDays - state.Day);
             _week.UpdateNumber(state.Round + 1);
             _month.UpdateNumber(state.Act + 1);
         }
 
         public void ProductBoosted(double delta)
         {
-            _products.UpdateNumber(_products.CurrentNumber + delta);
-            var t = (_products.CurrentNumber * _multiplier.CurrentNumber) /
-                    GameManager.Instance.State.GetCurrentRequiredScore();
-            var scoringAudio = StaticResolver.Resolve<IScoringAudio>();
-            scoringAudio.PlayScoreSound((int)(t * scoringAudio.ClipCount));
+            _currentScore += delta;
+            
+            _productFeedback.SetText($"+{_currentScore:0.#}");
+            _productFeedback.gameObject.SetActive(true);
+            _productFeedback.Show();
+
+            Bump(_productFeedback.transform);
         }
 
-        public void MultBoosted(double mult)
+        private void Bump(Transform target)
         {
-            _multiplier.UpdateNumber(mult);
+            target.DOKill();
+            target.DOPunchScale(Vector3.one * 0.2f, 0.1f)
+                .OnComplete(() => target.localScale = Vector3.one);
+            target.DOPunchRotation(new Vector3(0, 0, Random.Range(-5, 5)), 0.1f)
+                .OnComplete(() => target.localEulerAngles = Vector3.zero);
         }
 
         public void MoneyBoosted(int delta)
@@ -158,13 +152,6 @@ namespace RogueIslands.Gameplay.View
 
         public void ShowScoringPanel(bool show)
         {
-            _scoringPanel.DOComplete();
-            _scoringPanel.DOAnchorPosY(show ? 0 : _scoringPanel.rect.height, 0.5f)
-                .SetEase(show ? Ease.OutBack : Ease.InBack);
-
-            var btnTransform = (RectTransform)_playButton.transform;
-            btnTransform.DOAnchorPosX(show ? -150 : 150, 0.5f)
-                .SetEase(show ? Ease.OutBack : Ease.InBack);
         }
     }
 }

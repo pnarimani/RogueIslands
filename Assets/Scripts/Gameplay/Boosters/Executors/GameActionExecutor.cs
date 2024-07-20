@@ -16,11 +16,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
 
         public sealed override bool Execute(GameState state, IGameView view, IBooster booster, GameAction action)
         {
-            var boosterView = view.GetBooster(booster);
-            
-            boosterView.OnBeforeActionExecuted(state, action);
             Execute(state, view, booster, (T)action);
-            boosterView.OnAfterActionExecuted(state, action);
             return true;
         }
 

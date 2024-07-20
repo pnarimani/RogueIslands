@@ -1,9 +1,9 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Flexalon;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Buildings;
-using RogueIslands.Gameplay.View.DeckBuilding;
 using RogueIslands.Gameplay.View.Feedbacks;
 using RogueIslands.View.Audio;
 using TMPro;
@@ -16,7 +16,7 @@ namespace RogueIslands.Gameplay.View
     public class BuildingCardView : MonoBehaviour, IPointerClickHandler
     {
         private const float BuildingRotationStep = 45 * 0.5f;
-        
+
         [SerializeField] private RectTransform _animationParent;
         [SerializeField] private Image _colorBg, _colorGradient, _buildingIcon;
         [SerializeField] private LabelFeedback _moneyFeedback, _productFeedback, _multFeedback;
@@ -24,7 +24,7 @@ namespace RogueIslands.Gameplay.View
 
         private BuildingView _buildingPreview;
         private Transform _originalParent;
-        private CardListItem _cardListItem;
+        private FlexalonObject _cardListItem;
 
         private readonly BuildingViewFactory _buildingViewFactory = new();
         private IBuildingCardAudio _audio;
@@ -57,14 +57,14 @@ namespace RogueIslands.Gameplay.View
         private void Start()
         {
             _audio = StaticResolver.Resolve<IBuildingCardAudio>();
-            _cardListItem = GetComponent<CardListItem>();
+            _cardListItem = GetComponent<FlexalonObject>();
         }
 
         private void OnDestroy()
         {
             if (_buildingPreview != null)
                 Destroy(_buildingPreview.gameObject);
-            
+
             InputHandling.Instance.Click -= OnWorldClicked;
             InputHandling.Instance.Scroll -= OnInputRotateBuilding;
         }
@@ -73,7 +73,7 @@ namespace RogueIslands.Gameplay.View
         {
             if (!CanPlaceBuildings)
                 return;
-            
+
             if (Input.GetMouseButtonUp(1))
             {
                 if (IsSelected)
@@ -87,12 +87,13 @@ namespace RogueIslands.Gameplay.View
                 if (_buildingPreview == null)
                 {
                     _buildingPreview = _buildingViewFactory.Create(Data);
+                    Destroy(_buildingPreview.GetComponent<DescriptionBoxSpawner>());
                 }
 
                 _buildingPreview.transform.position =
-                    BuildingViewPlacement.Instance.GetPosition(_buildingPreview.transform);
+                    BuildingViewPlacement.Instance.GetPosition(_buildingPreview);
 
-                var isValidPlacement = BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview.transform);
+                var isValidPlacement = BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview);
                 _buildingPreview.ShowValidPlacement(isValidPlacement);
 
                 EffectRangeHighlighter.HighlightBuilding(_buildingPreview);
@@ -113,12 +114,12 @@ namespace RogueIslands.Gameplay.View
         {
             if (!CanPlaceBuildings)
                 return;
-            
+
             if (_buildingPreview == null)
                 return;
 
             if (GameUI.Instance.IsInSpawnRegion(Input.mousePosition) &&
-                BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview.transform))
+                BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview))
             {
                 StaticResolver.Resolve<BuildingPlacement>().PlaceBuilding(
                     Data,
@@ -139,25 +140,17 @@ namespace RogueIslands.Gameplay.View
         {
             if (!CanPlaceBuildings)
                 return;
-            
-            if (PlayButtonHandler.Instance.IsPlaying)
-                return;
 
             IsSelected = !IsSelected;
 
             if (IsSelected)
             {
                 _audio.PlayCardSelected();
+                GetComponent<DescriptionBoxSpawner>().SpawnManually();
 
-                _cardListItem.ShouldAnimateToTarget = false;
-
-                transform.DOLocalMoveY(50, 0.2f)
-                    .SetRelative(true)
-                    .OnComplete(() =>
-                    {
-                        InputHandling.Instance.Scroll += OnInputRotateBuilding;
-                        InputHandling.Instance.Click += OnWorldClicked;
-                    });
+                _cardListItem.Offset = new Vector3(0, 50);
+                InputHandling.Instance.Scroll += OnInputRotateBuilding;
+                InputHandling.Instance.Click += OnWorldClicked;
 
                 foreach (var c in ObjectRegistry.GetBuildingCards())
                 {
@@ -170,11 +163,10 @@ namespace RogueIslands.Gameplay.View
             else
             {
                 _audio.PlayCardDeselected();
+                GetComponent<DescriptionBoxSpawner>().HideManually();
 
-                transform.DOLocalMoveY(-50, 0.2f)
-                    .SetRelative(true)
-                    .OnComplete(() => _cardListItem.ShouldAnimateToTarget = true);
-
+                _cardListItem.Offset = new Vector3(0, 0);
+                
                 InputHandling.Instance.Click -= OnWorldClicked;
                 InputHandling.Instance.Scroll -= OnInputRotateBuilding;
             }
@@ -184,7 +176,7 @@ namespace RogueIslands.Gameplay.View
         {
             if (_buildingPreview == null)
                 return;
-            
+
             _buildingPreview.transform.Rotate(new Vector3(0, obj * BuildingRotationStep, 0));
         }
 

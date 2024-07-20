@@ -22,7 +22,7 @@ namespace RogueIslands.Gameplay.View.Shop
         [SerializeField] private BoosterCardView _boosterPrefab;
         [SerializeField] private ConsumableCardView _consumableCardView;
         [SerializeField] private BuildingCardView _buildingCardView;
-        [SerializeField] private CardListView _cardParent, _cardParent2;
+        [SerializeField] private Transform _cardParent;
         [SerializeField] private Button _continue, _reroll;
         [SerializeField] private TextMeshProUGUI _rerollText;
         [SerializeField] private PopupOpeningFeedback _openingFeedback;
@@ -44,19 +44,15 @@ namespace RogueIslands.Gameplay.View.Shop
 
         private void PopulateShop()
         {
-            _cardParent.Content.DestroyChildren();
-            _cardParent2.Content.DestroyChildren();
+            _cardParent.DestroyChildren();
 
             UpdateRerollCost();
 
             for (var i = 0; i < Shop.CardCount; i++)
             {
                 var shopIndex = i;
-                
-                var parent = i / 4 == 0 ? _cardParent : _cardParent2;
 
-                var item = Instantiate(_itemPrefab, parent.Content, false);
-                parent.Add(item);
+                var item = Instantiate(_itemPrefab, _cardParent, false);
 
                 switch (Shop.ItemsForSale[i])
                 {
@@ -72,8 +68,9 @@ namespace RogueIslands.Gameplay.View.Shop
                 }
 
 
-                item.SetPrice(StaticResolver.Resolve<ILocalization>().Get("Buy-Price-Button", Shop.ItemsForSale[i].BuyPrice));
-                
+                item.SetPrice(StaticResolver.Resolve<ILocalization>()
+                    .Get("Buy-Price-Button", Shop.ItemsForSale[i].BuyPrice));
+
                 item.BuyClicked += () =>
                 {
                     if (GameManager.Instance.State.Money < Shop.ItemsForSale[shopIndex].BuyPrice)
@@ -96,7 +93,6 @@ namespace RogueIslands.Gameplay.View.Shop
             card.Initialize(booster);
             Destroy(card.GetComponent<BoosterView>());
             Destroy(card.GetComponent<BoosterCardView>());
-            Destroy(card.GetComponent<CardListItem>());
             Destroy(card.GetComponent<DescriptionBoxSpawner>());
         }
 
@@ -118,7 +114,7 @@ namespace RogueIslands.Gameplay.View.Shop
         private async void OnContinueClicked()
         {
             await _openingFeedback.PlayClosing();
-            GameManager.Instance.ShowRoundsSelectionScreen();
+            StaticResolver.Resolve<RoundController>().StartRound();
             Destroy(gameObject);
         }
 
@@ -126,17 +122,15 @@ namespace RogueIslands.Gameplay.View.Shop
         {
             var card = Instantiate(_consumableCardView, item.transform);
             card.Initialize(consumable);
-            Destroy(card.GetComponent<CardListItem>());
             Destroy(card.GetComponent<ConsumableCardView>());
             Destroy(card.GetComponent<DescriptionBoxSpawner>());
         }
-        
+
         private void InstantiateBuildingCard(ShopItem item, Building building)
         {
             var card = Instantiate(_buildingCardView, item.transform);
             card.Initialize(building);
             Destroy(card.GetComponent<BuildingCardView>());
-            Destroy(card.GetComponent<CardListItem>());
             Destroy(card.GetComponent<DescriptionBoxSpawner>());
         }
     }

@@ -10,7 +10,6 @@ namespace RogueIslands.Gameplay.View.Boosters
     public class BoosterView : MonoBehaviour, IBoosterView
     {
         private List<BoosterActionVisualizer> _visualizers;
-        private CardListItem _cardListItem;
 
         public IBooster Data { get; private set; }
 
@@ -58,6 +57,11 @@ namespace RogueIslands.Gameplay.View.Boosters
             Destroy(gameObject);
             GameUI.Instance.RefreshDate();
             GameUI.Instance.RefreshMoney();
+        }
+
+        public IBoosterScoreVisualizer GetScoringVisualizer()
+        {
+            return GetComponent<IBoosterScoreVisualizer>();
         }
     }
 }

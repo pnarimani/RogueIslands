@@ -10,7 +10,7 @@ namespace RogueIslands.Debug
         {
             GameManager.Instance.State.Act = act;
             GameManager.Instance.State.Round = round;
-            GameManager.Instance.GetUI().RefreshAll();
+            GameManager.Instance.GetUI().RefreshDate();
         }
         
         [ConsoleMethod("set_rem_days", "Set the remaining days to the specified value. Usage: set_rem_days <days>")]
@@ -19,14 +19,14 @@ namespace RogueIslands.Debug
             if(remainingDays > GameManager.Instance.State.TotalDays)
                 GameManager.Instance.State.TotalDays = remainingDays;
             GameManager.Instance.State.Day = GameManager.Instance.State.TotalDays - remainingDays;
-            GameManager.Instance.GetUI().RefreshAll();
+            GameManager.Instance.GetUI().RefreshDate();
         }
         
         [ConsoleMethod("set_money", "Set the money to the specified value. Usage: set_money <money>")]
         public static void SetMoney(int money)
         {
             GameManager.Instance.State.Money = money;
-            GameManager.Instance.GetUI().RefreshAll();
+            GameManager.Instance.GetUI().RefreshMoney();
         }
     }
 }

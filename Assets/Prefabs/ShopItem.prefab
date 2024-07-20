@@ -45,8 +45,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6731640889424226284}
   - component: {fileID: 5517188471021414671}
-  - component: {fileID: 1242485457558760379}
   - component: {fileID: 7933572541903919081}
+  - component: {fileID: 3095593765056666661}
   m_Layer: 5
   m_Name: ShopItem
   m_TagString: Untagged
@@ -89,20 +89,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buy: {fileID: 6969310821180454238}
   _price: {fileID: 1347801421267853213}
---- !u!114 &1242485457558760379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6378974441686291424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dc701a530064b88a8794c039f8438cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 10
-  _allowReorder: 0
 --- !u!114 &7933572541903919081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,6 +105,43 @@ MonoBehaviour:
   _descriptionBoxPrefab: {fileID: 6584765328537110756, guid: d70c4d99d6dab4b448f46152753db9b7, type: 3}
   _showName: 0
   _growToBottom: 0
+  _enableAfterFirstMouseExit: 0
+--- !u!114 &3095593765056666661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6378974441686291424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 994c66b6148109b489689ed705d244cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Parent: {fileID: 0}
+  SiblingIndex: 0
+  LayoutPosition: {x: 0, y: 0, z: 0}
+  LayoutRotation: {x: 0, y: 0, z: 0, w: 1}
+  AdapterBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 92.34125, y: 167.8238, z: 0}
+  LayoutBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 92.34125, y: 167.8238, z: 0}
+  RotatedAndScaledBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 92.34125, y: 167.8238, z: 0}
+  ComponentScale: {x: 1, y: 1, z: 1}
+  FillSize: {x: 554.0475, y: 1006.9429, z: 0}
+  ShrinkSize: {x: 999999, y: 999999, z: 999999}
+  TargetPosition: {x: 0, y: 0, z: 0}
+  TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  TargetScale: {x: 1, y: 1, z: 1}
+  TargetRectSize: {x: 184.6825, y: 335.6476, z: 0}
+  TransformPosition: {x: -184.6825, y: 335.64764, z: 0}
+  TransformRotation: {x: 0, y: 0, z: 0, w: 1}
+  TransformScale: {x: 1, y: 1, z: 1}
+  TransformRectSize: {x: 184.6825, y: 335.6476}
 --- !u!1001 &4699985419701394564
 PrefabInstance:
   m_ObjectHideFlags: 0

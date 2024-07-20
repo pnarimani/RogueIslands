@@ -8,22 +8,18 @@ namespace RogueIslands.Gameplay.View
 {
     public class DescriptionBoxSpawner : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        private static readonly UILayer _overlayLayer = new("OverlayLayer");
         [SerializeField] private Transform _descriptionBoxParent;
         [SerializeField] private DescriptionBox _descriptionBoxPrefab;
         [SerializeField] private bool _showName;
         [SerializeField] private bool _growToBottom = true;
-
-        private static readonly UILayer _descriptionBoxLayer = new("DescriptionBoxLayer");
+        [SerializeField] private bool _enableAfterFirstMouseExit;
 
         private DescriptionBox _descBox;
         private IDescribableItem _describableItem;
+        private bool _hasSpawnedManually;
+        private bool _isEnabled;
         private IUIRootProvider _uiRootProvider;
-
-        public void Initialize(IDescribableItem describableItem)
-        {
-            _uiRootProvider = StaticResolver.Resolve<IUIRootProvider>();
-            _describableItem = describableItem;
-        }
 
         private void OnDestroy()
         {
@@ -33,15 +29,46 @@ namespace RogueIslands.Gameplay.View
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
         {
+            if (!_isEnabled)
+                return;
+            
             if (_describableItem == null)
             {
                 Debug.LogError("No describable item set on DescriptionBoxSpawner");
                 return;
             }
 
+            if (!_hasSpawnedManually)
+                Spawn();
+        }
+
+        void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
+        {
+            if (!_hasSpawnedManually)
+                HideManually();
+
+            _isEnabled = true;
+        }
+
+        public void Initialize(IDescribableItem describableItem)
+        {
+            _uiRootProvider = StaticResolver.Resolve<IUIRootProvider>();
+            _describableItem = describableItem;
+
+            _isEnabled = !_enableAfterFirstMouseExit;
+        }
+
+        public void SpawnManually()
+        {
+            Spawn();
+            _hasSpawnedManually = true;
+        }
+
+        private void Spawn()
+        {
             if (_descBox == null)
             {
-                var root = _uiRootProvider.GetRoot(_descriptionBoxLayer);
+                var root = _uiRootProvider.GetRoot(_overlayLayer);
                 _descBox = Instantiate(_descriptionBoxPrefab,
                     _descriptionBoxParent.position,
                     Quaternion.identity,
@@ -66,16 +93,18 @@ namespace RogueIslands.Gameplay.View
 
         private string GetDescriptionText()
         {
-            return _describableItem.Description.Get(_describableItem);
+            return _describableItem.Description.Get(GameManager.Instance.State, _describableItem);
         }
 
-        void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
+        public void HideManually()
         {
             if (_descBox != null)
             {
                 Destroy(_descBox.gameObject);
                 _descBox = null;
             }
+
+            _hasSpawnedManually = false;
         }
     }
 }

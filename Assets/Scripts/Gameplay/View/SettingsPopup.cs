@@ -21,7 +21,6 @@ namespace RogueIslands.Gameplay.View
             
             _music.value = SettingsMusicVolume;
             _sfx.value = SettingsSfxVolume;
-            _enableParticles.isOn = SettingsParticles;
             
             _music.onValueChanged.AddListener(value =>
             {
@@ -33,11 +32,6 @@ namespace RogueIslands.Gameplay.View
             {
                 SettingsSfxVolume = value;
                 StaticResolver.Resolve<IAudioSettings>().SetSfxVolume(value);
-            });
-            
-            _enableParticles.onValueChanged.AddListener(value =>
-            {
-                SettingsParticles = value;
             });
         }
     }

@@ -2,6 +2,6 @@
 {
     public interface IDescriptionProvider
     {
-        string Get(IDescribableItem item);
+        string Get(GameState state, IDescribableItem item);
     }
 }

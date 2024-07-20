@@ -20,7 +20,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             if (state.CurrentEvent is BuildingEvent buildingEvent)
                 responsibleBuilding = buildingEvent.Building;
 
-            if (responsibleBuilding == null || !responsibleBuilding.IsPlacedDown())
+            if (responsibleBuilding == null || !responsibleBuilding.IsPlacedDown(state))
                 AnimationScheduler.WaitForTotalTime();
 
             await AnimationScheduler.ScheduleAndWait(0.3f, 0.1f);
@@ -28,7 +28,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             UniTask task;
             if (responsibleBuilding != null)
             {
-                if (responsibleBuilding.IsPlacedDown())
+                if (responsibleBuilding.IsPlacedDown(state))
                 {
                     var view = ObjectRegistry.GetBuildings().First(b => b.Data == responsibleBuilding);
                     task = view.BuildingMadeMoney(action.Change);

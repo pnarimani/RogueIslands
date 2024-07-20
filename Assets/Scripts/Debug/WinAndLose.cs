@@ -22,11 +22,5 @@ namespace RogueIslands.Debug
             GameManager.Instance.State.Day = GameManager.Instance.State.TotalDays;
             StaticResolver.Resolve<RoundController>().TryEndingRound();
         }
-        
-        [ConsoleMethod("play", "Play")]
-        public static void Play()
-        {
-            StaticResolver.Resolve<PlayButtonHandler>().OnPlayClicked(default).Forget();
-        }
     }
 }

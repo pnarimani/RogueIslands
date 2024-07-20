@@ -21,7 +21,8 @@ namespace RogueIslands.Gameplay.View.Feedbacks
         {
             return _bg.DOLocalMoveY(-Screen.height, 0.5f)
                 .SetEase(Ease.InBack)
-                .AwaitForComplete();
+                .AsyncWaitForCompletion()
+                .AsUniTask();
         }
     }
 }

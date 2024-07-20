@@ -1,93 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using RogueIslands.Gameplay.GameEvents;
+﻿using System.Linq;
+using RogueIslands.Serialization;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace RogueIslands.Gameplay.Buildings
 {
     public class BuildingPlacement
     {
+        private readonly ICloner _cloner;
+        private readonly IEventController _eventController;
+        private readonly ScoringController _scoringController;
         private readonly GameState _state;
         private readonly IGameView _view;
-        private readonly IEventController _eventController;
+        private RoundController _roundController;
 
-        public BuildingPlacement(GameState state, IGameView view, IEventController eventController)
+        public BuildingPlacement(GameState state, IGameView view, IEventController eventController, ICloner cloner,
+            ScoringController scoringController, RoundController roundController)
         {
+            _roundController = roundController;
+            _scoringController = scoringController;
+            _cloner = cloner;
             _eventController = eventController;
             _view = view;
             _state = state;
         }
 
-        public void PlaceBuilding(Building building, Vector3 position, Quaternion rotation)
+        public void PlaceBuilding(Building buildingBlueprint, Vector3 position, Quaternion rotation)
         {
+            var building = _cloner.Clone(buildingBlueprint);
             building.Position = position;
             building.Rotation = rotation;
+            _state.Buildings.PlacedDownBuildings.Add(building);
 
             _view.SpawnBuilding(building);
 
-            RemoveOverlappingWorldBoosters(building);
+            _scoringController.ScoreBuilding(building);
 
-            PlaceBuildingInIsland(building);
-
-            _eventController.Execute(new BuildingPlaced { Building = building });
-        }
-
-        private void PlaceBuildingInIsland(Building building)
-        {
-            using var _ = ListPool<ClusterId>.Get(out var idList);
-            foreach (var other in _state.PlacedDownBuildings)
-            {
-                if (idList.Contains(other.ClusterId))
-                    continue;
-
-                var distance = Vector3.Distance(other.Position, building.Position);
-                var biggestRange = Math.Max(other.Range, building.Range);
-                if (distance < biggestRange)
-                    idList.Add(other.ClusterId);
-            }
-
-            if (idList.Count == 0)
-            {
-                building.ClusterId = ClusterId.NewClusterId();
-                return;
-            }
-
-            if (idList.Count == 1)
-            {
-                building.ClusterId = idList[0];
-                return;
-            }
-
-            MergeClusters(idList, building);
-        }
-
-        private void MergeClusters(List<ClusterId> existingClusters, Building newBuilding)
-        {
-            var newClusterId = ClusterId.NewClusterId();
-            newBuilding.ClusterId = newClusterId;
-
-            foreach (var building in _state.PlacedDownBuildings)
-            {
-                if (existingClusters.Contains(building.ClusterId))
-                    building.ClusterId = newClusterId;
-            }
-        }
-
-        private void RemoveOverlappingWorldBoosters(Building building)
-        {
-            for (var i = _state.WorldBoosters.SpawnedBoosters.Count - 1; i >= 0; i--)
-            {
-                var wb = _state.WorldBoosters.SpawnedBoosters[i];
-                if (_view.IsOverlapping(building, wb))
-                {
-                    _state.WorldBoosters.SpawnedBoosters.RemoveAt(i);
-
-                    _eventController.Execute(new WorldBoosterDestroyed { Booster = wb });
-
-                    _view.GetBooster(wb).Remove();
-                }
-            }
+            _view.GetUI().RemoveCard(buildingBlueprint);
+            _view.GetUI().MoveCardToHand(_state.BuildingsInHand.Last());
+            _view.GetUI().ShowBuildingCardPeek(_state.DeckPeek.Last());
         }
     }
 }

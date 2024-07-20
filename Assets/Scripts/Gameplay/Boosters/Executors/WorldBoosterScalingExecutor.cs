@@ -25,8 +25,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         private static void SetBoosterToStartingStats(WorldBoosterScalingAction action, ScoringAction scoring)
         {
             scoring.Products = action.StartingProducts;
-            scoring.PlusMult = action.StartingPlusMult;
-            scoring.XMult = action.StartingXMult;
+            scoring.Multiplier = action.StartingMultiplier;
         }
 
         private static void ProcessOutsideBuildings(WorldBoosterScalingAction action, ScoringAction scoring,
@@ -34,12 +33,9 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         {
             if (action.ProductChangePerBuildingOutside is { } k)
                 scoring.Products += k * countOutside;
-
-            if (action.PlusMultChangePerBuildingOutside is { } l)
-                scoring.PlusMult += l * countOutside;
-
+            
             if (action.XMultChangePerBuildingOutside is { } m)
-                scoring.XMult += m * countOutside;
+                scoring.Multiplier += m * countOutside;
         }
 
         private static void ProcessInsideBuildings(WorldBoosterScalingAction action, ScoringAction scoring,
@@ -47,12 +43,9 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         {
             if (action.ProductChangePerBuildingInside is { } p)
                 scoring.Products += p * countInside;
-
-            if (action.PlusMultChangePerBuildingInside is { } q)
-                scoring.PlusMult += q * countInside;
-
+            
             if (action.XMultChangePerBuildingInside is { } r)
-                scoring.XMult += r * countInside;
+                scoring.Multiplier += r * countInside;
         }
     }
 }

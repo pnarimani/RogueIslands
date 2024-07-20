@@ -1,7 +1,5 @@
-﻿using RogueIslands.Gameplay.Boosters;
-using RogueIslands.Gameplay.Buildings;
+﻿using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.GameEvents;
-using RogueIslands.Gameplay.Rollback;
 using RogueIslands.Gameplay.Shop;
 using UnityEngine;
 
@@ -12,21 +10,15 @@ namespace RogueIslands.Gameplay
         private readonly GameState _state;
         private readonly IGameView _view;
         private readonly IEventController _eventController;
-        private readonly WorldBoosterGeneration _worldBoosterGeneration;
-        private readonly ResetController _resetController;
         private readonly ShopItemSpawner _shopItemSpawner;
 
         public RoundController(
             GameState state,
             IGameView view,
             IEventController eventController,
-            WorldBoosterGeneration worldBoosterGeneration,
-            ResetController resetController,
             ShopItemSpawner shopItemSpawner)
         {
             _shopItemSpawner = shopItemSpawner;
-            _resetController = resetController;
-            _worldBoosterGeneration = worldBoosterGeneration;
             _eventController = eventController;
             _view = view;
             _state = state;
@@ -47,6 +39,7 @@ namespace RogueIslands.Gameplay
 
                 _shopItemSpawner.PopulateShop();
 
+                _state.CurrentScore = 0;
                 _state.Round++;
                 if (_state.Round >= GameState.RoundsPerAct)
                 {
@@ -67,16 +60,12 @@ namespace RogueIslands.Gameplay
             }
             else
             {
-                AddBuildingCardsToHand();
+                // AddBuildingCardsToHand();
             }
         }
 
         private void ShowRoundWinScreen()
         {
-            _view.DestroyBuildingsInHand();
-
-            ResetDeck();
-
             var winScreen = _view.ShowRoundWin();
             winScreen.AddMoneyChange(new MoneyChange
             {
@@ -119,52 +108,39 @@ namespace RogueIslands.Gameplay
 
         public void StartRound()
         {
-            _view.DestroyWorldBoosters();
-            _state.WorldBoosters.SpawnedBoosters.Clear();
-
-            _worldBoosterGeneration.GenerateWorldBoosters();
-
-            _resetController.RestoreProperties();
-
-            _state.CurrentScore = 0;
             _state.Day = 0;
             _state.DiscardsLeft = _state.TotalDiscards;
 
             _eventController.Execute(new RoundStart());
 
-            _view.DestroyBuildings();
+            if (_state.Round == 0)
+            {
+                foreach (var hand in _state.BuildingsInHand)
+                {
+                    _view.GetUI().ShowBuildingCard(hand);
+                }
 
-            AddBuildingCardsToHand();
+                foreach (var peek in _state.DeckPeek)
+                {
+                    _view.GetUI().ShowBuildingCardPeek(peek);
+                }
+            }
 
-            _view.GetUI().RefreshAll();
+            _view.GetUI().RefreshDate();
+            _view.GetUI().RefreshMoney();
         }
 
         private void AddBuildingCardsToHand()
         {
-            _view.DestroyBuildingsInHand();
-            _state.Buildings.HandPointer += _state.HandSize;
-            _view.ShowBuildingsInHand();
+            
         }
 
         private void ResetDeck()
         {
-            RemoveBuildingsClusterId();
+            _state.Buildings.Deck.RemoveAll(b => _state.Buildings.PlacedDownBuildings.Exists(p => p.Id == b.Id));
             _state.ShuffleDeck();
             _state.Buildings.HandPointer = 0;
             _view.GetUI().RefreshDeckText();
-        }
-
-        private void RemoveBuildingsClusterId()
-        {
-            if (GameParameters.ShouldDiscardPlayedBuildings)
-            {
-                _state.Buildings.Deck.RemoveAll(b => b.IsPlacedDown());
-            }
-            else
-            {
-                foreach (var building in _state.Buildings.Deck)
-                    building.ClusterId = default;
-            }
         }
 
         private bool HasLost()

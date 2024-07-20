@@ -10,11 +10,9 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         protected override void Execute(GameState state, IGameView view, IBooster booster, RandomScoringAction action)
         {
             if (action.Products is { } products)
-                state.ScoringState.Products += _random.ForAct(state.Act).NextDouble(0, products);
-            if (action.PlusMult is { } plusMult)
-                state.ScoringState.Multiplier += _random.ForAct(state.Act).NextDouble(0, plusMult);
-            if (action.XMult is { } xMult)
-                state.ScoringState.Multiplier *= _random.ForAct(state.Act).NextDouble(1, xMult);
+                state.TransientScore += _random.ForAct(state.Act).NextDouble(0, products);
+            if (action.Multiplier is { } xMult)
+                state.TransientScore *= _random.ForAct(state.Act).NextDouble(1, xMult);
         }
     }
 }

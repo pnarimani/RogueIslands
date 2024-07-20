@@ -33,7 +33,7 @@ namespace RogueIslands.Gameplay.Shop
 
             _eventController.Execute(new ShopRerolledEvent());
 
-            _view.GetUI().RefreshAll();
+            _view.GetUI().RefreshMoney();
         }
     }
 }

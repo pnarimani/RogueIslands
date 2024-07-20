@@ -1,38 +1,32 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using RogueIslands.View;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.View
 {
     public class AnimationScheduler : Singleton<AnimationScheduler>
     {
-        public static float Multiplier 
-            => GameSettings.AnimationSpeedMultiplier;
-
         private float _delay;
         private float _ensureTime;
-        private float _lastAutoResetTime;
-        private float _nextAutoResetTime;
+        
+        public float AnimationEndTime { get; private set; }
+        public float AnimationStartTime { get; private set; }
 
         private static void AutoResetIfNeeded()
         {
-            if (Instance._nextAutoResetTime < Time.time)
+            if (Instance.AnimationEndTime <= Time.time)
             {
                 Instance._delay = 0;
                 Instance._ensureTime = 0;
 
-                Instance._lastAutoResetTime = Time.time;
-                Instance._nextAutoResetTime = Time.time;
-
-                DOTween.timeScale = Multiplier;
+                Instance.AnimationStartTime = Time.time;
+                Instance.AnimationEndTime = Time.time;
             }
         }
 
         private static void SetAutoResetTime()
         {
-            Instance._nextAutoResetTime = Instance._lastAutoResetTime + GetTotalTime();
+            Instance.AnimationEndTime = Instance.AnimationStartTime + Mathf.Max(Instance._ensureTime, Instance._delay);
         }
 
         public static void AllocateTime(float time)
@@ -42,7 +36,7 @@ namespace RogueIslands.Gameplay.View
 
             AutoResetIfNeeded();
 
-            Instance._delay += time * Multiplier;
+            Instance._delay += time;
             
             SetAutoResetTime();
         }
@@ -54,18 +48,22 @@ namespace RogueIslands.Gameplay.View
 
             AutoResetIfNeeded();
             
-            Instance._ensureTime = Mathf.Max(Instance._ensureTime, Instance._delay + time * Multiplier);
+            Instance._ensureTime = Mathf.Max(Instance._ensureTime, Instance._delay + time);
             
             SetAutoResetTime();
         }
 
         public static UniTask ScheduleAndWait(float time, float extraTime = 0)
         {
-            var wait = GetAnimationTime();
+            var animationTime = GetAnimationTime();
             AllocateTime(time);
             if (extraTime > 0)
                 EnsureExtraTime(extraTime);
-            return UniTask.WaitForSeconds(wait);
+            var passedTime = Time.time - Instance.AnimationStartTime;
+            var duration = animationTime - passedTime;
+            if(duration <= 0)
+                return UniTask.CompletedTask;
+            return UniTask.WaitForSeconds(duration);
         }
 
         public static float GetAnimationTime()

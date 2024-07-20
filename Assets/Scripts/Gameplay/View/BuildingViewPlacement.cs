@@ -15,9 +15,9 @@ namespace RogueIslands.Gameplay.View
         private Vector3 _topRight;
         private Vector3 _bottomRight;
 
-        public Vector3 GetPosition(Transform building)
+        public Vector3 GetPosition(BuildingView building)
         {
-            var bounds = building.GetBounds();
+            var bounds = building.transform.GetBounds(building.GetMeshRenderers());
 
             _gizmosCenter = bounds.center;
             _gizmosSize = bounds.size;
@@ -25,9 +25,12 @@ namespace RogueIslands.Gameplay.View
             var ray = _camera!.ScreenPointToRay(Input.mousePosition);
 
             if (!Physics.Raycast(ray, out var hit, 100, _groundMask))
-                return Vector3.zero;
+            {
+                new Plane(Vector3.up, Vector3.zero).Raycast(ray, out var distance);
+                return ray.GetPoint(distance);
+            }
 
-            var desiredPosition = SlideDesiredPosition(building, bounds, hit.point);
+            var desiredPosition = SlideDesiredPosition(building.transform, bounds, hit.point);
 
             if (Vector3.Distance(desiredPosition, hit.point) > 10f)
             {
@@ -78,12 +81,12 @@ namespace RogueIslands.Gameplay.View
             return false;
         }
 
-        public bool IsValidPlacement(Transform building)
+        public bool IsValidPlacement(BuildingView building)
         {
-            var bounds = building.GetBounds();
-            var isIntersectingWithAnyBuildings = IntersectsAnyBuilding(building, bounds);
-            var isOnFlatGround = IsOnFlatGround(building,bounds);
-
+            var bounds = building.transform.GetBounds(building.GetMeshRenderers());
+            var isIntersectingWithAnyBuildings = IntersectsAnyBuilding(building.transform, bounds);
+            var isOnFlatGround = IsOnFlatGround(building.transform, bounds);
+            //
             // Debug.Log("isIntersectingWithAnyBuildings = " + isIntersectingWithAnyBuildings);
             // Debug.Log("isOnFlatGround = " + isOnFlatGround);
 

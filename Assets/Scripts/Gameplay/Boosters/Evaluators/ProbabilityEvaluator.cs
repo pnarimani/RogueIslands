@@ -9,7 +9,7 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
 
         protected override bool Evaluate(GameState state, IBooster booster, ProbabilityCondition condition)
         {
-            return _random.ForAct(state.Act).NextInt(0, condition.TotalOutcomes) < condition.FavorableOutcome;
+            return _random.ForAct(state.Act).NextInt(0, condition.TotalOutcomes) < condition.FavorableOutcome * (state.GetRiggedCount() + 1);
         }
     }
 }

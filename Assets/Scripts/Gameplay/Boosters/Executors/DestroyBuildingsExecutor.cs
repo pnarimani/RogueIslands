@@ -13,7 +13,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
                 for (var i = state.Buildings.Deck.Count - 1; i >= 0; i--)
                 {
                     var building = state.Buildings.Deck[i];
-                    if (!building.IsPlacedDown()) 
+                    if (!building.IsPlacedDown(state)) 
                         continue;
                     if (Vector3.Distance(building.Position, worldBooster.Position) > worldBooster.Range)
                         continue;

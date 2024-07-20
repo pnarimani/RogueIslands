@@ -5,7 +5,6 @@ namespace RogueIslands.Gameplay.Boosters.Conditions
         public enum Target
         {
             Buildings,
-            Cluster,
             BuildingsInAnyIsland,
             BuildingsInScoringIsland,
         }

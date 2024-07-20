@@ -1,10 +1,12 @@
 ﻿using RogueIslands.Gameplay.Boosters.Actions;
+using RogueIslands.Gameplay.Rand;
 
 namespace RogueIslands.Gameplay.Boosters.Executors
 {
     public class RatAttackExecutor : GameActionExecutor<RatAttack>
     {
         private BoosterManagement _boosterManagement;
+        private RogueRandom _rogueRandom = new(3);
 
         public RatAttackExecutor(BoosterManagement boosterManagement)
         {
@@ -13,16 +15,13 @@ namespace RogueIslands.Gameplay.Boosters.Executors
 
         protected override void Execute(GameState state, IGameView view, IBooster booster, RatAttack action)
         {
-            var index = state.Boosters.IndexOf((BoosterCard)booster);
-            if (index >= state.Boosters.Count - 1)
-                return;
-            
-            var nextBooster = state.Boosters[index + 1];
-            var mult = nextBooster.SellPrice * 2;
-            _boosterManagement.DestroyBooster(nextBooster.Id);
+            if (state.Boosters.Count > 1)
+            {
+                var toDestroy = state.Boosters.SelectRandom(_rogueRandom.ForAct(state.Act));
+                _boosterManagement.DestroyBooster(toDestroy.Id);
+            }
 
-            booster.GetEventAction<ScoringAction>().PlusMult += mult;
-
+            booster.GetEventAction<ScoringAction>().Multiplier += 4;
             view.GetBooster(booster).OnAfterActionExecuted(state, new BoosterScalingAction());
         }
     }

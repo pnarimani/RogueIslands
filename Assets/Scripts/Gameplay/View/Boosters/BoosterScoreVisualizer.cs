@@ -1,104 +1,45 @@
-using System.Linq;
+using System;
 using Cysharp.Threading.Tasks;
+using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Boosters.Actions;
-using RogueIslands.Gameplay.Buildings;
-using RogueIslands.Gameplay.GameEvents;
 using RogueIslands.Gameplay.View.Feedbacks;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.View.Boosters
 {
-    public class BoosterScoreVisualizer : BoosterActionVisualizer<ScoringAction>
+    public class BoosterScoreVisualizer : BoosterActionVisualizer<ScoringAction>, IBoosterScoreVisualizer
     {
         [SerializeField] private LabelFeedback _productLabelFeedback, _multiLabelFeedback;
 
-        private double _previousProduct, _previousMult;
+        private double _previousScore;
 
         protected override UniTask OnBeforeBoosterExecuted(GameState state, ScoringAction action, BoosterView booster)
         {
-            if (IsProduct(action))
-                _previousProduct = state.ScoringState.Products;
-
-            if (IsMult(action))
-                _previousMult = state.ScoringState.Multiplier;
-
-            return UniTask.CompletedTask;
+            throw new NotImplementedException();
         }
 
         protected override async UniTask OnAfterBoosterExecuted(GameState state, ScoringAction action,
             BoosterView booster)
         {
-            var productDelta = action is MultipliedScoringAction
-                ? state.ScoringState.Products - _previousProduct
-                : action.Products ?? 0;
-
-            var finalMult = state.ScoringState.Multiplier;
-
-            var dividedDelta = action is MultipliedScoringAction
-                ? finalMult / _previousMult
-                : action.XMult ?? 1;
-
-            var delta = action is MultipliedScoringAction
-                ? finalMult - _previousMult
-                : action.PlusMult ?? 0;
-
-            Building responsibleBuilding = null;
-
-            if (state.CurrentEvent is BuildingRemainedInHand buildingEvent)
-                responsibleBuilding = buildingEvent.Building;
-
-            await AnimationScheduler.ScheduleAndWait(0.2f);
-
-            if (IsProduct(action))
-            {
-                GameUI.Instance.ProductBoosted(productDelta);
-
-                if (responsibleBuilding != null)
-                {
-                    await GetBuildingView(responsibleBuilding).BuildingMadeProduct(productDelta);
-                }
-                else
-                {
-                    _productLabelFeedback.SetText($"+{productDelta:F1}");
-                    await _productLabelFeedback.Play();
-                }
-            }
-
-            if (IsMult(action))
-            {
-                GameUI.Instance.MultBoosted(finalMult);
-
-                if (action.XMult != null)
-                {
-                    if (responsibleBuilding != null)
-                        await GetBuildingView(responsibleBuilding).BuildingMadeXMult(dividedDelta);
-                    else
-                        _multiLabelFeedback.SetText($"x{dividedDelta:F1}");
-                }
-
-                if (action.PlusMult != null)
-                {
-                    if (responsibleBuilding != null)
-                        await GetBuildingView(responsibleBuilding).BuildingMadePlusMult(delta);
-                    else
-                        _multiLabelFeedback.SetText($"+{delta:F1}");
-                }
-
-                if (responsibleBuilding == null)
-                    await _multiLabelFeedback.Play();
-            }
+            throw new NotImplementedException();
         }
 
-        private static BuildingCardView GetBuildingView(Building responsibleBuilding)
+        public async void MultiplierApplied(double multiplier, double products)
         {
-            return ObjectRegistry.GetBuildingCards()
-                .First(c => c.Data == responsibleBuilding);
+            await AnimationScheduler.ScheduleAndWait(1f);
+            
+            GameUI.Instance.ProductBoosted(products);
+            _multiLabelFeedback.SetText($"x{multiplier:F1}");
+            await _multiLabelFeedback.Play();
         }
 
-        private static bool IsProduct(ScoringAction action)
-            => action.Products != null;
-
-        private static bool IsMult(ScoringAction action)
-            => action.PlusMult != null || action.XMult != null;
+        public async void ProductApplied(double products)
+        {
+            await AnimationScheduler.ScheduleAndWait(1f);
+            
+            GameUI.Instance.ProductBoosted(products);
+            _productLabelFeedback.SetText($"+{products:F1}");
+            await _productLabelFeedback.Play();
+        }
     }
 }

@@ -25,10 +25,8 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             
             if (action.ProductChange is { } p)
                 scoringAction.Products += p;
-            if (action.PlusMultChange is { } q)
-                scoringAction.PlusMult += q;
-            if (action.XMultChange is { } r)
-                scoringAction.XMult += r;
+            if (action.MultiplierChange is { } q)
+                scoringAction.Multiplier += q;
 
             action.HasTriggered = true;
         }

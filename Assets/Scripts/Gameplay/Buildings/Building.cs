@@ -6,7 +6,6 @@ namespace RogueIslands.Gameplay.Buildings
     public class Building : IDescribableItem, IPurchasableItem
     {
         public BuildingId Id;
-        public ClusterId ClusterId;
         public Vector3 Position;
         public Quaternion Rotation;
         public int RemainingTriggers;
@@ -20,11 +19,11 @@ namespace RogueIslands.Gameplay.Buildings
         public double OutputUpgrade;
         public IDescriptionProvider Description { get; set; }
 
-        public bool IsPlacedDown() 
-            => !ClusterId.IsDefault();
-
         public string Name { get; set; }
         public int BuyPrice { get; set; }
         public int SellPrice { get; set; }
+
+        public bool IsPlacedDown(GameState state) 
+            => state.Buildings.PlacedDownBuildings.Exists(b => b.Id == Id);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.Gameplay.Boosters.Conditions;
@@ -11,6 +12,7 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
 
         protected override bool Evaluate(GameState state, IBooster booster, ColorCheckCondition condition)
         {
+            throw new NotImplementedException();
             _existingColors.Clear();
             foreach (var tag in state.PlacedDownBuildings.Select(b => b.Color))
                 _existingColors.Add(tag);

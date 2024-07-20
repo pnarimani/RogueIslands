@@ -8,5 +8,7 @@ namespace RogueIslands.Gameplay.Boosters.Actions
         public int? PerMoney { get; set; }
         public bool MultiplyBySellValueOfBoosters { get; set; }
         public bool MultiplyByRemainingCards { get; set; }
+        public bool MultiplyByRedBuildingsInRange { get; set; }
+        public bool MultiplyByIdenticalBuildingsInRange { get; set; }
     }
 }

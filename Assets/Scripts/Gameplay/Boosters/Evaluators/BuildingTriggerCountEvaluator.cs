@@ -6,6 +6,6 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
     public class BuildingTriggerCountEvaluator : GameConditionEvaluator<BuildingTriggerCountCondition>
     {
         protected override bool Evaluate(GameState state, IBooster booster, BuildingTriggerCountCondition condition)
-            => state.CurrentEvent is BuildingEvent e && e.TriggerCount == condition.TriggerCount;
+            => state.CurrentEvent is BuildingTriggered e && e.TriggerCount == condition.TriggerCount;
     }
 }

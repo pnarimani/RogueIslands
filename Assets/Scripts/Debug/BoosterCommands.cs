@@ -20,7 +20,6 @@ namespace RogueIslands.Debug
             }
 
             StaticResolver.Resolve<BoosterManagement>().TryAddBooster(booster);
-            GameManager.Instance.GetUI().RefreshAll();
         }
 
         [ConsoleMethod("remove_booster",
@@ -31,7 +30,6 @@ namespace RogueIslands.Debug
             if (booster == null)
                 return;
             StaticResolver.Resolve<BoosterManagement>().SellBooster(booster.Id);
-            GameManager.Instance.GetUI().RefreshAll();
         }
 
         private static Func<BoosterCard, bool> CompareName(string name)

@@ -48,31 +48,34 @@ namespace RogueIslands.Gameplay.Shop
                         item = _state.Consumables.AllConsumables.SelectRandom(randomForAct);
                     }
 
-                    item = Deduplicate(item);
+                    item = Deduplicate(item, 0);
                 }
 
                 _state.Shop.ItemsForSale[i] = item;
             }
         }
 
-        private IPurchasableItem Deduplicate(IPurchasableItem item)
+        private IPurchasableItem Deduplicate(IPurchasableItem item, int depth)
         {
+            if (depth >= 10)
+                return item;
+            
             foreach (var existingItem in _state.Shop.ItemsForSale)
             {
                 if (existingItem?.Name == item.Name)
-                    return ReplaceItem(item);
+                    return ReplaceItem(item, depth + 1);
             }
 
             foreach (var booster in _state.Boosters)
             {
                 if (booster.Name == item.Name)
-                    return ReplaceItem(item);
+                    return ReplaceItem(item, depth + 1);
             }
 
             return item;
         }
 
-        private IPurchasableItem ReplaceItem(IPurchasableItem item)
+        private IPurchasableItem ReplaceItem(IPurchasableItem item, int depth)
         {
             var dupeRandom = _state.Shop.DeduplicationRandom.ForAct(_state.Act);
             if (item is IBooster)
@@ -81,7 +84,7 @@ namespace RogueIslands.Gameplay.Shop
                 item = _state.Consumables.AllConsumables.SelectRandom(dupeRandom);
             else
                 throw new InvalidOperationException();
-            return Deduplicate(item);
+            return Deduplicate(item, depth);
         }
     }
 }

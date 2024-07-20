@@ -20,31 +20,35 @@ namespace RogueIslands.Gameplay
         public int TotalDiscards = 3;
         public int DiscardsLeft = 3;
 
-        public double CurrentScore;
-
-        public double[] AllRequiredScores;
+        public double TransientScore { get; set; }
+        public double CurrentScore { get; set; }
+        public double[] AllRequiredScores { get; set; }
 
         public int Money = 4;
         public int MoneyPayoutPerRound = 4;
         public List<MoneyChange> MoneyChanges = new();
 
         public IGameEvent CurrentEvent;
-        public ScoringState ScoringState;
 
         public BuildingsState Buildings;
+
         public IEnumerable<Building> BuildingsInHand => Buildings.Deck
-            .Skip(Buildings.HandPointer - HandSize)
-            .Take(HandSize)
-            .Where(b => !b.IsPlacedDown());
-        public IEnumerable<Building> PlacedDownBuildings => Buildings.Deck
-            .Where(b => b.IsPlacedDown());
+            .Where(b => !b.IsPlacedDown(this))
+            .Take(HandSize);
+
+        public IEnumerable<Building> DeckPeek => Buildings.Deck
+            .Where(b => !b.IsPlacedDown(this))
+            .Skip(HandSize)
+            .Take(3);
+
+        public IEnumerable<Building> PlacedDownBuildings => Buildings.PlacedDownBuildings;
 
         public int MaxBoosters = 5;
         public List<BoosterCard> Boosters = new();
         public List<BoosterCard> AvailableBoosters;
 
         public ShopState Shop;
-        public ConsumablesState Consumables; 
+        public ConsumablesState Consumables;
 
         public GameResult Result;
 

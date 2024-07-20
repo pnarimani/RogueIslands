@@ -53,5 +53,10 @@ namespace RogueIslands.Gameplay.View.Feedbacks
         {
             GetComponentInChildren<TextMeshProUGUI>().text = text;
         }
+
+        public void Show()
+        {
+            _group.alpha = 1;
+        }
     }
 }
