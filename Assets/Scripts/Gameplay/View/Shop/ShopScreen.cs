@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters;
@@ -73,18 +75,34 @@ namespace RogueIslands.Gameplay.View.Shop
 
                 item.BuyClicked += () =>
                 {
-                    if (GameManager.Instance.State.Money < Shop.ItemsForSale[shopIndex].BuyPrice)
+                    var itemToBuy = Shop.ItemsForSale[shopIndex];
+                    if (GameManager.Instance.State.Money < itemToBuy.BuyPrice)
                         return;
 
                     if (StaticResolver.Resolve<ShopPurchaseController>().PurchaseItemAtShop(shopIndex))
                     {
                         GameUI.Instance.RefreshMoney();
+
+                        if (itemToBuy is IBooster)
+                        {
+                            var boosterCard = (BoosterView)GameManager.Instance.GetBooster(GameManager.Instance.State.Boosters.Last());
+                            boosterCard.transform.position = item.transform.position;
+                            boosterCard.BringToFront(item);
+                            ResetOrderOfBoughtBooster(boosterCard);
+                        }
+                        
                         Destroy(item.gameObject);
                     }
                 };
 
                 item.GetComponent<DescriptionBoxSpawner>().Initialize((IDescribableItem)Shop.ItemsForSale[i]);
             }
+        }
+
+        private async void ResetOrderOfBoughtBooster(BoosterView booster)
+        {
+            await UniTask.WaitForSeconds(2);
+            booster.ResetOrder();
         }
 
         private void InstantiateBoosterCard(ShopItem item, BoosterCard booster)

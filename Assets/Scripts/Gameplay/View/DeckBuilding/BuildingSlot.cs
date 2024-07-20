@@ -7,6 +7,7 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
     public class BuildingSlot
     {
         public bool ShouldFlipOnSubmit;
+        public bool DestroyOnSubmit;
         public RectTransform Transform;
     }
 }

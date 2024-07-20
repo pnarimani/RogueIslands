@@ -69,7 +69,7 @@ namespace RogueIslands.Gameplay.Boosters
                     BuyPrice = 5,
                     EventAction = new MultipliedScoringAction()
                     {
-                        Conditions = new[] { GameEventCondition.Create<BuildingTriggered>(), },
+                        Conditions = new[] { GameEventCondition.Create<AfterAllBuildingTriggers>(), },
                         MultiplyByRedBuildingsInRange = true,
                         Multiplier = 1.2f,
                     },
@@ -213,27 +213,27 @@ namespace RogueIslands.Gameplay.Boosters
                         Change = 4,
                     },
                 },
-                new()
-                {
-                    Name = "Crowded",
-                    Description = new ProbabilityDescription(
-                        $"{{0}} chance to retrigger all buildings when a {Category.Cat4} building is triggered."),
-                    BuyPrice = 6,
-                    EventAction = new RetriggerBuildingAction
-                    {
-                        Conditions = new IGameCondition[]
-                        {
-                            GameEventCondition.Create<BuildingTriggered>(),
-                            BuildingTriggerCountCondition.FirstTrigger,
-                            new ProbabilityCondition()
-                            {
-                                FavorableOutcome = 1,
-                                TotalOutcomes = 4,
-                            },
-                        },
-                        RetriggerTimes = 1,
-                    },
-                },
+                // new()
+                // {
+                //     Name = "Crowded",
+                //     Description = new ProbabilityDescription(
+                //         $"{{0}} chance to retrigger all buildings when a {Category.Cat4} building is triggered."),
+                //     BuyPrice = 6,
+                //     EventAction = new RetriggerBuildingAction
+                //     {
+                //         Conditions = new IGameCondition[]
+                //         {
+                //             GameEventCondition.Create<BuildingTriggered>(),
+                //             BuildingTriggerCountCondition.FirstTrigger,
+                //             new ProbabilityCondition()
+                //             {
+                //                 FavorableOutcome = 1,
+                //                 TotalOutcomes = 4,
+                //             },
+                //         },
+                //         RetriggerTimes = 1,
+                //     },
+                // },
                 // new()
                 // {
                 //     Name = "Economy of Scale",

@@ -21,38 +21,60 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
 
         public async UniTask PlaySubmitAnimation(Consumable consumable, List<Building> selectedBuildings)
         {
-            var hasAnyAnimations = Slots.Any(s => s.ShouldFlipOnSubmit);
+            var hasFlip = Slots.Any(s => s.ShouldFlipOnSubmit);
+            var hasDestroy = Slots.Any(s => s.DestroyOnSubmit);
 
-            if (!hasAnyAnimations)
+            if (!hasFlip && !hasDestroy)
             {
                 PerformConversion(selectedBuildings, consumable);
                 return;
             }
 
-            var duration = 0.5f;
-
-            foreach (var slot in Slots)
+            if (hasFlip)
             {
-                if (slot.ShouldFlipOnSubmit)
+                var duration = 0.5f;
+
+                foreach (var slot in Slots)
                 {
-                    slot.Transform.DORotate(new Vector3(0, 180, 0), duration)
-                        .SetEase(Ease.InOutCubic)
-                        .SetLoops(2, LoopType.Yoyo);
+                    if (slot.ShouldFlipOnSubmit)
+                    {
+                        slot.Transform.DORotate(new Vector3(0, 180, 0), duration)
+                            .SetEase(Ease.InOutCubic)
+                            .SetLoops(2, LoopType.Yoyo);
+                    }
                 }
+
+                await UniTask.WaitForSeconds(duration);
+
+                PerformConversion(selectedBuildings, consumable);
+                var buildingsState = GameManager.Instance.State.Buildings;
+                foreach (var slot in Slots)
+                {
+                    var view = slot.Transform.GetComponentInChildren<BuildingCardView>();
+                    if (view != null)
+                        view.Initialize(buildingsState.Deck.Find(x => x.Id == view.Data.Id));
+                }
+
+                await UniTask.WaitForSeconds(duration);
             }
-
-            await UniTask.WaitForSeconds(duration);
-
-            PerformConversion(selectedBuildings, consumable);
-            var buildingsState = GameManager.Instance.State.Buildings;
-            foreach (var slot in Slots)
+            else
             {
-                var view = slot.Transform.GetComponentInChildren<BuildingCardView>();
-                if (view != null)
-                    view.Initialize(buildingsState.Deck.Find(x => x.Id == view.Data.Id));
-            }
+                var duration = 0.25f;
 
-            await UniTask.WaitForSeconds(duration);
+                foreach (var slot in Slots)
+                {
+                    if (slot.DestroyOnSubmit)
+                    {
+                        var view = slot.Transform.GetComponentInChildren<BuildingCardView>();
+                        if (view)
+                            view.transform.DOScale(1.5f, duration)
+                                .SetEase(Ease.InBack)
+                                .OnComplete(() => slot.Transform.DestroyChildren());
+                    }
+                }
+
+                await UniTask.WaitForSeconds(duration);
+            }
         }
 
         private void PerformConversion(IReadOnlyList<Building> buildings, Consumable consumable)

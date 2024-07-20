@@ -46,7 +46,7 @@ namespace RogueIslands.Gameplay.View
 
         private async UniTask ShowScoringFeedback(int count, LabelFeedback feedbackSource)
         {
-            await AnimationScheduler.ScheduleAndWait(1f, 0.5f);
+            await AnimationScheduler.ScheduleAndWait(1f, 0.1f);
             var overlay = GetOverlayRoot();
             var feedback = Instantiate(feedbackSource, overlay);
             feedback.SetText($"+{count}");

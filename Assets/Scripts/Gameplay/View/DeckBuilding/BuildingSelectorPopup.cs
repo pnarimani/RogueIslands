@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Flexalon;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DeckBuilding;
 using RogueIslands.Gameplay.View.Feedbacks;
@@ -61,7 +62,13 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
                 var cardComponent = Instantiate(_buildingCardPrefab, _buildingCardList);
                 cardComponent.Initialize(building);
                 cardComponent.CanPlaceBuildings = false;
-                throw new NotImplementedException();
+
+                var interactable = cardComponent.GetComponent<FlexalonInteractable>();
+                interactable.Draggable = true;
+                interactable.DragEnd.AddListener((card) =>
+                {
+                    OnCardDragEnded(card, building);
+                });
             }
         }
 
@@ -77,29 +84,26 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
             _currentSelector = Instantiate(selectorPrefab, _selectorParent, false);
         }
 
-        // private void OnCardDragEnded(CardListItem cardListItem, Building building)
-        // {
-        //     foreach (var slot in _currentSelector.GetSlots())
-        //     {
-        //         if (slot.Transform.childCount > 0)
-        //         {
-        //             continue;
-        //         }
-        //
-        //         if (slot.Transform.GetWorldRect().Overlaps(cardListItem.transform.GetWorldRect()))
-        //         {
-        //             _buildingCardList.Remove(cardListItem);
-        //             cardListItem.transform.SetParent(slot.Transform, false);
-        //             cardListItem.transform.localPosition = Vector3.zero;
-        //             cardListItem.ShouldAnimateToTarget = false;
-        //             _selectedBuildings.Add(building);
-        //             return;
-        //         }
-        //     }
-        //
-        //     if (cardListItem.Owner == null)
-        //         _buildingCardList.Add(cardListItem);
-        // }
+        private void OnCardDragEnded(FlexalonInteractable cardListItem, Building building)
+        {
+            foreach (var slot in _currentSelector.GetSlots())
+            {
+                if (slot.Transform.childCount > 0)
+                {
+                    continue;
+                }
+        
+                if (slot.Transform.GetWorldRect().Overlaps(cardListItem.transform.GetWorldRect()))
+                {
+                    cardListItem.transform.SetParent(slot.Transform, true);
+                    cardListItem.transform.localPosition = Vector3.zero;
+                    _selectedBuildings.Add(building);
+                    return;
+                }
+            }
+        
+            cardListItem.transform.SetParent(_buildingCardList, true);
+        }
 
         private static PooledList<Building> CreateBuildingList()
         {

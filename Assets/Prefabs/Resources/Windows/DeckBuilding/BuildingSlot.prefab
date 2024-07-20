@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5196808890890601313}
   - component: {fileID: 2166052350321867152}
   - component: {fileID: 4584725117196781076}
-  - component: {fileID: 8936135917187061784}
   m_Layer: 5
   m_Name: BuildingSlot
   m_TagString: Untagged
@@ -76,18 +75,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8936135917187061784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481447565478887461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dc701a530064b88a8794c039f8438cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 10
-  _allowReorder: 0
-  _extraAnimationParent: {fileID: 0}
