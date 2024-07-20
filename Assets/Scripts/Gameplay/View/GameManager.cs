@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using RogueIslands.Assets;
-using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.Rand;
@@ -81,88 +79,11 @@ namespace RogueIslands.Gameplay.View
         public IBoosterView GetBooster(IBooster booster)
             => ObjectRegistry.GetBoosters().FirstOrDefault(b => Equals(b.Data, booster));
 
-        public async void HighlightIsland(List<Building> cluster)
-        {
-            var wait = AnimationScheduler.GetAnimationTime();
-            AnimationScheduler.AllocateTime(0.4f);
-            await UniTask.WaitForSeconds(wait);
-
-            foreach (var building in cluster)
-            {
-                foreach (var view in ObjectRegistry.GetBuildings())
-                {
-                    if (view.Data != building)
-                        continue;
-
-                    view.transform.DOLocalMoveY(0.2f, 0.2f)
-                        .SetEase(Ease.OutBack);
-                    break;
-                }
-            }
-        }
-
-        public async void LowlightIsland(List<Building> cluster)
-        {
-            var wait = AnimationScheduler.GetAnimationTime();
-            AnimationScheduler.AllocateTime(0.4f);
-            await UniTask.WaitForSeconds(wait);
-
-            foreach (var building in cluster)
-            {
-                foreach (var view in ObjectRegistry.GetBuildings())
-                {
-                    if (view.Data != building)
-                        continue;
-
-                    view.transform.DOLocalMoveY(-0.2f, 0.2f)
-                        .SetEase(Ease.OutBounce);
-                    break;
-                }
-            }
-        }
-
         public void ShowShopScreen() => _windowOpener.Open<ShopScreen>();
-
-        public void DestroyWorldBoosters()
-        {
-            foreach (var booster in ObjectRegistry.GetBoosters())
-            {
-                if (booster.Data is WorldBooster)
-                    Object.Destroy(booster.gameObject);
-            }
-        }
 
         public void ShowDeckPreview() => _windowOpener.Open<DeckPreviewScreen>();
 
-        public bool TryGetWorldBoosterSpawnPoint(WorldBooster blueprint, RogueRandom positionRandom,
-            out Vector3 point) =>
-            WorldBoosterSpawnPointProvider.TryGet(blueprint, positionRandom.ForAct(State.Act), out point);
-
         public IDeckBuildingView GetDeckBuildingView() => DeckBuildingView.Instance;
-
-        public async void CheckForRoundEnd()
-        {
-            var timer = 0f;
-            while (timer < AnimationScheduler.GetTotalTime())
-            {
-                await UniTask.DelayFrame(1);
-                timer += Time.deltaTime;
-            }
-            
-            GameUI.Instance.RefreshScores();
-            StaticResolver.Resolve<RoundController>().TryEndingRound();
-        }
-
-        public void DestroyBuildingsInHand()
-        {
-            foreach (var v in ObjectRegistry.GetBuildingCards())
-                Object.Destroy(v.gameObject);
-        }
-
-        public bool IsOverlapping(Building building, WorldBooster worldBooster)
-        {
-            return false;
-        }
 
         public void ShowSettingsPopup() => _windowOpener.Open<SettingsPopup>();
 

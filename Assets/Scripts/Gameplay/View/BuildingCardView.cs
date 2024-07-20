@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Flexalon;
@@ -121,11 +122,8 @@ namespace RogueIslands.Gameplay.View
             if (GameUI.Instance.IsInSpawnRegion(Input.mousePosition) &&
                 BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview))
             {
-                StaticResolver.Resolve<BuildingPlacement>().PlaceBuilding(
-                    Data,
-                    _buildingPreview.transform.position,
-                    _buildingPreview.transform.rotation
-                );
+                PlayButtonHandler.Instance.PlaceBuildingDown(Data, _buildingPreview.transform.position,
+                    _buildingPreview.transform.rotation, CancellationToken.None).Forget();
 
                 EffectRangeHighlighter.LowlightAll();
 
@@ -139,6 +137,9 @@ namespace RogueIslands.Gameplay.View
         public void OnPointerClick(PointerEventData eventData)
         {
             if (!CanPlaceBuildings)
+                return;
+            
+            if (PlayButtonHandler.Instance.IsPlaying)
                 return;
 
             IsSelected = !IsSelected;

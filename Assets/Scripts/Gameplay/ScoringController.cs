@@ -33,8 +33,6 @@ namespace RogueIslands.Gameplay
             _state.CurrentScore += _state.TransientScore;
 
             _state.TransientScore = 0;
-
-            _view.CheckForRoundEnd();
         }
 
         private void TriggerBuilding(Building building, bool shouldScoreBonus, double buildingScore)

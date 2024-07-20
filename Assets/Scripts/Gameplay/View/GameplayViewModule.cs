@@ -46,6 +46,8 @@ namespace RogueIslands.Gameplay.View
                 .AsSelf()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            
+            builder.RegisterType<PlayButtonHandler>().AsImplementedInterfaces().AsSelf().SingleInstance().AutoActivate();
         }
     }
 }
