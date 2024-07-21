@@ -91,7 +91,6 @@ namespace RogueIslands.Gameplay
         public void ClaimRoundEndMoney()
         {
             _state.Money += _state.MoneyPayoutPerRound;
-            _state.Money += _state.TotalDays - _state.Day;
             _state.Money += GetInterestMoney();
             foreach (var change in _state.MoneyChanges)
                 _state.Money += change.Change;
