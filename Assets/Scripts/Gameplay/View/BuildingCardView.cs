@@ -122,6 +122,8 @@ namespace RogueIslands.Gameplay.View
             if (GameUI.Instance.IsInSpawnRegion(Input.mousePosition) &&
                 BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview))
             {
+                GameUI.Instance.HideDeck();
+                
                 PlayButtonHandler.Instance.PlaceBuildingDown(Data, _buildingPreview.transform.position,
                     _buildingPreview.transform.rotation, CancellationToken.None).Forget();
 

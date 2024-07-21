@@ -23,7 +23,7 @@ namespace RogueIslands.Gameplay.View
         [SerializeField] private Button _deckButton, _optionsButton;
         [SerializeField] private BuildingCardView _buildingCardPrefab;
         [SerializeField] private BoosterCardView _boosterPrefab;
-        [SerializeField] private Transform _buildingCardList, _deckPeekList;
+        [SerializeField] private RectTransform _buildingCardList, _deckPeekList;
         [SerializeField] private Transform _boosterList;
         [SerializeField] private TextMeshProUGUI _deckCardCount, _scoreRequirements;
         [SerializeField] private Image _scoreFill;
@@ -152,6 +152,24 @@ namespace RogueIslands.Gameplay.View
 
         public void ShowScoringPanel(bool show)
         {
+        }
+
+        public void HideDeck()
+        {
+            _deckPeekList.DOAnchorPosY(-80, 0.5f)
+                .SetRelative();
+            _buildingCardList.DOAnchorPosY(-80, 0.5f)
+                .SetRelative();
+        }
+
+        public void ShowDeck()
+        {
+            _deckPeekList.DOAnchorPosY(80, 0.5f)
+                .SetRelative()
+                .SetEase(Ease.OutBack);
+            _buildingCardList.DOAnchorPosY(80, 0.5f)
+                .SetRelative()
+                .SetEase(Ease.OutBack);
         }
     }
 }

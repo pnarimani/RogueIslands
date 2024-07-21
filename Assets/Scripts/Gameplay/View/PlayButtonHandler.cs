@@ -41,6 +41,7 @@ namespace RogueIslands.Gameplay.View
 
             BuildingView.TriggerCount = 0;
             StaticResolver.Resolve<IScoringAudio>().PlayScoringFinished();
+            GameUI.Instance.ShowDeck();
             
             _roundController.TryEndingRound();
 
