@@ -26,7 +26,6 @@ namespace RogueIslands.Gameplay.Buildings
                             Range = 15,
                             PrefabAddress = prefabAddress,
                             IconAddress = "Buildings/Icons/Sample",
-                            RemainingTriggers = 1,
                         };
                         card.Description = new BuildingDescriptionProvider();
                         allCards.Add(card);

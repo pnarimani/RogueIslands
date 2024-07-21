@@ -125,8 +125,7 @@ namespace RogueIslands.Gameplay.Boosters
                         RetriggerTimes = 1,
                         Conditions = new IGameCondition[]
                         {
-                            GameEventCondition.Create<AfterBuildingScoreTrigger>(),
-                            BuildingTriggerCountCondition.FirstTrigger,
+                            GameEventCondition.Create<AfterBuildingScoreTrigger>().Or<ResetRetriggers>(),
                             new BuildingCategoryCondition
                             {
                                 Categories = new[] { Category.Cat2 },
@@ -227,8 +226,7 @@ namespace RogueIslands.Gameplay.Boosters
                     {
                         Conditions = new IGameCondition[]
                         {
-                            GameEventCondition.Create<AfterBuildingScoreTrigger>(),
-                            BuildingTriggerCountCondition.FirstTrigger,
+                            GameEventCondition.Create<AfterBuildingScoreTrigger>().Or<ResetRetriggers>(),
                             new ProbabilityCondition()
                             {
                                 FavorableOutcome = 1,

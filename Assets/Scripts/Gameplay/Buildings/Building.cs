@@ -8,7 +8,6 @@ namespace RogueIslands.Gameplay.Buildings
         public BuildingId Id;
         public Vector3 Position;
         public Quaternion Rotation;
-        public int RemainingTriggers;
         public string PrefabAddress;
         public string IconAddress;
         public float Range;

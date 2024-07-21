@@ -19,12 +19,11 @@ namespace RogueIslands.Gameplay
 
         public void ScoreBuilding(Building building)
         {
-            _eventController.Execute(new BuildingPlaced
-            {
-                Building = building,
-            });
+            _eventController.Execute(new ResetRetriggers());
+            
+            _eventController.Execute(new BuildingPlaced { Building = building, });
 
-            TriggerBuilding(building, true, Math.Ceiling(building.Output + building.OutputUpgrade));
+            TriggerBuilding(building);
 
             _state.TransientScore = Math.Ceiling(_state.TransientScore);
 
@@ -35,38 +34,22 @@ namespace RogueIslands.Gameplay
             _state.TransientScore = 0;
         }
 
+        public void TriggerBuilding(Building building)
+        {
+            TriggerBuilding(building, true, Math.Ceiling(building.Output + building.OutputUpgrade));
+        }
+
         private void TriggerBuilding(Building building, bool shouldScoreBonus, double buildingScore)
         {
-            building.RemainingTriggers = 1;
+            _state.TransientScore += buildingScore;
+            _view.GetBuilding(building).BuildingTriggered((int)buildingScore);
 
-            var buildingTriggered = new BuildingTriggered
-            {
-                Building = building,
-                TriggerCount = 0,
-            };
+            _eventController.Execute(new BuildingTriggered { Building = building, });
 
-            var scoreTrigger = new AfterBuildingScoreTrigger()
-            {
-                Building = building,
-                TriggerCount = 0,
-            };
+            if (shouldScoreBonus)
+                ScoreBonusForBuilding(building);
 
-            while (building.RemainingTriggers > 0)
-            {
-                building.RemainingTriggers--;
-                buildingTriggered.TriggerCount++;
-                scoreTrigger.TriggerCount++;
-
-                _state.TransientScore += buildingScore;
-                _view.GetBuilding(building).BuildingTriggered((int)buildingScore);
-
-                _eventController.Execute(buildingTriggered);
-
-                if (shouldScoreBonus)
-                    ScoreBonusForBuilding(building);
-
-                _eventController.Execute(scoreTrigger);
-            }
+            _eventController.Execute(new AfterBuildingScoreTrigger() { Building = building, });
         }
 
         private void ScoreBonusForBuilding(Building building)

@@ -30,7 +30,6 @@ namespace RogueIslands.Tools
                     Id = BuildingId.NewBuildingId(),
                     Position = default,
                     Rotation = default,
-                    RemainingTriggers = 1,
                     PrefabAddress = "A",
                     IconAddress = "B",
                     Range = 3,
