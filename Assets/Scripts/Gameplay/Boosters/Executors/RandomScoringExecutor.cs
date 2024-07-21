@@ -12,7 +12,14 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             if (action.Products is { } products)
                 state.TransientScore += _random.ForAct(state.Act).NextDouble(0, products);
             if (action.Multiplier is { } xMult)
-                state.TransientScore *= _random.ForAct(state.Act).NextDouble(1, xMult);
+            {
+                var randomMult = _random.ForAct(state.Act).NextDouble(1, xMult);
+                var finalScore = state.TransientScore * randomMult;
+                var diff = finalScore - state.TransientScore;
+                state.TransientScore = finalScore;
+
+                view.GetBooster(booster).GetScoringVisualizer().MultiplierApplied(randomMult, diff);
+            }
         }
     }
 }
