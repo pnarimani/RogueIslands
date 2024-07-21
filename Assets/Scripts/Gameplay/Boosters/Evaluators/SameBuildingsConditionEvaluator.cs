@@ -7,7 +7,7 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
     {
         protected override bool Evaluate(GameState state, IBooster booster, SameBuildingsCondition condition)
         {
-            var buildings = state.PlacedDownBuildings.ToList();
+            var buildings = condition.Source.Get(state, booster).ToList();
             return buildings.Count <= 1 || buildings.All(other =>
             {
                 var first = buildings[0];

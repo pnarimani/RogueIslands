@@ -22,5 +22,8 @@ namespace RogueIslands.Gameplay
 
         public static MinMax operator *(MinMax minMax, int multiplier) =>
             new(minMax.Min * multiplier, minMax.Max * multiplier);
+
+        public bool Contains(double value) 
+            => value >= Min && value <= Max;
     }
 }

@@ -1,14 +1,10 @@
+using RogueIslands.Gameplay.Boosters.Sources;
+using RogueIslands.Gameplay.Buildings;
+
 namespace RogueIslands.Gameplay.Boosters.Conditions
 {
-    public class CountCondition : IGameCondition
+    public class CountCondition : IGameConditionWithSource<Building>
     {
-        public enum Target
-        {
-            Buildings,
-            BuildingsInAnyIsland,
-            BuildingsInScoringIsland,
-        }
-
         public enum Mode
         {
             Less,
@@ -19,7 +15,7 @@ namespace RogueIslands.Gameplay.Boosters.Conditions
             PowerOfTwo,
         }
         
-        public Target TargetType { get; set; }
+        public ISource<Building> Source { get; set; }
         public Mode ComparisonMode { get; set; }
         public int Value { get; set; }
     }

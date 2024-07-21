@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.Gameplay.Boosters.Conditions;
+using RogueIslands.Gameplay.Boosters.Sources;
 using RogueIslands.Gameplay.Buildings;
 
 namespace RogueIslands.Gameplay.Boosters.Evaluators
@@ -12,8 +13,10 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
 
         protected override bool Evaluate(GameState state, IBooster booster, ColorCheckCondition condition)
         {
+            condition.Source ??= new BuildingFromCurrentEvent();
+            
             _existingColors.Clear();
-            foreach (var tag in state.PlacedDownBuildings.Select(b => b.Color))
+            foreach (var tag in condition.Source.Get(state, booster).Select(b => b.Color))
                 _existingColors.Add(tag);
 
             if (state.HasBadEyesight())

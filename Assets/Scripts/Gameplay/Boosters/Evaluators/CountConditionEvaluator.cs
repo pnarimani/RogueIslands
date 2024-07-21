@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using RogueIslands.Gameplay.Boosters.Conditions;
+using RogueIslands.Gameplay.Boosters.Sources;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.GameEvents;
 using UnityEngine;
@@ -12,23 +13,11 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
     {
         protected override bool Evaluate(GameState state, IBooster booster, CountCondition condition)
         {
-            if (condition.TargetType == Target.BuildingsInAnyIsland)
-                return false;
+            condition.Source ??= new BuildingFromCurrentEvent();
+            
+            var count = condition.Source.Get(state, booster).Count();
 
-            if (condition.TargetType == Target.BuildingsInScoringIsland &&
-                state.CurrentEvent is not BuildingPlaced)
-                return false;
-
-            {
-                var count = condition.TargetType switch
-                {
-                    Target.Buildings => state.PlacedDownBuildings.Count(),
-                    Target.BuildingsInScoringIsland => GetBuildingsInScoringCluster(state),
-                    Target.BuildingsInAnyIsland => throw new ArgumentOutOfRangeException(),
-                    _ => throw new ArgumentOutOfRangeException(),
-                };
-
-                return condition.ComparisonMode switch
+            return condition.ComparisonMode switch
                 {
                     Mode.Less => count < condition.Value,
                     Mode.More => count > condition.Value,
@@ -38,14 +27,6 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
                     Mode.PowerOfTwo => (count & (count - 1)) == 0,
                     _ => false,
                 };
-            }
-        }
-
-        private static int GetBuildingsInScoringCluster(GameState state)
-        {
-            if (state.CurrentEvent is BuildingPlaced buildingScored)
-                return state.PlacedDownBuildings.Count(b => Vector3.Distance(b.Position, buildingScored.Building.Position) <= buildingScored.Building.Range);
-            throw new ArgumentException("Current event is not a ClusterScored or BuildingScored event.");
         }
     }
 }
