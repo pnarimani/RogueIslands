@@ -26,7 +26,8 @@ namespace RogueIslands.Gameplay.View.Boosters
         {
             foreach (var view in ObjectRegistry.GetBoosters())
             {
-                view.GetComponent<BoosterCardView>().HideSellPanel();
+                if (view.Data.Id != _booster.Id)
+                    view.GetComponent<BoosterCardView>().HideSellPanel();
             }
 
             if (_buySellPanel.gameObject.activeSelf)

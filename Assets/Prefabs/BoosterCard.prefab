@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _clickable: 1
-  _maxClickTime: 0.1
+  _maxClickTime: 0.15
   _draggable: 1
   _interpolationSpeed: 10
   _insertRadius: 0.5

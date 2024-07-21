@@ -628,7 +628,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Capitalist",
                     Description =
-                        new ScalingBoosterDescription("+20% score for every $5 you have when a building is triggered"),
+                        new ScalingBoosterDescription("1x score for every $5 you have when a building is triggered"),
                     BuyPrice = 7,
                     EventAction = new MultipliedScoringAction()
                     {
@@ -636,7 +636,7 @@ namespace RogueIslands.Gameplay.Boosters
                         {
                             GameEventCondition.Create<BuildingTriggered>(),
                         },
-                        Multiplier = 1.2,
+                        Multiplier = 2,
                         PerMoney = 5,
                     },
                 },
