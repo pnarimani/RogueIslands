@@ -16,7 +16,6 @@ namespace RogueIslands.Gameplay.View.Boosters
         public async void Play(int money)
         {
             var state = GameManager.Instance.State;
-            _cardTriggerFeedback.Play().Forget();
             Building responsibleBuilding = null;
 
             if (state.CurrentEvent is BuildingEvent buildingEvent)
@@ -26,6 +25,8 @@ namespace RogueIslands.Gameplay.View.Boosters
                 AnimationScheduler.WaitForTotalTime();
 
             await AnimationScheduler.ScheduleAndWait(1, 0.1F);
+
+            _cardTriggerFeedback.Play().Forget();
 
             UniTask task;
             if (responsibleBuilding != null)

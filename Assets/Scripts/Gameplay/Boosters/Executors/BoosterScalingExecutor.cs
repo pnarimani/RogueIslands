@@ -5,10 +5,8 @@ namespace RogueIslands.Gameplay.Boosters.Executors
     public class BoosterScalingExecutor : GameActionExecutor<BoosterScalingAction>
     {
         protected override void Execute(GameState state, IGameView view, IBooster booster, BoosterScalingAction action)
-            => ScaleScoringAction(action, booster.GetEventAction<ScoringAction>());
-
-        private static void ScaleScoringAction(BoosterScalingAction action, ScoringAction scoringAction)
         {
+            var scoringAction = booster.GetEventAction<ScoringAction>();
             if (action.Delay is { } delay)
             {
                 if (action.Progress < delay)
@@ -27,8 +25,10 @@ namespace RogueIslands.Gameplay.Boosters.Executors
                 scoringAction.Products += p;
             if (action.MultiplierChange is { } q)
                 scoringAction.Multiplier += q;
-
+            
             action.HasTriggered = true;
+            
+            view.GetBooster(booster).GetScalingVisualizer().PlayScaleUp();
         }
     }
 }

@@ -35,7 +35,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Mr Producer",
                     Description = new LiteralDescription("Permanently add +2 product to placed buildings"),
-                    BuyPrice = 4,
+                    BuyPrice = 5,
                     EventAction = new PermanentBuildingUpgradeAction
                     {
                         ProductUpgrade = 2,
@@ -53,7 +53,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Network",
                     Description = new LiteralDescription("+100% range for all buildings"),
-                    BuyPrice = 5,
+                    BuyPrice = 8,
                     BuyAction = new ModifyBuildingRangeAction
                     {
                         RangeMultiplier = 2f,
@@ -66,7 +66,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Sweatshop",
-                    Description = new LiteralDescription("+20% output for each red building in range"),
+                    Description = new LiteralDescription("1.2x for each red building in range"),
                     BuyPrice = 5,
                     EventAction = new MultipliedScoringAction
                     {
@@ -84,11 +84,13 @@ namespace RogueIslands.Gameplay.Boosters
                     Description =
                         new LiteralDescription(
                             $"{ColorTag.Red} and {ColorTag.Blue} count as the same. {ColorTag.Green} and {ColorTag.Purple} count as the same."),
+                    BuyPrice = 5,
                 },
                 new()
                 {
                     Name = "Rigged",
                     Description = new LiteralDescription("Double all probabilities"),
+                    BuyPrice = 4,
                 },
                 new()
                 {
@@ -249,6 +251,7 @@ namespace RogueIslands.Gameplay.Boosters
                             GameEventCondition.Create<AfterAllBuildingTriggers>(),
                             new ColorCheckCondition
                             {
+                                Source = new PlacedDownBuildings(),
                                 ForcedColors = ColorTag.All,
                             },
                         },
@@ -278,7 +281,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Gennaro",
                     Description = new LiteralDescription("Sometimes maybe good..."),
-                    BuyPrice = 4,
+                    BuyPrice = 3,
                     EventAction = new RandomScoringAction
                     {
                         Conditions = new IGameCondition[]
@@ -291,7 +294,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Sacrifice",
-                    Description = new LiteralDescription("x4 score if 6 or less buildings exist"),
+                    Description = new LiteralDescription("x4 score if 6 or more buildings are placed down"),
                     BuyPrice = 5,
                     EventAction = new ScoringAction
                     {
@@ -301,25 +304,11 @@ namespace RogueIslands.Gameplay.Boosters
                             new CountCondition
                             {
                                 Source = new PlacedDownBuildings(),
-                                ComparisonMode = CountCondition.Mode.Less,
-                                Value = 7,
+                                ComparisonMode = CountCondition.Mode.More,
+                                Value = 5,
                             },
                         },
-                        Multiplier = 20,
-                    },
-                },
-                new()
-                {
-                    Name = "Big Hands",
-                    Description = new LiteralDescription("+2 hand size"),
-                    BuyPrice = 5,
-                    BuyAction = new HandModifier
-                    {
-                        Change = 2,
-                    },
-                    SellAction = new HandModifier
-                    {
-                        Change = -2,
+                        Multiplier = 4,
                     },
                 },
                 new()
@@ -413,7 +402,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Country Carl",
                     Description = new LiteralDescription($"+50 score when {Category.Cat2} building is triggered"),
-                    BuyPrice = 5,
+                    BuyPrice = 4,
                     EventAction = new ScoringAction
                     {
                         Products = 50,
@@ -431,7 +420,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Ice Cream",
                     Description =
-                        new ScalingBoosterDescription("+20 score, loses 1 score after each building is placed."),
+                        new ScalingBoosterDescription("+100 score, loses 5 score after each building is placed."),
                     BuyPrice = 4,
                     EventAction = new CompositeAction
                     {
@@ -486,22 +475,14 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Stuntman",
-                    Description = new LiteralDescription("+250 products, -2 hand size"),
+                    Description = new LiteralDescription("+100 products when a building is placed down"),
                     BuyPrice = 6,
-                    BuyAction = new HandModifier
-                    {
-                        Change = -2,
-                    },
-                    SellAction = new HandModifier
-                    {
-                        Change = 2,
-                    },
                     EventAction = new ScoringAction
                     {
-                        Products = 250,
+                        Products = 100,
                         Conditions = new IGameCondition[]
                         {
-                            GameEventCondition.Create<AfterAllBuildingTriggers>(),
+                            GameEventCondition.Create<BuildingPlaced>(),
                         },
                     },
                 },
@@ -627,20 +608,13 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Hug",
-                    Description =
-                        new LiteralDescription(
-                            "x3 for each Large building in range when a small building gets triggered"),
+                    Description = new LiteralDescription("x3 for each Large building in range"),
                     BuyPrice = 4,
                     EventAction = new MultipliedScoringAction
                     {
                         Conditions = new IGameCondition[]
                         {
-                            GameEventCondition.Create<BuildingTriggered>(),
-                            new BuildingSizeCondition
-                            {
-                                Source = new BuildingFromCurrentEvent(),
-                                Allowed = new[] { BuildingSize.Small },
-                            },
+                            GameEventCondition.Create<AfterAllBuildingTriggers>(),
                         },
                         Factor = new BuildingsByRange()
                             {
@@ -724,7 +698,7 @@ namespace RogueIslands.Gameplay.Boosters
             return new BoosterCard
             {
                 Name = name,
-                Description = new LiteralDescription($"+3 mult when {color} buildings score"),
+                Description = new LiteralDescription($"x3 score when {color} buildings get triggered"),
                 BuyPrice = 3,
                 EventAction = new ScoringAction
                 {
