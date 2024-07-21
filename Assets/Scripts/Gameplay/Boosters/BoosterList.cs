@@ -121,7 +121,7 @@ namespace RogueIslands.Gameplay.Boosters
                         RetriggerTimes = 1,
                         Conditions = new IGameCondition[]
                         {
-                            GameEventCondition.Create<BuildingTriggered>(),
+                            GameEventCondition.Create<AfterBuildingScoreTrigger>(),
                             BuildingTriggerCountCondition.FirstTrigger,
                             new BuildingCategoryCondition
                             {

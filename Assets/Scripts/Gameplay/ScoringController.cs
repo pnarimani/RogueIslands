@@ -38,8 +38,14 @@ namespace RogueIslands.Gameplay
         private void TriggerBuilding(Building building, bool shouldScoreBonus, double buildingScore)
         {
             building.RemainingTriggers = 1;
-            
+
             var buildingTriggered = new BuildingTriggered
+            {
+                Building = building,
+                TriggerCount = 0,
+            };
+
+            var scoreTrigger = new AfterBuildingScoreTrigger()
             {
                 Building = building,
                 TriggerCount = 0,
@@ -49,14 +55,17 @@ namespace RogueIslands.Gameplay
             {
                 building.RemainingTriggers--;
                 buildingTriggered.TriggerCount++;
+                scoreTrigger.TriggerCount++;
 
                 _state.TransientScore += buildingScore;
                 _view.GetBuilding(building).BuildingTriggered((int)buildingScore);
 
                 _eventController.Execute(buildingTriggered);
-                
+
                 if (shouldScoreBonus)
                     ScoreBonusForBuilding(building);
+
+                _eventController.Execute(scoreTrigger);
             }
         }
 
