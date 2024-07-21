@@ -73,12 +73,6 @@ namespace RogueIslands.Gameplay
                 Reason = "Round Completion Prize",
             });
 
-            winScreen.AddMoneyChange(new MoneyChange
-            {
-                Change = _state.TotalDays - _state.Day,
-                Reason = "Days Left (1$ per day)",
-            });
-
             winScreen.AddMoneyChange(new MoneyChange()
             {
                 Change = GetInterestMoney(),
