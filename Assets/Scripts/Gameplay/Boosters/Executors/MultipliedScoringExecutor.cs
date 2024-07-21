@@ -14,8 +14,6 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             int multiplier;
             if (action.MultiplyByDay)
                 multiplier = state.TotalDays - state.Day;
-            else if (action.MultiplyByIslandCount)
-                multiplier = 1;
             else if (action.MultiplyByUniqueBuildings)
                 multiplier = GetUniqueBuildingCount(state);
             else if (action.PerMoney is { } perMoney)
@@ -33,26 +31,43 @@ namespace RogueIslands.Gameplay.Boosters.Executors
                     if (b.Color == ColorTag.Red)
                         multiplier++;
 
-                    if (hasBadEyesight && b.Color == ColorTag.Blue) 
+                    if (hasBadEyesight && b.Color == ColorTag.Blue)
+                        multiplier++;
+                }
+            }
+            else if (action.MultiplyByLargeBuildingsInRange)
+            {
+                multiplier = 0;
+                foreach (var b in state.GetInRangeBuildings(((BuildingEvent)state.CurrentEvent).Building))
+                {
+                    if (b.Size == BuildingSize.Large)
                         multiplier++;
                 }
             }
             else
-                multiplier = 1;
-
-            if (action.Products is { } products)
             {
-                state.TransientScore += products * multiplier;
-
-                view.GetBooster(booster).GetScoringVisualizer().ProductApplied(products * multiplier);
+                multiplier = 0;
             }
-            if (action.Multiplier is { } xMult)
+
+
+            if (multiplier > 0)
             {
-                var finalMultiplier = 1 + (xMult - 1) * multiplier;
-                var finalProducts = state.TransientScore * finalMultiplier;
-                var diff = finalProducts - state.TransientScore;
-                state.TransientScore = finalProducts;
-                view.GetBooster(booster).GetScoringVisualizer().MultiplierApplied(finalMultiplier, diff);
+                var boosterView = view.GetBooster(booster);
+                
+                if (action.Products is { } products)
+                {
+                    state.TransientScore += products * multiplier;
+                    boosterView.GetScoringVisualizer().ProductApplied(products * multiplier);
+                }
+
+                if (action.Multiplier is { } xMult)
+                {
+                    var multiplied = Math.Pow(xMult, multiplier);
+                    var finalProducts = state.TransientScore * multiplied;
+                    var diff = finalProducts - state.TransientScore;
+                    state.TransientScore = finalProducts;
+                    boosterView.GetScoringVisualizer().MultiplierApplied(multiplied, diff);
+                }
             }
         }
 

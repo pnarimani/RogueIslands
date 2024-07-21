@@ -840,6 +840,25 @@ namespace RogueIslands.Gameplay.Boosters
                     Description = new LiteralDescription("Copies the booster to the right"),
                     BuyPrice = 10,
                     EventAction = new CopyBoosterAction(),
+                },
+                new()
+                {
+                    Name = "Hug",
+                    Description = new LiteralDescription("x5 for each Large building in range when a small building gets triggered"),
+                    BuyPrice = 4,
+                    EventAction = new MultipliedScoringAction
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<BuildingTriggered>(),
+                            new BuildingSizeCondition
+                            {
+                                Allowed = new [] { BuildingSize.Small },
+                            },
+                        },
+                        Multiplier = 5,
+                        MultiplyByLargeBuildingsInRange = true,
+                    },
                 }
             };
         }

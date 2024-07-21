@@ -9,6 +9,8 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             if (action.IsImmediate)
             {
                 state.Money += action.Change;
+                
+                view.GetBooster(booster).GetMoneyVisualizer().Play(action.Change);
             }
             else
             {

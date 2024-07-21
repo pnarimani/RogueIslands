@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using RogueIslands.Gameplay.Boosters;
-using RogueIslands.Gameplay.Boosters.Actions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -15,18 +13,10 @@ namespace RogueIslands.Gameplay.View.Boosters
         {
         }
 
-        public void Initialize(IBooster booster)
-        {
-            Assert.IsNotNull(booster);
-
-            Data = booster;
-            GetComponent<DescriptionBoxSpawner>().Initialize(booster);
-        }
-
         public async void Remove()
         {
             await UniTask.WaitForSeconds(AnimationScheduler.GetTotalTime());
-            
+
             Destroy(gameObject);
             GameUI.Instance.RefreshDate();
             GameUI.Instance.RefreshMoney();
@@ -45,6 +35,19 @@ namespace RogueIslands.Gameplay.View.Boosters
         public IBoosterScalingVisualizer GetScalingVisualizer()
         {
             return GetComponent<IBoosterScalingVisualizer>();
+        }
+
+        public IBoosterMoneyVisualizer GetMoneyVisualizer()
+        {
+            return GetComponent<IBoosterMoneyVisualizer>();
+        }
+
+        public void Initialize(IBooster booster)
+        {
+            Assert.IsNotNull(booster);
+
+            Data = booster;
+            GetComponent<DescriptionBoxSpawner>().Initialize(booster);
         }
     }
 }

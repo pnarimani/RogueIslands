@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Cysharp.Threading.Tasks;
-using RogueIslands.Gameplay.Boosters.Actions;
+using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.GameEvents;
 using RogueIslands.Gameplay.View.Feedbacks;
@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace RogueIslands.Gameplay.View.Boosters
 {
-    public class MoneyChangeVisualizer : MonoBehaviour
+    public class MoneyChangeVisualizer : MonoBehaviour, IBoosterMoneyVisualizer
     {
         [SerializeField] private LabelFeedback _money;
         [SerializeField] private CardTriggerFeedback _cardTriggerFeedback;
