@@ -38,10 +38,8 @@ namespace RogueIslands.Tests
             
             _before = new GameState
             {
-                Day = 4,
                 Round = 5,
                 Act = 67,
-                TotalDays = 7,
                 HandSize = 3,
                 CurrentScore = 45,
                 AllRequiredScores = new double[]

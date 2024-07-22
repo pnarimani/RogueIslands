@@ -4,10 +4,8 @@ namespace RogueIslands.Gameplay.Boosters.Conditions
     {
         public enum Mode
         {
-            Day,
             Round,
             Act,
-            TotalDays,
         }
 
         public Mode TimeMode { get; set; }
@@ -18,7 +16,6 @@ namespace RogueIslands.Gameplay.Boosters.Conditions
         {
             return new TimeCondition
             {
-                TimeMode = Mode.Day,
                 FromStart = false,
                 Time = 1,
             };
@@ -28,7 +25,6 @@ namespace RogueIslands.Gameplay.Boosters.Conditions
         {
             return new TimeCondition
             {
-                TimeMode = Mode.Day,
                 FromStart = true,
                 Time = 0,
             };

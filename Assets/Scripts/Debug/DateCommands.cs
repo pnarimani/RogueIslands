@@ -13,15 +13,6 @@ namespace RogueIslands.Debug
             GameManager.Instance.GetUI().RefreshDate();
         }
         
-        [ConsoleMethod("set_rem_days", "Set the remaining days to the specified value. Usage: set_rem_days <days>")]
-        public static void SetRemainingDays(int remainingDays)
-        {
-            if(remainingDays > GameManager.Instance.State.TotalDays)
-                GameManager.Instance.State.TotalDays = remainingDays;
-            GameManager.Instance.State.Day = GameManager.Instance.State.TotalDays - remainingDays;
-            GameManager.Instance.GetUI().RefreshDate();
-        }
-        
         [ConsoleMethod("set_money", "Set the money to the specified value. Usage: set_money <money>")]
         public static void SetMoney(int money)
         {

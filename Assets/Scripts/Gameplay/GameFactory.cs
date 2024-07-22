@@ -41,7 +41,6 @@ namespace RogueIslands.Gameplay
                 },
                 AvailableBoosters = allBoosters,
                 HandSize = handSize,
-                TotalDays = 4,
                 CardPackSelectionRandom = seedRandom.NextRandom(),
                 CardSelectionRandom = seedRandom.NextRandom(),
                 Consumables = new ConsumablesState()

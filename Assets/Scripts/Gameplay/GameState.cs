@@ -9,17 +9,13 @@ namespace RogueIslands.Gameplay
 {
     public class GameState
     {
-        public const int RoundsPerAct = 4;
+        public const int RoundsPerAct = 5;
         public const int TotalActs = 5;
 
-        public int Day;
         public int Round;
         public int Act;
 
-        public int TotalDays = 4;
         public int HandSize = 4;
-        public int TotalDiscards = 3;
-        public int DiscardsLeft = 3;
 
         public double TransientScore { get; set; }
         public double CurrentScore { get; set; }

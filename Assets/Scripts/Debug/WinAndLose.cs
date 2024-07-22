@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using IngameDebugConsole;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay;
@@ -18,8 +19,8 @@ namespace RogueIslands.Debug
         [ConsoleMethod("lose", "Lose")]
         public static void Lose()
         {
+            throw new NotImplementedException();
             GameManager.Instance.State.CurrentScore = 0;
-            GameManager.Instance.State.Day = GameManager.Instance.State.TotalDays;
             StaticResolver.Resolve<RoundController>().TryEndingRound();
         }
     }
