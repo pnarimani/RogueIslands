@@ -3,6 +3,7 @@ using System.Linq;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.GameEvents;
+using RogueIslands.Gameplay.Rand;
 
 namespace RogueIslands.Gameplay
 {
@@ -43,6 +44,10 @@ namespace RogueIslands.Gameplay
 
         public IEnumerable<Building> PlacedDownBuildings => Buildings.PlacedDownBuildings;
 
+        public RogueRandom CardPackSelectionRandom;
+        public RogueRandom CardSelectionRandom;
+        public int CardPerPack = 12;
+        
         public int MaxBoosters = 5;
         public List<BoosterCard> Boosters = new();
         public List<BoosterCard> AvailableBoosters;

@@ -29,7 +29,7 @@ namespace RogueIslands.Gameplay.View
         [SerializeField] private Image _scoreFill;
         [SerializeField] private Transform _scoreParent;
         [SerializeField] private LabelFeedback _productFeedback;
-        
+
         private double _currentScore;
 
         private void Start()
@@ -55,6 +55,11 @@ namespace RogueIslands.Gameplay.View
         public async void MoveCardToHand(Building building)
         {
             var card = ObjectRegistry.GetBuildingCards().First(b => b.Data == building);
+            if (card.transform.parent != _deckPeekList)
+                return;
+            
+            await AnimationScheduler.ScheduleAndWait(1f);
+
             card.CanPlaceBuildings = true;
             card.transform.SetParent(_buildingCardList, true);
 
@@ -89,7 +94,7 @@ namespace RogueIslands.Gameplay.View
             var viewRect = new Rect(bl, tr - bl);
             return !viewRect.Contains(screenPosition);
         }
-        
+
         public void RefreshDeckText()
         {
             var state = GameManager.Instance.State;
@@ -128,7 +133,7 @@ namespace RogueIslands.Gameplay.View
         public void ProductBoosted(double delta)
         {
             _currentScore += delta;
-            
+
             _productFeedback.SetText($"+{_currentScore:0.#}");
             _productFeedback.gameObject.SetActive(true);
             _productFeedback.Show();
@@ -164,6 +169,8 @@ namespace RogueIslands.Gameplay.View
 
         public void ShowDeck()
         {
+            AnimationScheduler.AllocateTime(0.1f);
+            
             _deckPeekList.DOAnchorPosY(80, 0.5f)
                 .SetRelative()
                 .SetEase(Ease.OutBack);

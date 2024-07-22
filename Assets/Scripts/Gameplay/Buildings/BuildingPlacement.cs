@@ -36,8 +36,6 @@ namespace RogueIslands.Gameplay.Buildings
             _scoringController.ScoreBuilding(building);
 
             _view.GetUI().RemoveCard(buildingBlueprint);
-            _view.GetUI().MoveCardToHand(_state.BuildingsInHand.Last());
-            _view.GetUI().ShowBuildingCardPeek(_state.DeckPeek.Last());
         }
     }
 }

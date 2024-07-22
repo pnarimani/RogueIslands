@@ -94,5 +94,10 @@ namespace RogueIslands.Gameplay.View
         public void ShowSettingsPopup() => _windowOpener.Open<SettingsPopup>();
 
         public void ShowOptions() => _windowOpener.Open<OptionsPopup>();
+
+        public void ShowCardPackSelectionScreen()
+        {
+            _windowOpener.Open<CardPackSelection>();
+        }
     }
 }

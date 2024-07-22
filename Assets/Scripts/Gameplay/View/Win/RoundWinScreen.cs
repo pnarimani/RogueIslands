@@ -29,6 +29,7 @@ namespace RogueIslands.Gameplay.View.Win
                     .OnComplete(() =>
                     {
                         GameManager.Instance.ShowShopScreen();
+                        // GameManager.Instance.ShowCardPackSelectionScreen();
                         Destroy(gameObject);
                     });
             });

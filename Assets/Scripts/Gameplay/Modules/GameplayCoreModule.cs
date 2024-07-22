@@ -4,6 +4,7 @@ using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Boosters.Evaluators;
 using RogueIslands.Gameplay.Boosters.Executors;
 using RogueIslands.Gameplay.Buildings;
+using RogueIslands.Gameplay.DeckBuilding;
 using RogueIslands.Gameplay.Rand;
 using RogueIslands.Gameplay.Shop;
 
@@ -39,6 +40,7 @@ namespace RogueIslands.Gameplay.Modules
             RegisterController<ShopRerollController>(builder);
             RegisterController<ShopPurchaseController>(builder);
             RegisterController<ShopItemSpawner>(builder);
+            RegisterController<CardPackSpawner>(builder);
         }
 
         private static IRegistration<T> RegisterController<T>(IContainerBuilder builder)

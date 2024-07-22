@@ -69,4 +69,9 @@ TextAsset:
     BuildingSelectorPopup:
     Windows/DeckBuilding/BuildingSelectionPopup.prefab
 
+    RogueIslands.Gameplay.View.DeckBuilding.CardPackSelection:
+    Windows/CardPackScreen.prefab
+
+    CardPackSelection: Windows/CardPackScreen.prefab
+
 '

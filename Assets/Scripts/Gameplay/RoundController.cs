@@ -1,4 +1,5 @@
-﻿using RogueIslands.Gameplay.Buildings;
+﻿using System.Linq;
+using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.GameEvents;
 using RogueIslands.Gameplay.Shop;
 using UnityEngine;
@@ -32,6 +33,11 @@ namespace RogueIslands.Gameplay
                 _view.ShowLoseScreen();
                 return;
             }
+
+            if (_state.DeckPeek.Count() == 3)
+                _view.GetUI().ShowBuildingCardPeek(_state.DeckPeek.Last());
+            if (_state.BuildingsInHand.Count() == _state.HandSize)
+                _view.GetUI().MoveCardToHand(_state.BuildingsInHand.Last());
 
             if (IsRoundFinished())
             {
@@ -133,7 +139,7 @@ namespace RogueIslands.Gameplay
         }
 
         private bool HasLost()
-            => _state.Day >= _state.TotalDays && _state.CurrentScore < _state.GetCurrentRequiredScore();
+            => !_state.BuildingsInHand.Any() && _state.CurrentScore < _state.GetCurrentRequiredScore();
 
         private bool IsRoundFinished()
         {

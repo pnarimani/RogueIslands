@@ -1,4 +1,5 @@
 ﻿using RogueIslands.DependencyInjection;
+using RogueIslands.Gameplay.View.DeckBuilding;
 using RogueIslands.Gameplay.View.RoundSelection;
 using RogueIslands.UISystem;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace RogueIslands.Gameplay.View
         {
             var windowOpener = StaticResolver.Resolve<IWindowOpener>();
             windowOpener.Open<GameUI>();
+
+            // windowOpener.Open<CardPackSelection>();
             
             StaticResolver.Resolve<RoundController>().StartRound();
         }
