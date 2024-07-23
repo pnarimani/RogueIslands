@@ -54,7 +54,9 @@ namespace RogueIslands.Gameplay.Shop
             var cards = _state.Shop.BuildingCards;
             for (var i = 0; i < cards.Length; i++)
             {
-                cards[i] = DeduplicateBuilding(_state.Buildings.All.SelectRandom(random), 0);
+                var item = DeduplicateBuilding(_state.Buildings.All.SelectRandom(random), 0);
+                item.BuyPrice = _state.Shop.BuildingCardPrices[i];
+                cards[i] = item;
             }
         }
         

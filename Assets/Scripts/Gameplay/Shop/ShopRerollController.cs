@@ -53,6 +53,10 @@ namespace RogueIslands.Gameplay.Shop
         {
             _state.Shop.CurrentRerollCost = _state.Shop.StartingRerollCost;
             _state.Shop.CurrentBuildingRerollCost = _state.Shop.StartingBuildingRerollCost;
+            for (var i = 0; i < _state.Shop.BuildingCardPrices.Length; i++)
+            {
+                _state.Shop.BuildingCardPrices[i] = 0;
+            }
         }
     }
 }

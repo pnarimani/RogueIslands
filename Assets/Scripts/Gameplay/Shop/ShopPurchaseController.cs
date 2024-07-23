@@ -56,6 +56,8 @@ namespace RogueIslands.Gameplay.Shop
                 {
                     var index = Array.IndexOf(_state.Shop.BuildingCards, building);
                     _state.Shop.BuildingCards[index] = null;
+
+                    _state.Shop.BuildingCardPrices[index]++;
                 }
                 else
                 {

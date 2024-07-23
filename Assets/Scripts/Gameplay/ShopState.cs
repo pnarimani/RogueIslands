@@ -16,6 +16,7 @@ namespace RogueIslands.Gameplay
         public float BuildingSpawnChance = 0.0f;
         public IPurchasableItem[] ItemsForSale { get; set; }
         public Building[] BuildingCards { get; set; } = new Building[4];
+        public int[] BuildingCardPrices { get; set; } = new int[4];
         public RogueRandom SelectionRandom { get; set; }
         public RogueRandom BoosterSpawn { get; set; }
         public RogueRandom BuildingSpawn { get; set; }
