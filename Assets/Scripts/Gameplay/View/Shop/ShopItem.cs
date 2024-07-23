@@ -9,9 +9,15 @@ namespace RogueIslands.Gameplay.View.Shop
     {
         [SerializeField] private Button _buy;
         [SerializeField] private TextMeshProUGUI _price;
+        [SerializeField] private Transform _spawnParent;
         
         public GameObject InnerObject { get; set; }
-        
+
+        public Transform SpawnParent
+        {
+            get => _spawnParent;
+        }
+
         public event Action BuyClicked;
 
         private void Awake()

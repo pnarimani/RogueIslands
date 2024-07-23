@@ -129,7 +129,7 @@ namespace RogueIslands.Gameplay.View.Shop
         
         private void InstantiateBoosterCard(ShopItem item, BoosterCard booster)
         {
-            var card = Instantiate(_boosterPrefab, item.transform);
+            var card = Instantiate(_boosterPrefab, item.SpawnParent);
             card.Initialize(booster);
             Destroy(card.GetComponent<BoosterView>());
             Destroy(card.GetComponent<BoosterCardView>());
@@ -141,7 +141,7 @@ namespace RogueIslands.Gameplay.View.Shop
         
         private void InstantiateBuildingCard(ShopItem item, Building building)
         {
-            var card = Instantiate(_buildingCardView, item.transform);
+            var card = Instantiate(_buildingCardView, item.SpawnParent);
             card.Initialize(building);
             Destroy(card.GetComponent<BuildingCardView>());
             Destroy(card.GetComponent<DescriptionBoxSpawner>());
