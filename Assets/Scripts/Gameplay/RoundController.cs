@@ -54,9 +54,7 @@ namespace RogueIslands.Gameplay
                     _eventController.Execute(new ActEnd());
 
                     _view.DestroyAllBuildings();
-                    _view.RemoveAllCardsFromHand();
                     _state.Buildings.PlacedDownBuildings.Clear();
-                    ResetDeck();
                 }
 
                 if (_state.Act >= GameState.TotalActs)
@@ -112,7 +110,7 @@ namespace RogueIslands.Gameplay
 
             _eventController.Execute(new RoundStart());
 
-            if (_state.Round == 0)
+            if (_state.Act == 0 && _state.Round == 0)
             {
                 foreach (var hand in _state.BuildingsInHand)
                 {
@@ -128,13 +126,6 @@ namespace RogueIslands.Gameplay
             _view.GetUI().RefreshDate();
             _view.GetUI().RefreshMoney();
             _view.GetUI().RefreshScores();
-        }
-
-        private void ResetDeck()
-        {
-            _state.ShuffleDeck();
-            _state.Buildings.HandPointer = 0;
-            _view.GetUI().RefreshDeckText();
         }
 
         private bool HasLost()

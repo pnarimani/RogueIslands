@@ -69,7 +69,7 @@ namespace RogueIslands.Gameplay
         {
             var reqPerAct = new double[]
             {
-                30,
+                20,
                 1000,
                 3000,
                 10000,

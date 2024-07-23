@@ -19,10 +19,6 @@ namespace RogueIslands.Gameplay.Boosters.Executors
                         continue;
                     state.Buildings.Deck.RemoveAt(i);
                     view.GetBuilding(building).Destroy();
-                    if (i < state.Buildings.HandPointer) 
-                        state.Buildings.HandPointer--;
-                    else
-                        Debug.LogError("WTF");
                 }
             }
         }

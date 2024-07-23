@@ -99,7 +99,7 @@ namespace RogueIslands.Gameplay.View
         {
             var state = GameManager.Instance.State;
             var total = state.Buildings.Deck.Count;
-            var rem = total - state.Buildings.HandPointer;
+            var rem = total;
             rem = Mathf.Max(rem, 0);
             _deckCardCount.text = $"{rem}/{total}";
         }

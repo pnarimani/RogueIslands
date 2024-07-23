@@ -19,7 +19,6 @@ namespace RogueIslands.Gameplay
         void SpawnBuilding(Building building);
         void ShowShopScreen();
         IDeckBuildingView GetDeckBuildingView();
-        void RemoveAllCardsFromHand();
         void DestroyAllBuildings();
     }
 }

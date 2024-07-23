@@ -24,18 +24,19 @@ namespace RogueIslands.Gameplay.Buildings
             _state = state;
         }
 
-        public void PlaceBuilding(Building buildingBlueprint, Vector3 position, Quaternion rotation)
+        public void PlaceBuilding(Building building, Vector3 position, Quaternion rotation)
         {
-            var building = _cloner.Clone(buildingBlueprint);
             building.Position = position;
             building.Rotation = rotation;
+            
+            _state.Buildings.Deck.Remove(building);
             _state.Buildings.PlacedDownBuildings.Add(building);
 
             _view.SpawnBuilding(building);
 
             _scoringController.ScoreBuilding(building);
 
-            _view.GetUI().RemoveCard(buildingBlueprint);
+            _view.GetUI().RemoveCard(building);
         }
     }
 }

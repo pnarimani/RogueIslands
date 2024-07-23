@@ -30,11 +30,9 @@ namespace RogueIslands.Gameplay
         public BuildingsState Buildings;
 
         public IEnumerable<Building> BuildingsInHand => Buildings.Deck
-            .Where(b => !b.IsPlacedDown(this))
             .Take(HandSize);
 
         public IEnumerable<Building> DeckPeek => Buildings.Deck
-            .Where(b => !b.IsPlacedDown(this))
             .Skip(HandSize)
             .Take(3);
 

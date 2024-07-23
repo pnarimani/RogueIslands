@@ -17,7 +17,13 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         {
             if (state.Boosters.Count > 1)
             {
-                var toDestroy = state.Boosters.SelectRandom(_rogueRandom.ForAct(state.Act));
+                var randomForAct = _rogueRandom.ForAct(state.Act);
+                BoosterCard toDestroy;
+                do
+                {
+                    toDestroy = state.Boosters.SelectRandom(randomForAct);
+                } while (Equals(toDestroy, booster));
+
                 _boosterManagement.DestroyBooster(toDestroy.Id);
             }
 

@@ -68,7 +68,6 @@ namespace RogueIslands.Tests
                 {
                     ShufflingRandom = new RogueRandom(3245),
                     Deck = inGameBuildings ,
-                    HandPointer = 0,
                     All = defaultBuildings,
                 },
                 MaxBoosters = 34234,

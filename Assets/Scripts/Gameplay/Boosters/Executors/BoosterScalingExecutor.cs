@@ -12,7 +12,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
                 if (action.Progress < delay)
                 {
                     action.Progress++;
-                    
+
                     if (action.Progress < delay)
                         return;
                 }
@@ -20,15 +20,28 @@ namespace RogueIslands.Gameplay.Boosters.Executors
 
             if (action.HasTriggered && action.OneTime)
                 return;
-            
+
             if (action.ProductChange is { } p)
+            {
+                PlayScalingAnimation(view, booster, p);
                 scoringAction.Products += p;
+            }
+
             if (action.MultiplierChange is { } q)
+            {
+                PlayScalingAnimation(view, booster, q);
                 scoringAction.Multiplier += q;
-            
+            }
+
             action.HasTriggered = true;
-            
-            view.GetBooster(booster).GetScalingVisualizer().PlayScaleUp();
+        }
+
+        private static void PlayScalingAnimation(IGameView view, IBooster booster, double change)
+        {
+            if (change > 0)
+                view.GetBooster(booster).GetScalingVisualizer().PlayScaleUp();
+            else
+                view.GetBooster(booster).GetScalingVisualizer().PlayScaleDown();
         }
     }
 }
