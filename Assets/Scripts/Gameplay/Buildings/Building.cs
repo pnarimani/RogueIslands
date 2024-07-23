@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace RogueIslands.Gameplay.Buildings
 {
-    public class Building : IDescribableItem, IPurchasableItem
+    public class Building : IDescribableItem, IPurchasableItem, IItemWithIcon
     {
         public BuildingId Id;
         public Vector3 Position;
         public Quaternion Rotation;
         public string PrefabAddress;
-        public string IconAddress;
+        public string IconAddress { get; set; }
         public float Range;
         public Category Category;
         public ColorTag Color;

@@ -19,6 +19,7 @@ namespace RogueIslands.Gameplay
             var buildingBlueprints = DefaultBuildingsList.Get();
             var deck = DefaultBuildingsList.Get();
             deck.Shuffle(seedRandom);
+            deck = deck.GetRange(0, handSize);
             foreach (var building in deck)
             {
                 building.Id = BuildingId.NewBuildingId();
@@ -68,7 +69,7 @@ namespace RogueIslands.Gameplay
         {
             var reqPerAct = new double[]
             {
-                40,
+                30,
                 1000,
                 3000,
                 10000,

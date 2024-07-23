@@ -44,6 +44,7 @@ namespace RogueIslands.Gameplay
                 _eventController.Execute(new RoundEnd());
 
                 _shopItemSpawner.PopulateShop();
+                _shopItemSpawner.RepopulateBuildings();
 
                 _state.Round++;
                 if (_state.Round >= GameState.RoundsPerAct)

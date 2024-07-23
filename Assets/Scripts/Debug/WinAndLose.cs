@@ -19,8 +19,8 @@ namespace RogueIslands.Debug
         [ConsoleMethod("lose", "Lose")]
         public static void Lose()
         {
-            throw new NotImplementedException();
             GameManager.Instance.State.CurrentScore = 0;
+            GameManager.Instance.State.Buildings.Deck.Clear();
             StaticResolver.Resolve<RoundController>().TryEndingRound();
         }
     }

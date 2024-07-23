@@ -111,7 +111,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44836823490560
-    m_Localized: Reroll {0}
+    m_Localized: Reroll ${0}
     m_Metadata:
       m_Items: []
   - m_Id: 45129653018624

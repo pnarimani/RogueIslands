@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DeckBuilding;
@@ -17,10 +18,9 @@ namespace RogueIslands.Gameplay.Shop
             _boosterManagement = boosterManagement;
             _state = state;
         }
-        
-        public bool PurchaseItemAtShop(int index)
+
+        public bool PurchaseItemAtShop(IPurchasableItem item)
         {
-            var item = _state.Shop.ItemsForSale[index];
             if (_state.Money < item.BuyPrice)
                 return false;
 
@@ -37,6 +37,10 @@ namespace RogueIslands.Gameplay.Shop
                 case Building building:
                     _state.Buildings.Deck.Add(building);
                     _view.GetUI().RefreshDeckText();
+                    if (_state.BuildingsInHand.Contains(building))
+                        _view.GetUI().ShowBuildingCard(building);
+                    if (_state.DeckPeek.Contains(building))
+                        _view.GetUI().ShowBuildingCardPeek(building);
                     success = true;
                     break;
                 default:
@@ -47,7 +51,20 @@ namespace RogueIslands.Gameplay.Shop
             if (success)
             {
                 _state.Money -= item.BuyPrice;
-                _state.Shop.ItemsForSale[index] = null;
+
+                if (item is Building building)
+                {
+                    var index = Array.IndexOf(_state.Shop.BuildingCards, building);
+                    _state.Shop.BuildingCards[index] = null;
+                }
+                else
+                {
+                    var index = Array.IndexOf(_state.Shop.ItemsForSale, item);
+                    if (index >= 0)
+                    {
+                        _state.Shop.ItemsForSale[index] = null;
+                    }
+                }
             }
 
             return success;

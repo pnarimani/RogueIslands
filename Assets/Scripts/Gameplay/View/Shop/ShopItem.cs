@@ -9,7 +9,9 @@ namespace RogueIslands.Gameplay.View.Shop
     {
         [SerializeField] private Button _buy;
         [SerializeField] private TextMeshProUGUI _price;
-
+        
+        public GameObject InnerObject { get; set; }
+        
         public event Action BuyClicked;
 
         private void Awake()
@@ -20,6 +22,11 @@ namespace RogueIslands.Gameplay.View.Shop
         public void SetPrice(string price)
         {
             _price.text = price;
+        }
+
+        public void ShowBuyButton(bool active)
+        {
+            _buy.gameObject.SetActive(active);
         }
     }
 }

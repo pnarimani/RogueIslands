@@ -33,10 +33,7 @@ namespace RogueIslands.Gameplay.View
                 return;
             
             if (_describableItem == null)
-            {
-                Debug.LogError("No describable item set on DescriptionBoxSpawner");
                 return;
-            }
 
             if (!_hasSpawnedManually)
                 Spawn();

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
+using Flexalon;
+using RogueIslands.Assets;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
-using RogueIslands.Gameplay.DeckBuilding;
 using RogueIslands.Gameplay.Shop;
 using RogueIslands.Gameplay.View.Boosters;
-using RogueIslands.Gameplay.View.DeckBuilding;
 using RogueIslands.Gameplay.View.Feedbacks;
 using RogueIslands.Localization;
 using RogueIslands.UISystem;
@@ -22,12 +20,13 @@ namespace RogueIslands.Gameplay.View.Shop
     {
         [SerializeField] private ShopItem _itemPrefab;
         [SerializeField] private BoosterCardView _boosterPrefab;
-        [SerializeField] private ConsumableCardView _consumableCardView;
         [SerializeField] private BuildingCardView _buildingCardView;
-        [SerializeField] private Transform _cardParent;
-        [SerializeField] private Button _continue, _reroll;
-        [SerializeField] private TextMeshProUGUI _rerollText;
+        [SerializeField] private Transform _cardParent, _buildingCardParent;
+        [SerializeField] private Button _continue, _reroll, _rerollBuildings;
+        [SerializeField] private TextMeshProUGUI _rerollText, _rerollBuildingsText;
         [SerializeField] private PopupOpeningFeedback _openingFeedback;
+
+        private ILocalization _localization;
 
         private static ShopState Shop => GameManager.Instance.State.Shop;
 
@@ -35,13 +34,16 @@ namespace RogueIslands.Gameplay.View.Shop
         {
             _continue.onClick.AddListener(OnContinueClicked);
             _reroll.onClick.AddListener(OnRerollClicked);
-
-            PopulateShop();
+            _rerollBuildings.onClick.AddListener(OnRerollBuildingsClicked);
         }
 
         private void Start()
         {
+            _localization = StaticResolver.Resolve<ILocalization>();
             _openingFeedback.PlayOpening();
+            
+            PopulateShop();
+            PopulateBuildingShop();
         }
 
         private void PopulateShop()
@@ -50,53 +52,73 @@ namespace RogueIslands.Gameplay.View.Shop
 
             UpdateRerollCost();
 
-            for (var i = 0; i < Shop.CardCount; i++)
+            foreach (var item in Shop.ItemsForSale)
             {
-                var shopIndex = i;
-
-                var item = Instantiate(_itemPrefab, _cardParent, false);
-
-                switch (Shop.ItemsForSale[i])
-                {
-                    case BoosterCard booster:
-                        InstantiateBoosterCard(item, booster);
-                        break;
-                    case Consumable consumable:
-                        InstantiateConsumableCard(item, consumable);
-                        break;
-                    case Building building:
-                        InstantiateBuildingCard(item, building);
-                        break;
-                }
-
-
-                item.SetPrice(StaticResolver.Resolve<ILocalization>()
-                    .Get("Buy-Price-Button", Shop.ItemsForSale[i].BuyPrice));
-
-                item.BuyClicked += () =>
-                {
-                    var itemToBuy = Shop.ItemsForSale[shopIndex];
-                    if (GameManager.Instance.State.Money < itemToBuy.BuyPrice)
-                        return;
-
-                    if (StaticResolver.Resolve<ShopPurchaseController>().PurchaseItemAtShop(shopIndex))
-                    {
-                        GameUI.Instance.RefreshMoney();
-
-                        if (itemToBuy is IBooster)
-                        {
-                            var boosterCard = (BoosterView)GameManager.Instance.GetBooster(GameManager.Instance.State.Boosters.Last());
-                            boosterCard.transform.position = item.transform.position;
-                            boosterCard.BringToFront(item);
-                            ResetOrderOfBoughtBooster(boosterCard);
-                        }
-                        
-                        Destroy(item.gameObject);
-                    }
-                };
-
-                item.GetComponent<DescriptionBoxSpawner>().Initialize((IDescribableItem)Shop.ItemsForSale[i]);
+                SpawnItem(item, _cardParent);
             }
+        }
+
+        private void PopulateBuildingShop()
+        {
+            _buildingCardParent.DestroyChildren();
+            
+            UpdateRerollCost();
+            
+            foreach (var building in Shop.BuildingCards)
+            {
+                SpawnItem(building, _buildingCardParent);
+            }
+        }
+
+        private void SpawnItem(IPurchasableItem shopItem, Transform parent)
+        {
+            var item = Instantiate(_itemPrefab, parent, false);
+            item.transform.localPosition = Vector3.zero;
+
+            if (shopItem == null)
+            {
+                item.ShowBuyButton(false);
+                return;
+            }
+
+            switch (shopItem)
+            {
+                case BoosterCard booster:
+                    InstantiateBoosterCard(item, booster);
+                    break;
+                case Building building:
+                    InstantiateBuildingCard(item, building);
+                    break;
+            }
+
+            item.SetPrice(shopItem.BuyPrice > 0 ? _localization.Get("Buy-Price-Button", shopItem.BuyPrice) : "Free");
+            item.ShowBuyButton(true);
+
+            item.BuyClicked += () =>
+            {
+                if (GameManager.Instance.State.Money < shopItem.BuyPrice)
+                    return;
+
+                if (StaticResolver.Resolve<ShopPurchaseController>().PurchaseItemAtShop(shopItem))
+                {
+                    GameUI.Instance.RefreshMoney();
+
+                    if (shopItem is IBooster)
+                    {
+                        var boosterCard =
+                            (BoosterView)GameManager.Instance.GetBooster(GameManager.Instance.State.Boosters
+                                .Last());
+                        boosterCard.transform.position = item.transform.position;
+                        boosterCard.BringToFront(item);
+                        ResetOrderOfBoughtBooster(boosterCard);
+                    }
+
+                    item.ShowBuyButton(false);
+                    Destroy(item.InnerObject);
+                }
+            };
+
+            item.GetComponent<DescriptionBoxSpawner>().Initialize((IDescribableItem)shopItem);
         }
 
         private async void ResetOrderOfBoughtBooster(BoosterView booster)
@@ -104,7 +126,7 @@ namespace RogueIslands.Gameplay.View.Shop
             await UniTask.WaitForSeconds(2);
             booster.ResetOrder();
         }
-
+        
         private void InstantiateBoosterCard(ShopItem item, BoosterCard booster)
         {
             var card = Instantiate(_boosterPrefab, item.transform);
@@ -112,11 +134,26 @@ namespace RogueIslands.Gameplay.View.Shop
             Destroy(card.GetComponent<BoosterView>());
             Destroy(card.GetComponent<BoosterCardView>());
             Destroy(card.GetComponent<DescriptionBoxSpawner>());
+            Destroy(card.GetComponent<FlexalonInteractable>());
+
+            item.InnerObject = card.gameObject;
+        }
+        
+        private void InstantiateBuildingCard(ShopItem item, Building building)
+        {
+            var card = Instantiate(_buildingCardView, item.transform);
+            card.Initialize(building);
+            Destroy(card.GetComponent<BuildingCardView>());
+            Destroy(card.GetComponent<DescriptionBoxSpawner>());
+            Destroy(card.GetComponent<FlexalonInteractable>());
+            
+            item.InnerObject = card.gameObject;
         }
 
         private void UpdateRerollCost()
         {
-            _rerollText.text = StaticResolver.Resolve<ILocalization>().Get("Reroll-Button", Shop.CurrentRerollCost);
+            _rerollText.text = _localization.Get("Reroll-Button", Shop.CurrentRerollCost);
+            _rerollBuildingsText.text = _localization.Get("Reroll-Button", Shop.CurrentBuildingRerollCost);
         }
 
         private void OnRerollClicked()
@@ -129,27 +166,22 @@ namespace RogueIslands.Gameplay.View.Shop
             PopulateShop();
         }
 
+        private void OnRerollBuildingsClicked()
+        {
+            if (GameManager.Instance.State.Money < Shop.CurrentBuildingRerollCost)
+                return;
+
+            StaticResolver.Resolve<ShopRerollController>().RerollBuildingSlots();
+
+            PopulateBuildingShop();
+        }
+
         private async void OnContinueClicked()
         {
             await _openingFeedback.PlayClosing();
+            StaticResolver.Resolve<ShopRerollController>().ResetRerollCosts();
             StaticResolver.Resolve<RoundController>().StartRound();
             Destroy(gameObject);
-        }
-
-        private void InstantiateConsumableCard(ShopItem item, Consumable consumable)
-        {
-            var card = Instantiate(_consumableCardView, item.transform);
-            card.Initialize(consumable);
-            Destroy(card.GetComponent<ConsumableCardView>());
-            Destroy(card.GetComponent<DescriptionBoxSpawner>());
-        }
-
-        private void InstantiateBuildingCard(ShopItem item, Building building)
-        {
-            var card = Instantiate(_buildingCardView, item.transform);
-            card.Initialize(building);
-            Destroy(card.GetComponent<BuildingCardView>());
-            Destroy(card.GetComponent<DescriptionBoxSpawner>());
         }
     }
 }

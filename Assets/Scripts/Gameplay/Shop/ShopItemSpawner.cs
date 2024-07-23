@@ -15,13 +15,6 @@ namespace RogueIslands.Gameplay.Shop
 
         public void PopulateShop()
         {
-            RepopulateSlots();
-
-            _state.Shop.CurrentRerollCost = _state.Shop.StartingRerollCost;
-        }
-
-        public void RepopulateSlots()
-        {
             _state.Shop.ItemsForSale = new IPurchasableItem[_state.Shop.CardCount];
 
             var selectionRand = _state.Shop.SelectionRandom.ForAct(_state.Act);
@@ -53,6 +46,32 @@ namespace RogueIslands.Gameplay.Shop
 
                 _state.Shop.ItemsForSale[i] = item;
             }
+        }
+
+        public void RepopulateBuildings()
+        {
+            var random = _state.Shop.BuildingSpawn.ForAct(_state.Act);
+            var cards = _state.Shop.BuildingCards;
+            for (var i = 0; i < cards.Length; i++)
+            {
+                cards[i] = DeduplicateBuilding(_state.Buildings.All.SelectRandom(random), 0);
+            }
+        }
+        
+        private Building DeduplicateBuilding(Building item, int depth)
+        {
+            if (depth >= 10)
+                return item;
+            
+            var random = _state.Shop.BuildingSpawn.ForAct(_state.Act);
+            
+            foreach (var existingItem in _state.Shop.BuildingCards)
+            {
+                if (existingItem?.Name == item.Name)
+                    return DeduplicateBuilding(_state.Buildings.All.SelectRandom(random), depth + 1);
+            }
+
+            return item;
         }
 
         private IPurchasableItem Deduplicate(IPurchasableItem item, int depth)

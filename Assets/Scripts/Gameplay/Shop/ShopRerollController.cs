@@ -1,6 +1,5 @@
 ﻿using System;
 using RogueIslands.Gameplay.GameEvents;
-using UnityEngine;
 
 namespace RogueIslands.Gameplay.Shop
 {
@@ -25,15 +24,35 @@ namespace RogueIslands.Gameplay.Shop
             if (_state.Money < _state.Shop.CurrentRerollCost)
                 throw new InvalidOperationException();
 
-            _state.Money -= Mathf.RoundToInt(_state.Shop.CurrentRerollCost);
-            _state.Shop.CurrentRerollCost =
-                (int)MathF.Ceiling(_state.Shop.CurrentRerollCost + 1);
+            _state.Money -= _state.Shop.CurrentRerollCost;
+            _state.Shop.CurrentRerollCost += 1;
 
-            _shopItemSpawner.RepopulateSlots();
+            _shopItemSpawner.PopulateShop();
 
             _eventController.Execute(new ShopRerolledEvent());
 
             _view.GetUI().RefreshMoney();
+        }
+
+        public void RerollBuildingSlots()
+        {
+            if (_state.Money < _state.Shop.CurrentBuildingRerollCost)
+                throw new InvalidOperationException();
+            
+            _state.Money -= _state.Shop.CurrentBuildingRerollCost;
+            _state.Shop.CurrentBuildingRerollCost += 1;
+            
+            _shopItemSpawner.RepopulateBuildings();
+            
+            _eventController.Execute(new ShopRerolledEvent());
+            
+            _view.GetUI().RefreshMoney();
+        }
+
+        public void ResetRerollCosts()
+        {
+            _state.Shop.CurrentRerollCost = _state.Shop.StartingRerollCost;
+            _state.Shop.CurrentBuildingRerollCost = _state.Shop.StartingBuildingRerollCost;
         }
     }
 }
