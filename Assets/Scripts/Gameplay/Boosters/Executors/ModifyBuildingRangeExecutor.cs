@@ -7,7 +7,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         protected override void Execute(GameState state, IGameView view, IBooster booster,
             ModifyBuildingRangeAction action)
         {
-            foreach (var building in state.Buildings.Deck)
+            foreach (var building in action.Source.Get(state, booster))
             {
                 building.Range *= action.RangeMultiplier;
             }

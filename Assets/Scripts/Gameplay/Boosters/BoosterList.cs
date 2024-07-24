@@ -43,11 +43,19 @@ namespace RogueIslands.Gameplay.Boosters
                     BuyAction = new ModifyBuildingRangeAction
                     {
                         RangeMultiplier = 2f,
+                        Source = new BuildingsInDeck(),
                     },
                     SellAction = new ModifyBuildingRangeAction
                     {
                         RangeMultiplier = 0.5f,
+                        Source = new BuildingsInDeck(),
                     },
+                    EventAction = new ModifyBuildingRangeAction()
+                    {
+                        Conditions = new []{ GameEventCondition.Create<BuildingAdded>(), },
+                        RangeMultiplier = 2,
+                        Source = new BuildingFromCurrentEvent(),
+                    }
                 },
                 new()
                 {

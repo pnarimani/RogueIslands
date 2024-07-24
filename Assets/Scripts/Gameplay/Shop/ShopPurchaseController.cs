@@ -3,6 +3,7 @@ using System.Linq;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DeckBuilding;
+using RogueIslands.Gameplay.GameEvents;
 using RogueIslands.Serialization;
 
 namespace RogueIslands.Gameplay.Shop
@@ -13,9 +14,11 @@ namespace RogueIslands.Gameplay.Shop
         private readonly BoosterManagement _boosterManagement;
         private readonly IGameView _view;
         private readonly ICloner _cloner;
+        private readonly IEventController _eventController;
 
-        public ShopPurchaseController(GameState state, BoosterManagement boosterManagement, IGameView view, ICloner cloner)
+        public ShopPurchaseController(GameState state, BoosterManagement boosterManagement, IGameView view, ICloner cloner, IEventController eventController)
         {
+            _eventController = eventController;
             _cloner = cloner;
             _view = view;
             _boosterManagement = boosterManagement;
@@ -38,14 +41,7 @@ namespace RogueIslands.Gameplay.Shop
                     success = true;
                     break;
                 case Building buildingBlueprint:
-                    var building = _cloner.Clone(buildingBlueprint);
-                    building.Id = BuildingId.NewBuildingId();
-                    _state.Buildings.Deck.Add(building);
-                    _view.GetUI().RefreshDeckText();
-                    if (_state.BuildingsInHand.Contains(building))
-                        _view.GetUI().ShowBuildingCard(building);
-                    if (_state.DeckPeek.Contains(building))
-                        _view.GetUI().ShowBuildingCardPeek(building);
+                    AddBuildingToDeck(buildingBlueprint);
                     success = true;
                     break;
                 default:
@@ -75,6 +71,20 @@ namespace RogueIslands.Gameplay.Shop
             }
 
             return success;
+        }
+
+        private void AddBuildingToDeck(Building buildingBlueprint)
+        {
+            var building = _cloner.Clone(buildingBlueprint);
+            building.Id = BuildingId.NewBuildingId();
+            _state.Buildings.Deck.Add(building);
+            _view.GetUI().RefreshDeckText();
+            if (_state.BuildingsInHand.Contains(building))
+                _view.GetUI().ShowBuildingCard(building);
+            if (_state.DeckPeek.Contains(building))
+                _view.GetUI().ShowBuildingCardPeek(building);
+            
+            _eventController.Execute(new BuildingAdded { Building = building });
         }
     }
 }
