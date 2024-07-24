@@ -70,6 +70,9 @@ namespace RogueIslands.Gameplay.View.DeckPreview
 
         private void ContainAllItems(Transform content)
         {
+            if (content.childCount == 0)
+                return;
+            
             var layout = content.GetComponent<FlexalonFlexibleLayout>();
             Canvas.ForceUpdateCanvases();
             layout.ForceUpdate();
