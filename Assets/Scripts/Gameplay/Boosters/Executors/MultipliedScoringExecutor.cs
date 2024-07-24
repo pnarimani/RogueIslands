@@ -11,43 +11,27 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         protected override void Execute(GameState state, IGameView view, IBooster booster,
             MultipliedScoringAction action)
         {
-            int multiplier = action.Factor.Get(state, booster).First();
+            var multiplier = action.Factor.Get(state, booster).First();
 
-            if (multiplier > 0)
-            {
-                var boosterView = view.GetBooster(booster);
+            if (multiplier <= 0) 
+                return;
+            
+            var boosterView = view.GetBooster(booster);
                 
-                if (action.Products is { } products)
-                {
-                    state.TransientScore += products * multiplier;
-                    boosterView.GetScoringVisualizer().ProductApplied(products * multiplier);
-                }
-
-                if (action.Multiplier is { } xMult)
-                {
-                    var multiplied = xMult * multiplier;
-                    var finalProducts = state.TransientScore * multiplied;
-                    var diff = finalProducts - state.TransientScore;
-                    state.TransientScore = finalProducts;
-                    boosterView.GetScoringVisualizer().MultiplierApplied(multiplied, diff);
-                }
+            if (action.Products is { } products)
+            {
+                state.TransientScore += products * multiplier;
+                boosterView.GetScoringVisualizer().ProductApplied(products * multiplier);
             }
-        }
 
-        private static int GetUniqueBuildingCount(GameState state)
-        {
-            return state.PlacedDownBuildings
-                .GroupBy(GetHash)
-                .Count();
-        }
-
-        private static int GetHash(Building building)
-        {
-            var code = new HashCode();
-            code.Add(building.Category);
-            code.Add(building.Color);
-            code.Add(building.Size);
-            return code.ToHashCode();
+            if (action.Multiplier is { } xMult)
+            {
+                var multiplied = 1 + xMult * multiplier;
+                var finalProducts = state.TransientScore * multiplied;
+                var diff = finalProducts - state.TransientScore;
+                state.TransientScore = finalProducts;
+                boosterView.GetScoringVisualizer().MultiplierApplied(multiplied, diff);
+            }
         }
     }
 }

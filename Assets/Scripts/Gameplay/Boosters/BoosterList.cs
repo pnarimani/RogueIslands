@@ -52,7 +52,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Sweatshop",
-                    Description = new LiteralDescription("1.2x for each red building in range"),
+                    Description = new LiteralDescription("+20% for each red building in range"),
                     BuyPrice = 5,
                     EventAction = new MultipliedScoringAction
                     {
@@ -61,7 +61,7 @@ namespace RogueIslands.Gameplay.Boosters
                             .GetBuildingsInRange()
                             .WithCondition(new ColorCheckCondition() { ForcedColors = new[] { ColorTag.Red, } })
                             .Count(),
-                        Multiplier = 1.2f,
+                        Multiplier = .2f,
                     },
                 },
                 new()
@@ -323,12 +323,12 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "The Collector",
-                    Description = new LiteralDescription("1.25x score for each different building placed in the world"),
+                    Description = new LiteralDescription("+.25x score for each different building placed in the world"),
                     BuyPrice = 8,
                     EventAction = new MultipliedScoringAction
                     {
                         Conditions = new[] { GameEventCondition.Create<AfterAllBuildingTriggers>() },
-                        Multiplier = 1.25,
+                        Multiplier = .25,
                         Factor = new PlacedDownBuildings().Distinct().Count(),
                     },
                 },
@@ -476,15 +476,15 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Capitalist",
                     Description =
-                        new ScalingBoosterDescription("1x score for every $5 you have when a building is triggered"),
+                        new ScalingBoosterDescription("1x score for every $5 you have"),
                     BuyPrice = 7,
                     EventAction = new MultipliedScoringAction
                     {
                         Conditions = new IGameCondition[]
                         {
-                            GameEventCondition.Create<BuildingTriggered>(),
+                            GameEventCondition.Create<AfterAllBuildingTriggers>(),
                         },
-                        Multiplier = 2,
+                        Multiplier = 1,
                         Factor = new MoneyAmount() { DivideBy = 5, },
                     },
                 },
@@ -594,7 +594,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Hug",
-                    Description = new LiteralDescription("x3 for each Large building in range"),
+                    Description = new LiteralDescription("+0.8x for each Large building in range"),
                     BuyPrice = 4,
                     EventAction = new MultipliedScoringAction
                     {
@@ -608,7 +608,7 @@ namespace RogueIslands.Gameplay.Boosters
                                 ReturnInRange = true,
                             }.WithCondition(new BuildingSizeCondition() { Allowed = new[] { BuildingSize.Large } })
                             .Count(),
-                        Multiplier = 3,
+                        Multiplier = 0.8,
                     },
                 },
                 new()
@@ -661,7 +661,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Away",
-                    Description = new LiteralDescription("x3 for each small building out of range"),
+                    Description = new LiteralDescription("+0.3x for each small building out of range"),
                     BuyPrice = 5,
                     EventAction = new MultipliedScoringAction
                     {
@@ -673,7 +673,7 @@ namespace RogueIslands.Gameplay.Boosters
                             .GetBuildingsOutOfRange()
                             .WithCondition(new BuildingSizeCondition() { Allowed = new[] { BuildingSize.Small } })
                             .Count(),
-                        Multiplier = 3,
+                        Multiplier = .3,
                     },
                 },
                 new()
