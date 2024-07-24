@@ -88,6 +88,7 @@ namespace RogueIslands.Gameplay.View
                 if (_buildingPreview == null)
                 {
                     _buildingPreview = _buildingViewFactory.Create(Data);
+                    _buildingPreview.IsPreview = true;
                     Destroy(_buildingPreview.GetComponent<DescriptionBoxSpawner>());
                 }
 

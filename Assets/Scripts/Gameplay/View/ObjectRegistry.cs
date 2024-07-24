@@ -8,9 +8,9 @@ namespace RogueIslands.Gameplay.View
 {
     public class ObjectRegistry
     {
-        public static IReadOnlyList<BuildingView> GetBuildings()
+        public static IEnumerable<BuildingView> GetBuildings()
         {
-            return Object.FindObjectsByType<BuildingView>(FindObjectsSortMode.None);
+            return Object.FindObjectsByType<BuildingView>(FindObjectsSortMode.None).Where(b => !b.IsPreview);
         }
 
         public static IReadOnlyList<BoosterView> GetBoosters()

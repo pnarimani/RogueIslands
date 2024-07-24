@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,6 +31,8 @@ namespace RogueIslands.Gameplay.View
         public Building Data { get; private set; }
 
         private bool IsPlacedDown => !Data.Id.IsDefault();
+        
+        public bool IsPreview { get; set; }
 
         private void Awake()
         {
@@ -60,16 +63,7 @@ namespace RogueIslands.Gameplay.View
             TriggerCount++;
             
             await UniTask.WhenAll(_triggerFeedback.Play(), feedback.Play());
-            Destroy(feedback);
-        }
-
-        public async void Destroy()
-        {
-            var wait = AnimationScheduler.GetTotalTime();
-            AnimationScheduler.EnsureExtraTime(0.2f);
-            await UniTask.WaitForSeconds(wait);
-
-            Destroy(gameObject);
+            Destroy(feedback.gameObject);
         }
 
         public void Highlight(bool highlight)
@@ -84,6 +78,9 @@ namespace RogueIslands.Gameplay.View
 
         public void Initialize(Building building)
         {
+            if (building.Id.IsDefault())
+                throw new InvalidOperationException();
+            
             Data = building;
             _synergyRange.transform.localScale = Vector3.one * (building.Range * 2);
             var vector3 = transform.GetBounds(GetMeshRenderers()).size;

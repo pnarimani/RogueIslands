@@ -8,19 +8,6 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         protected override void Execute(GameState state, IGameView view, IBooster booster,
             DestroyBuildingsAction action)
         {
-            if (action.DestroyBuildingsInRange && booster is WorldBooster worldBooster)
-            {
-                for (var i = state.Buildings.Deck.Count - 1; i >= 0; i--)
-                {
-                    var building = state.Buildings.Deck[i];
-                    if (!building.IsPlacedDown(state)) 
-                        continue;
-                    if (Vector3.Distance(building.Position, worldBooster.Position) > worldBooster.Range)
-                        continue;
-                    state.Buildings.Deck.RemoveAt(i);
-                    view.GetBuilding(building).Destroy();
-                }
-            }
         }
     }
 }

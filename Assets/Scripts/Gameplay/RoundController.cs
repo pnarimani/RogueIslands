@@ -34,11 +34,6 @@ namespace RogueIslands.Gameplay
                 return;
             }
 
-            if (_state.DeckPeek.Count() == 3)
-                _view.GetUI().ShowBuildingCardPeek(_state.DeckPeek.Last());
-            if (_state.BuildingsInHand.Count() == _state.HandSize)
-                _view.GetUI().MoveCardToHand(_state.BuildingsInHand.Last());
-
             if (IsRoundFinished())
             {
                 _eventController.Execute(new RoundEnd());

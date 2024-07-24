@@ -3,6 +3,7 @@ using System.Linq;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DeckBuilding;
+using RogueIslands.Serialization;
 
 namespace RogueIslands.Gameplay.Shop
 {
@@ -11,9 +12,11 @@ namespace RogueIslands.Gameplay.Shop
         private readonly GameState _state;
         private readonly BoosterManagement _boosterManagement;
         private readonly IGameView _view;
+        private readonly ICloner _cloner;
 
-        public ShopPurchaseController(GameState state, BoosterManagement boosterManagement, IGameView view)
+        public ShopPurchaseController(GameState state, BoosterManagement boosterManagement, IGameView view, ICloner cloner)
         {
+            _cloner = cloner;
             _view = view;
             _boosterManagement = boosterManagement;
             _state = state;
@@ -34,7 +37,9 @@ namespace RogueIslands.Gameplay.Shop
                     _view.GetDeckBuildingView().ShowPopupForConsumable(consumable);
                     success = true;
                     break;
-                case Building building:
+                case Building buildingBlueprint:
+                    var building = _cloner.Clone(buildingBlueprint);
+                    building.Id = BuildingId.NewBuildingId();
                     _state.Buildings.Deck.Add(building);
                     _view.GetUI().RefreshDeckText();
                     if (_state.BuildingsInHand.Contains(building))

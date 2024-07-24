@@ -143,7 +143,7 @@ namespace RogueIslands.Gameplay.Boosters
                             {
                                 Conditions = new IGameCondition[]
                                 {
-                                    GameEventCondition.Create<BuildingPlaced>(),
+                                    GameEventCondition.Create<AfterAllBuildingTriggers>(),
                                 },
                                 Multiplier = 0.9,
                             },
@@ -208,7 +208,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Crowded",
                     Description = new ProbabilityDescription(
-                        $"{{0}} chance to retrigger all buildings when a {Category.Cat4} building is triggered."),
+                        $"{{0}} chance to retrigger an {Category.Cat4} building"),
                     BuyPrice = 6,
                     EventAction = new RetriggerBuildingAction
                     {

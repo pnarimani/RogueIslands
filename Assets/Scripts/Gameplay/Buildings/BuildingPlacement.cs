@@ -28,15 +28,24 @@ namespace RogueIslands.Gameplay.Buildings
         {
             building.Position = position;
             building.Rotation = rotation;
-            
+
+            var previousPeek = _state.DeckPeek.ToList();
+            var previousHand = _state.BuildingsInHand.ToList();
+
             _state.Buildings.Deck.Remove(building);
             _state.Buildings.PlacedDownBuildings.Add(building);
 
             _view.SpawnBuilding(building);
+            
+            _view.GetUI().RemoveCard(building);
+
+            foreach (var handBuilding in _state.BuildingsInHand.Where(c => !previousHand.Contains(c)))
+                _view.GetUI().MoveCardToHand(handBuilding);
+            
+            foreach (var peekBuilding in _state.DeckPeek.Where(c => !previousPeek.Contains(c)))
+                _view.GetUI().ShowBuildingCardPeek(peekBuilding);
 
             _scoringController.ScoreBuilding(building);
-
-            _view.GetUI().RemoveCard(building);
         }
     }
 }

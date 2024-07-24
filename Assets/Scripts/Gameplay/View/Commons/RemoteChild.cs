@@ -26,11 +26,8 @@ namespace RogueIslands.Gameplay.View.Commons
         private void Update()
         {
             if (_parent == null)
-            {
-                Destroy(gameObject);
                 return;
-            }
-
+            
             SetPosition();
         }
 
