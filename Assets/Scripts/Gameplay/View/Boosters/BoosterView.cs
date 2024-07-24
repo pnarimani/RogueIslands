@@ -42,6 +42,11 @@ namespace RogueIslands.Gameplay.View.Boosters
             return GetComponent<IBoosterMoneyVisualizer>();
         }
 
+        public void BoosterReset()
+        {
+            GetComponent<BoosterResetVisualizer>().Play().Forget();
+        }
+
         public void Initialize(IBooster booster)
         {
             Assert.IsNotNull(booster);

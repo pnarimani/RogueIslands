@@ -7,7 +7,10 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         protected override void Execute(GameState state, IGameView view, IBooster booster, GainSellValueAction action)
         {
             if (booster is IPurchasableItem purchasable)
+            {
                 purchasable.SellPrice += action.Amount;
+                view.GetBooster(booster).GetScalingVisualizer().PlayScaleUp();
+            }
         }
     }
 }
