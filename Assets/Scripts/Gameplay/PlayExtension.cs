@@ -18,6 +18,21 @@ namespace RogueIslands.Gameplay
             return state.Boosters.Any(b => b.Name == "Bad Eyesight");
         }
         
+        public static bool HasColorful(this GameState state)
+        {
+            return state.Boosters.Any(b => b.Name == "Colorful");
+        }
+        
+        public static bool HasTourism(this GameState state)
+        {
+            return state.Boosters.Any(b => b.Name == "Tourism");
+        }
+        
+        public static bool HasGoodYear(this GameState state)
+        {
+            return state.Boosters.Any(b => b.Name == "Good Year");
+        }
+        
         public static bool HasSensitive(this GameState state)
         {
             return state.Boosters.Any(b => b.Name == "Sensitive");

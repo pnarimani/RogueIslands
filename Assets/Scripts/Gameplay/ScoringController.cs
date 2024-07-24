@@ -82,11 +82,20 @@ namespace RogueIslands.Gameplay
 
             if (building.Color == other.Color ||
                 (_state.HasBadEyesight() && BadEyesightColorCheck(building.Color, other.Color)))
-                output = Math.Ceiling(output * 1.1);
+            {
+                var multiplier = _state.HasColorful() ? 2 : 1;
+                output = Math.Ceiling(output * 1.1) * multiplier;
+            }
 
             if (building.Category == other.Category) output = Math.Ceiling(output * 1.2);
 
             if (building.Size == other.Size) output = Math.Ceiling(output * 1.05);
+
+            if (other.Category == Category.Cat5 && _state.HasTourism()) 
+                output *= 10;
+
+            if (_state.HasGoodYear())
+                output *= 5;
 
             return Math.Ceiling(output - initialOutput);
         }

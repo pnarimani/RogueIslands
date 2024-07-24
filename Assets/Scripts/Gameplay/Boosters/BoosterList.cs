@@ -59,7 +59,7 @@ namespace RogueIslands.Gameplay.Boosters
                         Conditions = new[] { GameEventCondition.Create<AfterAllBuildingTriggers>() },
                         Factor = new BuildingFromCurrentEvent()
                             .GetBuildingsInRange()
-                            .WithCondition(new ColorCheckCondition(){ForcedColors = new []{ColorTag.Red, }})
+                            .WithCondition(new ColorCheckCondition() { ForcedColors = new[] { ColorTag.Red, } })
                             .Count(),
                         Multiplier = 1.2f,
                     },
@@ -675,6 +675,118 @@ namespace RogueIslands.Gameplay.Boosters
                             .Count(),
                         Multiplier = 3,
                     },
+                },
+                new()
+                {
+                    Name = "Quiet",
+                    Description =
+                        new LiteralDescription(
+                            $"x10 score when a {Category.Cat1} building has no {Category.Cat3} building nearby"),
+                    BuyPrice = 6,
+                    EventAction = new ScoringAction()
+                    {
+                        Multiplier = 10,
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<AfterAllBuildingTriggers>(),
+                            new BuildingCategoryCondition()
+                            {
+                                Categories = new[] { Category.Cat1, },
+                                Source = new BuildingFromCurrentEvent(),
+                            },
+                            new CountCondition()
+                            {
+                                Source = new BuildingsByRange()
+                                {
+                                    Center = new BuildingFromCurrentEvent(),
+                                    ReturnInRange = true,
+                                }.WithCondition(new BuildingCategoryCondition()
+                                    { Categories = new[] { Category.Cat3, } }),
+                                Value = 0,
+                                ComparisonMode = CountCondition.Mode.Equal,
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "Industry",
+                    Description =
+                        new LiteralDescription(
+                            $"5x score when an {Category.Cat4} building has {Category.Cat3} buildings nearby"),
+                    BuyPrice = 5,
+                    EventAction = new ScoringAction()
+                    {
+                        Multiplier = 5,
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<AfterAllBuildingTriggers>(),
+                            new BuildingCategoryCondition()
+                            {
+                                Categories = new[] { Category.Cat4, },
+                                Source = new BuildingFromCurrentEvent(),
+                            },
+                            new CountCondition()
+                            {
+                                Source = new BuildingsByRange()
+                                {
+                                    Center = new BuildingFromCurrentEvent(),
+                                    ReturnInRange = true,
+                                }.WithCondition(new BuildingCategoryCondition()
+                                    { Categories = new[] { Category.Cat3, } }),
+                                Value = 0,
+                                ComparisonMode = CountCondition.Mode.More,
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "Lowkey",
+                    Description = new LiteralDescription($"3x score when {Category.Cat5} building has no other {Category.Cat5} buildings nearby"),
+                    BuyPrice = 5,
+                    EventAction = new ScoringAction()
+                    {
+                        Multiplier = 3,
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<AfterAllBuildingTriggers>(),
+                            new BuildingCategoryCondition()
+                            {
+                                Categories = new[] { Category.Cat5, },
+                                Source = new BuildingFromCurrentEvent(),
+                            },
+                            new CountCondition()
+                            {
+                                Source = new BuildingsByRange()
+                                {
+                                    Center = new BuildingFromCurrentEvent(),
+                                    ReturnInRange = true,
+                                }.WithCondition(new BuildingCategoryCondition()
+                                    { Categories = new[] { Category.Cat5, } }),
+                                Value = 0,
+                                ComparisonMode = CountCondition.Mode.Equal,
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "Colorful",
+                    Description = new LiteralDescription("+200% same-color bonus score"),
+                    BuyPrice = 3,
+                },
+                new()
+                {
+                    Name = "Good Year",
+                    Description = new LiteralDescription("x5 all bonus scores"),
+                    BuyPrice = 3,
+                },
+                new()
+                {
+                    Name = "Tourism",
+                    Description = new LiteralDescription($"x10 bonus score from {Category.Cat5} buildings"),
+                    BuyPrice = 4,
                 },
             };
         }

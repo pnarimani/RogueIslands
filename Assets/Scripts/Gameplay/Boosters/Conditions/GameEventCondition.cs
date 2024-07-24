@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.Gameplay.GameEvents;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 
 namespace RogueIslands.Gameplay.Boosters.Conditions
 {
