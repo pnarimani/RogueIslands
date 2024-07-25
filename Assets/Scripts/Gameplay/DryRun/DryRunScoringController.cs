@@ -39,11 +39,15 @@ namespace RogueIslands.Gameplay.DryRun
         public void ExecuteDryRun(Building building)
         {
             Profiler.BeginSample("DryRunScoringController.ExecuteDryRun");
-            
+
+            var clonedBuilding = _cloner.Clone(building);
             _cloner.CloneTo(_realGame.Boosters, _fakeGame.Boosters);
             _cloner.CloneTo(_realGame.Buildings.PlacedDownBuildings, _fakeGame.PlacedDownBuildings);
-            
-            _scoringController.ScoreBuilding(building);
+            _fakeGame.Money = _realGame.Money;
+            _fakeGame.CurrentScore = _realGame.CurrentScore;
+
+            _fakeGame.Buildings.PlacedDownBuildings.Add(clonedBuilding);
+            _scoringController.ScoreBuilding(clonedBuilding);
 
             _fakeView.ShowDryRunResults();
             

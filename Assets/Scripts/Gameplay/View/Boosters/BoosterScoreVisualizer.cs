@@ -19,7 +19,7 @@ namespace RogueIslands.Gameplay.View.Boosters
 
             _triggerFeedback.Play().Forget();
             GameUI.Instance.ProductBoosted(products);
-            _multiLabelFeedback.SetText($"x{multiplier:F1}");
+            _multiLabelFeedback.SetText($"x{multiplier:0.#}");
             await _multiLabelFeedback.Play();
         }
 
@@ -29,7 +29,7 @@ namespace RogueIslands.Gameplay.View.Boosters
 
             _triggerFeedback.Play().Forget();
             GameUI.Instance.ProductBoosted(products);
-            _productLabelFeedback.SetText($"+{products:F1}");
+            _productLabelFeedback.SetText($"+{products:0.#}");
             await _productLabelFeedback.Play();
         }
 
@@ -38,7 +38,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             foreach (var (mult, count) in multipliersAndCount)
             {
                 var label = Instantiate(_multiLabelFeedback, _multiLabelFeedback.transform.parent, true);
-                label.SetText(count > 1 ? $"x{mult} x {count}" : $"x{mult}");
+                label.SetText(count > 1 ? $"x{mult:0.#} x {count}" : $"x{mult:0.#}");
                 label.Show();
                 _dryRunLabels.Add(label);
             }
@@ -49,7 +49,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             foreach (var (prod, count) in productsAndCount)
             {
                 var label = Instantiate(_productLabelFeedback, _productLabelFeedback.transform.parent, true);
-                label.SetText(count > 1 ? $"+{prod} x {count}" : $"+{prod}");
+                label.SetText(count > 1 ? $"+{prod:0.#} x {count}" : $"+{prod:0.#}");
                 label.Show();
                 _dryRunLabels.Add(label);
             }
