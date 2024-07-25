@@ -825,6 +825,12 @@ namespace RogueIslands.Gameplay.Boosters
                         Multiplier = 10,
                     },
                 },
+                new()
+                {
+                    Name = "Inside Out",
+                    Description = new LiteralDescription("Instead of in-range buildings, out of range buildings score bonus"),
+                    BuyPrice = 4,
+                },
             };
         }
 

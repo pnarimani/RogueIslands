@@ -54,7 +54,11 @@ namespace RogueIslands.Gameplay
 
         private void ScoreBonusForBuilding(Building building)
         {
-            foreach (var other in _state.GetInRangeBuildings(building))
+            var potentialBuildings = _state.HasInsideOut()
+                ? _state.GetOutOfRangeBuildings(building)
+                : _state.GetInRangeBuildings(building);
+            
+            foreach (var other in potentialBuildings)
             {
                 _state.Score.ResetBonuses();
                 

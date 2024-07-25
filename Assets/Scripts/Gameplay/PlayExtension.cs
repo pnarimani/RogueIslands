@@ -13,24 +13,19 @@ namespace RogueIslands.Gameplay
                 o != building && Vector3.Distance(building.Position, o.Position) <= building.Range);
         }
         
+        public static IEnumerable<Building> GetOutOfRangeBuildings(this GameState state, Building building)
+        {
+            return state.PlacedDownBuildings.Where(o => o != building && Vector3.Distance(building.Position, o.Position) > building.Range);
+        }
+        
         public static bool HasBadEyesight(this GameState state)
         {
             return state.Boosters.Any(b => b.Name == "Bad Eyesight");
         }
         
-        public static bool HasColorful(this GameState state)
+        public static bool HasInsideOut(this GameState state)
         {
-            return state.Boosters.Any(b => b.Name == "Colorful");
-        }
-        
-        public static bool HasTourism(this GameState state)
-        {
-            return state.Boosters.Any(b => b.Name == "Tourism");
-        }
-        
-        public static bool HasGoodYear(this GameState state)
-        {
-            return state.Boosters.Any(b => b.Name == "Good Year");
+            return state.Boosters.Any(b => b.Name == "Inside Out");
         }
         
         public static bool HasSensitive(this GameState state)
