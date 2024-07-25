@@ -3,10 +3,13 @@
   "rootNamespace": "RogueIslands",
   "references": [
     "RogueIslands.Assets",
-    "RogueIslands.DependencyInjection"
+    "RogueIslands.Autofac"
   ],
   "includePlatforms": [
     "Editor"
   ],
-  "overrideReferences": true
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "Autofac.dll"
+  ]
 }

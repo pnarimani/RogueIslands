@@ -7,7 +7,7 @@ namespace RogueIslands.Gameplay.View
     public class GizmosCaller : MonoBehaviour, IDisposable
     {
         private IReadOnlyList<IGizmosDrawer> _drawers;
-
+        
         public void Initialize(IReadOnlyList<IGizmosDrawer> drawers)
         {
             _drawers = drawers;

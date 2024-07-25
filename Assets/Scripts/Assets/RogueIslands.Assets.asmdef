@@ -2,7 +2,10 @@
   "name": "RogueIslands.Assets",
   "rootNamespace": "RogueIslands",
   "references": [
-    "RogueIslands.DependencyInjection"
+    "RogueIslands.Autofac"
   ],
-  "overrideReferences": true
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "Autofac.dll"
+  ]
 }

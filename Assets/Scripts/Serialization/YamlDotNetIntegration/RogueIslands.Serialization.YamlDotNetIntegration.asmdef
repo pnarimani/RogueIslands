@@ -4,10 +4,11 @@
   "references": [
     "RogueIslands.Serialization",
     "RogueIslands",
-    "RogueIslands.DependencyInjection"
+    "RogueIslands.Autofac"
   ],
   "overrideReferences": true,
   "precompiledReferences": [
-    "YamlDotNet.dll"
+    "YamlDotNet.dll",
+    "Autofac.dll"
   ]
 }

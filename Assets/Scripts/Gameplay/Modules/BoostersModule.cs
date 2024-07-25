@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Autofac;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters.Evaluators;
 using RogueIslands.Gameplay.Boosters.Executors;
@@ -8,7 +9,7 @@ namespace RogueIslands.Gameplay.Modules
 {
     public class BoostersModule : IModule
     {
-        public void Load(IContainerBuilder builder)
+        public void Load(ContainerBuilder builder)
         {
             foreach (var evalType in TypeDatabase.GetProjectTypesOf<GameConditionEvaluator>())
             {

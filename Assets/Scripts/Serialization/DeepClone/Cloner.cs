@@ -12,5 +12,12 @@ namespace RogueIslands.Serialization.DeepClone
             Profiler.EndSample();
             return deepClone;
         }
+
+        public void CloneTo<T>(T source, T target) where T : class
+        {
+            Profiler.BeginSample("CloneTo");
+            source.DeepCloneTo(target);
+            Profiler.EndSample();
+        }
     }
 }

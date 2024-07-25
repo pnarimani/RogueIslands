@@ -14,10 +14,9 @@ namespace RogueIslands.DependencyInjection.Autofac
         
         protected override void Configure(ContainerBuilder builder)
         {
-            var builderProxy = new ContainerBuilderProxy(builder);
             foreach (var instance in ModuleFinder.GetProjectModules())
             {
-                instance.Load(builderProxy);
+                instance.Load(builder);
             }
 
             builder.Register(_ =>

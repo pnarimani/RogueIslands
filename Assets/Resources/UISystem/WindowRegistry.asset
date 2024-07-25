@@ -74,4 +74,9 @@ TextAsset:
 
     CardPackSelection: Windows/CardPackScreen.prefab
 
+    RogueIslands.Gameplay.IRoundWinScreen:
+    Windows/RoundWinScreen.prefab
+
+    IRoundWinScreen: Windows/RoundWinScreen.prefab
+
 '

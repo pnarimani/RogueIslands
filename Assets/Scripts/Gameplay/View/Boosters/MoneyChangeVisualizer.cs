@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
@@ -53,6 +54,14 @@ namespace RogueIslands.Gameplay.View.Boosters
             GameUI.Instance.MoneyBoosted(money);
 
             await task;
+        }
+
+        public void ShowDryRunMoney(Dictionary<int, int> moneyAndCount)
+        {
+        }
+
+        public void HideDryRun()
+        {
         }
     }
 }

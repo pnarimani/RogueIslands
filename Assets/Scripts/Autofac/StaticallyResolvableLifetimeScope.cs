@@ -8,7 +8,7 @@ namespace RogueIslands.DependencyInjection.Autofac
         {
             base.Build();
 
-            StaticResolver.AddContainer(new ContainerProxy(Container));
+            StaticResolver.AddContainer(Container);
         }
     }
 }

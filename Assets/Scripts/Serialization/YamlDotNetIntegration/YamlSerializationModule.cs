@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Autofac;
 using RogueIslands.DependencyInjection;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
@@ -12,12 +13,12 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration
 {
     public class YamlSerializationModule : IModule
     {
-        public void Load(IContainerBuilder builder)
+        public void Load(ContainerBuilder builder)
         {
             RegisterYaml(builder);
         }
 
-        private static void RegisterYaml(IContainerBuilder builder)
+        private static void RegisterYaml(ContainerBuilder builder)
         {
             var types = GetProjectTypes();
 
@@ -64,7 +65,7 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration
                 .ToArray();
         }
 
-        private static void RegisterTypeConverters(IContainerBuilder builder, Type[] types)
+        private static void RegisterTypeConverters(ContainerBuilder builder, Type[] types)
         {
             foreach (var converter in types.Where(t => typeof(IYamlTypeConverter).IsAssignableFrom(t)))
             {
@@ -73,7 +74,7 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration
             }
         }
 
-        private static void AddTypeConvertersToSerializer(IContainer c, SerializerBuilder serializerBuilder,
+        private static void AddTypeConvertersToSerializer(IComponentContext c, SerializerBuilder serializerBuilder,
             DeserializerBuilder deserializerBuilder)
         {
             foreach (var converter in c.Resolve<IReadOnlyList<IYamlTypeConverter>>())

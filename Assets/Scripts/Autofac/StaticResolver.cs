@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Autofac;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,7 +10,7 @@ namespace RogueIslands.DependencyInjection
 {
     public static class StaticResolver
     {
-        private static readonly List<IContainer> _containers = new();
+        private static readonly List<ILifetimeScope> _containers = new();
         
         public static T Resolve<T>()
         {
@@ -19,10 +20,10 @@ namespace RogueIslands.DependencyInjection
             return _containers[^1].Resolve<T>();
         }
 
-        public static void AddContainer(IContainer container) 
+        public static void AddContainer(ILifetimeScope container) 
             => _containers.Add(container);
 
-        public static void RemoveContainer(IContainer container) 
+        public static void RemoveContainer(ILifetimeScope container) 
             => _containers.Remove(container);
 
 #if UNITY_EDITOR

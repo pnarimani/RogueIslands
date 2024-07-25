@@ -1,10 +1,11 @@
-﻿using RogueIslands.DependencyInjection;
+﻿using Autofac;
+using RogueIslands.DependencyInjection;
 
 namespace RogueIslands.Assets
 {
     public class AssetsModule : IModule
     {
-        public void Load(IContainerBuilder builder)
+        public void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ResourcesAssetLoader>().SingleInstance().AsImplementedInterfaces();
         }

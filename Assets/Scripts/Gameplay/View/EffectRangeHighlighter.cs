@@ -22,19 +22,6 @@ namespace RogueIslands.Gameplay.View
 
                 var distance = Vector3.Magnitude(center.transform.position - building.transform.position);
                 building.Highlight(distance <= range);
-
-                if (distance <= range)
-                {
-                    var bonus = StaticResolver.Resolve<ScoringController>().GetScoreBonus(center.Data, building.Data);
-                    if (bonus > 0)
-                        building.ShowBonus(bonus);
-                    else
-                        building.HideBonus();
-                }
-                else
-                {
-                    building.HideBonus();
-                }
             }
         }
 
@@ -44,7 +31,6 @@ namespace RogueIslands.Gameplay.View
             {
                 view.Highlight(false);
                 view.ShowRange(false);
-                view.HideBonus();
             }
         }
 

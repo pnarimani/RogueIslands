@@ -3,7 +3,7 @@
   "rootNamespace": "RogueIslands",
   "overrideReferences": true,
   "references": [
-    "RogueIslands.DependencyInjection",
+    "RogueIslands.Autofac",
     "Unity.TextMeshPro",
     "UniTask"
   ]

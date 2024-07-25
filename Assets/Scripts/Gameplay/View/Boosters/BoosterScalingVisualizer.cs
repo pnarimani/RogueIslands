@@ -23,5 +23,20 @@ namespace RogueIslands.Gameplay.View.Boosters
             _triggerFeedback.Play().Forget();
             await _scaleDownFeedback.Play();
         }
+
+        public void HideDryRun()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ShowDryRunScaleUp(int count)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ShowDryRunScaleDown(int count)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

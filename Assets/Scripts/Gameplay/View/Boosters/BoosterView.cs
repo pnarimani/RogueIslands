@@ -9,10 +9,6 @@ namespace RogueIslands.Gameplay.View.Boosters
     {
         public IBooster Data { get; private set; }
 
-        private void Awake()
-        {
-        }
-
         public async void Remove()
         {
             await UniTask.WaitForSeconds(AnimationScheduler.GetTotalTime());
@@ -22,30 +18,15 @@ namespace RogueIslands.Gameplay.View.Boosters
             GameUI.Instance.RefreshMoney();
         }
 
-        public IBoosterScoreVisualizer GetScoringVisualizer()
-        {
-            return GetComponent<IBoosterScoreVisualizer>();
-        }
+        public IBoosterScoreVisualizer GetScoringVisualizer() => GetComponent<IBoosterScoreVisualizer>();
 
-        public void ShowRetriggerEffect()
-        {
-            GetComponent<BoosterRetriggerVisualizer>().Play().Forget();
-        }
+        public IBoosterScalingVisualizer GetScalingVisualizer() => GetComponent<IBoosterScalingVisualizer>();
 
-        public IBoosterScalingVisualizer GetScalingVisualizer()
-        {
-            return GetComponent<IBoosterScalingVisualizer>();
-        }
+        public IBoosterMoneyVisualizer GetMoneyVisualizer() => GetComponent<IBoosterMoneyVisualizer>();
 
-        public IBoosterMoneyVisualizer GetMoneyVisualizer()
-        {
-            return GetComponent<IBoosterMoneyVisualizer>();
-        }
+        public IBoosterResetVisualizer GetResetVisualizer() => GetComponent<IBoosterResetVisualizer>();
 
-        public void BoosterReset()
-        {
-            GetComponent<BoosterResetVisualizer>().Play().Forget();
-        }
+        public IBoosterRetriggerVisualizer GetRetriggerVisualizer() => GetComponent<BoosterRetriggerVisualizer>();
 
         public void Initialize(IBooster booster)
         {

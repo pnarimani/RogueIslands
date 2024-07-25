@@ -21,7 +21,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
                     return;
                 action.RemainingTriggers--;
                 
-                view.GetBooster(booster).ShowRetriggerEffect();
+                view.GetBooster(booster).GetRetriggerVisualizer().PlayRetrigger();
                 _scoringController.TriggerBuilding(e.Building);
             }
 

@@ -4,7 +4,10 @@
   "references": [
     "RogueIslands.Serialization",
     "RogueIslands.Assets",
-    "RogueIslands.DependencyInjection"
+    "RogueIslands.Autofac"
   ],
-  "overrideReferences": true
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "Autofac.dll"
+  ]
 }

@@ -5,7 +5,7 @@
     "RogueIslands",
     "RogueIslands.Gameplay.View",
     "IngameDebugConsole.Runtime",
-    "RogueIslands.DependencyInjection",
+    "RogueIslands.Autofac",
     "UniTask"
   ]
 }

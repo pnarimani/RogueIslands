@@ -3,7 +3,7 @@
   "rootNamespace": "RogueIslands",
   "references": [
     "UniTask",
-    "RogueIslands.DependencyInjection"
+    "RogueIslands.Autofac"
   ],
   "overrideReferences": true
 }

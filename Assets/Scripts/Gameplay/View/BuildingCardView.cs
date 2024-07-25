@@ -5,6 +5,7 @@ using DG.Tweening;
 using Flexalon;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Buildings;
+using RogueIslands.Gameplay.DryRun;
 using RogueIslands.Gameplay.View.Feedbacks;
 using RogueIslands.View.Audio;
 using TMPro;
@@ -94,12 +95,15 @@ namespace RogueIslands.Gameplay.View
 
                 _buildingPreview.transform.position =
                     BuildingViewPlacement.Instance.GetPosition(_buildingPreview);
+                _buildingPreview.Data.Position = _buildingPreview.transform.position;
 
                 var isValidPlacement = BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview);
                 _buildingPreview.ShowValidPlacement(isValidPlacement);
 
                 EffectRangeHighlighter.HighlightBuilding(_buildingPreview);
                 WorldBoosterBoundCheck.HighlightOverlappingWorldBoosters(_buildingPreview.transform);
+                
+                StaticResolver.Resolve<DryRunScoringController>().ExecuteDryRun(_buildingPreview.Data);
             }
             else
             {
@@ -108,6 +112,7 @@ namespace RogueIslands.Gameplay.View
                     Destroy(_buildingPreview.gameObject);
                     WorldBoosterBoundCheck.HideAllDeletionWarnings();
                     EffectRangeHighlighter.LowlightAll();
+                    StaticResolver.Resolve<DryRunScoringController>().Clear();
                 }
             }
         }
@@ -129,6 +134,7 @@ namespace RogueIslands.Gameplay.View
                     _buildingPreview.transform.rotation, CancellationToken.None).Forget();
 
                 EffectRangeHighlighter.LowlightAll();
+                StaticResolver.Resolve<DryRunScoringController>().Clear();
 
                 GameUI.Instance.RefreshMoney();
 

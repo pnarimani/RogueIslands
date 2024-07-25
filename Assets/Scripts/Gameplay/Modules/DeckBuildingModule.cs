@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Autofac;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.DeckBuilding;
 using RogueIslands.Gameplay.DeckBuilding.ActionHandlers;
@@ -8,7 +9,7 @@ namespace RogueIslands.Gameplay.Modules
 {
     public class DeckBuildingModule : IModule
     {
-        public void Load(IContainerBuilder builder)
+        public void Load(ContainerBuilder builder)
         {
             builder.RegisterType<DeckBuildingController>()
                 .SingleInstance()

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Autofac;
 using RogueIslands.DependencyInjection;
 using Object = UnityEngine.Object;
 
@@ -6,7 +7,7 @@ namespace RogueIslands.View.Audio.FMOD
 {
     public class AudioFMODModule : IModule
     {
-        public void Load(IContainerBuilder builder)
+        public void Load(ContainerBuilder builder)
         {
             var types = TypeDatabase.GetProjectTypes()
                 .Where(x => x.Assembly.FullName.Contains("RogueIslands.View.Audio"))

@@ -13,7 +13,7 @@ namespace RogueIslands.Gameplay
         
         void ShowLoseScreen();
         void ShowGameWinScreen();
-        IWeekWinScreen ShowRoundWin();
+        IRoundWinScreen ShowRoundWin();
         void AddBooster(IBooster instance);
         IGameUI GetUI();
         void SpawnBuilding(Building building);

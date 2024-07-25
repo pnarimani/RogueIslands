@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Gameplay
 {
-    public interface IWeekWinScreen
+    public interface IRoundWinScreen
     {
         void AddMoneyChange(MoneyChange change);
     }

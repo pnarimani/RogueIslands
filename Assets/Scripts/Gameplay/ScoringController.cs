@@ -74,7 +74,7 @@ namespace RogueIslands.Gameplay
             }
         }
 
-        public double GetScoreBonus(Building building, Building other)
+        private double GetScoreBonus(Building building, Building other)
         {
             var initialOutput = building.Output + building.OutputUpgrade;
 

@@ -3,10 +3,11 @@
   "rootNamespace": "RogueIslands",
   "references": [
     "RogueIslands.Serialization",
-    "RogueIslands.DependencyInjection"
+    "RogueIslands.Autofac"
   ],
   "overrideReferences": true,
   "precompiledReferences": [
-    "DeepCloner.dll"
+    "DeepCloner.dll",
+    "Autofac.dll"
   ]
 }

@@ -26,12 +26,12 @@ namespace RogueIslands.Gameplay.View
 
         public static int TriggerCount;
 
-        private LabelFeedback _bonusInstance;
+        private List<LabelFeedback> _dryRunLabels = new();
 
         public Building Data { get; private set; }
 
         private bool IsPlacedDown => !Data.Id.IsDefault();
-        
+
         public bool IsPreview { get; set; }
 
         private void Awake()
@@ -39,14 +39,38 @@ namespace RogueIslands.Gameplay.View
             SetLayerRecursively(gameObject, LayerMask.NameToLayer("Building"));
         }
 
-        public async void BuildingTriggered(int count)
+        public async void BuildingTriggered(int score)
         {
-            await ShowScoringFeedback(count, _outputFeedback);
+            await ShowScoringFeedback(score, _outputFeedback);
         }
 
-        public async void BonusTriggered(int count)
+        public async void BonusTriggered(int score)
         {
-            await ShowScoringFeedback(count, _bonusContainer);
+            await ShowScoringFeedback(score, _bonusContainer);
+        }
+
+        public void ShowDryRunTrigger(Dictionary<int, int> triggerAndCount)
+        {
+            foreach (var (trigger, count) in triggerAndCount)
+            {
+                ShowDryRun(trigger * count, _outputFeedback);
+            }
+        }
+
+        public void ShowDryRunBonus(Dictionary<int, int> bonusAndCount)
+        {
+            foreach (var (bonus, count) in bonusAndCount)
+            {
+                ShowDryRun(bonus * count, _bonusContainer);
+            }
+        }
+
+        public void HideAllDryRunLabels()
+        {
+            foreach (var label in _dryRunLabels)
+                Destroy(label.gameObject);
+
+            _dryRunLabels.Clear();
         }
 
         private async UniTask ShowScoringFeedback(int count, LabelFeedback feedbackSource)
@@ -61,7 +85,7 @@ namespace RogueIslands.Gameplay.View
             var scoringAudio = StaticResolver.Resolve<IScoringAudio>();
             scoringAudio.PlayScoreSound(Mathf.Clamp(TriggerCount, 0, scoringAudio.ClipCount - 1));
             TriggerCount++;
-            
+
             await UniTask.WhenAll(_triggerFeedback.Play(), feedback.Play());
             Destroy(feedback.gameObject);
         }
@@ -80,7 +104,7 @@ namespace RogueIslands.Gameplay.View
         {
             if (building.Id.IsDefault())
                 throw new InvalidOperationException();
-            
+
             Data = building;
             _synergyRange.transform.localScale = Vector3.one * (building.Range * 2);
             var vector3 = transform.GetBounds(GetMeshRenderers()).size;
@@ -134,28 +158,18 @@ namespace RogueIslands.Gameplay.View
                 .Where(m => m.gameObject != _synergyRange && m.gameObject != _highlight);
         }
 
-        public void ShowBonus(double bonus)
+        private void ShowDryRun(double bonus, LabelFeedback source)
         {
-            if (_bonusInstance == null)
-            {
-                var feedbackSource = GameManager.Instance.State.HasSensitive() ? _outputFeedback : _bonusContainer;
-                _bonusInstance = Instantiate(feedbackSource, GetOverlayRoot());
-                _bonusInstance.gameObject.AddComponent<RemoteChild>().SetParent(feedbackSource.transform, Vector3.zero);
-                _bonusInstance.Show();
-            }
-
-            _bonusInstance.SetText($"+{bonus:0.#}");
+            var instance = Instantiate(source, GetOverlayRoot());
+            instance.gameObject.AddComponent<RemoteChild>().SetParent(source.transform, Vector3.zero);
+            instance.Show();
+            instance.SetText($"+{bonus:0.#}");
+            _dryRunLabels.Add(instance);
         }
 
         private static Transform GetOverlayRoot()
         {
             return StaticResolver.Resolve<IUIRootProvider>().GetRoot(new UILayer("OverlayLayer"));
-        }
-
-        public void HideBonus()
-        {
-            if (_bonusInstance != null)
-                Destroy(_bonusInstance.gameObject);
         }
     }
 }

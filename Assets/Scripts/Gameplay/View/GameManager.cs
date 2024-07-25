@@ -33,9 +33,9 @@ namespace RogueIslands.Gameplay.View
 
         public void ShowGameWinScreen() => _windowOpener.Open<GameWinScreen>();
 
-        public IWeekWinScreen ShowRoundWin()
+        public IRoundWinScreen ShowRoundWin()
         {
-            return _windowOpener.Open<IWeekWinScreen>();
+            return _windowOpener.Open<IRoundWinScreen>();
         }
 
         public void RemoveAllCardsFromHand()
@@ -80,10 +80,10 @@ namespace RogueIslands.Gameplay.View
         public void ShowLoseScreen() => _windowOpener.Open<LoseScreen>();
 
         public IBuildingView GetBuilding(Building building)
-            => ObjectRegistry.GetBuildings().FirstOrDefault(b => b.Data == building);
+            => ObjectRegistry.GetBuildings().FirstOrDefault(b => b.Data.Id == building.Id);
 
         public IBoosterView GetBooster(IBooster booster)
-            => ObjectRegistry.GetBoosters().FirstOrDefault(b => Equals(b.Data, booster));
+            => ObjectRegistry.GetBoosters().FirstOrDefault(b => b.Data.Id == booster.Id);
 
         public void ShowShopScreen() => _windowOpener.Open<ShopScreen>();
 

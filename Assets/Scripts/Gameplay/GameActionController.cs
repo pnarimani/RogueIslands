@@ -9,20 +9,17 @@ namespace RogueIslands.Gameplay
 {
     public class GameActionController
     {
-        private IReadOnlyList<GameActionExecutor> _execs;
+        private readonly Lazy<IReadOnlyList<GameActionExecutor>> _execs;
         private readonly GameState _state;
         private readonly IGameView _view;
         private readonly GameConditionsController _conditionsController;
 
-        public GameActionController(GameState state, IGameView view, GameConditionsController conditionsController)
+        public GameActionController(GameState state, IGameView view, GameConditionsController conditionsController,
+            Lazy<IReadOnlyList<GameActionExecutor>> execs)
         {
             _conditionsController = conditionsController;
             _view = view;
             _state = state;
-        }
-
-        public void SetExecutors(IReadOnlyList<GameActionExecutor> execs)
-        {
             _execs = execs;
         }
 
@@ -32,7 +29,7 @@ namespace RogueIslands.Gameplay
                 action.Conditions.Any(condition => !_conditionsController.IsConditionMet(booster, condition)))
                 return false;
 
-            var exec = _execs.FirstOrDefault(x => x.ActionType == action.GetType());
+            var exec = _execs.Value.FirstOrDefault(x => x.ActionType == action.GetType());
             if (exec == null)
                 throw new InvalidOperationException($"No executor found for action type {action.GetType().Name}");
             return exec.Execute(_state, _view, booster, action);

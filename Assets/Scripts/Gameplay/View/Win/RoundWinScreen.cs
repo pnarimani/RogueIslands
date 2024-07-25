@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace RogueIslands.Gameplay.View.Win
 {
-    public class RoundWinScreen : MonoBehaviour, IWeekWinScreen, IWindow
+    public class RoundWinScreen : MonoBehaviour, IRoundWinScreen, IWindow
     {
         [SerializeField] private Button _nextButton;
         [SerializeField] private TextMeshProUGUI _totalMoneyText, _weeklyPayoutText;

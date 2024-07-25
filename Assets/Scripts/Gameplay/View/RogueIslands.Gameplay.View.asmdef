@@ -10,7 +10,7 @@
     "Coffee.UIParticle",
     "Unity.Cinemachine",
     "RogueIslands.UISystem",
-    "RogueIslands.DependencyInjection",
+    "RogueIslands.Autofac",
     "RogueIslands.View",
     "RogueIslands.Assets",
     "RogueIslands.Gameplay.Rand",
@@ -19,6 +19,7 @@
   ],
   "overrideReferences": true,
   "precompiledReferences": [
-    "DOTween.dll"
+    "DOTween.dll",
+    "Autofac.dll"
   ]
 }

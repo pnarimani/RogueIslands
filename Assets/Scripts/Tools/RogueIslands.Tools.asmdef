@@ -3,10 +3,9 @@
   "rootNamespace": "RogueIslands",
   "references": [
     "RogueIslands",
-    "RogueIslands.DependencyInjection",
+    "RogueIslands.Autofac",
     "RogueIslands.Serialization",
     "Unity.Mathematics",
-    "RogueIslands.DependencyInjection.Autofac",
     "RogueIslands.Assets",
     "RogueIslands.Serialization.YamlDotNetIntegration",
     "RogueIslands.Assets.Editor",

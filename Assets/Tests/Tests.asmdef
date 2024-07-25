@@ -7,7 +7,7 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "RogueIslands.Serialization",
-        "RogueIslands.DependencyInjection",
+        "RogueIslands.Autofac",
         "RogueIslands.Gameplay.Rand"
     ],
     "includePlatforms": [

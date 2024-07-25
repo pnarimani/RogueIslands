@@ -11,11 +11,12 @@
     "Unity.Cinemachine",
     "Audoty",
     "RogueIslands.UISystem",
-    "RogueIslands.DependencyInjection",
+    "RogueIslands.Autofac",
     "RogueIslands.Initialization"
   ],
   "overrideReferences": true,
   "precompiledReferences": [
-    "DOTween.dll"
+    "DOTween.dll",
+    "Autofac.dll"
   ]
 }

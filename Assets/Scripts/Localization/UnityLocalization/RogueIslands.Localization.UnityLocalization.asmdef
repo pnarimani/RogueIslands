@@ -3,11 +3,14 @@
   "rootNamespace": "RogueIslands",
   "overrideReferences": true,
   "references": [
-    "RogueIslands.DependencyInjection",
+    "RogueIslands.Autofac",
     "RogueIslands.Localization",
     "Unity.Localization",
     "Unity.ResourceManager",
     "UniTask",
     "RogueIslands.Initialization"
+  ],
+  "precompiledReferences": [
+    "Autofac.dll"
   ]
 }

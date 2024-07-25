@@ -4,14 +4,16 @@
   "references": [
     "UniTask",
     "RogueIslands.Serialization",
-    "RogueIslands.DependencyInjection",
+    "RogueIslands.Autofac",
     "RogueIslands.Gameplay.Rand"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
   "overrideReferences": true,
-  "precompiledReferences": [],
+  "precompiledReferences": [
+    "Autofac.dll"
+  ],
   "autoReferenced": true,
   "defineConstraints": [],
   "versionDefines": [],

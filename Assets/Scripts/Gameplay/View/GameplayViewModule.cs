@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Autofac;
+using RogueIslands.Autofac;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.View.DeckBuilding;
 using UnityEngine;
@@ -7,7 +9,7 @@ namespace RogueIslands.Gameplay.View
 {
     public class GameplayViewModule : IModule
     {
-        public void Load(IContainerBuilder builder)
+        public void Load(ContainerBuilder builder)
         {
             builder.RegisterMonoBehaviour<InputHandling>()
                 .AutoActivate()
@@ -33,7 +35,7 @@ namespace RogueIslands.Gameplay.View
 
             builder.RegisterMonoBehaviour<GizmosCaller>()
                 .AutoActivate()
-                .OnActivated((container, instance) => instance.Initialize(container.Resolve<IReadOnlyList<IGizmosDrawer>>()));
+                .OnActivated(args => args.Instance.Initialize(args.Context.Resolve<IReadOnlyList<IGizmosDrawer>>()));
 
             builder.RegisterType<GameManager>()
                 .AutoActivate()
