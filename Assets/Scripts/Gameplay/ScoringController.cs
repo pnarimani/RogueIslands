@@ -36,11 +36,12 @@ namespace RogueIslands.Gameplay
 
         public void TriggerBuilding(Building building)
         {
-            TriggerBuilding(building, true, Math.Ceiling(building.Output + building.OutputUpgrade));
+            TriggerBuilding(building, true);
         }
 
-        private void TriggerBuilding(Building building, bool shouldScoreBonus, double buildingScore)
+        private void TriggerBuilding(Building building, bool shouldScoreBonus)
         {
+            var buildingScore = Math.Ceiling(building.Output + building.OutputUpgrade);
             _state.TransientScore += buildingScore;
             _view.GetBuilding(building).BuildingTriggered((int)buildingScore);
 
@@ -60,6 +61,12 @@ namespace RogueIslands.Gameplay
             
             foreach (var other in potentialBuildings)
             {
+                if (_state.HasSensitive())
+                {
+                    TriggerBuilding(other, false);
+                    continue;
+                }
+                
                 _state.Score.ResetBonuses();
                 
                 var initialOutput = building.Output + building.OutputUpgrade;
@@ -76,6 +83,9 @@ namespace RogueIslands.Gameplay
                 _state.Score.TransientCategoryBonus = Math.Ceiling(_state.Score.TransientCategoryBonus);
                 _state.Score.TransientColorBonus = Math.Ceiling(_state.Score.TransientColorBonus);
                 _state.Score.TransientSizeBonus = Math.Ceiling(_state.Score.TransientSizeBonus);
+
+                if (_state.Score.GetTotalBonus() <= 0)
+                    continue;
                 
                 _eventController.Execute(new BuildingBonus
                 {
@@ -86,21 +96,18 @@ namespace RogueIslands.Gameplay
                 _state.Score.TransientCategoryBonus = Math.Ceiling(_state.Score.TransientCategoryBonus);
                 _state.Score.TransientColorBonus = Math.Ceiling(_state.Score.TransientColorBonus);
                 _state.Score.TransientSizeBonus = Math.Ceiling(_state.Score.TransientSizeBonus);
-
-                if (_state.Score.GetTotalBonus() <= 0)
-                    continue;
+                _state.Score.TransientExtraBonus = Math.Ceiling(_state.Score.TransientExtraBonus);
                 
-                if (_state.HasSensitive())
-                {
-                    TriggerBuilding(other, false, _state.Score.GetTotalBonus());
-                    continue;
-                }
-
                 var otherBuildingView = _view.GetBuilding(other);
                 otherBuildingView.BonusTriggered((int)_state.Score.GetTotalBonus());
-
                 _state.TransientScore += _state.Score.GetTotalBonus();
                 _state.Score.ResetBonuses();
+                
+                _eventController.Execute(new AfterBuildingBonus
+                {
+                    Building = other,
+                    PlacedBuilding = building,
+                });
             }
         }
 

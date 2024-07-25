@@ -28,12 +28,17 @@ namespace RogueIslands.Gameplay.View
             
             _buildingPlacement.PlaceBuilding(building, position, rotation);
 
+            var increaseRate = 0.1f;
             var timer = 0f;
             while (timer < AnimationScheduler.GetTotalTime())
             {
                 await UniTask.DelayFrame(1, cancellationToken: destroyCancellationToken);
                 timer += Time.deltaTime;
+
+                Time.timeScale += increaseRate * Time.deltaTime;
             }
+
+            Time.timeScale = 1;
 
             destroyCancellationToken.ThrowIfCancellationRequested();
 

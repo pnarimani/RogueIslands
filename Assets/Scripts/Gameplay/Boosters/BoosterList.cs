@@ -831,6 +831,20 @@ namespace RogueIslands.Gameplay.Boosters
                     Description = new LiteralDescription("Instead of in-range buildings, out of range buildings score bonus"),
                     BuyPrice = 4,
                 },
+                new()
+                {
+                    Name = "Double Trouble",
+                    Description = new LiteralDescription("x2 score when a building scores bonus"),
+                    BuyPrice = 6,
+                    EventAction = new ScoringAction()
+                    {
+                        Multiplier = 2,
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<AfterBuildingBonus>(),
+                        },
+                    },
+                },
             };
         }
 

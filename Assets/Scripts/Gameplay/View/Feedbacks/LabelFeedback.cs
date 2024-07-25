@@ -27,12 +27,12 @@ namespace RogueIslands.Gameplay.View.Feedbacks
             {
                 bg.DOComplete();
                 bg.localRotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
-                bg.localScale = Vector3.one;
+                bg.localScale = Vector3.one * 0.5f;
                 bg.DORotateQuaternion(Quaternion.Euler(0, 0, Random.Range(0, 360)), 5)
                     .SetSpeedBased()
                     .SetEase(Ease.Linear)
                     .SetLink(gameObject);
-                bg.DOScale(Random.Range(2f, 3f), 1f)
+                bg.DOScale(Random.Range(2f, 3f), 3f)
                     .SetSpeedBased()
                     .SetEase(Ease.Linear)
                     .SetLink(gameObject);
@@ -56,6 +56,13 @@ namespace RogueIslands.Gameplay.View.Feedbacks
 
         public void Show()
         {
+            foreach (var bg in _backgrounds)
+            {
+                bg.DOComplete();
+                bg.localRotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+                bg.localScale = Vector3.one;
+            }
+            
             _group.alpha = 1;
         }
     }
