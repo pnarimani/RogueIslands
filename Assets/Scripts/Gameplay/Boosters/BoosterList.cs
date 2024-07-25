@@ -783,18 +783,47 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Colorful",
                     Description = new LiteralDescription("+200% same-color bonus score"),
                     BuyPrice = 3,
+                    EventAction = new ModifyBonusAction()
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<BuildingBonus>(),
+                        },
+                        ColorMultiplier = 2,
+                    },
                 },
                 new()
                 {
                     Name = "Good Year",
                     Description = new LiteralDescription("x5 all bonus scores"),
                     BuyPrice = 3,
+                    EventAction = new ModifyBonusAction()
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<BuildingBonus>(),
+                        },
+                        Multiplier = 5,
+                    },
                 },
                 new()
                 {
                     Name = "Tourism",
                     Description = new LiteralDescription($"x10 bonus score from {Category.Cat5} buildings"),
                     BuyPrice = 4,
+                    EventAction = new ModifyBonusAction()
+                    {
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<BuildingBonus>(),
+                            new BuildingCategoryCondition()
+                            {
+                                Source = new BuildingFromCurrentEvent(),
+                                Categories = new[] { Category.Cat5, },
+                            },
+                        },
+                        Multiplier = 10,
+                    },
                 },
             };
         }

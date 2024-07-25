@@ -20,7 +20,7 @@ namespace RogueIslands.Gameplay
         public void ScoreBuilding(Building building)
         {
             _eventController.Execute(new ResetRetriggers());
-            
+
             _eventController.Execute(new BuildingPlaced { Building = building, });
 
             TriggerBuilding(building);
@@ -56,57 +56,55 @@ namespace RogueIslands.Gameplay
         {
             foreach (var other in _state.GetInRangeBuildings(building))
             {
-                var bonus = GetScoreBonus(building, other);
+                _state.Score.ResetBonuses();
+                
+                var initialOutput = building.Output + building.OutputUpgrade;
 
-                if (bonus > 0)
+                if (building.Color == other.Color || (_state.HasBadEyesight() && BadEyesightColorCheck(building.Color, other.Color)))
+                    _state.Score.TransientColorBonus = initialOutput * 0.1;
+
+                if (building.Category == other.Category)
+                    _state.Score.TransientCategoryBonus = initialOutput * 0.2;
+
+                if (building.Size == other.Size) 
+                    _state.Score.TransientSizeBonus = initialOutput * 0.05;
+                
+                _state.Score.TransientCategoryBonus = Math.Ceiling(_state.Score.TransientCategoryBonus);
+                _state.Score.TransientColorBonus = Math.Ceiling(_state.Score.TransientColorBonus);
+                _state.Score.TransientSizeBonus = Math.Ceiling(_state.Score.TransientSizeBonus);
+                
+                _eventController.Execute(new BuildingBonus
                 {
-                    var otherBuildingView = _view.GetBuilding(other);
-                    if (_state.HasSensitive())
-                    {
-                        TriggerBuilding(other, false, bonus);
-                    }
-                    else
-                    {
-                        otherBuildingView.BonusTriggered((int)bonus);
-                        _state.TransientScore += bonus;
-                    }
+                    Building = other,
+                    PlacedBuilding = building,
+                });
+
+                _state.Score.TransientCategoryBonus = Math.Ceiling(_state.Score.TransientCategoryBonus);
+                _state.Score.TransientColorBonus = Math.Ceiling(_state.Score.TransientColorBonus);
+                _state.Score.TransientSizeBonus = Math.Ceiling(_state.Score.TransientSizeBonus);
+
+                if (_state.Score.GetTotalBonus() <= 0)
+                    continue;
+                
+                if (_state.HasSensitive())
+                {
+                    TriggerBuilding(other, false, _state.Score.GetTotalBonus());
+                    continue;
                 }
+
+                var otherBuildingView = _view.GetBuilding(other);
+                otherBuildingView.BonusTriggered((int)_state.Score.GetTotalBonus());
+
+                _state.TransientScore += _state.Score.GetTotalBonus();
+                _state.Score.ResetBonuses();
             }
         }
 
-        private double GetScoreBonus(Building building, Building other)
-        {
-            var initialOutput = building.Output + building.OutputUpgrade;
-
-            var output = initialOutput;
-
-            if (building.Color == other.Color ||
-                (_state.HasBadEyesight() && BadEyesightColorCheck(building.Color, other.Color)))
-            {
-                var multiplier = _state.HasColorful() ? 2 : 1;
-                output = Math.Ceiling(output * 1.1) * multiplier;
-            }
-
-            if (building.Category == other.Category) output = Math.Ceiling(output * 1.2);
-
-            if (building.Size == other.Size) output = Math.Ceiling(output * 1.05);
-
-            if (other.Category == Category.Cat5 && _state.HasTourism()) 
-                output *= 10;
-
-            if (_state.HasGoodYear())
-                output *= 5;
-
-            return Math.Ceiling(output - initialOutput);
-        }
-
-        private static bool BadEyesightColorCheck(ColorTag c1, ColorTag c2)
-        {
-            return c1 == c2 ||
-                   (c1 == ColorTag.Red && c2 == ColorTag.Blue) ||
-                   (c2 == ColorTag.Red && c1 == ColorTag.Blue) ||
-                   (c1 == ColorTag.Purple && c2 == ColorTag.Green) ||
-                   (c2 == ColorTag.Purple && c1 == ColorTag.Green);
-        }
+        private static bool BadEyesightColorCheck(ColorTag c1, ColorTag c2) =>
+            c1 == c2 ||
+            (c1 == ColorTag.Red && c2 == ColorTag.Blue) ||
+            (c2 == ColorTag.Red && c1 == ColorTag.Blue) ||
+            (c1 == ColorTag.Purple && c2 == ColorTag.Green) ||
+            (c2 == ColorTag.Purple && c1 == ColorTag.Green);
     }
 }

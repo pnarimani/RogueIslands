@@ -17,13 +17,29 @@ namespace RogueIslands.Gameplay
 
         public int HandSize = 4;
 
-        public double TransientScore { get; set; }
-        public double CurrentScore { get; set; }
-        public double[] AllRequiredScores { get; set; }
-
         public int Money = 4;
         public int MoneyPayoutPerRound = 4;
         public List<MoneyChange> MoneyChanges = new();
+
+        public ScoreState Score { get; set; } = new();
+
+        public double TransientScore
+        {
+            get => Score.TransientScore;
+            set => Score.TransientScore = value;
+        }
+
+        public double CurrentScore
+        {
+            get => Score.CurrentScore;
+            set => Score.CurrentScore = value;
+        }
+
+        public double[] AllRequiredScores
+        {
+            get => Score.AllRequiredScores;
+            set => Score.AllRequiredScores = value;
+        }
 
         public IGameEvent CurrentEvent;
 
@@ -41,7 +57,7 @@ namespace RogueIslands.Gameplay
         public RogueRandom CardPackSelectionRandom;
         public RogueRandom CardSelectionRandom;
         public int CardPerPack = 12;
-        
+
         public int MaxBoosters = 5;
         public List<BoosterCard> Boosters = new();
         public List<BoosterCard> AvailableBoosters;
