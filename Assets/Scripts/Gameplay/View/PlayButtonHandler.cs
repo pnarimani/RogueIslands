@@ -44,8 +44,6 @@ namespace RogueIslands.Gameplay.View
 
             BuildingView.TriggerCount = 0;
             StaticResolver.Resolve<IScoringAudio>().PlayScoringFinished();
-
-            await UniTask.WaitForSeconds(0.3f, cancellationToken: destroyCancellationToken);
             
             _roundController.TryEndingRound();
             

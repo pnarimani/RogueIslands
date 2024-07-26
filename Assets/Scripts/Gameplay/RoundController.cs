@@ -38,6 +38,8 @@ namespace RogueIslands.Gameplay
             {
                 _eventController.Execute(new RoundEnd());
                 
+                _state.CurrentScore = 0;
+                
                 _shopItemSpawner.PopulateShop();
                 _shopItemSpawner.PopulateBuildings();
 
@@ -60,9 +62,6 @@ namespace RogueIslands.Gameplay
                 else
                 {
                     ShowRoundWinScreen();
-                    
-                    _state.CurrentScore = 0;
-                    _view.GetUI().RefreshScores();
                 }
             }
         }

@@ -42,6 +42,8 @@ namespace RogueIslands.Gameplay.View.Shop
             _localization = StaticResolver.Resolve<ILocalization>();
             _openingFeedback.PlayOpening();
             
+            GameUI.Instance.RefreshScores();
+            
             PopulateShop();
             PopulateBuildingShop();
         }
