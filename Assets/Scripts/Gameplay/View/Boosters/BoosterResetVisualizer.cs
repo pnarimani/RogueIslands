@@ -1,7 +1,9 @@
 using Cysharp.Threading.Tasks;
+using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Boosters.Actions;
 using RogueIslands.Gameplay.View.Feedbacks;
+using RogueIslands.View.Audio;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.View.Boosters
@@ -15,6 +17,7 @@ namespace RogueIslands.Gameplay.View.Boosters
         public async UniTask Play()
         {
             await AnimationScheduler.ScheduleAndWait(1);
+            StaticResolver.Resolve<IBoosterAudio>().BoosterTriggered();
             _triggerFeedback.Play().Forget();
             await _labelFeedback.Play();
         }

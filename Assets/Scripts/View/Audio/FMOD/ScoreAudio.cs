@@ -1,6 +1,5 @@
 ﻿using FMOD.Studio;
 using FMODUnity;
-using UnityEngine;
 
 namespace RogueIslands.View.Audio.FMOD
 {
@@ -9,20 +8,13 @@ namespace RogueIslands.View.Audio.FMOD
         private const string ParameterName = "score_intensity";
         private const string EventName = "event:/SFX/Scoring";
 
-        public int ClipCount
+        public void PlayScoreSound(float intensity)
         {
-            get
-            {
-                var description = RuntimeManager.GetEventDescription(EventName);
-                description.getParameterDescriptionByName(ParameterName, out var paramDesc);
-                return Mathf.RoundToInt(paramDesc.maximum + 1);
-            }
-        }
-
-        public void PlayScoreSound(int score)
-        {
+            if(intensity is < 0 or > 1)
+                throw new System.ArgumentOutOfRangeException(nameof(intensity), intensity, "Intensity must be between 0 and 1");
+            
             var instance = CreateInstance();
-            instance.setParameterByName(ParameterName, score);
+            instance.setParameterByName(ParameterName, intensity);
             instance.start();
             instance.release();
         }

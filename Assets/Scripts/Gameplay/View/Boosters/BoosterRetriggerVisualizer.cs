@@ -1,6 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
+using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.View.Feedbacks;
+using RogueIslands.View.Audio;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.View.Boosters
@@ -15,6 +17,7 @@ namespace RogueIslands.Gameplay.View.Boosters
         private async UniTask Play()
         {
             await AnimationScheduler.ScheduleAndWait(1);
+            StaticResolver.Resolve<IBoosterAudio>().BoosterTriggered();
             _triggerFeedback.Play().Forget();
             await _labelFeedback.Play();
         }
@@ -28,7 +31,7 @@ namespace RogueIslands.Gameplay.View.Boosters
         {
             _dryRunLabel = Instantiate(_labelFeedback, _labelFeedback.transform.parent, true);
             _dryRunLabel.transform.localScale = Vector3.one * 0.75f;
-            _dryRunLabel.SetText(count > 1 ? $"Again!<size=50%>x{count}" : $"Again!");
+            _dryRunLabel.SetText(count > 1 ? $"Again!<size=65%>x{count}" : $"Again!");
             _dryRunLabel.Show();
         }
 

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.View.Feedbacks;
+using RogueIslands.View.Audio;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.View.Boosters
@@ -17,6 +19,7 @@ namespace RogueIslands.Gameplay.View.Boosters
         {
             await AnimationScheduler.ScheduleAndWait(1f);
 
+            StaticResolver.Resolve<IBoosterAudio>().BoosterTriggered();
             _triggerFeedback.Play().Forget();
             GameUI.Instance.ProductBoosted(products);
             _multiLabelFeedback.SetText($"x{multiplier:0.#}");
@@ -27,6 +30,7 @@ namespace RogueIslands.Gameplay.View.Boosters
         {
             await AnimationScheduler.ScheduleAndWait(1f);
 
+            StaticResolver.Resolve<IBoosterAudio>().BoosterTriggered();
             _triggerFeedback.Play().Forget();
             GameUI.Instance.ProductBoosted(products);
             _productLabelFeedback.SetText($"+{products:0.#}");
@@ -39,7 +43,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             {
                 var label = Instantiate(_multiLabelFeedback, _multiLabelFeedback.transform.parent, true);
                 label.transform.localScale = Vector3.one * 0.75f;
-                label.SetText(count > 1 ? $"x{mult:0.#}<size=50%>x{count}" : $"x{mult:0.#}");
+                label.SetText(count > 1 ? $"x{mult:0.#}<size=65%>x{count}" : $"x{mult:0.#}");
                 label.Show();
                 _dryRunLabels.Add(label);
             }
@@ -51,7 +55,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             {
                 var label = Instantiate(_productLabelFeedback, _productLabelFeedback.transform.parent, true);
                 label.transform.localScale = Vector3.one * 0.75f;
-                label.SetText(count > 1 ? $"+{prod:0.#}<size=50%>x{count}" : $"+{prod:0.#}");
+                label.SetText(count > 1 ? $"+{prod:0.#}<size=65%>x{count}" : $"+{prod:0.#}");
                 label.Show();
                 _dryRunLabels.Add(label);
             }

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.GameEvents;
 using RogueIslands.Gameplay.View.Feedbacks;
+using RogueIslands.View.Audio;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.View.Boosters
@@ -29,6 +31,7 @@ namespace RogueIslands.Gameplay.View.Boosters
 
             await AnimationScheduler.ScheduleAndWait(1, 0.1F);
 
+            StaticResolver.Resolve<IBoosterAudio>().BoosterTriggered();
             _cardTriggerFeedback.Play().Forget();
 
             UniTask task;

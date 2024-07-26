@@ -2,8 +2,7 @@
 {
     public interface IScoringAudio
     {
-        int ClipCount { get; }
-        void PlayScoreSound(int score);
+        void PlayScoreSound(float intensity);
         void PlayScoringFinished();
     }
 }
