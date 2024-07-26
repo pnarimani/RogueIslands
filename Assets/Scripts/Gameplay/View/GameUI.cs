@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -57,7 +58,7 @@ namespace RogueIslands.Gameplay.View
             var card = ObjectRegistry.GetBuildingCards().First(b => b.Data == building);
             if (card.transform.parent != _deckPeekList)
                 return;
-            
+
             await AnimationScheduler.ScheduleAndWait(1f);
 
             card.CanPlaceBuildings = true;
@@ -158,18 +159,51 @@ namespace RogueIslands.Gameplay.View
                 .SetRelative();
             _buildingCardList.DOAnchorPosY(-100, 0.5f)
                 .SetRelative();
+
+            var layout = _buildingCardList.GetComponent<FlexalonCurveLayout>();
+            layout.SetPoints(new List<FlexalonCurveLayout.CurvePoint>()
+            {
+                new FlexalonCurveLayout.CurvePoint()
+                {
+                    Position = new Vector3(-400, 50),
+                },
+                new FlexalonCurveLayout.CurvePoint()
+                {
+                    Position = new Vector3(400, 50),
+                },
+            });
         }
 
         public void ShowDeck()
         {
             AnimationScheduler.AllocateTime(0.1f);
-            
+
             _deckPeekList.DOAnchorPosY(100, 0.5f)
                 .SetRelative()
                 .SetEase(Ease.OutBack);
             _buildingCardList.DOAnchorPosY(100, 0.5f)
                 .SetRelative()
                 .SetEase(Ease.OutBack);
+
+            var layout = _buildingCardList.GetComponent<FlexalonCurveLayout>();
+            layout.SetPoints(new List<FlexalonCurveLayout.CurvePoint>()
+            {
+                new FlexalonCurveLayout.CurvePoint()
+                {
+                    Position = new Vector3(-400, 20),
+                    TangentMode = FlexalonCurveLayout.TangentMode.Corner,
+                },
+                new FlexalonCurveLayout.CurvePoint()
+                {
+                    Position = new Vector3(0, 60),
+                    TangentMode = FlexalonCurveLayout.TangentMode.Smooth,
+                },
+                new FlexalonCurveLayout.CurvePoint()
+                {
+                    Position = new Vector3(400, 20),
+                    TangentMode = FlexalonCurveLayout.TangentMode.Corner,
+                },
+            });
         }
     }
 }
