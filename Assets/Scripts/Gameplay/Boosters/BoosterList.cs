@@ -756,7 +756,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Lowkey",
                     Description =
                         new LiteralDescription(
-                            $"3x score when {Category.Cat5} building has no other {Category.Cat5} buildings nearby"),
+                            $"3x score when a placed down {Category.Cat5} building has no other {Category.Cat5} buildings nearby"),
                     BuyPrice = 5,
                     EventAction = new ScoringAction
                     {
