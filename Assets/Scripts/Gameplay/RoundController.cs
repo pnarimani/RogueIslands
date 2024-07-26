@@ -37,9 +37,9 @@ namespace RogueIslands.Gameplay
             if (IsRoundFinished())
             {
                 _eventController.Execute(new RoundEnd());
-
+                
                 _shopItemSpawner.PopulateShop();
-                _shopItemSpawner.RepopulateBuildings();
+                _shopItemSpawner.PopulateBuildings();
 
                 _state.Round++;
                 if (_state.Round >= GameState.RoundsPerAct)
@@ -60,6 +60,9 @@ namespace RogueIslands.Gameplay
                 else
                 {
                     ShowRoundWinScreen();
+                    
+                    _state.CurrentScore = 0;
+                    _view.GetUI().RefreshScores();
                 }
             }
         }
@@ -101,8 +104,6 @@ namespace RogueIslands.Gameplay
 
         public void StartRound()
         {
-            _state.CurrentScore = 0;
-
             _eventController.Execute(new RoundStart());
 
             if (_state.Act == 0 && _state.Round == 0)

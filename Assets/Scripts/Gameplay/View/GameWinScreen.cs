@@ -10,7 +10,6 @@ namespace RogueIslands.Gameplay.View
         
         private void Start()
         {
-            GameUI.Instance.ShowScoringPanel(false);
             _backToMenu.onClick.AddListener(() => UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu"));
         }
     }

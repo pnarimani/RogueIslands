@@ -42,7 +42,7 @@ namespace RogueIslands.Gameplay.Shop
             _state.Money -= _state.Shop.CurrentBuildingRerollCost;
             _state.Shop.CurrentBuildingRerollCost += 1;
             
-            _shopItemSpawner.RepopulateBuildings();
+            _shopItemSpawner.PopulateBuildings();
             
             _eventController.Execute(new ShopRerolledEvent());
             

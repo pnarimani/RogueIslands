@@ -18,7 +18,7 @@ namespace RogueIslands.Gameplay.View.DeckPreview
         [SerializeField] private TextMeshProUGUI _blueCount, _redCount, _greenCount, _purpleCount, _deckStatPrefab;
         [SerializeField] private Transform _deckStatParent;
         [SerializeField] private Button _close;
-        private static readonly Vector3 _cardScale = Vector3.one * 0.6f;
+        private static readonly Vector3 _cardScale = Vector3.one * 0.75f;
 
         private void Start()
         {

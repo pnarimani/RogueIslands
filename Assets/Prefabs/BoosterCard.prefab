@@ -1166,6 +1166,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7279051143042432023}
     m_Modifications:
+    - target: {fileID: 855831965982447956, guid: a5e2b7ebe678210439526dd52c597338, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4281479730
+      objectReference: {fileID: 0}
     - target: {fileID: 2364233756542241946, guid: a5e2b7ebe678210439526dd52c597338, type: 3}
       propertyPath: m_Name
       value: BuySellPanel
@@ -1173,6 +1177,10 @@ PrefabInstance:
     - target: {fileID: 2364233756542241946, guid: a5e2b7ebe678210439526dd52c597338, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539992767501681575, guid: a5e2b7ebe678210439526dd52c597338, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6054879935349638288, guid: a5e2b7ebe678210439526dd52c597338, type: 3}
       propertyPath: m_Pivot.x

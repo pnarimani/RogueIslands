@@ -37,19 +37,22 @@ namespace RogueIslands.Gameplay.View
 
                 Time.timeScale += increaseRate * Time.deltaTime;
             }
-
-            Time.timeScale = 1;
-
+            
             destroyCancellationToken.ThrowIfCancellationRequested();
 
             GameUI.Instance.RefreshScores();
 
             BuildingView.TriggerCount = 0;
             StaticResolver.Resolve<IScoringAudio>().PlayScoringFinished();
-            GameUI.Instance.ShowDeck();
+
+            await UniTask.WaitForSeconds(0.3f, cancellationToken: destroyCancellationToken);
             
             _roundController.TryEndingRound();
-
+            
+            Time.timeScale = 1;
+            
+            GameUI.Instance.ShowDeck();
+            
             IsPlaying = false;
         }
     }

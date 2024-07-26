@@ -38,6 +38,7 @@ namespace RogueIslands.Gameplay.Buildings
             _view.SpawnBuilding(building);
             
             _view.GetUI().RemoveCard(building);
+            _view.GetUI().RefreshDeckText();
 
             foreach (var handBuilding in _state.BuildingsInHand.Where(c => !previousHand.Contains(c)))
                 _view.GetUI().MoveCardToHand(handBuilding);

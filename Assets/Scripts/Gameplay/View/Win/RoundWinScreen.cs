@@ -37,7 +37,6 @@ namespace RogueIslands.Gameplay.View.Win
 
         private void Start()
         {
-            GameUI.Instance.ShowScoringPanel(false);
             StaticResolver.Resolve<IStageAudio>().PlayRoundWin();
 
             _bg.DOLocalMoveY(-Screen.height, 0.5f)

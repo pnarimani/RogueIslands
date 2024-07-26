@@ -223,6 +223,11 @@ namespace RogueIslands.Gameplay.Boosters
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<AfterBuildingScoreTrigger>().Or<ResetRetriggers>(),
+                            new BuildingCategoryCondition()
+                            {
+                                Categories = new[] { Category.Cat4 },
+                                Source = new BuildingFromCurrentEvent(),
+                            },
                             new ProbabilityCondition
                             {
                                 FavorableOutcome = 1,

@@ -48,7 +48,7 @@ namespace RogueIslands.Gameplay.Shop
             }
         }
 
-        public void RepopulateBuildings()
+        public void PopulateBuildings()
         {
             var random = _state.Shop.BuildingSpawn.ForAct(_state.Act);
             var cards = _state.Shop.BuildingCards;

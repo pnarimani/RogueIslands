@@ -16,6 +16,7 @@ namespace RogueIslands.Gameplay.View
             // windowOpener.Open<CardPackSelection>();
             
             StaticResolver.Resolve<RoundController>().StartRound();
+            GameUI.Instance.RefreshDeckText();
         }
     }
 }

@@ -98,10 +98,7 @@ namespace RogueIslands.Gameplay.View
         public void RefreshDeckText()
         {
             var state = GameManager.Instance.State;
-            var total = state.Buildings.Deck.Count;
-            var rem = total;
-            rem = Mathf.Max(rem, 0);
-            _deckCardCount.text = $"{rem}/{total}";
+            _deckCardCount.text = $"{state.BuildingsInHand.Count()}/{state.Buildings.Deck.Count}";
         }
 
         public void RefreshMoney()
@@ -155,15 +152,11 @@ namespace RogueIslands.Gameplay.View
             _budget.UpdateNumber(_budget.CurrentNumber + delta);
         }
 
-        public void ShowScoringPanel(bool show)
-        {
-        }
-
         public void HideDeck()
         {
-            _deckPeekList.DOAnchorPosY(-80, 0.5f)
+            _deckPeekList.DOAnchorPosY(-100, 0.5f)
                 .SetRelative();
-            _buildingCardList.DOAnchorPosY(-80, 0.5f)
+            _buildingCardList.DOAnchorPosY(-100, 0.5f)
                 .SetRelative();
         }
 
@@ -171,10 +164,10 @@ namespace RogueIslands.Gameplay.View
         {
             AnimationScheduler.AllocateTime(0.1f);
             
-            _deckPeekList.DOAnchorPosY(80, 0.5f)
+            _deckPeekList.DOAnchorPosY(100, 0.5f)
                 .SetRelative()
                 .SetEase(Ease.OutBack);
-            _buildingCardList.DOAnchorPosY(80, 0.5f)
+            _buildingCardList.DOAnchorPosY(100, 0.5f)
                 .SetRelative()
                 .SetEase(Ease.OutBack);
         }
