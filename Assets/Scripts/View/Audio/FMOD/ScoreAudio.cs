@@ -1,4 +1,5 @@
-﻿using FMOD.Studio;
+﻿using System;
+using FMOD.Studio;
 using FMODUnity;
 
 namespace RogueIslands.View.Audio.FMOD
@@ -10,9 +11,9 @@ namespace RogueIslands.View.Audio.FMOD
 
         public void PlayScoreSound(float intensity)
         {
-            if(intensity is < 0 or > 1)
-                throw new System.ArgumentOutOfRangeException(nameof(intensity), intensity, "Intensity must be between 0 and 1");
-            
+            if (intensity is < 0 or > 1)
+                throw new ArgumentOutOfRangeException(nameof(intensity), intensity, "Intensity must be between 0 and 1");
+
             var instance = CreateInstance();
             instance.setParameterByName(ParameterName, intensity);
             instance.start();
