@@ -236,7 +236,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Painting",
                     Description =
-                        new LiteralDescription("x10 score if at least one building of each color is placed down"),
+                        new LiteralDescription("x4 score if at least one building of each color is placed down"),
                     BuyPrice = 5,
                     EventAction = new ScoringAction
                     {
