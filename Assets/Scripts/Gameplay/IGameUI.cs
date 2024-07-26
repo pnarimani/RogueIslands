@@ -12,5 +12,6 @@ namespace RogueIslands.Gameplay
         void ShowBuildingCardPeek(Building building);
         void MoveCardToHand(Building building);
         void RemoveCard(Building building);
+        void ShowStageInformation();
     }
 }

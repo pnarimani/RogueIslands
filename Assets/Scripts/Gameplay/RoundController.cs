@@ -121,6 +121,7 @@ namespace RogueIslands.Gameplay
             _view.GetUI().RefreshDate();
             _view.GetUI().RefreshMoney();
             _view.GetUI().RefreshScores();
+            _view.GetUI().ShowStageInformation();
         }
 
         private bool HasLost()

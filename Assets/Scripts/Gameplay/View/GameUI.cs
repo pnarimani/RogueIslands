@@ -26,7 +26,7 @@ namespace RogueIslands.Gameplay.View
         [SerializeField] private BoosterCardView _boosterPrefab;
         [SerializeField] private RectTransform _buildingCardList, _deckPeekList;
         [SerializeField] private Transform _boosterList;
-        [SerializeField] private TextMeshProUGUI _deckCardCount, _scoreRequirements;
+        [SerializeField] private TextMeshProUGUI _deckCardCount, _scoreRequirements, _stageInformation;
         [SerializeField] private Image _scoreFill;
         [SerializeField] private Transform _scoreParent;
         [SerializeField] private LabelFeedback _productFeedback;
@@ -77,25 +77,6 @@ namespace RogueIslands.Gameplay.View
             Destroy(ObjectRegistry.GetBuildingCards().First(b => b.Data == building).gameObject);
         }
 
-        public void ShowBoosterCard(BoosterCard booster)
-        {
-            var card = Instantiate(_boosterPrefab, _boosterList);
-            card.Initialize(booster);
-
-            RefreshDate();
-            RefreshMoney();
-        }
-
-        public bool IsInSpawnRegion(Vector3 screenPosition)
-        {
-            var corners = new Vector3[4];
-            ((RectTransform)_buildingCardList.transform).GetWorldCorners(corners);
-            var bl = corners[0];
-            var tr = corners[2];
-            var viewRect = new Rect(bl, tr - bl);
-            return !viewRect.Contains(screenPosition);
-        }
-
         public void RefreshDeckText()
         {
             var state = GameManager.Instance.State;
@@ -126,6 +107,25 @@ namespace RogueIslands.Gameplay.View
             var state = GameManager.Instance.State;
             _week.UpdateNumber(state.Round + 1);
             _month.UpdateNumber(state.Act + 1);
+        }
+
+        public void ShowBoosterCard(BoosterCard booster)
+        {
+            var card = Instantiate(_boosterPrefab, _boosterList);
+            card.Initialize(booster);
+
+            RefreshDate();
+            RefreshMoney();
+        }
+
+        public bool IsInSpawnRegion(Vector3 screenPosition)
+        {
+            var corners = new Vector3[4];
+            ((RectTransform)_buildingCardList.transform).GetWorldCorners(corners);
+            var bl = corners[0];
+            var tr = corners[2];
+            var viewRect = new Rect(bl, tr - bl);
+            return !viewRect.Contains(screenPosition);
         }
 
         public void ProductBoosted(double delta)
@@ -161,13 +161,13 @@ namespace RogueIslands.Gameplay.View
                 .SetRelative();
 
             var layout = _buildingCardList.GetComponent<FlexalonCurveLayout>();
-            layout.SetPoints(new List<FlexalonCurveLayout.CurvePoint>()
+            layout.SetPoints(new List<FlexalonCurveLayout.CurvePoint>
             {
-                new FlexalonCurveLayout.CurvePoint()
+                new()
                 {
                     Position = new Vector3(-400, 50),
                 },
-                new FlexalonCurveLayout.CurvePoint()
+                new()
                 {
                     Position = new Vector3(400, 50),
                 },
@@ -186,24 +186,40 @@ namespace RogueIslands.Gameplay.View
                 .SetEase(Ease.OutBack);
 
             var layout = _buildingCardList.GetComponent<FlexalonCurveLayout>();
-            layout.SetPoints(new List<FlexalonCurveLayout.CurvePoint>()
+            layout.SetPoints(new List<FlexalonCurveLayout.CurvePoint>
             {
-                new FlexalonCurveLayout.CurvePoint()
+                new()
                 {
                     Position = new Vector3(-400, 20),
                     TangentMode = FlexalonCurveLayout.TangentMode.Corner,
                 },
-                new FlexalonCurveLayout.CurvePoint()
+                new()
                 {
                     Position = new Vector3(0, 60),
                     TangentMode = FlexalonCurveLayout.TangentMode.Smooth,
                 },
-                new FlexalonCurveLayout.CurvePoint()
+                new()
                 {
                     Position = new Vector3(400, 20),
                     TangentMode = FlexalonCurveLayout.TangentMode.Corner,
                 },
             });
+        }
+
+        public async void ShowStageInformation()
+        {
+            var state = GameManager.Instance.State;
+            _stageInformation.text = $"Act {state.Act + 1}/{GameState.TotalActs}\n<size=80%>Round {state.Round + 1}/{GameState.RoundsPerAct}";
+            _stageInformation.gameObject.SetActive(true);
+            _stageInformation.transform.localScale = Vector3.zero;
+            await _stageInformation.transform.DOScale(1, 0.25f)
+                .SetEase(Ease.OutBack)
+                .AsyncWaitForCompletion();
+            await UniTask.WaitForSeconds(1);
+            await _stageInformation.transform.DOScale(0, 0.25f)
+                .SetEase(Ease.InBack)
+                .AsyncWaitForCompletion();
+            _stageInformation.gameObject.SetActive(false);
         }
     }
 }
