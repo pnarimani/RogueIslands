@@ -6,6 +6,7 @@ namespace RogueIslands.Gameplay.Boosters
     {
         void Play(int moneyChange);
         void ShowDryRunMoney(Dictionary<int,int> moneyAndCount);
+        void ShowDryRunProbability();
         void HideDryRun();
     }
 }

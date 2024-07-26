@@ -31,6 +31,13 @@ namespace RogueIslands.Gameplay.View.Boosters
             _dryRunLabel.Show();
         }
 
+        public void ShowDryRunProbability()
+        {
+            _dryRunLabel = Instantiate(_labelFeedback, _labelFeedback.transform.parent, true);
+            _dryRunLabel.SetText("???");
+            _dryRunLabel.Show();
+        }
+
         public void HideDryRun()
         {
             if (_dryRunLabel != null)

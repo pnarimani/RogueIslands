@@ -9,6 +9,8 @@ namespace RogueIslands.Gameplay.View.Boosters
     {
         [SerializeField] private LabelFeedback _labelFeedback, _scaleDownFeedback;
         [SerializeField] private CardTriggerFeedback _triggerFeedback;
+        
+        private LabelFeedback _dryRunLabel;
 
         public async void PlayScaleUp()
         {
@@ -26,17 +28,29 @@ namespace RogueIslands.Gameplay.View.Boosters
 
         public void HideDryRun()
         {
-            throw new System.NotImplementedException();
+            if (_dryRunLabel != null)
+            {
+                Destroy(_dryRunLabel.gameObject);
+            }
         }
 
         public void ShowDryRunScaleUp(int count)
         {
-            throw new System.NotImplementedException();
+            _dryRunLabel = Instantiate(_labelFeedback, _labelFeedback.transform.parent, true);
+            _dryRunLabel.Show();
         }
 
         public void ShowDryRunScaleDown(int count)
         {
-            throw new System.NotImplementedException();
+            _dryRunLabel = Instantiate(_scaleDownFeedback, _scaleDownFeedback.transform.parent, true);
+            _dryRunLabel.Show();
+        }
+
+        public void ShowDryRunProbability()
+        {
+            _dryRunLabel = Instantiate(_labelFeedback, _labelFeedback.transform.parent, true);
+            _dryRunLabel.SetText("???");
+            _dryRunLabel.Show();
         }
     }
 }

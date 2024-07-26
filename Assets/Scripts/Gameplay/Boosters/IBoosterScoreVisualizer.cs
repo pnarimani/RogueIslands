@@ -8,6 +8,8 @@ namespace RogueIslands.Gameplay.Boosters
         void ProductApplied(double products);
         void ShowDryRunMultiplier(Dictionary<double, int> multipliersAndCount);
         void ShowDryRunProducts(Dictionary<double, int> productsAndCount);
+        void ShowDryRunAddProbability();
+        void ShowDryRunMultiplyProbability();
         void HideDryRun();
     }
 }

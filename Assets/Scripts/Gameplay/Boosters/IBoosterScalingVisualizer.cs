@@ -7,5 +7,6 @@
         void HideDryRun();
         void ShowDryRunScaleUp(int count);
         void ShowDryRunScaleDown(int count);
+        void ShowDryRunProbability();
     }
 }

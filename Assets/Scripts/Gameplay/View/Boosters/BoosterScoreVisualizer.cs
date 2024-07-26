@@ -55,6 +55,22 @@ namespace RogueIslands.Gameplay.View.Boosters
             }
         }
 
+        public void ShowDryRunAddProbability()
+        {
+            var label = Instantiate(_productLabelFeedback, _productLabelFeedback.transform.parent, true);
+            label.SetText("???");
+            label.Show();
+            _dryRunLabels.Add(label);
+        }
+
+        public void ShowDryRunMultiplyProbability()
+        {
+            var label = Instantiate(_multiLabelFeedback, _multiLabelFeedback.transform.parent, true);
+            label.SetText("???");
+            label.Show();
+            _dryRunLabels.Add(label);
+        }
+
         public void HideDryRun()
         {
             foreach (var label in _dryRunLabels)

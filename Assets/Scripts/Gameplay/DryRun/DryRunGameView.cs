@@ -34,7 +34,7 @@ namespace RogueIslands.Gameplay.DryRun
                 if (realBoosterView == null)
                     throw new Exception($"Failed to find booster view for booster {booster.Name}");
 
-                view = new DryRunBoosterView(realBoosterView);
+                view = new DryRunBoosterView(booster, realBoosterView);
                 _boosterViews.Add(booster.Id, view);
             }
 
@@ -72,7 +72,7 @@ namespace RogueIslands.Gameplay.DryRun
             foreach (var (booster, view) in _boosterViews)
             {
                 if (!_lastFrameBoosterViews.TryGetValue(booster, out var lastFrame))
-                    lastFrame = new DryRunBoosterView(null);
+                    lastFrame = new DryRunBoosterView(null, null);
 
                 view.ApplyChanges(lastFrame);
 

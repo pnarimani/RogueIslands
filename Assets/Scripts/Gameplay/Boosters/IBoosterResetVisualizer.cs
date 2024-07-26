@@ -5,5 +5,6 @@
         void PlayReset();
         void HideDryRun();
         void ShowDryRunReset();
+        void ShowDryRunProbability();
     }
 }

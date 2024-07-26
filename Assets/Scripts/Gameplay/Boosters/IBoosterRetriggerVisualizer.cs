@@ -4,6 +4,7 @@
     {
         void PlayRetrigger();
         void ShowDryRunRetriggers(int count);
+        void ShowDryRunProbability();
         void HideDryRun();
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.Gameplay.Boosters;
+using RogueIslands.Gameplay.Boosters.Conditions;
 
 namespace RogueIslands.Gameplay.DryRun
 {
@@ -12,8 +13,13 @@ namespace RogueIslands.Gameplay.DryRun
         private readonly List<double> _multipliers = new();
         private readonly List<double> _products = new();
         private readonly IBoosterView _realBoosterView;
+        private readonly IBooster _booster;
 
-        public DryRunBoosterView(IBoosterView realBoosterView) => _realBoosterView = realBoosterView;
+        public DryRunBoosterView(IBooster booster, IBoosterView realBoosterView)
+        {
+            _booster = booster;
+            _realBoosterView = realBoosterView;
+        }
 
         private int ScaleUpTriggers { get; set; }
         private int ScaleDownTriggers { get; set; }
@@ -23,78 +29,42 @@ namespace RogueIslands.Gameplay.DryRun
         public void Play(int moneyChange)
             => _moneyChanges.Add(moneyChange);
 
-        void IBoosterMoneyVisualizer.HideDryRun()
-        {
-            throw new InvalidOperationException();
-        }
-
         public void ShowDryRunMoney(Dictionary<int, int> moneyAndCount)
             => throw new InvalidOperationException();
 
-        public void ShowDryRunReset()
-        {
-            throw new NotImplementedException();
-        }
+        public void ShowDryRunReset() => throw new InvalidOperationException();
 
-        public void PlayReset()
-        {
-            Resets++;
-        }
+        public void ShowDryRunProbability() => throw new InvalidOperationException();
+
+        public void PlayReset() => Resets++;
 
         public void ShowDryRunRetriggers(int count) => throw new InvalidOperationException();
 
-        public void PlayRetrigger()
-        {
-            Retriggers++;
-        }
+        public void PlayRetrigger() => Retriggers++;
 
-        public void ShowDryRunScaleUp(int count)
-        {
+        public void ShowDryRunScaleUp(int count) => throw new InvalidOperationException();
+
+        public void ShowDryRunScaleDown(int count) => throw new InvalidOperationException();
+
+        public void PlayScaleUp() => ScaleUpTriggers++;
+
+        public void PlayScaleDown() => ScaleDownTriggers++;
+
+        public void ShowDryRunMultiplyProbability() => throw new InvalidOperationException();
+
+        public void HideDryRun() => throw new InvalidOperationException();
+
+        public void ShowDryRunProducts(Dictionary<double, int> productsAndCount) =>
             throw new InvalidOperationException();
-        }
 
-        public void ShowDryRunScaleDown(int count)
-        {
-            throw new InvalidOperationException();
-        }
+        public void ShowDryRunAddProbability() => throw new InvalidOperationException();
 
-        public void PlayScaleUp()
-        {
-            ScaleUpTriggers++;
-        }
+        public void MultiplierApplied(double multiplier, double products) => _multipliers.Add(multiplier);
 
-        public void PlayScaleDown()
-        {
-            ScaleDownTriggers++;
-        }
-
-        public void HideDryRun()
-        {
-            throw new InvalidOperationException();
-        }
-
-        public void ShowDryRunProducts(Dictionary<double, int> productsAndCount)
-        {
-            throw new InvalidOperationException();
-        }
-
-        public void MultiplierApplied(double multiplier, double products)
-        {
-            _multipliers.Add(multiplier);
-        }
-
-        public void ProductApplied(double products)
-        {
-            _products.Add(products);
-        }
+        public void ProductApplied(double products) => _products.Add(products);
 
         public void ShowDryRunMultiplier(Dictionary<double, int> multipliersAndCount)
             => throw new InvalidOperationException();
-
-        void IBoosterScoreVisualizer.HideDryRun()
-        {
-            throw new InvalidOperationException();
-        }
 
         public void Remove()
         {
@@ -160,16 +130,25 @@ namespace RogueIslands.Gameplay.DryRun
             {
                 var vis = _realBoosterView.GetRetriggerVisualizer();
                 vis.HideDryRun();
-                vis.ShowDryRunRetriggers(Retriggers);
+                if (HasProbabilityCondition())
+                    vis.ShowDryRunProbability();
+                else
+                    vis.ShowDryRunRetriggers(Retriggers);
             }
 
             if (Resets != lastFrameView.Resets)
             {
                 var vis = _realBoosterView.GetResetVisualizer();
                 vis.HideDryRun();
-                vis.ShowDryRunReset();
+                if (HasProbabilityCondition())
+                    vis.ShowDryRunProbability();
+                else
+                    vis.ShowDryRunReset();
             }
         }
+
+        private bool HasProbabilityCondition()
+            => _booster.EventAction.GetAllConditions().Any(p => p is ProbabilityCondition);
 
         public void HideAll()
         {

@@ -13,7 +13,9 @@ namespace RogueIslands.Gameplay.View.Boosters
     {
         [SerializeField] private LabelFeedback _money;
         [SerializeField] private CardTriggerFeedback _cardTriggerFeedback;
-        
+
+        private readonly List<LabelFeedback> _dryRunLabels = new();
+
         public async void Play(int money)
         {
             var state = GameManager.Instance.State;
@@ -58,10 +60,29 @@ namespace RogueIslands.Gameplay.View.Boosters
 
         public void ShowDryRunMoney(Dictionary<int, int> moneyAndCount)
         {
+            foreach (var (money, count) in moneyAndCount)
+            {
+                var label = Instantiate(_money, _money.transform.parent, true);
+                label.SetText(count > 1 ? $"${money} x {count}" : $"${money}");
+                label.Show();
+                _dryRunLabels.Add(label);
+            }
+        }
+
+        public void ShowDryRunProbability()
+        {
+            var label = Instantiate(_money, _money.transform.parent, true);
+            label.SetText("???");
+            label.Show();
+            _dryRunLabels.Add(label);
         }
 
         public void HideDryRun()
         {
+            foreach (var label in _dryRunLabels) 
+                Destroy(label.gameObject);
+            
+            _dryRunLabels.Clear();
         }
     }
 }

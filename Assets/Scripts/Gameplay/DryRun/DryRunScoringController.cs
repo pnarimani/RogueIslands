@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Autofac;
+using RogueIslands.Gameplay.Boosters.Conditions;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Serialization;
 using UnityEngine.Profiling;
@@ -45,6 +47,7 @@ namespace RogueIslands.Gameplay.DryRun
             _cloner.CloneTo(_realGame.Buildings.PlacedDownBuildings, _fakeGame.PlacedDownBuildings);
             _fakeGame.Money = _realGame.Money;
             _fakeGame.CurrentScore = _realGame.CurrentScore;
+            MakeProbabilitiesPass();
 
             _fakeGame.Buildings.PlacedDownBuildings.Add(clonedBuilding);
             _scoringController.ScoreBuilding(clonedBuilding);
@@ -52,6 +55,15 @@ namespace RogueIslands.Gameplay.DryRun
             _fakeView.ShowDryRunResults();
             
             Profiler.EndSample();
+        }
+
+        private void MakeProbabilitiesPass()
+        {
+            foreach (var b in _fakeGame.Boosters)
+            {
+                foreach (var probabilityCondition in b.EventAction.GetAllConditions().OfType<ProbabilityCondition>())
+                    probabilityCondition.FavorableOutcome = probabilityCondition.TotalOutcomes;
+            }
         }
 
         public void Clear()
