@@ -50,12 +50,12 @@ namespace RogueIslands.Gameplay.Boosters
                         RangeMultiplier = 0.5f,
                         Source = new BuildingsInDeck(),
                     },
-                    EventAction = new ModifyBuildingRangeAction()
+                    EventAction = new ModifyBuildingRangeAction
                     {
-                        Conditions = new []{ GameEventCondition.Create<BuildingAdded>(), },
+                        Conditions = new[] { GameEventCondition.Create<BuildingAdded>() },
                         RangeMultiplier = 2,
                         Source = new BuildingFromCurrentEvent(),
-                    }
+                    },
                 },
                 new()
                 {
@@ -67,7 +67,7 @@ namespace RogueIslands.Gameplay.Boosters
                         Conditions = new[] { GameEventCondition.Create<AfterAllBuildingTriggers>() },
                         Factor = new BuildingFromCurrentEvent()
                             .GetBuildingsInRange()
-                            .WithCondition(new ColorCheckCondition() { ForcedColors = new[] { ColorTag.Red, } })
+                            .WithCondition(new ColorCheckCondition { ForcedColors = new[] { ColorTag.Red } })
                             .Count(),
                         Multiplier = .2f,
                     },
@@ -135,7 +135,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Description =
                         new LiteralDescription("-10% products, gains 5$ of sell value at the end of the round."),
                     BuyPrice = 2,
-                    EventAction = new CompositeAction()
+                    EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
                         {
@@ -147,7 +147,7 @@ namespace RogueIslands.Gameplay.Boosters
                                     GameEventCondition.Create<RoundEnd>(),
                                 },
                             },
-                            new ScoringAction()
+                            new ScoringAction
                             {
                                 Conditions = new IGameCondition[]
                                 {
@@ -216,20 +216,20 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Crowded",
                     Description = new ProbabilityDescription(
-                        $"{{0}} chance to retrigger an {Category.Cat4} building"),
+                        $"{{0}} chance to retrigger {Category.Cat4} buildings twice"),
                     BuyPrice = 6,
                     EventAction = new RetriggerBuildingAction
                     {
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<AfterBuildingScoreTrigger>().Or<ResetRetriggers>(),
-                            new ProbabilityCondition()
+                            new ProbabilityCondition
                             {
                                 FavorableOutcome = 1,
-                                TotalOutcomes = 4,
+                                TotalOutcomes = 2,
                             },
                         },
-                        RetriggerTimes = 1,
+                        RetriggerTimes = 2,
                     },
                 },
                 new()
@@ -493,7 +493,7 @@ namespace RogueIslands.Gameplay.Boosters
                             GameEventCondition.Create<AfterAllBuildingTriggers>(),
                         },
                         Multiplier = 1,
-                        Factor = new MoneyAmount() { DivideBy = 5, },
+                        Factor = new MoneyAmount { DivideBy = 5 },
                     },
                 },
                 new()
@@ -509,7 +509,7 @@ namespace RogueIslands.Gameplay.Boosters
                             GameEventCondition.Create<BuildingPlaced>(),
                         },
                         Products = 10,
-                        Factor = new MoneyAmount() { DivideBy = 2 }
+                        Factor = new MoneyAmount { DivideBy = 2 },
                     },
                 },
                 new()
@@ -610,11 +610,11 @@ namespace RogueIslands.Gameplay.Boosters
                         {
                             GameEventCondition.Create<AfterAllBuildingTriggers>(),
                         },
-                        Factor = new BuildingsByRange()
+                        Factor = new BuildingsByRange
                             {
                                 Center = new BuildingFromCurrentEvent(),
                                 ReturnInRange = true,
-                            }.WithCondition(new BuildingSizeCondition() { Allowed = new[] { BuildingSize.Large } })
+                            }.WithCondition(new BuildingSizeCondition { Allowed = new[] { BuildingSize.Large } })
                             .Count(),
                         Multiplier = 0.8,
                     },
@@ -631,34 +631,33 @@ namespace RogueIslands.Gameplay.Boosters
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<AfterAllBuildingTriggers>(),
-                            new CountCondition()
+                            new CountCondition
                             {
-                                Source = new BuildingsByRange()
+                                Source = new BuildingsByRange
                                 {
                                     Center = new BuildingFromCurrentEvent(),
                                     ReturnInRange = true,
-                                }.WithCondition(new BuildingSizeCondition() { Allowed = new[] { BuildingSize.Small } }),
+                                }.WithCondition(new BuildingSizeCondition { Allowed = new[] { BuildingSize.Small } }),
                                 Value = 0,
                                 ComparisonMode = CountCondition.Mode.More,
                             },
-                            new CountCondition()
+                            new CountCondition
                             {
-                                Source = new BuildingsByRange()
+                                Source = new BuildingsByRange
                                 {
                                     Center = new BuildingFromCurrentEvent(),
                                     ReturnInRange = true,
-                                }.WithCondition(new BuildingSizeCondition()
-                                    { Allowed = new[] { BuildingSize.Medium } }),
+                                }.WithCondition(new BuildingSizeCondition { Allowed = new[] { BuildingSize.Medium } }),
                                 Value = 0,
                                 ComparisonMode = CountCondition.Mode.More,
                             },
-                            new CountCondition()
+                            new CountCondition
                             {
-                                Source = new BuildingsByRange()
+                                Source = new BuildingsByRange
                                 {
                                     Center = new BuildingFromCurrentEvent(),
                                     ReturnInRange = true,
-                                }.WithCondition(new BuildingSizeCondition() { Allowed = new[] { BuildingSize.Large } }),
+                                }.WithCondition(new BuildingSizeCondition { Allowed = new[] { BuildingSize.Large } }),
                                 Value = 0,
                                 ComparisonMode = CountCondition.Mode.More,
                             },
@@ -679,7 +678,7 @@ namespace RogueIslands.Gameplay.Boosters
                         },
                         Factor = new BuildingFromCurrentEvent()
                             .GetBuildingsOutOfRange()
-                            .WithCondition(new BuildingSizeCondition() { Allowed = new[] { BuildingSize.Small } })
+                            .WithCondition(new BuildingSizeCondition { Allowed = new[] { BuildingSize.Small } })
                             .Count(),
                         Multiplier = .3,
                     },
@@ -691,25 +690,24 @@ namespace RogueIslands.Gameplay.Boosters
                         new LiteralDescription(
                             $"x10 score when a {Category.Cat1} building has no {Category.Cat3} building nearby"),
                     BuyPrice = 6,
-                    EventAction = new ScoringAction()
+                    EventAction = new ScoringAction
                     {
                         Multiplier = 10,
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<AfterAllBuildingTriggers>(),
-                            new BuildingCategoryCondition()
+                            new BuildingCategoryCondition
                             {
-                                Categories = new[] { Category.Cat1, },
+                                Categories = new[] { Category.Cat1 },
                                 Source = new BuildingFromCurrentEvent(),
                             },
-                            new CountCondition()
+                            new CountCondition
                             {
-                                Source = new BuildingsByRange()
+                                Source = new BuildingsByRange
                                 {
                                     Center = new BuildingFromCurrentEvent(),
                                     ReturnInRange = true,
-                                }.WithCondition(new BuildingCategoryCondition()
-                                    { Categories = new[] { Category.Cat3, } }),
+                                }.WithCondition(new BuildingCategoryCondition { Categories = new[] { Category.Cat3 } }),
                                 Value = 0,
                                 ComparisonMode = CountCondition.Mode.Equal,
                             },
@@ -723,25 +721,24 @@ namespace RogueIslands.Gameplay.Boosters
                         new LiteralDescription(
                             $"5x score when an {Category.Cat4} building has {Category.Cat3} buildings nearby"),
                     BuyPrice = 5,
-                    EventAction = new ScoringAction()
+                    EventAction = new ScoringAction
                     {
                         Multiplier = 5,
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<AfterAllBuildingTriggers>(),
-                            new BuildingCategoryCondition()
+                            new BuildingCategoryCondition
                             {
-                                Categories = new[] { Category.Cat4, },
+                                Categories = new[] { Category.Cat4 },
                                 Source = new BuildingFromCurrentEvent(),
                             },
-                            new CountCondition()
+                            new CountCondition
                             {
-                                Source = new BuildingsByRange()
+                                Source = new BuildingsByRange
                                 {
                                     Center = new BuildingFromCurrentEvent(),
                                     ReturnInRange = true,
-                                }.WithCondition(new BuildingCategoryCondition()
-                                    { Categories = new[] { Category.Cat3, } }),
+                                }.WithCondition(new BuildingCategoryCondition { Categories = new[] { Category.Cat3 } }),
                                 Value = 0,
                                 ComparisonMode = CountCondition.Mode.More,
                             },
@@ -751,27 +748,28 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Lowkey",
-                    Description = new LiteralDescription($"3x score when {Category.Cat5} building has no other {Category.Cat5} buildings nearby"),
+                    Description =
+                        new LiteralDescription(
+                            $"3x score when {Category.Cat5} building has no other {Category.Cat5} buildings nearby"),
                     BuyPrice = 5,
-                    EventAction = new ScoringAction()
+                    EventAction = new ScoringAction
                     {
                         Multiplier = 3,
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<AfterAllBuildingTriggers>(),
-                            new BuildingCategoryCondition()
+                            new BuildingCategoryCondition
                             {
-                                Categories = new[] { Category.Cat5, },
+                                Categories = new[] { Category.Cat5 },
                                 Source = new BuildingFromCurrentEvent(),
                             },
-                            new CountCondition()
+                            new CountCondition
                             {
-                                Source = new BuildingsByRange()
+                                Source = new BuildingsByRange
                                 {
                                     Center = new BuildingFromCurrentEvent(),
                                     ReturnInRange = true,
-                                }.WithCondition(new BuildingCategoryCondition()
-                                    { Categories = new[] { Category.Cat5, } }),
+                                }.WithCondition(new BuildingCategoryCondition { Categories = new[] { Category.Cat5 } }),
                                 Value = 0,
                                 ComparisonMode = CountCondition.Mode.Equal,
                             },
@@ -783,7 +781,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Colorful",
                     Description = new LiteralDescription("+200% same-color bonus score"),
                     BuyPrice = 3,
-                    EventAction = new ModifyBonusAction()
+                    EventAction = new ModifyBonusAction
                     {
                         Conditions = new IGameCondition[]
                         {
@@ -797,7 +795,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Good Year",
                     Description = new LiteralDescription("x5 all bonus scores"),
                     BuyPrice = 3,
-                    EventAction = new ModifyBonusAction()
+                    EventAction = new ModifyBonusAction
                     {
                         Conditions = new IGameCondition[]
                         {
@@ -811,15 +809,15 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Tourism",
                     Description = new LiteralDescription($"x10 bonus score from {Category.Cat5} buildings"),
                     BuyPrice = 4,
-                    EventAction = new ModifyBonusAction()
+                    EventAction = new ModifyBonusAction
                     {
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<BuildingBonus>(),
-                            new BuildingCategoryCondition()
+                            new BuildingCategoryCondition
                             {
                                 Source = new BuildingFromCurrentEvent(),
-                                Categories = new[] { Category.Cat5, },
+                                Categories = new[] { Category.Cat5 },
                             },
                         },
                         Multiplier = 10,
@@ -828,7 +826,8 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Inside Out",
-                    Description = new LiteralDescription("Instead of in-range buildings, out of range buildings score bonus"),
+                    Description =
+                        new LiteralDescription("Instead of in-range buildings, out of range buildings score bonus"),
                     BuyPrice = 4,
                 },
                 new()
@@ -836,12 +835,31 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Double Trouble",
                     Description = new LiteralDescription("x2 score when a building scores bonus"),
                     BuyPrice = 6,
-                    EventAction = new ScoringAction()
+                    EventAction = new ScoringAction
                     {
                         Multiplier = 2,
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<AfterBuildingBonus>(),
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "Mine Shaft",
+                    Description = new LiteralDescription($"+50 score when an {Category.Cat4} building is triggered"),
+                    BuyPrice = 6,
+                    EventAction = new ScoringAction
+                    {
+                        Products = 50,
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<BuildingTriggered>(),
+                            new BuildingCategoryCondition
+                            {
+                                Categories = new[] { Category.Cat4 },
+                                Source = new BuildingFromCurrentEvent(),
+                            },
                         },
                     },
                 },
@@ -861,7 +879,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Conditions = new IGameCondition[]
                     {
                         GameEventCondition.Create<BuildingTriggered>(),
-                        new ColorCheckCondition()
+                        new ColorCheckCondition
                         {
                             Source = new BuildingFromCurrentEvent(),
                             ForcedColors = new List<ColorTag> { color },
