@@ -87,7 +87,12 @@ namespace RogueIslands.Gameplay.DryRun
                 var moneyAndCount = _moneyChanges
                     .GroupBy(x => x)
                     .ToDictionary(x => x.Key, x => x.Count());
-                _realBoosterView.GetMoneyVisualizer().ShowDryRunMoney(moneyAndCount);
+
+                var vis = _realBoosterView.GetMoneyVisualizer();
+                if (HasProbabilityCondition())
+                    vis.ShowDryRunProbability();
+                else
+                    vis.ShowDryRunMoney(moneyAndCount);
             }
 
             if (!_multipliers.SequenceEqual(lastFrameView._multipliers))
@@ -98,7 +103,10 @@ namespace RogueIslands.Gameplay.DryRun
 
                 var vis = _realBoosterView.GetScoringVisualizer();
                 vis.HideDryRun();
-                vis.ShowDryRunMultiplier(multipliersAndCount);
+                if (HasProbabilityCondition())
+                    vis.ShowDryRunMultiplyProbability();
+                else
+                    vis.ShowDryRunMultiplier(multipliersAndCount);
             }
 
             if (!_products.SequenceEqual(lastFrameView._products))
@@ -109,21 +117,30 @@ namespace RogueIslands.Gameplay.DryRun
 
                 var vis = _realBoosterView.GetScoringVisualizer();
                 vis.HideDryRun();
-                vis.ShowDryRunProducts(productsAndCount);
+                if (HasProbabilityCondition())
+                    vis.ShowDryRunAddProbability();
+                else
+                    vis.ShowDryRunProducts(productsAndCount);
             }
 
             if (ScaleUpTriggers != lastFrameView.ScaleUpTriggers)
             {
                 var vis = _realBoosterView.GetScalingVisualizer();
                 vis.HideDryRun();
-                vis.ShowDryRunScaleUp(ScaleUpTriggers);
+                if (HasProbabilityCondition())
+                    vis.ShowDryRunProbability();
+                else
+                    vis.ShowDryRunScaleUp(ScaleUpTriggers);
             }
 
             if (ScaleDownTriggers != lastFrameView.ScaleDownTriggers)
             {
                 var vis = _realBoosterView.GetScalingVisualizer();
                 vis.HideDryRun();
-                vis.ShowDryRunScaleDown(ScaleDownTriggers);
+                if (HasProbabilityCondition())
+                    vis.ShowDryRunProbability();
+                else
+                    vis.ShowDryRunScaleDown(ScaleDownTriggers);
             }
 
             if (Retriggers != lastFrameView.Retriggers)

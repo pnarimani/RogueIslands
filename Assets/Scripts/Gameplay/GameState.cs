@@ -10,7 +10,7 @@ namespace RogueIslands.Gameplay
     public class GameState
     {
         public const int RoundsPerAct = 5;
-        public const int TotalActs = 5;
+        public const int TotalActs = 4;
 
         public int Round;
         public int Act;

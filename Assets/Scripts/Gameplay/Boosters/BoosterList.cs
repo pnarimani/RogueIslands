@@ -91,7 +91,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Saw Dust",
                     Description =
                         new ProbabilityDescription(
-                            $"{{0}} to give x2 mult for each {Category.Cat3} building triggered"),
+                            $"{{0}} to give x10 mult for each {Category.Cat3} building triggered"),
                     BuyPrice = 6,
                     EventAction = new ScoringAction
                     {
@@ -108,7 +108,7 @@ namespace RogueIslands.Gameplay.Boosters
                                 TotalOutcomes = 2,
                             },
                         },
-                        Multiplier = 2,
+                        Multiplier = 10,
                     },
                 },
                 new()
@@ -216,7 +216,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Crowded",
                     Description = new ProbabilityDescription(
-                        $"{{0}} chance to retrigger {Category.Cat4} buildings twice"),
+                        $"{{0}} chance to trigger {Category.Cat4} buildings 2 more times"),
                     BuyPrice = 6,
                     EventAction = new RetriggerBuildingAction
                     {
@@ -256,7 +256,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Binary World",
                     Description =
-                        new LiteralDescription($"x30 mult if all buildings are {ColorTag.Green} or {ColorTag.Purple}"),
+                        new LiteralDescription($"x20 mult if all buildings are {ColorTag.Green} or {ColorTag.Purple}"),
                     BuyPrice = 8,
                     EventAction = new ScoringAction
                     {
@@ -266,9 +266,10 @@ namespace RogueIslands.Gameplay.Boosters
                             new ColorCheckCondition
                             {
                                 BannedColors = new[] { ColorTag.Red, ColorTag.Blue },
+                                Source = new PlacedDownBuildings(),
                             },
                         },
-                        Multiplier = 30,
+                        Multiplier = 20,
                     },
                 },
                 new()
