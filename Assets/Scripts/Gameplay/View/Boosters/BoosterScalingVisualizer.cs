@@ -37,18 +37,21 @@ namespace RogueIslands.Gameplay.View.Boosters
         public void ShowDryRunScaleUp(int count)
         {
             _dryRunLabel = Instantiate(_labelFeedback, _labelFeedback.transform.parent, true);
+            _dryRunLabel.transform.localScale = Vector3.one * 0.75f;
             _dryRunLabel.Show();
         }
 
         public void ShowDryRunScaleDown(int count)
         {
             _dryRunLabel = Instantiate(_scaleDownFeedback, _scaleDownFeedback.transform.parent, true);
+            _dryRunLabel.transform.localScale = Vector3.one * 0.75f;
             _dryRunLabel.Show();
         }
 
         public void ShowDryRunProbability()
         {
             _dryRunLabel = Instantiate(_labelFeedback, _labelFeedback.transform.parent, true);
+            _dryRunLabel.transform.localScale = Vector3.one * 0.75f;
             _dryRunLabel.SetText("???");
             _dryRunLabel.Show();
         }

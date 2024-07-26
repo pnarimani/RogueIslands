@@ -64,6 +64,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             {
                 var label = Instantiate(_money, _money.transform.parent, true);
                 label.SetText(count > 1 ? $"${money} x {count}" : $"${money}");
+                label.transform.localScale = Vector3.one * 0.75f;
                 label.Show();
                 _dryRunLabels.Add(label);
             }
@@ -72,6 +73,7 @@ namespace RogueIslands.Gameplay.View.Boosters
         public void ShowDryRunProbability()
         {
             var label = Instantiate(_money, _money.transform.parent, true);
+            label.transform.localScale = Vector3.one * 0.75f;
             label.SetText("???");
             label.Show();
             _dryRunLabels.Add(label);

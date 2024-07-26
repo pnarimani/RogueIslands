@@ -38,7 +38,8 @@ namespace RogueIslands.Gameplay.View.Boosters
             foreach (var (mult, count) in multipliersAndCount)
             {
                 var label = Instantiate(_multiLabelFeedback, _multiLabelFeedback.transform.parent, true);
-                label.SetText(count > 1 ? $"x{mult:0.#} x {count}" : $"x{mult:0.#}");
+                label.transform.localScale = Vector3.one * 0.75f;
+                label.SetText(count > 1 ? $"x{mult:0.#}<size=50%>x{count}" : $"x{mult:0.#}");
                 label.Show();
                 _dryRunLabels.Add(label);
             }
@@ -49,7 +50,8 @@ namespace RogueIslands.Gameplay.View.Boosters
             foreach (var (prod, count) in productsAndCount)
             {
                 var label = Instantiate(_productLabelFeedback, _productLabelFeedback.transform.parent, true);
-                label.SetText(count > 1 ? $"+{prod:0.#} x {count}" : $"+{prod:0.#}");
+                label.transform.localScale = Vector3.one * 0.75f;
+                label.SetText(count > 1 ? $"+{prod:0.#}<size=50%>x{count}" : $"+{prod:0.#}");
                 label.Show();
                 _dryRunLabels.Add(label);
             }
@@ -58,6 +60,7 @@ namespace RogueIslands.Gameplay.View.Boosters
         public void ShowDryRunAddProbability()
         {
             var label = Instantiate(_productLabelFeedback, _productLabelFeedback.transform.parent, true);
+            label.transform.localScale = Vector3.one * 0.75f;
             label.SetText("???");
             label.Show();
             _dryRunLabels.Add(label);
@@ -66,6 +69,7 @@ namespace RogueIslands.Gameplay.View.Boosters
         public void ShowDryRunMultiplyProbability()
         {
             var label = Instantiate(_multiLabelFeedback, _multiLabelFeedback.transform.parent, true);
+            label.transform.localScale = Vector3.one * 0.75f;
             label.SetText("???");
             label.Show();
             _dryRunLabels.Add(label);

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using RogueIslands.Gameplay.Boosters;
-using RogueIslands.Gameplay.Boosters.Conditions;
 
 namespace RogueIslands.Gameplay.DryRun
 {
@@ -13,11 +12,9 @@ namespace RogueIslands.Gameplay.DryRun
         private readonly List<double> _multipliers = new();
         private readonly List<double> _products = new();
         private readonly IBoosterView _realBoosterView;
-        private readonly IBooster _booster;
 
-        public DryRunBoosterView(IBooster booster, IBoosterView realBoosterView)
+        public DryRunBoosterView(IBoosterView realBoosterView)
         {
-            _booster = booster;
             _realBoosterView = realBoosterView;
         }
 
@@ -80,7 +77,7 @@ namespace RogueIslands.Gameplay.DryRun
 
         public IBoosterMoneyVisualizer GetMoneyVisualizer() => this;
 
-        public void ApplyChanges(DryRunBoosterView lastFrameView)
+        public void ApplyChanges(DryRunBoosterView lastFrameView, DryRunBoosterView noProbabilitiesView)
         {
             if (!_moneyChanges.SequenceEqual(lastFrameView._moneyChanges))
             {
@@ -89,7 +86,7 @@ namespace RogueIslands.Gameplay.DryRun
                     .ToDictionary(x => x.Key, x => x.Count());
 
                 var vis = _realBoosterView.GetMoneyVisualizer();
-                if (HasProbabilityCondition())
+                if (!_moneyChanges.SequenceEqual(noProbabilitiesView._moneyChanges))
                     vis.ShowDryRunProbability();
                 else
                     vis.ShowDryRunMoney(moneyAndCount);
@@ -103,7 +100,7 @@ namespace RogueIslands.Gameplay.DryRun
 
                 var vis = _realBoosterView.GetScoringVisualizer();
                 vis.HideDryRun();
-                if (HasProbabilityCondition())
+                if (!_multipliers.SequenceEqual(noProbabilitiesView._multipliers))
                     vis.ShowDryRunMultiplyProbability();
                 else
                     vis.ShowDryRunMultiplier(multipliersAndCount);
@@ -117,7 +114,7 @@ namespace RogueIslands.Gameplay.DryRun
 
                 var vis = _realBoosterView.GetScoringVisualizer();
                 vis.HideDryRun();
-                if (HasProbabilityCondition())
+                if (!_products.SequenceEqual(noProbabilitiesView._products))
                     vis.ShowDryRunAddProbability();
                 else
                     vis.ShowDryRunProducts(productsAndCount);
@@ -127,7 +124,7 @@ namespace RogueIslands.Gameplay.DryRun
             {
                 var vis = _realBoosterView.GetScalingVisualizer();
                 vis.HideDryRun();
-                if (HasProbabilityCondition())
+                if (!_moneyChanges.SequenceEqual(noProbabilitiesView._moneyChanges))
                     vis.ShowDryRunProbability();
                 else
                     vis.ShowDryRunScaleUp(ScaleUpTriggers);
@@ -137,7 +134,7 @@ namespace RogueIslands.Gameplay.DryRun
             {
                 var vis = _realBoosterView.GetScalingVisualizer();
                 vis.HideDryRun();
-                if (HasProbabilityCondition())
+                if (!_moneyChanges.SequenceEqual(noProbabilitiesView._moneyChanges))
                     vis.ShowDryRunProbability();
                 else
                     vis.ShowDryRunScaleDown(ScaleDownTriggers);
@@ -147,7 +144,7 @@ namespace RogueIslands.Gameplay.DryRun
             {
                 var vis = _realBoosterView.GetRetriggerVisualizer();
                 vis.HideDryRun();
-                if (HasProbabilityCondition())
+                if (Retriggers != noProbabilitiesView.Retriggers)
                     vis.ShowDryRunProbability();
                 else
                     vis.ShowDryRunRetriggers(Retriggers);
@@ -157,15 +154,12 @@ namespace RogueIslands.Gameplay.DryRun
             {
                 var vis = _realBoosterView.GetResetVisualizer();
                 vis.HideDryRun();
-                if (HasProbabilityCondition())
+                if (Resets != noProbabilitiesView.Resets)
                     vis.ShowDryRunProbability();
                 else
                     vis.ShowDryRunReset();
             }
         }
-
-        private bool HasProbabilityCondition()
-            => _booster.EventAction.GetAllConditions().Any(p => p is ProbabilityCondition);
 
         public void HideAll()
         {

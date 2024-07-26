@@ -10,17 +10,24 @@ namespace RogueIslands.Gameplay.DryRun
         private readonly IGameView _realGameView;
         private Dictionary<BuildingId, DryRunBuildingView> _lastFrameBuildingViews = new();
         private Dictionary<BoosterInstanceId, DryRunBoosterView> _lastFrameBoosterViews = new();
-        private Dictionary<BuildingId, DryRunBuildingView> _buildingViews = new();
-        private Dictionary<BoosterInstanceId, DryRunBoosterView> _boosterViews = new();
+
+        private Dictionary<BuildingId, DryRunBuildingView> _allProbabilitiesBuildingViews = new();
+        private Dictionary<BoosterInstanceId, DryRunBoosterView> _allProbabilitiesBoosterViews = new();
+
+        private Dictionary<BuildingId, DryRunBuildingView> _noProbabilitiesBuildingViews = new();
+        private Dictionary<BoosterInstanceId, DryRunBoosterView> _noProbabilitiesBoosterViews = new();
 
         public DryRunGameView(IGameView realGameView) => _realGameView = realGameView;
 
+        public bool IsAllProbabilitiesMode { get; set; }
+
         public IBuildingView GetBuilding(Building building)
         {
-            if (!_buildingViews.TryGetValue(building.Id, out var view))
+            var dict = IsAllProbabilitiesMode ? _allProbabilitiesBuildingViews : _noProbabilitiesBuildingViews;
+            if (!dict.TryGetValue(building.Id, out var view))
             {
                 view = new DryRunBuildingView(_realGameView.GetBuilding(building));
-                _buildingViews.Add(building.Id, view);
+                dict.Add(building.Id, view);
             }
 
             return view;
@@ -28,14 +35,15 @@ namespace RogueIslands.Gameplay.DryRun
 
         public IBoosterView GetBooster(IBooster booster)
         {
-            if (!_boosterViews.TryGetValue(booster.Id, out var view))
+            var dict = IsAllProbabilitiesMode ? _allProbabilitiesBoosterViews : _noProbabilitiesBoosterViews;
+            if (!dict.TryGetValue(booster.Id, out var view))
             {
                 var realBoosterView = _realGameView.GetBooster(booster);
                 if (realBoosterView == null)
                     throw new Exception($"Failed to find booster view for booster {booster.Name}");
 
-                view = new DryRunBoosterView(booster, realBoosterView);
-                _boosterViews.Add(booster.Id, view);
+                view = new DryRunBoosterView(realBoosterView);
+                dict.Add(booster.Id, view);
             }
 
             return view;
@@ -69,17 +77,20 @@ namespace RogueIslands.Gameplay.DryRun
 
         public void ShowDryRunResults()
         {
-            foreach (var (booster, view) in _boosterViews)
+            foreach (var (booster, view) in _allProbabilitiesBoosterViews)
             {
                 if (!_lastFrameBoosterViews.TryGetValue(booster, out var lastFrame))
-                    lastFrame = new DryRunBoosterView(null, null);
+                    lastFrame = new DryRunBoosterView(null);
 
-                view.ApplyChanges(lastFrame);
+                if (!_noProbabilitiesBoosterViews.TryGetValue(booster, out var noProb))
+                    noProb = new DryRunBoosterView(null);
+
+                view.ApplyChanges(lastFrame, noProb);
 
                 _lastFrameBoosterViews.Remove(booster);
             }
 
-            foreach (var (building, view) in _buildingViews)
+            foreach (var (building, view) in _allProbabilitiesBuildingViews)
             {
                 if (!_lastFrameBuildingViews.TryGetValue(building, out var lastFrame))
                     lastFrame = new DryRunBuildingView(null);
@@ -93,16 +104,18 @@ namespace RogueIslands.Gameplay.DryRun
             {
                 view.HideAll();
             }
-            
+
             foreach (var (_, view) in _lastFrameBuildingViews)
             {
                 view.HideAll();
             }
 
-            _lastFrameBoosterViews = _boosterViews;
-            _lastFrameBuildingViews = _buildingViews;
-            _boosterViews = new Dictionary<BoosterInstanceId, DryRunBoosterView>();
-            _buildingViews = new Dictionary<BuildingId, DryRunBuildingView>();
+            _lastFrameBoosterViews = _allProbabilitiesBoosterViews;
+            _lastFrameBuildingViews = _allProbabilitiesBuildingViews;
+            _allProbabilitiesBoosterViews = new Dictionary<BoosterInstanceId, DryRunBoosterView>();
+            _allProbabilitiesBuildingViews = new Dictionary<BuildingId, DryRunBuildingView>();
+            _noProbabilitiesBoosterViews.Clear();
+            _noProbabilitiesBuildingViews.Clear();
         }
 
         public void Clear()
@@ -111,16 +124,18 @@ namespace RogueIslands.Gameplay.DryRun
             {
                 view.HideAll();
             }
-            
+
             foreach (var (_, view) in _lastFrameBuildingViews)
             {
                 view.HideAll();
             }
-            
+
             _lastFrameBoosterViews.Clear();
             _lastFrameBuildingViews.Clear();
-            _boosterViews.Clear();
-            _buildingViews.Clear();
+            _allProbabilitiesBoosterViews.Clear();
+            _allProbabilitiesBuildingViews.Clear();
+            _noProbabilitiesBoosterViews.Clear();
+            _noProbabilitiesBuildingViews.Clear();
         }
     }
 }

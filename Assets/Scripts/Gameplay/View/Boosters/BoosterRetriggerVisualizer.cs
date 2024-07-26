@@ -9,7 +9,7 @@ namespace RogueIslands.Gameplay.View.Boosters
     {
         [SerializeField] private LabelFeedback _labelFeedback;
         [SerializeField] private CardTriggerFeedback _triggerFeedback;
-        
+
         private LabelFeedback _dryRunLabel;
 
         private async UniTask Play()
@@ -27,13 +27,15 @@ namespace RogueIslands.Gameplay.View.Boosters
         public void ShowDryRunRetriggers(int count)
         {
             _dryRunLabel = Instantiate(_labelFeedback, _labelFeedback.transform.parent, true);
-            _dryRunLabel.SetText(count > 1 ? $"Again! x {count}" : $"Again!");
+            _dryRunLabel.transform.localScale = Vector3.one * 0.75f;
+            _dryRunLabel.SetText(count > 1 ? $"Again!<size=50%>x{count}" : $"Again!");
             _dryRunLabel.Show();
         }
 
         public void ShowDryRunProbability()
         {
             _dryRunLabel = Instantiate(_labelFeedback, _labelFeedback.transform.parent, true);
+            _dryRunLabel.transform.localScale = Vector3.one * 0.75f;
             _dryRunLabel.SetText("???");
             _dryRunLabel.Show();
         }

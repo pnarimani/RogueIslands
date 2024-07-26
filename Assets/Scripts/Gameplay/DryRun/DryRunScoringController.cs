@@ -43,13 +43,15 @@ namespace RogueIslands.Gameplay.DryRun
             Profiler.BeginSample("DryRunScoringController.ExecuteDryRun");
 
             var clonedBuilding = _cloner.Clone(building);
-            _cloner.CloneTo(_realGame.Boosters, _fakeGame.Boosters);
-            _cloner.CloneTo(_realGame.Buildings.PlacedDownBuildings, _fakeGame.PlacedDownBuildings);
-            _fakeGame.Money = _realGame.Money;
-            _fakeGame.CurrentScore = _realGame.CurrentScore;
-            MakeProbabilitiesPass();
+            
+            CloneRealGameToFakeGame(clonedBuilding);
+            MakeProbabilitiesPass(true);
+            _fakeView.IsAllProbabilitiesMode = true;
+            _scoringController.ScoreBuilding(clonedBuilding);
 
-            _fakeGame.Buildings.PlacedDownBuildings.Add(clonedBuilding);
+            CloneRealGameToFakeGame(clonedBuilding);
+            MakeProbabilitiesPass(false);
+            _fakeView.IsAllProbabilitiesMode = false;
             _scoringController.ScoreBuilding(clonedBuilding);
 
             _fakeView.ShowDryRunResults();
@@ -57,12 +59,39 @@ namespace RogueIslands.Gameplay.DryRun
             Profiler.EndSample();
         }
 
-        private void MakeProbabilitiesPass()
+        private void CloneRealGameToFakeGame(Building clonedBuilding)
         {
-            foreach (var b in _fakeGame.Boosters)
+            _cloner.CloneTo(_realGame.Boosters, _fakeGame.Boosters);
+            _cloner.CloneTo(_realGame.Buildings.PlacedDownBuildings, _fakeGame.PlacedDownBuildings);
+            _fakeGame.Money = _realGame.Money;
+            _fakeGame.CurrentScore = _realGame.CurrentScore;
+            _fakeGame.Buildings.PlacedDownBuildings.Add(clonedBuilding);
+        }
+
+        private void MakeProbabilitiesPass(bool pass)
+        {
+            var riggedCounts = _fakeGame.GetRiggedCount();
+            
+            foreach (var booster in _fakeGame.Boosters)
             {
-                foreach (var probabilityCondition in b.EventAction.GetAllConditions().OfType<ProbabilityCondition>())
-                    probabilityCondition.FavorableOutcome = probabilityCondition.TotalOutcomes;
+                foreach (var cond in booster.EventAction.GetAllConditions().OfType<ProbabilityCondition>())
+                {
+                    if (pass)
+                    {
+                        cond.FavorableOutcome = cond.TotalOutcomes;
+                        continue;
+                    }
+
+                    var withRigged = cond.FavorableOutcome * (riggedCounts + 1);
+
+                    if (withRigged >= cond.TotalOutcomes)
+                    {
+                        cond.FavorableOutcome = cond.TotalOutcomes;
+                        continue;
+                    }
+
+                    cond.FavorableOutcome = 0;
+                }
             }
         }
 
