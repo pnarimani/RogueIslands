@@ -608,7 +608,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Hug",
-                    Description = new LiteralDescription("+0.8x for each Large building in range"),
+                    Description = new LiteralDescription("+2x for each Large building in range"),
                     BuyPrice = 4,
                     EventAction = new MultipliedScoringAction
                     {
@@ -622,7 +622,7 @@ namespace RogueIslands.Gameplay.Boosters
                                 ReturnInRange = true,
                             }.WithCondition(new BuildingSizeCondition { Allowed = new[] { BuildingSize.Large } })
                             .Count(),
-                        Multiplier = 0.8,
+                        Multiplier = 2,
                     },
                 },
                 new()
