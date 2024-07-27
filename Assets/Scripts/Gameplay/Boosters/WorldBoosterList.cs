@@ -1,9 +1,4 @@
 ﻿using System.Collections.Generic;
-using RogueIslands.Gameplay.Boosters.Actions;
-using RogueIslands.Gameplay.Boosters.Conditions;
-using RogueIslands.Gameplay.Boosters.Descriptions;
-using RogueIslands.Gameplay.Buildings;
-using RogueIslands.Gameplay.GameEvents;
 
 namespace RogueIslands.Gameplay.Boosters
 {

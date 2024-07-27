@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Autofac;
 using RogueIslands.Serialization;
 using RogueIslands.Gameplay;
-using RogueIslands.Gameplay.Boosters.Descriptions;
 using RogueIslands.Gameplay.Buildings;
+using RogueIslands.Gameplay.Descriptions;
 using UnityEditor;
 using UnityEngine;
 
@@ -33,12 +33,16 @@ namespace RogueIslands.Tools
                     PrefabAddress = "A",
                     IconAddress = "B",
                     Range = 3,
-                    Category = Category.Cat1,
+                    Category = Category.City,
                     Color = ColorTag.Blue,
                     Size = BuildingSize.Small,
                     Output = 34,
                     OutputUpgrade = 540,
-                    Description = new LiteralDescription("A"),
+                    Description = new DescriptionData()
+                    {
+                        Text = "A",
+                        Keywords = new[] { "A", "B" }
+                    }
                 };
 
                 var buildingState = new BuildingsState()

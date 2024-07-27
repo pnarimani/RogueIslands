@@ -16,12 +16,12 @@ namespace RogueIslands.Gameplay.Buildings
         public static bool operator ==(Category left, Category right) => left.Equals(right);
         public static bool operator !=(Category left, Category right) => !(left == right);
 
-        public static readonly Category Cat1 = new("City");
-        public static readonly Category Cat2 = new("Farming");
-        public static readonly Category Cat3 = new("Lumber");
-        public static readonly Category Cat4 = new("Iron");
-        public static readonly Category Cat5 = new("Statue");
+        public static readonly Category City = new("City");
+        public static readonly Category Farming = new("Farming");
+        public static readonly Category Lumber = new("Lumber");
+        public static readonly Category Iron = new("Iron");
+        public static readonly Category Statue = new("Statue");
 
-        public static readonly Category[] All = { Cat1, Cat2, Cat3, Cat4, Cat5 };
+        public static readonly Category[] All = { City, Farming, Lumber, Iron, Statue };
     }
 }

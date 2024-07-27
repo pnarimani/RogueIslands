@@ -7,6 +7,7 @@ using RogueIslands.DependencyInjection;
 using RogueIslands.Diagnostics;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DryRun;
+using RogueIslands.Gameplay.View.Descriptions;
 using RogueIslands.Gameplay.View.Feedbacks;
 using RogueIslands.Gameplay.View.Shop;
 using RogueIslands.Gameplay.View.Win;

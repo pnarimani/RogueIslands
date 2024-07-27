@@ -4,16 +4,16 @@ using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using RogueIslands.Gameplay;
-using RogueIslands.Gameplay.Boosters.Descriptions;
 using RogueIslands.Gameplay.Buildings;
+using RogueIslands.Gameplay.Descriptions;
 using RogueIslands.Serialization;
 
 namespace RogueIslands.Tests
 {
     public class SerializationIntegrationTest
     {
-        private ISerializer _serializer;
         private IDeserializer _deserializer;
+        private ISerializer _serializer;
 
         [SetUp]
         public void SetUp()
@@ -36,17 +36,21 @@ namespace RogueIslands.Tests
                 PrefabAddress = "A",
                 IconAddress = "B",
                 Range = 3,
-                Category = Category.Cat1,
+                Category = Category.City,
                 Color = ColorTag.Blue,
                 Size = BuildingSize.Small,
                 Output = 34,
                 OutputUpgrade = 540,
-                Description = new LiteralDescription("A"),
+                Description = new DescriptionData
+                {
+                    Text = "Text goes here",
+                    Keywords = new List<string> { "a", "b", "c" },
+                },
             };
-            var buildingState = new BuildingsState()
+            var buildingState = new BuildingsState
             {
-                Deck = new List<Building>() { building },
-                All = new List<Building>() { building },
+                Deck = new List<Building> { building },
+                All = new List<Building> { building },
             };
             var text = _serializer.Serialize(buildingState);
 

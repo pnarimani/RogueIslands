@@ -13,8 +13,10 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
 
             if (boosterScored.Booster.EventAction is null)
                 return false;
+
+            using var gameConditions = boosterScored.Booster.EventAction.GetAllConditions();
             
-            return boosterScored.Booster.EventAction.GetAllConditions().Any(c => c is ProbabilityCondition);
+            return gameConditions.Any(c => c is ProbabilityCondition);
         }
     }
 }

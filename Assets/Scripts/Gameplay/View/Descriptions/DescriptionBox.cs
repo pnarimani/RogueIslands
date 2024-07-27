@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace RogueIslands.Gameplay.View
+namespace RogueIslands.Gameplay.View.Descriptions
 {
     public class DescriptionBox : MonoBehaviour
     {

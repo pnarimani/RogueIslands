@@ -51,7 +51,7 @@ namespace RogueIslands.Gameplay.View.DeckBuilding
         {
             _consumable = consumable;
             _title.text = consumable.Name;
-            _description.text = consumable.Description.Get(GameManager.Instance.State, consumable);
+            _description.text = "";
 
             InitializeSelector(consumable);
 

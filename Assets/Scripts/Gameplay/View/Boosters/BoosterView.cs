@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using RogueIslands.Gameplay.Boosters;
+using RogueIslands.Gameplay.View.Descriptions;
 using UnityEngine;
 using UnityEngine.Assertions;
 

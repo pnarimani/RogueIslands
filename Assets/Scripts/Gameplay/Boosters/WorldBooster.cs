@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using RogueIslands.Gameplay.Boosters.Actions;
 using RogueIslands.Gameplay.Boosters.Evaluators;
+using RogueIslands.Gameplay.Descriptions;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.Boosters
@@ -13,7 +14,7 @@ namespace RogueIslands.Gameplay.Boosters
         public Vector3 Position { get; set; }
         public Quaternion Rotation { get; set; }
         public float Range { get; set; }
-        public IDescriptionProvider Description { get; set; }
+        public DescriptionData Description { get; set; }
         public GameAction EventAction { get; set; }
         public IReadOnlyList<GameConditionEvaluator> EvaluationOverrides { get; set; }
         public string PrefabAddress { get; set; }

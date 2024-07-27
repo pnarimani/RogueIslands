@@ -27,7 +27,7 @@ namespace RogueIslands.Gameplay.Buildings
                             PrefabAddress = prefabAddress,
                             IconAddress = "Buildings/Icons/Sample",
                         };
-                        card.Description = new BuildingDescriptionProvider();
+                        card.Description = $"Output: {card.Output}\nSize: {{{card.Size.ToString()}}}\nCategory: {{{card.Category.Value}}}";
                         allCards.Add(card);
                     }
                 }

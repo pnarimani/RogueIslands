@@ -74,7 +74,8 @@ namespace RogueIslands.Gameplay.DryRun
             
             foreach (var booster in _fakeGame.Boosters)
             {
-                foreach (var cond in booster.EventAction.GetAllConditions().OfType<ProbabilityCondition>())
+                using var gameConditions = booster.EventAction.GetAllConditions();
+                foreach (var cond in gameConditions.OfType<ProbabilityCondition>())
                 {
                     if (pass)
                     {

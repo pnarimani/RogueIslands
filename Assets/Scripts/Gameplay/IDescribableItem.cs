@@ -1,7 +1,9 @@
-﻿namespace RogueIslands.Gameplay
+﻿using RogueIslands.Gameplay.Descriptions;
+
+namespace RogueIslands.Gameplay
 {
     public interface IDescribableItem
     {
-        IDescriptionProvider Description { get; }
+        DescriptionData Description { get; }
     }
 }

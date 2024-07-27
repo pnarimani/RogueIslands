@@ -1,4 +1,5 @@
 using System;
+using RogueIslands.Gameplay.Descriptions;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.Buildings
@@ -16,7 +17,7 @@ namespace RogueIslands.Gameplay.Buildings
         public BuildingSize Size;
         public double Output;
         public double OutputUpgrade;
-        public IDescriptionProvider Description { get; set; }
+        public DescriptionData Description { get; set; }
 
         public string Name { get; set; }
         public int BuyPrice { get; set; }

@@ -7,6 +7,7 @@ using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.Shop;
 using RogueIslands.Gameplay.View.Boosters;
+using RogueIslands.Gameplay.View.Descriptions;
 using RogueIslands.Gameplay.View.Feedbacks;
 using RogueIslands.Localization;
 using RogueIslands.UISystem;

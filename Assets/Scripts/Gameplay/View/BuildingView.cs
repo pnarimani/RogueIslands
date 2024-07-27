@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.View.Commons;
+using RogueIslands.Gameplay.View.Descriptions;
 using RogueIslands.Gameplay.View.Feedbacks;
 using RogueIslands.UISystem;
 using RogueIslands.View.Audio;

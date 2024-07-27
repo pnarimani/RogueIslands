@@ -4,7 +4,7 @@ using RogueIslands.UISystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace RogueIslands.Gameplay.View
+namespace RogueIslands.Gameplay.View.Descriptions
 {
     public class DescriptionBoxSpawner : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
@@ -31,7 +31,7 @@ namespace RogueIslands.Gameplay.View
         {
             if (!_isEnabled)
                 return;
-            
+
             if (_describableItem == null)
                 return;
 
@@ -88,10 +88,8 @@ namespace RogueIslands.Gameplay.View
                 _descBox.ShowName(alternateDescriptionTitle.AlternateTitle);
         }
 
-        private string GetDescriptionText()
-        {
-            return _describableItem.Description.Get(GameManager.Instance.State, _describableItem);
-        }
+        private string GetDescriptionText() 
+            => DescriptionTextProvider.Get(_describableItem);
 
         public void HideManually()
         {
