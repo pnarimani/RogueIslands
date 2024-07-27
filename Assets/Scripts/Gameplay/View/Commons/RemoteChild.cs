@@ -9,14 +9,10 @@ namespace RogueIslands.Gameplay.View.Commons
         private bool _isWorldSpaceUI;
         private Transform _parent;
         private Vector3 _localPosition;
-
-        private void Awake()
-        {
-            _camera = Camera.main;
-        }
-
+        
         public void SetParent(Transform parent, Vector3 localPosition)
         {
+            _camera = Camera.main;
             _parent = parent;
             _localPosition = localPosition;
             _isWorldSpaceUI = _parent.GetComponentInParent<Canvas>().renderMode == RenderMode.WorldSpace;
@@ -26,7 +22,10 @@ namespace RogueIslands.Gameplay.View.Commons
         private void Update()
         {
             if (_parent == null)
+            {
+                Destroy(gameObject);
                 return;
+            }
             
             SetPosition();
         }

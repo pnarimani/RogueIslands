@@ -107,10 +107,10 @@ namespace RogueIslands.Gameplay.View
             var min = -bounds.extents;
             var max = bounds.extents;
 
-            _bottomLeft = new Vector3(min.x, bounds.center.y, min.z);
-            _topLeft = new Vector3(min.x, bounds.center.y, max.z);
-            _topRight = new Vector3(max.x, bounds.center.y, max.z);
-            _bottomRight = new Vector3(max.x, bounds.center.y, min.z);
+            _bottomLeft = new Vector3(min.x, 0.1f, min.z);
+            _topLeft = new Vector3(min.x, 0.1f, max.z);
+            _topRight = new Vector3(max.x, 0.1f, max.z);
+            _bottomRight = new Vector3(max.x, 0.1f, min.z);
 
             _bottomLeft = building.TransformPoint(_bottomLeft);
             _topLeft = building.TransformPoint(_topLeft);
@@ -128,7 +128,7 @@ namespace RogueIslands.Gameplay.View
             float? previousHitDistance = null;
             foreach (var ray in rays)
             {
-                if (!Physics.Raycast(ray, out var hit, 20, _groundMask | _buildingMask))
+                if (!Physics.Raycast(ray, out var hit, 0.2f, _groundMask | _buildingMask))
                     return false;
 
                 if (previousHitDistance.HasValue && Mathf.Abs(hit.distance - previousHitDistance.Value) > 1f)

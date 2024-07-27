@@ -23,10 +23,12 @@ namespace RogueIslands.Gameplay.View
         [SerializeField] private LabelFeedback _moneyFeedback;
         [SerializeField] private LabelFeedback _outputFeedback;
         [SerializeField] private LabelFeedback _bonusContainer;
+        [SerializeField] private GameObject _invalidPlacement;
 
         public static int TriggerCount;
 
-        private List<LabelFeedback> _dryRunLabels = new();
+        private GameObject _invalidPlacementInstance;
+        private readonly List<LabelFeedback> _dryRunLabels = new();
 
         public Building Data { get; private set; }
 
@@ -142,13 +144,17 @@ namespace RogueIslands.Gameplay.View
 
         public void ShowValidPlacement(bool isValidPlacement)
         {
-            foreach (var component in GetMeshRenderers())
+            if (!isValidPlacement && _invalidPlacementInstance == null)
             {
-                var mat = component.material;
-                var c = mat.color;
-                c.a = isValidPlacement ? 1 : 0.5f;
-                mat.color = c;
-                component.material = mat;
+                var overlay = GetOverlayRoot();
+                _invalidPlacementInstance = Instantiate(_invalidPlacement, overlay);
+                _invalidPlacementInstance.gameObject.AddComponent<RemoteChild>()
+                    .SetParent(_invalidPlacement.transform, Vector3.zero);
+                _invalidPlacementInstance.SetActive(true);
+            }
+            else if(isValidPlacement && _invalidPlacementInstance != null)
+            {
+                Destroy(_invalidPlacementInstance);
             }
         }
 
