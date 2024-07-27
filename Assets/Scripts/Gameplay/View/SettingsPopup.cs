@@ -11,10 +11,7 @@ namespace RogueIslands.Gameplay.View
     {
         [SerializeField] private Button _close;
         [SerializeField] private Slider _music, _sfx;
-        [SerializeField] private Toggle _enableParticles;
-        
 
-        
         private void Awake()
         {
             _close.onClick.AddListener(() => Destroy(gameObject));
