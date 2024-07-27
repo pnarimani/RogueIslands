@@ -1,4 +1,5 @@
 ﻿using System;
+using RogueIslands.Diagnostics;
 using RogueIslands.Gameplay.Boosters.Actions;
 
 namespace RogueIslands.Gameplay.Boosters.Executors
@@ -16,6 +17,9 @@ namespace RogueIslands.Gameplay.Boosters.Executors
 
         public sealed override bool Execute(GameState state, IGameView view, IBooster booster, GameAction action)
         {
+            using var profiler = new ProfilerBlock("GameActionExecutor.Execute");
+            using var conditionProfiler = new ProfilerBlock(typeof(T).Name);
+            
             Execute(state, view, booster, (T)action);
             return true;
         }

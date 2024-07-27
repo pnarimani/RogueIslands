@@ -1,4 +1,5 @@
 using System;
+using RogueIslands.Diagnostics;
 using RogueIslands.Gameplay.Boosters.Conditions;
 
 namespace RogueIslands.Gameplay.Boosters.Evaluators
@@ -15,6 +16,9 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
 
         public sealed override bool Evaluate(GameState state, IBooster booster, IGameCondition condition)
         {
+            using var profiler = new ProfilerBlock("GameConditionEvaluator.Evaluate");
+            using var conditionProfiler = new ProfilerBlock(typeof(T).Name);
+            
             return Evaluate(state, booster, (T)condition);
         }
 

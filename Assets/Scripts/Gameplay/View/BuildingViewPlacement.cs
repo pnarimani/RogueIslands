@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RogueIslands.Diagnostics;
+using UnityEngine;
 
 namespace RogueIslands.Gameplay.View
 {
@@ -17,6 +18,8 @@ namespace RogueIslands.Gameplay.View
 
         public Vector3 GetPosition(BuildingView building)
         {
+            using var profiler = ProfilerBlock.Begin();
+            
             var bounds = building.transform.GetBounds(building.GetMeshRenderers());
 
             _gizmosCenter = bounds.center;
@@ -42,6 +45,8 @@ namespace RogueIslands.Gameplay.View
 
         private Vector3 SlideDesiredPosition(Transform building, Bounds bounds, Vector3 desiredPosition)
         {
+            using var profiler = ProfilerBlock.Begin();
+            
             var currentPos = building.position;
 
             bounds.center = currentPos;
@@ -68,6 +73,8 @@ namespace RogueIslands.Gameplay.View
 
         private bool IntersectsAnyBuilding(Transform building, Bounds bounds)
         {
+            using var profiler = ProfilerBlock.Begin();
+            
             var count = Physics.OverlapBoxNonAlloc(bounds.center, bounds.extents, _colliderBuffer, building.rotation,
                 _buildingMask);
             for (var i = 0; i < count; i++)
@@ -81,6 +88,8 @@ namespace RogueIslands.Gameplay.View
 
         public bool IsValidPlacement(BuildingView building)
         {
+            using var profiler = ProfilerBlock.Begin();
+            
             var bounds = building.transform.GetBounds(building.GetMeshRenderers());
             var isIntersectingWithAnyBuildings = IntersectsAnyBuilding(building.transform, bounds);
             var isOnFlatGround = IsOnFlatGround(building.transform, bounds);
@@ -93,6 +102,8 @@ namespace RogueIslands.Gameplay.View
 
         private bool IsOnFlatGround(Transform building, Bounds bounds)
         {
+            using var profiler = ProfilerBlock.Begin();
+            
             var min = -bounds.extents;
             var max = bounds.extents;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using RogueIslands.Diagnostics;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.GameEvents;
 
@@ -19,6 +20,8 @@ namespace RogueIslands.Gameplay
 
         public void ScoreBuilding(Building building)
         {
+            using var profiler = ProfilerBlock.Begin();
+            
             _eventController.Execute(new ResetRetriggers());
 
             _eventController.Execute(new BuildingPlaced { Building = building, });
@@ -41,6 +44,8 @@ namespace RogueIslands.Gameplay
 
         private void TriggerBuilding(Building building, bool shouldScoreBonus)
         {
+            using var profiler = ProfilerBlock.Begin();
+            
             var buildingScore = Math.Ceiling(building.Output + building.OutputUpgrade);
             _state.TransientScore += buildingScore;
             _view.GetBuilding(building).BuildingTriggered((int)buildingScore);
@@ -55,6 +60,8 @@ namespace RogueIslands.Gameplay
 
         private void ScoreBonusForBuilding(Building building)
         {
+            using var profiler = ProfilerBlock.Begin();
+
             var potentialBuildings = _state.HasInsideOut()
                 ? _state.GetOutOfRangeBuildings(building)
                 : _state.GetInRangeBuildings(building);

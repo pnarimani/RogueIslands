@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Flexalon;
 using RogueIslands.DependencyInjection;
+using RogueIslands.Diagnostics;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DryRun;
 using RogueIslands.Gameplay.View.Feedbacks;
@@ -86,24 +87,27 @@ namespace RogueIslands.Gameplay.View
 
             if (IsSelected && GameUI.Instance.IsInSpawnRegion(Input.mousePosition))
             {
-                if (_buildingPreview == null)
+                using (new ProfilerBlock("BuildingCardView.CardSelected"))
                 {
-                    _buildingPreview = _buildingViewFactory.Create(Data);
-                    _buildingPreview.IsPreview = true;
-                    Destroy(_buildingPreview.GetComponent<DescriptionBoxSpawner>());
+                    if (_buildingPreview == null)
+                    {
+                        _buildingPreview = _buildingViewFactory.Create(Data);
+                        _buildingPreview.IsPreview = true;
+                        Destroy(_buildingPreview.GetComponent<DescriptionBoxSpawner>());
+                    }
+
+                    _buildingPreview.transform.position =
+                        BuildingViewPlacement.Instance.GetPosition(_buildingPreview);
+                    _buildingPreview.Data.Position = _buildingPreview.transform.position;
+
+                    var isValidPlacement = BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview);
+                    _buildingPreview.ShowValidPlacement(isValidPlacement);
+
+                    EffectRangeHighlighter.HighlightBuilding(_buildingPreview);
+                    WorldBoosterBoundCheck.HighlightOverlappingWorldBoosters(_buildingPreview.transform);
+
+                    StaticResolver.Resolve<DryRunScoringController>().ExecuteDryRun(_buildingPreview.Data);
                 }
-
-                _buildingPreview.transform.position =
-                    BuildingViewPlacement.Instance.GetPosition(_buildingPreview);
-                _buildingPreview.Data.Position = _buildingPreview.transform.position;
-
-                var isValidPlacement = BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview);
-                _buildingPreview.ShowValidPlacement(isValidPlacement);
-
-                EffectRangeHighlighter.HighlightBuilding(_buildingPreview);
-                WorldBoosterBoundCheck.HighlightOverlappingWorldBoosters(_buildingPreview.transform);
-                
-                StaticResolver.Resolve<DryRunScoringController>().ExecuteDryRun(_buildingPreview.Data);
             }
             else
             {
@@ -129,7 +133,7 @@ namespace RogueIslands.Gameplay.View
                 BuildingViewPlacement.Instance.IsValidPlacement(_buildingPreview))
             {
                 GameUI.Instance.HideDeck();
-                
+
                 PlayButtonHandler.Instance.PlaceBuildingDown(Data, _buildingPreview.transform.position,
                     _buildingPreview.transform.rotation, CancellationToken.None).Forget();
 
@@ -147,7 +151,7 @@ namespace RogueIslands.Gameplay.View
         {
             if (!CanPlaceBuildings)
                 return;
-            
+
             if (PlayButtonHandler.Instance.IsPlaying)
                 return;
 
@@ -176,7 +180,7 @@ namespace RogueIslands.Gameplay.View
                 GetComponent<DescriptionBoxSpawner>().HideManually();
 
                 _cardListItem.Offset = new Vector3(0, 0);
-                
+
                 InputHandling.Instance.Click -= OnWorldClicked;
                 InputHandling.Instance.Scroll -= OnInputRotateBuilding;
             }

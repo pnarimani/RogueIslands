@@ -1,4 +1,5 @@
 ﻿using System;
+using RogueIslands.Diagnostics;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.GameEvents;
 using UnityEngine;
@@ -24,6 +25,9 @@ namespace RogueIslands.Gameplay
 
         public void Execute<T>(T e) where T : IGameEvent
         {
+            using var methodProfiler = new ProfilerBlock("EventController.Execute");
+            using var methodEvent = new ProfilerBlock(typeof(T).Name);
+            
             try
             {
                 using var _ = ListPool<IBooster>.Get(out var buffer);

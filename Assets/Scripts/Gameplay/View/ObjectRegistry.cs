@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RogueIslands.Diagnostics;
 using RogueIslands.Gameplay.View.Boosters;
 using UnityEngine;
 
@@ -8,44 +9,61 @@ namespace RogueIslands.Gameplay.View
 {
     public class ObjectRegistry
     {
+        private static int _cacheFrame = -1;
+
+        private static readonly List<BuildingView> _cachedBuildings = new();
+        private static readonly List<BoosterView> _cachedBoosters = new();
+        private static readonly List<BuildingCardView> _cachedBuildingCards = new();
+
         public static IEnumerable<BuildingView> GetBuildings()
         {
-            return Object.FindObjectsByType<BuildingView>(FindObjectsSortMode.None).Where(b => !b.IsPreview);
+            using var profiler = ProfilerBlock.Begin();
+
+            if (Time.frameCount != _cacheFrame)
+            {
+                RebuildCache();
+                _cacheFrame = Time.frameCount;
+            }
+
+            return _cachedBuildings;
+        }
+
+        private static void RebuildCache()
+        {
+            _cachedBuildings.Clear();
+            _cachedBoosters.Clear();
+            _cachedBuildingCards.Clear();
+
+            _cachedBuildings.AddRange(Object.FindObjectsByType<BuildingView>(FindObjectsSortMode.None)
+                .Where(b => !b.IsPreview));
+            _cachedBoosters.AddRange(Object.FindObjectsByType<BoosterView>(FindObjectsSortMode.None));
+            _cachedBuildingCards.AddRange(Object.FindObjectsByType<BuildingCardView>(FindObjectsSortMode.None));
         }
 
         public static IReadOnlyList<BoosterView> GetBoosters()
         {
-            return Object.FindObjectsByType<BoosterView>(FindObjectsSortMode.None);
+            using var profiler = ProfilerBlock.Begin();
+
+            if (Time.frameCount != _cacheFrame)
+            {
+                RebuildCache();
+                _cacheFrame = Time.frameCount;
+            }
+
+            return _cachedBoosters;
         }
 
         public static IReadOnlyList<BuildingCardView> GetBuildingCards()
         {
-            return Object.FindObjectsByType<BuildingCardView>(FindObjectsSortMode.None);
-        }
-
-        public static IReadOnlyList<WorldBoosterView> GetWorldBoosters()
-        {
-            return Object.FindObjectsByType<WorldBoosterView>(FindObjectsSortMode.None);
-        }
-
-        public static List<Vector3> GetWorldBoosterSpawnPoints()
-        {
-            var all = Object.FindObjectsOfType<WorldBoosterSpawnPoint>()
-                .Select(p => p.transform.position)
-                .ToList();
-
-            all.Sort((a, b) =>
+            using var profiler = ProfilerBlock.Begin();
+            
+            if (Time.frameCount != _cacheFrame)
             {
-                if(a.x < b.x)
-                    return -1;
-                if(a.y < b.y)
-                    return -1;
-                if (a.z < b.z)
-                    return -1;
-                return 1;
-            });
+                RebuildCache();
+                _cacheFrame = Time.frameCount;
+            }
 
-            return all;
+            return _cachedBuildingCards;
         }
     }
 }

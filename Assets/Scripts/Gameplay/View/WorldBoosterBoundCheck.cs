@@ -11,19 +11,11 @@ namespace RogueIslands.Gameplay.View
         
         public static void HighlightOverlappingWorldBoosters(Transform building)
         {
-            foreach (var wb in ObjectRegistry.GetWorldBoosters())
-            {
-                wb.WarnDeletion(_overlappingBoosters.Contains(wb));
-            }
         }
         
         public static void HideAllDeletionWarnings()
         {
-            var worldBoosters = ObjectRegistry.GetWorldBoosters();
-            foreach (var booster in worldBoosters)
-            {
-                booster.WarnDeletion(false);
-            }
+         
         }
     }
 }
