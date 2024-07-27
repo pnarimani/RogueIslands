@@ -195,12 +195,36 @@ namespace RogueIslands.Gameplay.Boosters
                         },
                     },
                 },
-                // new()
-                // {
-                //     Name = "Real-State Agent",
-                //     Description = new LiteralDescription("For every 50 buildings placed, gain 1x mult."),
-                //     BuyPrice = 2,
-                // },
+                new()
+                {
+                    Name = "RealState Agent",
+                    Description = new ScalingBoosterDescription("For every 8 buildings placed, gain 1x mult."),
+                    BuyPrice = 5,
+                    EventAction = new CompositeAction
+                    {
+                        Actions = new GameAction[]
+                        {
+                            new ScoringAction
+                            {
+                                Multiplier = 1,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<AfterAllBuildingTriggers>(),
+                                },
+                            },
+                            new BoosterScalingAction
+                            {
+                                MultiplierChange = 1,
+                                Delay = 8,
+                                OneTime = false,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<BuildingPlaced>(),
+                                },
+                            },
+                        },
+                    },
+                },
                 new()
                 {
                     Name = "Digger",
@@ -303,7 +327,7 @@ namespace RogueIslands.Gameplay.Boosters
                             GameEventCondition.Create<AfterAllBuildingTriggers>(),
                             new CountCondition
                             {
-                                Source = new PlacedDownBuildings(),
+                                Source = new PlacedDownBuildings().Count(),
                                 ComparisonMode = CountCondition.Mode.More,
                                 Value = 5,
                             },
@@ -475,11 +499,11 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Stuntman",
-                    Description = new LiteralDescription("+100 products when a building is placed down"),
+                    Description = new LiteralDescription("+25 products when a building is placed down"),
                     BuyPrice = 6,
                     EventAction = new ScoringAction
                     {
-                        Products = 100,
+                        Products = 25,
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<BuildingPlaced>(),
@@ -487,10 +511,10 @@ namespace RogueIslands.Gameplay.Boosters
                     },
                 },
                 new()
-                {
+                { 
                     Name = "Capitalist",
                     Description =
-                        new ScalingBoosterDescription("1x score for every $5 you have"),
+                        new ScalingBoosterDescription("1x score for every $10 you have"),
                     BuyPrice = 7,
                     EventAction = new MultipliedScoringAction
                     {
@@ -499,7 +523,7 @@ namespace RogueIslands.Gameplay.Boosters
                             GameEventCondition.Create<AfterAllBuildingTriggers>(),
                         },
                         Multiplier = 1,
-                        Factor = new MoneyAmount { DivideBy = 5 },
+                        Factor = new MoneyAmount { DivideBy = 10 },
                     },
                 },
                 new()
@@ -643,7 +667,8 @@ namespace RogueIslands.Gameplay.Boosters
                                 {
                                     Center = new BuildingFromCurrentEvent(),
                                     ReturnInRange = true,
-                                }.WithCondition(new BuildingSizeCondition { Allowed = new[] { BuildingSize.Small } }),
+                                }.WithCondition(new BuildingSizeCondition { Allowed = new[] { BuildingSize.Small } })
+                                .Count(),
                                 Value = 0,
                                 ComparisonMode = CountCondition.Mode.More,
                             },
@@ -653,7 +678,8 @@ namespace RogueIslands.Gameplay.Boosters
                                 {
                                     Center = new BuildingFromCurrentEvent(),
                                     ReturnInRange = true,
-                                }.WithCondition(new BuildingSizeCondition { Allowed = new[] { BuildingSize.Medium } }),
+                                }.WithCondition(new BuildingSizeCondition { Allowed = new[] { BuildingSize.Medium } })
+                                .Count(),
                                 Value = 0,
                                 ComparisonMode = CountCondition.Mode.More,
                             },
@@ -663,7 +689,8 @@ namespace RogueIslands.Gameplay.Boosters
                                 {
                                     Center = new BuildingFromCurrentEvent(),
                                     ReturnInRange = true,
-                                }.WithCondition(new BuildingSizeCondition { Allowed = new[] { BuildingSize.Large } }),
+                                }.WithCondition(new BuildingSizeCondition { Allowed = new[] { BuildingSize.Large } })
+                                .Count(),
                                 Value = 0,
                                 ComparisonMode = CountCondition.Mode.More,
                             },
@@ -713,7 +740,8 @@ namespace RogueIslands.Gameplay.Boosters
                                 {
                                     Center = new BuildingFromCurrentEvent(),
                                     ReturnInRange = true,
-                                }.WithCondition(new BuildingCategoryCondition { Categories = new[] { Category.Cat3 } }),
+                                }.WithCondition(new BuildingCategoryCondition { Categories = new[] { Category.Cat3 } })
+                                .Count(),
                                 Value = 0,
                                 ComparisonMode = CountCondition.Mode.Equal,
                             },
@@ -744,7 +772,8 @@ namespace RogueIslands.Gameplay.Boosters
                                 {
                                     Center = new BuildingFromCurrentEvent(),
                                     ReturnInRange = true,
-                                }.WithCondition(new BuildingCategoryCondition { Categories = new[] { Category.Cat3 } }),
+                                }.WithCondition(new BuildingCategoryCondition { Categories = new[] { Category.Cat3 } })
+                                .Count(),
                                 Value = 0,
                                 ComparisonMode = CountCondition.Mode.More,
                             },
@@ -775,7 +804,8 @@ namespace RogueIslands.Gameplay.Boosters
                                 {
                                     Center = new BuildingFromCurrentEvent(),
                                     ReturnInRange = true,
-                                }.WithCondition(new BuildingCategoryCondition { Categories = new[] { Category.Cat5 } }),
+                                }.WithCondition(new BuildingCategoryCondition { Categories = new[] { Category.Cat5 } })
+                                .Count(),
                                 Value = 0,
                                 ComparisonMode = CountCondition.Mode.Equal,
                             },
@@ -865,6 +895,71 @@ namespace RogueIslands.Gameplay.Boosters
                             {
                                 Categories = new[] { Category.Cat4 },
                                 Source = new BuildingFromCurrentEvent(),
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "The Wall",
+                    Description = new ScalingBoosterDescription(
+                        "Gains +0.3 mult for each medium and large building placed. Resets when a small building is placed"),
+                    BuyPrice = 6,
+                    EventAction = new CompositeAction()
+                    {
+                        Actions = new GameAction[]
+                        {
+                            new ScoringAction
+                            {
+                                Multiplier = 1,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<AfterAllBuildingTriggers>(),
+                                },
+                            },
+                            new BoosterScalingAction
+                            {
+                                MultiplierChange = 0.5,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<BuildingPlaced>(),
+                                    new BuildingSizeCondition
+                                    {
+                                        Allowed = new[] { BuildingSize.Medium, BuildingSize.Large },
+                                    },
+                                },
+                            },
+                            new BoosterResetAction
+                            {
+                                Multiplier = 1,
+                                Conditions = new IGameCondition[]
+                                {
+                                    GameEventCondition.Create<BuildingPlaced>(),
+                                    new BuildingSizeCondition
+                                    {
+                                        Allowed = new[] { BuildingSize.Small },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    Name = "Black Coat",
+                    Description = new LiteralDescription("x10 score when you have $4 or less"),
+                    BuyPrice = 4,
+                    EventAction = new ScoringAction
+                    {
+                        Multiplier = 10,
+                        Conditions = new IGameCondition[]
+                        {
+                            GameEventCondition.Create<AfterAllBuildingTriggers>(),
+                            new CountCondition()
+                            {
+                                Source = new MoneyAmount(),
+                                Value = 5,
+                                ComparisonMode = CountCondition.Mode.Less,
                             },
                         },
                     },

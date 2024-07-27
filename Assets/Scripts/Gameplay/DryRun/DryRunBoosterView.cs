@@ -167,6 +167,7 @@ namespace RogueIslands.Gameplay.DryRun
             _realBoosterView.GetScoringVisualizer().HideDryRun();
             _realBoosterView.GetRetriggerVisualizer().HideDryRun();
             _realBoosterView.GetResetVisualizer().HideDryRun();
+            _realBoosterView.GetScalingVisualizer().HideDryRun();
         }
     }
 }

@@ -3,7 +3,7 @@ using RogueIslands.Gameplay.Buildings;
 
 namespace RogueIslands.Gameplay.Boosters.Conditions
 {
-    public class CountCondition : IGameConditionWithSource<Building>
+    public class CountCondition : IGameConditionWithSource<int>
     {
         public enum Mode
         {
@@ -15,7 +15,7 @@ namespace RogueIslands.Gameplay.Boosters.Conditions
             PowerOfTwo,
         }
         
-        public ISource<Building> Source { get; set; }
+        public ISource<int> Source { get; set; }
         public Mode ComparisonMode { get; set; }
         public int Value { get; set; }
     }

@@ -34,6 +34,11 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             }
 
             action.HasTriggered = true;
+
+            if (!action.OneTime)
+            {
+                action.Progress = 0;
+            }
         }
 
         private static void PlayScalingAnimation(IGameView view, IBooster booster, double change)
