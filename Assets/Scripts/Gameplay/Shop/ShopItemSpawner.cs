@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DeckBuilding;
@@ -15,6 +17,8 @@ namespace RogueIslands.Gameplay.Shop
 
         public void PopulateShop()
         {
+            ReloadBoosters();
+            
             _state.Shop.ItemsForSale = new IPurchasableItem[_state.Shop.CardCount];
 
             var selectionRand = _state.Shop.SelectionRandom.ForAct(_state.Act);
@@ -106,6 +110,12 @@ namespace RogueIslands.Gameplay.Shop
             else
                 throw new InvalidOperationException();
             return Deduplicate(item, depth);
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        private void ReloadBoosters()
+        {
+            _state.AvailableBoosters = BoosterList.Get();
         }
     }
 }
