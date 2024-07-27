@@ -8,6 +8,8 @@ using RogueIslands.Diagnostics;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DryRun;
 using RogueIslands.Gameplay.View.Feedbacks;
+using RogueIslands.Gameplay.View.Shop;
+using RogueIslands.Gameplay.View.Win;
 using RogueIslands.View.Audio;
 using TMPro;
 using UnityEngine;
@@ -153,6 +155,9 @@ namespace RogueIslands.Gameplay.View
                 return;
 
             if (PlayButtonHandler.Instance.IsPlaying)
+                return;
+
+            if (FindObjectOfType<ShopScreen>() || FindObjectOfType<RoundWinScreen>())
                 return;
 
             IsSelected = !IsSelected;
