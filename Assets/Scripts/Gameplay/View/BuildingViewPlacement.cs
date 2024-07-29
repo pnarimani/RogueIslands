@@ -85,6 +85,23 @@ namespace RogueIslands.Gameplay.View
 
             return false;
         }
+        
+        private bool IntersectsGround(Transform building, Bounds bounds)
+        {
+            using var profiler = ProfilerBlock.Begin();
+
+            var extents = bounds.extents;
+            extents.y = 0.1f;
+            
+            var count = Physics.OverlapBoxNonAlloc(bounds.center, extents, _colliderBuffer, building.rotation, _groundMask);
+            for (var i = 0; i < count; i++)
+            {
+                if (_colliderBuffer[i].transform.root != building)
+                    return true;
+            }
+
+            return false;
+        }
 
         public bool IsValidPlacement(BuildingView building)
         {
@@ -93,11 +110,12 @@ namespace RogueIslands.Gameplay.View
             var bounds = building.transform.GetBounds(building.GetMeshRenderers());
             var isIntersectingWithAnyBuildings = IntersectsAnyBuilding(building.transform, bounds);
             var isOnFlatGround = IsOnFlatGround(building.transform, bounds);
+            var isIntersectingGround = IntersectsGround(building.transform, bounds);
             //
             // Debug.Log("isIntersectingWithAnyBuildings = " + isIntersectingWithAnyBuildings);
             // Debug.Log("isOnFlatGround = " + isOnFlatGround);
 
-            return !isIntersectingWithAnyBuildings && isOnFlatGround;
+            return !isIntersectingGround && !isIntersectingWithAnyBuildings && isOnFlatGround;
         }
 
         private bool IsOnFlatGround(Transform building, Bounds bounds)
@@ -128,7 +146,7 @@ namespace RogueIslands.Gameplay.View
             float? previousHitDistance = null;
             foreach (var ray in rays)
             {
-                if (!Physics.Raycast(ray, out var hit, 0.2f, _groundMask | _buildingMask))
+                if (!Physics.Raycast(ray, out var hit, 1.5f, _groundMask | _buildingMask))
                     return false;
 
                 if (previousHitDistance.HasValue && Mathf.Abs(hit.distance - previousHitDistance.Value) > 1f)
