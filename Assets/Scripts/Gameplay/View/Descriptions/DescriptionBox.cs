@@ -18,9 +18,25 @@ namespace RogueIslands.Gameplay.View.Descriptions
             _name.text = name;
         }
 
-        public void SetGrowToBottom(bool growToBottom)
+        public void SetAlignment(DescriptionAlignment horizontal, DescriptionAlignment vertical)
         {
-            _container.pivot = growToBottom ? new Vector2(0.5f, 1) : new Vector2(0.5f, 0);
+            var x = horizontal switch
+            {
+                DescriptionAlignment.Start => 0,
+                DescriptionAlignment.Center => 0.5f,
+                DescriptionAlignment.End => 1,
+                _ => 0,
+            };
+            
+            var y = vertical switch
+            {
+                DescriptionAlignment.Start => 0,
+                DescriptionAlignment.Center => 0.5f,
+                DescriptionAlignment.End => 1,
+                _ => 0,
+            };
+            
+            _container.pivot = new Vector2(x, y);
         }
     }
 }

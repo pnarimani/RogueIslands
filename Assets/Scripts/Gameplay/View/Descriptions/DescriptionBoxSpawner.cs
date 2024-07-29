@@ -12,8 +12,9 @@ namespace RogueIslands.Gameplay.View.Descriptions
         [SerializeField] private Transform _descriptionBoxParent;
         [SerializeField] private DescriptionBox _descriptionBoxPrefab;
         [SerializeField] private bool _showName;
-        [SerializeField] private bool _growToBottom = true;
         [SerializeField] private bool _enableAfterFirstMouseExit;
+        [SerializeField] private DescriptionAlignment _horizontalAlignment = DescriptionAlignment.Center;
+        [SerializeField] private DescriptionAlignment _verticalAlignment = DescriptionAlignment.Start;
 
         private DescriptionBox _descBox;
         private IDescribableItem _describableItem;
@@ -73,7 +74,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 );
                 var remoteChild = _descBox.gameObject.AddComponent<RemoteChild>();
                 remoteChild.SetParent(_descriptionBoxParent, Vector3.zero);
-                _descBox.SetGrowToBottom(_growToBottom);
+                _descBox.SetAlignment(_horizontalAlignment, _verticalAlignment);
                 _descBox.SetDescription(GetDescriptionText());
                 ShowName();
             }
@@ -88,7 +89,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 _descBox.ShowName(alternateDescriptionTitle.AlternateTitle);
         }
 
-        private string GetDescriptionText() 
+        private string GetDescriptionText()
             => DescriptionTextProvider.Get(_describableItem);
 
         public void HideManually()

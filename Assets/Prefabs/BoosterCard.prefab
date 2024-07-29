@@ -163,8 +163,9 @@ MonoBehaviour:
   _descriptionBoxParent: {fileID: 3247091001552782063}
   _descriptionBoxPrefab: {fileID: 6584765328537110756, guid: d70c4d99d6dab4b448f46152753db9b7, type: 3}
   _showName: 0
-  _growToBottom: 1
   _enableAfterFirstMouseExit: 0
+  _horizontalAlignment: 0
+  _verticalAlignment: 1
 --- !u!114 &643227470352206402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -702,10 +703,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4108632914121167087}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.000023365, y: -50.100006}
-  m_SizeDelta: {x: 100, y: 70.50571}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 10.688, y: 0.00002861}
+  m_SizeDelta: {x: 21.3765, y: 23.6339}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1322505174757275514
 PrefabInstance:
