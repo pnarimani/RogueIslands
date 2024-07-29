@@ -27,15 +27,15 @@ namespace RogueIslands.Gameplay.View.Descriptions
         private static readonly string MultColor = ColorUtility.ToHtmlStringRGB(new Color(1, 1, 1));
 
         private static readonly string MultHighlightColor =
-            ColorUtility.ToHtmlStringRGBA(new Color(0f, 0.47f, 0.36f, 0));
+            ColorUtility.ToHtmlStringRGBA(new Color(0f, 0.56f, 0.57f, 0));
 
-        private static readonly string AddColor = ColorUtility.ToHtmlStringRGB(new Color(0f, 0.47f, 0.36f));
+        private static readonly string AddColor = ColorUtility.ToHtmlStringRGB(new Color(0f, 0.56f, 0.57f));
 
         private static readonly string ProbabilityColor = ColorUtility.ToHtmlStringRGB(new Color(0f, 0.78f, 0.06f));
         private static readonly string ProgressColor = ColorUtility.ToHtmlStringRGB(new Color(0.29f, 0.31f, 0.3f));
         private static readonly string MoneyColor = ColorUtility.ToHtmlStringRGB(new Color(0.76f, 0.55f, 0f));
 
-        private static readonly string CategoryColor = ColorUtility.ToHtmlStringRGB(new Color(0f, 0.22f, 0.05f));
+        private static readonly string CategoryColor = ColorUtility.ToHtmlStringRGB(new Color(0.31f, 0f, 1f));
         private static readonly string SizeColor = CategoryColor;
 
         private static readonly string TriggerColor = ColorUtility.ToHtmlStringRGB(new Color(0f, 0.22f, 0.39f));
