@@ -20,16 +20,22 @@ namespace RogueIslands.Gameplay.Boosters.Executors
 
         public override bool Execute(GameState state, IGameView view, IBooster booster, GameAction action)
         {
+            var copyBooster = (CopyBoosterAction)action;
+            
             var index = state.Boosters.IndexOf((BoosterCard)booster);
             if (index >= state.Boosters.Count - 1)
+            {
+                copyBooster.Cloned = null;
                 return false;
+            }
 
             var nextBooster = state.Boosters[index + 1];
             if (nextBooster.EventAction == null)
+            {
+                copyBooster.Cloned = null;
                 return false;
-
-            var copyBooster = (CopyBoosterAction)action;
-
+            }
+            
             if (state.CurrentEvent is ResetRetriggers)
             {
                 copyBooster.Cloned = _cloner.Clone(nextBooster.EventAction);

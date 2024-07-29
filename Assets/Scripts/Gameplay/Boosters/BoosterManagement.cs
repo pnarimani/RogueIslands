@@ -44,6 +44,7 @@ namespace RogueIslands.Gameplay.Boosters
                 _gameActionController.Execute(instance, instance.BuyAction);
 
             _eventController.Execute(new BoosterBought { Booster = instance });
+            _eventController.Execute(new ResetRetriggers());
             return true;
         }
 
@@ -58,6 +59,7 @@ namespace RogueIslands.Gameplay.Boosters
             _view.GetUI().RefreshMoney();
 
             _eventController.Execute(new BoosterSold() { Booster = booster });
+            _eventController.Execute(new ResetRetriggers());
         }
 
         public void DestroyBooster(BoosterInstanceId boosterId)
@@ -80,12 +82,16 @@ namespace RogueIslands.Gameplay.Boosters
             {
                 throw new Exception("Failed to find booster with id " + boosterId);
             }
+
+            _eventController.Execute(new ResetRetriggers());
         }
 
         public void ReorderBoosters(IReadOnlyList<BoosterCard> order)
         {
             _state.Boosters.Clear();
             _state.Boosters.AddRange(order);
+            
+            _eventController.Execute(new ResetRetriggers());
         }
     }
 }

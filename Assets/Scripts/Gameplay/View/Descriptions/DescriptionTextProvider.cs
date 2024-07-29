@@ -162,7 +162,8 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 {
                     var finalMult = 1 + multipliedScoring.Multiplier * factor;
                     text +=
-                        ("\n(Currently " + $"{finalMult:0.#}x".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor) +
+                        ("\n(Currently " + $"{finalMult:0.#}x".WrapWithColor(MultColor)
+                             .WrapWithHighlight(MultHighlightColor) +
                          " Mult)").WrapWithColor(
                             ProgressColor);
                 }
@@ -198,9 +199,19 @@ namespace RogueIslands.Gameplay.View.Descriptions
                         .WrapWithColor(ProgressColor);
                 else if (scoring?.Multiplier != null)
                     text += ("\n(Currently " +
-                             $"{scoring.Multiplier:0.#}x".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor) +
+                             $"{scoring.Multiplier:0.#}x".WrapWithColor(MultColor)
+                                 .WrapWithHighlight(MultHighlightColor) +
                              " Mult)")
                         .WrapWithColor(ProgressColor);
+            }
+
+            var copy = booster.GetEventAction<CopyBoosterAction>();
+            if (copy != null)
+            {
+                if (copy.Cloned != null)
+                    text += "\n(Compatible)".WrapWithColor(TextColors[ColorTag.Green]);
+                else
+                    text += "\n(Incompatible)".WrapWithColor(TextColors[ColorTag.Red]);
             }
 
             return text;
