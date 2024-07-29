@@ -117,6 +117,7 @@ namespace RogueIslands.Gameplay.View.Shop
                     }
 
                     item.ShowBuyButton(false);
+                    Destroy(item.GetComponent<DescriptionBoxSpawner>());
                     Destroy(item.InnerObject);
                 }
             };
