@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RogueIslands.Assets
 {
@@ -11,6 +12,11 @@ namespace RogueIslands.Assets
             if (!string.IsNullOrEmpty(extension))
                 key = key.Replace(extension, "");
             return Resources.Load<T>(key);
+        }
+
+        public void LoadScene(string sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
         }
     }
 }

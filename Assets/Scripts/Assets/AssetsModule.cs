@@ -7,7 +7,7 @@ namespace RogueIslands.Assets
     {
         public void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ResourcesAssetLoader>().SingleInstance().AsImplementedInterfaces();
+            builder.RegisterType<AddressableAssetLoader>().SingleInstance().AsImplementedInterfaces();
         }
     }
 }

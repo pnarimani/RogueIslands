@@ -1,4 +1,6 @@
-﻿using RogueIslands.Gameplay.Buildings;
+﻿using RogueIslands.Assets;
+using RogueIslands.Autofac;
+using RogueIslands.Gameplay.Buildings;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.View
@@ -7,10 +9,11 @@ namespace RogueIslands.Gameplay.View
     {
         public BuildingView Create(Building building)
         {
-            var prefab = Resources.Load<BuildingView>(building.PrefabAddress);
-            var instance = Object.Instantiate(prefab);
-            instance.Initialize(building);
-            return instance;
+            var prefab = StaticResolver.Resolve<IAssetLoader>().Load<GameObject>(building.PrefabAddress);
+            var instance = Object.Instantiate(prefab, building.Position, building.Rotation);
+            var view = instance.GetComponent<BuildingView>();
+            view.Initialize(building);
+            return view;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace RogueIslands.Assets.Editor
     {
         public void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ResourcesAssetSaver>().SingleInstance().AsImplementedInterfaces();
+            builder.RegisterType<AddressableSaver>().SingleInstance().AsImplementedInterfaces();
         }
     }
 }

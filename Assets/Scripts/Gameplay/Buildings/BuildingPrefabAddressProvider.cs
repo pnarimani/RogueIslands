@@ -7,7 +7,7 @@ namespace RogueIslands.Gameplay.Buildings
         public static string GetPrefabAddress(string colorName, int catIndex, int sizeIndex)
         {
             var legacyColorName = colorName.Replace("Green", "White").Replace("Purple", "Black");
-            var prefabAddress = $"Buildings/{legacyColorName} Cat{catIndex + 1} {sizeIndex + 1}";
+            var prefabAddress = $"{legacyColorName} Cat{catIndex + 1} {sizeIndex + 1}";
             return prefabAddress;
         }
 

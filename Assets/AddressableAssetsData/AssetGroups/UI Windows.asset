@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI Windows
+  m_EditorClassIdentifier: 
+  m_GroupName: UI Windows
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 86b2636e447ba5d4ba33bfc0a56c206e
+  m_SerializeEntries:
+  - m_GUID: fee097c3cb842214e8efa7fd4b32cabc
+    m_Address: CardPackScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83abe0313deaccf4ab469a41f0bc1ef1
+    m_Address: DeckPreviewScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 08c279fd61893684980f00dab9fcd1a3
+    m_Address: DeckPreviewStat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b3ec39a006da40b4b8a999e2775c01c0
+    m_Address: GameplayHUD
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8770575ef22bdb47964d339969027de
+    m_Address: LoseScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dec89ef7844d4ad478c7232b229af9fe
+    m_Address: OptionsPopup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f3f9e2a654105040b0adabab1325890
+    m_Address: RoundWinScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c138f5c29e5b8644bdadf435875f9a9
+    m_Address: SettingsPopup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3469dc268c028f94cae2d66e0c8d83b8
+    m_Address: ShopScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 61436fe69ac925842b9b8194e626453a
+    m_Address: WinScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a1cde1acec2df7e468dc9a2233281e03
+    m_Address: UISystem/OverlayLayer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 57e50c28d64275d4290b3717020a1334
+    m_Address: UISystem/UIRoot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6fdb9fe43faed0644877a7b1797cc5aa
+    m_Address: UISystem/WindowRegistry.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9d7c87d3599a02240a9dae7f095edb60, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a20727ba21775e7459e03933a4fba989, type: 2}
+    - {fileID: 11400000, guid: 53e19b14ce8846746af548b45863c29c, type: 2}

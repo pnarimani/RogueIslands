@@ -69,12 +69,10 @@ namespace RogueIslands.Gameplay.View
 
         public void SpawnBuilding(Building data)
         {
-            var building = Object.Instantiate(_assetLoader.Load<BuildingView>(data.PrefabAddress), data.Position,
-                data.Rotation);
+            var building = new BuildingViewFactory().Create(data);
             building.transform.position += Vector3.up;
             building.transform.DOMove(data.Position, 0.3f)
                 .SetEase(Ease.OutBounce);
-            building.Initialize(data);
         }
 
         public void ShowLoseScreen() => _windowOpener.Open<LoseScreen>();

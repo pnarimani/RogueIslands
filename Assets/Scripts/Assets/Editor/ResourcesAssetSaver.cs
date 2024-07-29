@@ -9,12 +9,6 @@ namespace RogueIslands.Assets.Editor
     {
         private const string ResourcesFolder = "/Resources/";
 
-        public bool CanAssetBeLoadedAtRuntime(Object asset)
-        {
-            var assetPath = AssetDatabase.GetAssetPath(asset);
-            return assetPath.LastIndexOf(ResourcesFolder, StringComparison.Ordinal) >= 0;
-        }
-
         public string GetRuntimeLoadKey(Object asset)
         {
             var assetPath = AssetDatabase.GetAssetPath(asset);

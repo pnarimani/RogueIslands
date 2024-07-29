@@ -1,3 +1,5 @@
+using RogueIslands.Assets;
+using RogueIslands.Autofac;
 using RogueIslands.UISystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +13,7 @@ namespace RogueIslands.Gameplay.View.Lose
         
         private void Start()
         {
-            _back.onClick.AddListener(() => SceneManager.LoadScene("MainMenu"));
+            _back.onClick.AddListener(() => StaticResolver.Resolve<IAssetLoader>().LoadScene("MainMenu"));
         }
     }
 }

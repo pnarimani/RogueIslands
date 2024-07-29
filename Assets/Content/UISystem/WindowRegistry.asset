@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!49 &4900000
+TextAsset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: WindowRegistry
+  m_Script: 'RogueIslands.Gameplay.View.GameWinScreen: WinScreen
+
+    GameWinScreen:
+    WinScreen
+
+    RogueIslands.Gameplay.View.DeckPreview.DeckPreviewScreen: DeckPreviewScreen
+
+    DeckPreviewScreen:
+    DeckPreviewScreen
+
+    RogueIslands.Gameplay.View.GameUI: GameplayHUD
+
+    GameUI:
+    GameplayHUD
+
+    RogueIslands.Gameplay.IGameUI: GameplayHUD
+
+    IGameUI: GameplayHUD
+
+    RogueIslands.Gameplay.View.Shop.ShopScreen:
+    ShopScreen
+
+    ShopScreen: ShopScreen
+
+    RogueIslands.Gameplay.View.Lose.LoseScreen:
+    LoseScreen
+
+    LoseScreen: LoseScreen
+
+    RogueIslands.Gameplay.View.SettingsPopup:
+    SettingsPopup
+
+    SettingsPopup: SettingsPopup
+
+    RogueIslands.Gameplay.View.OptionsPopup:
+    OptionsPopup
+
+    OptionsPopup: OptionsPopup
+
+    RogueIslands.Gameplay.View.DeckBuilding.CardPackSelection:
+    CardPackScreen
+
+    CardPackSelection: CardPackScreen
+
+    RogueIslands.Gameplay.View.Win.RoundWinScreen:
+    RoundWinScreen
+
+    RoundWinScreen: RoundWinScreen
+
+    RogueIslands.Gameplay.IRoundWinScreen:
+    RoundWinScreen
+
+    IRoundWinScreen: RoundWinScreen
+
+'

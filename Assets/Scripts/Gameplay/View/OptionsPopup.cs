@@ -1,4 +1,5 @@
-﻿using RogueIslands.Autofac;
+﻿using RogueIslands.Assets;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.View.DeckBuilding;
 using RogueIslands.UISystem;
 using TMPro;
@@ -17,7 +18,7 @@ namespace RogueIslands.Gameplay.View
         {
             _settings.onClick.AddListener(() => GameManager.Instance.ShowSettingsPopup());
             _resume.onClick.AddListener(() => Destroy(gameObject));
-            _leave.onClick.AddListener(() => SceneManager.LoadScene("MainMenu"));
+            _leave.onClick.AddListener(() => StaticResolver.Resolve<IAssetLoader>().LoadScene("MainMenu"));
             
             _seed.text = StaticResolver.Resolve<Seed>().Value;
         }

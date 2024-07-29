@@ -1,3 +1,4 @@
+using RogueIslands.Assets;
 using RogueIslands.Autofac;
 using RogueIslands.UISystem;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace RogueIslands.Gameplay.View.MainMenu
 
         private void Start()
         {
-            _play.onClick.AddListener(() => SceneManager.LoadScene("Gameplay"));
+            _play.onClick.AddListener(() => StaticResolver.Resolve<IAssetLoader>().LoadScene("Gameplay"));
             _settingsButton.onClick.AddListener(() => StaticResolver.Resolve<IWindowOpener>().Open<SettingsPopup>());
             _quit.onClick.AddListener(Application.Quit);
         }

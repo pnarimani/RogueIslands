@@ -2,7 +2,9 @@
   "name": "RogueIslands.Assets",
   "rootNamespace": "RogueIslands",
   "references": [
-    "RogueIslands.Autofac"
+    "RogueIslands.Autofac",
+    "Unity.Addressables",
+    "Unity.ResourceManager"
   ],
   "overrideReferences": true,
   "precompiledReferences": [

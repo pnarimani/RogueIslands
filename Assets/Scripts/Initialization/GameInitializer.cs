@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using RogueIslands.Assets;
 using RogueIslands.Autofac;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace RogueIslands.Initialization
 {
@@ -16,12 +15,9 @@ namespace RogueIslands.Initialization
 
         private static async UniTask Initialize()
         {
-            foreach (var step in StaticResolver.Resolve<IReadOnlyList<IInitializationStep>>())
-            {
-                await step.Initialize();
-            }
+            foreach (var step in StaticResolver.Resolve<IReadOnlyList<IInitializationStep>>()) await step.Initialize();
 
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            StaticResolver.Resolve<IAssetLoader>().LoadScene("MainMenu");
         }
     }
 }

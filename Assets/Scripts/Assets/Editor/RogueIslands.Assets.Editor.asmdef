@@ -3,7 +3,10 @@
   "rootNamespace": "RogueIslands",
   "references": [
     "RogueIslands.Assets",
-    "RogueIslands.Autofac"
+    "RogueIslands.Autofac",
+    "Unity.Addressables",
+    "Unity.ResourceManager",
+    "Unity.Addressables.Editor"
   ],
   "includePlatforms": [
     "Editor"
