@@ -10,7 +10,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             scoringAction.Products = action.Product;
             scoringAction.Multiplier = action.Multiplier;
 
-            view.GetBooster(booster).GetResetVisualizer().PlayReset();
+            view.GetBooster(booster.Id).GetResetVisualizer().PlayReset();
         }
     }
 }

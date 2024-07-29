@@ -1,4 +1,5 @@
-﻿using RogueIslands.Gameplay.Rand;
+﻿using System;
+using RogueIslands.Gameplay.Rand;
 
 namespace RogueIslands.Gameplay
 {
@@ -8,7 +9,10 @@ namespace RogueIslands.Gameplay
         {
             if (!state.Randoms.TryGetValue(typeof(T).Name, out var random))
             {
-                random = state.SeedRandom.NextRandom();
+                HashCode hashCode = new();
+                hashCode.Add(state.Seed);
+                hashCode.Add(typeof(T).Name);
+                random = new RogueRandom((uint)hashCode.ToHashCode());
                 state.Randoms[typeof(T).Name] = random;
             }
             

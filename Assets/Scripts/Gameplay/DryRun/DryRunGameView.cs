@@ -16,8 +16,14 @@ namespace RogueIslands.Gameplay.DryRun
 
         private Dictionary<BuildingId, DryRunBuildingView> _noProbabilitiesBuildingViews = new();
         private Dictionary<BoosterInstanceId, DryRunBoosterView> _noProbabilitiesBoosterViews = new();
+        
+        private readonly GameState _state;
 
-        public DryRunGameView(IGameView realGameView) => _realGameView = realGameView;
+        public DryRunGameView(IGameView realGameView, GameState state)
+        {
+            _state = state;
+            _realGameView = realGameView;
+        }
 
         public bool IsAllProbabilitiesMode { get; set; }
 
@@ -33,17 +39,13 @@ namespace RogueIslands.Gameplay.DryRun
             return view;
         }
 
-        public IBoosterView GetBooster(IBooster booster)
+        public IBoosterView GetBooster(BoosterInstanceId boosterId)
         {
             var dict = IsAllProbabilitiesMode ? _allProbabilitiesBoosterViews : _noProbabilitiesBoosterViews;
-            if (!dict.TryGetValue(booster.Id, out var view))
+            if (!dict.TryGetValue(boosterId, out var view))
             {
-                var realBoosterView = _realGameView.GetBooster(booster);
-                if (realBoosterView == null)
-                    throw new Exception($"Failed to find booster view for booster {booster.Name}");
-
-                view = new DryRunBoosterView(realBoosterView);
-                dict.Add(booster.Id, view);
+                view = new DryRunBoosterView();
+                dict.Add(boosterId, view);
             }
 
             return view;
@@ -77,15 +79,17 @@ namespace RogueIslands.Gameplay.DryRun
 
         public void ShowDryRunResults()
         {
-            foreach (var (booster, view) in _allProbabilitiesBoosterViews)
+            foreach (var (booster, allProb) in _allProbabilitiesBoosterViews)
             {
                 if (!_lastFrameBoosterViews.TryGetValue(booster, out var lastFrame))
-                    lastFrame = new DryRunBoosterView(null);
+                    lastFrame = new DryRunBoosterView();
 
                 if (!_noProbabilitiesBoosterViews.TryGetValue(booster, out var noProb))
-                    noProb = new DryRunBoosterView(null);
+                    noProb = new DryRunBoosterView();
 
-                view.ApplyChanges(lastFrame, noProb);
+                var boosterCard = _state.Boosters.Find(b => b.Id == booster);
+                var realBoosterView = _realGameView.GetBooster(booster);
+                BoosterComparer.Compare(boosterCard, realBoosterView, allProb, noProb, lastFrame);
 
                 _lastFrameBoosterViews.Remove(booster);
             }
@@ -100,9 +104,9 @@ namespace RogueIslands.Gameplay.DryRun
                 _lastFrameBuildingViews.Remove(building);
             }
 
-            foreach (var (_, view) in _lastFrameBoosterViews)
+            foreach (var (id, _) in _lastFrameBoosterViews)
             {
-                view.HideAll();
+                HideAll(id);
             }
 
             foreach (var (_, view) in _lastFrameBuildingViews)
@@ -120,9 +124,9 @@ namespace RogueIslands.Gameplay.DryRun
 
         public void Clear()
         {
-            foreach (var (_, view) in _lastFrameBoosterViews)
+            foreach (var (boosterId, _) in _lastFrameBoosterViews)
             {
-                view.HideAll();
+                HideAll(boosterId);
             }
 
             foreach (var (_, view) in _lastFrameBuildingViews)
@@ -136,6 +140,16 @@ namespace RogueIslands.Gameplay.DryRun
             _allProbabilitiesBuildingViews.Clear();
             _noProbabilitiesBoosterViews.Clear();
             _noProbabilitiesBuildingViews.Clear();
+        }
+
+        private void HideAll(BoosterInstanceId boosterId)
+        {
+            var boosterView = _realGameView.GetBooster(boosterId);
+            boosterView.GetMoneyVisualizer().HideDryRun();
+            boosterView.GetScoringVisualizer().HideDryRun();
+            boosterView.GetRetriggerVisualizer().HideDryRun();
+            boosterView.GetResetVisualizer().HideDryRun();
+            boosterView.GetScalingVisualizer().HideDryRun();
         }
     }
 }

@@ -82,8 +82,8 @@ namespace RogueIslands.Gameplay.View
         public IBuildingView GetBuilding(Building building)
             => ObjectRegistry.GetBuildings().FirstOrDefault(b => b.Data.Id == building.Id);
 
-        public IBoosterView GetBooster(IBooster booster)
-            => ObjectRegistry.GetBoosters().FirstOrDefault(b => b.Data.Id == booster.Id);
+        public IBoosterView GetBooster(BoosterInstanceId boosterId)
+            => ObjectRegistry.GetBoosters().FirstOrDefault(b => b.Data.Id == boosterId);
 
         public void ShowShopScreen() => _windowOpener.Open<ShopScreen>();
 

@@ -10,7 +10,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             if (action.Products is { } products and > 0)
             {
                 state.TransientScore += products;
-                view.GetBooster(booster).GetScoringVisualizer().ProductApplied(products);
+                view.GetBooster(booster.Id).GetScoringVisualizer().ProductApplied(products);
             }
 
             if (action.Multiplier is { } xMult and > 1)
@@ -18,7 +18,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
                 var final = state.TransientScore * xMult;
                 var diff = final - state.TransientScore;
                 state.TransientScore = final;
-                view.GetBooster(booster).GetScoringVisualizer().MultiplierApplied(xMult, diff);
+                view.GetBooster(booster.Id).GetScoringVisualizer().MultiplierApplied(xMult, diff);
             }
         }
     }

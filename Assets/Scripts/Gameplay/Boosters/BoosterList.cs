@@ -350,7 +350,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "The Collector",
-                    Description = ".25x score for each different building placed in the world",
+                    Description = ".25x score for each different\n building placed in the world",
                     BuyPrice = 8,
                     EventAction = new MultipliedScoringAction
                     {

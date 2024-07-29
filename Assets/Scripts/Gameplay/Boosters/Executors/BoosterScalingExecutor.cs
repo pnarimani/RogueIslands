@@ -44,9 +44,9 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         private static void PlayScalingAnimation(IGameView view, IBooster booster, double change)
         {
             if (change > 0)
-                view.GetBooster(booster).GetScalingVisualizer().PlayScaleUp();
+                view.GetBooster(booster.Id).GetScalingVisualizer().PlayScaleUp();
             else
-                view.GetBooster(booster).GetScalingVisualizer().PlayScaleDown();
+                view.GetBooster(booster.Id).GetScalingVisualizer().PlayScaleDown();
         }
     }
 }

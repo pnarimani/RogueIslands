@@ -110,7 +110,7 @@ namespace RogueIslands.Gameplay.View.Shop
                     {
                         var boosterCard =
                             (BoosterView)GameManager.Instance.GetBooster(GameManager.Instance.State.Boosters
-                                .Last());
+                                .Last().Id);
                         boosterCard.transform.position = item.transform.position;
                         boosterCard.BringToFront(item);
                         ResetOrderOfBoughtBooster(boosterCard);

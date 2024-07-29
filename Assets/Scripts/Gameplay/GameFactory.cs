@@ -4,16 +4,17 @@ using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DeckBuilding;
 using RogueIslands.Gameplay.GameEvents;
 using RogueIslands.Gameplay.Rand;
-using UnityEngine;
 
 namespace RogueIslands.Gameplay
 {
     public static class GameFactory
     {
-        public static GameState NewGame(SeedRandom seedRandom)
+        public static GameState NewGame(Seed seed)
         {
             const int handSize = 6;
 
+            var seedRandom = new SeedRandom((uint)seed.Value.GetHashCode());
+            
             var buildingBlueprints = DefaultBuildingsList.Get();
             var deck = DefaultBuildingsList.Get();
             deck.Shuffle(seedRandom);
@@ -23,14 +24,9 @@ namespace RogueIslands.Gameplay
                 building.Id = BuildingId.NewBuildingId();
             }
 
-
-            var allBoosters = BoosterList.Get();
-
-            Debug.Log("Booster Count = " + allBoosters.Count);
-
             return new GameState()
             {
-                SeedRandom = seedRandom,
+                Seed = seed,
                 AllRequiredScores = GetScoringRequirements(),
                 CurrentEvent = new ActStart(),
                 Buildings = new BuildingsState()
@@ -39,7 +35,7 @@ namespace RogueIslands.Gameplay
                     Deck = deck,
                     ShufflingRandom = seedRandom.NextRandom(),
                 },
-                AvailableBoosters = allBoosters,
+                AvailableBoosters = BoosterList.Get(),
                 HandSize = handSize,
                 CardPackSelectionRandom = seedRandom.NextRandom(),
                 CardSelectionRandom = seedRandom.NextRandom(),

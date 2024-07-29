@@ -19,7 +19,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
                 var diff = finalScore - state.TransientScore;
                 state.TransientScore = finalScore;
 
-                view.GetBooster(booster).GetScoringVisualizer().MultiplierApplied(randomMult, diff);
+                view.GetBooster(booster.Id).GetScoringVisualizer().MultiplierApplied(randomMult, diff);
             }
         }
     }

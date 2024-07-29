@@ -9,7 +9,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             if (booster is IPurchasableItem purchasable)
             {
                 purchasable.SellPrice += action.Amount;
-                view.GetBooster(booster).GetScalingVisualizer().PlayScaleUp();
+                view.GetBooster(booster.Id).GetScalingVisualizer().PlayScaleUp();
             }
         }
     }

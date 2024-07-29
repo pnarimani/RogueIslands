@@ -9,8 +9,8 @@ namespace RogueIslands.Gameplay
     public interface IGameView
     {
         IBuildingView GetBuilding(Building building);
-        IBoosterView GetBooster(IBooster booster);
-        
+        IBoosterView GetBooster(BoosterInstanceId boosterId);
+
         void ShowLoseScreen();
         void ShowGameWinScreen();
         IRoundWinScreen ShowRoundWin();

@@ -16,7 +16,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             if (multiplier <= 0) 
                 return;
             
-            var boosterView = view.GetBooster(booster);
+            var boosterView = view.GetBooster(booster.Id);
                 
             if (action.Products is { } products)
             {

@@ -26,7 +26,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             }
 
             booster.GetEventAction<ScoringAction>().Multiplier += 4;
-            view.GetBooster(booster).GetScalingVisualizer().PlayScaleUp();
+            view.GetBooster(booster.Id).GetScalingVisualizer().PlayScaleUp();
         }
     }
 }
