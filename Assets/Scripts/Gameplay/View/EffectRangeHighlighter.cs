@@ -1,5 +1,4 @@
-﻿using RogueIslands.DependencyInjection;
-using RogueIslands.Gameplay.View.Boosters;
+﻿using RogueIslands.Gameplay.View.Boosters;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.View

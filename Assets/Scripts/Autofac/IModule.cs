@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace RogueIslands.DependencyInjection
+namespace RogueIslands.Autofac
 {
     public interface IModule
     {

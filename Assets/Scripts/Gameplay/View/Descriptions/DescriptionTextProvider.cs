@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using RogueIslands.Diagnostics;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Boosters.Actions;

@@ -3,7 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Flexalon;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using RogueIslands.Diagnostics;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DryRun;

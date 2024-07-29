@@ -1,0 +1,10 @@
+﻿{
+  "name": "RogueIslands.Autofac.Scopes",
+  "rootNamespace": "RogueIslands",
+  "references": [
+    "RogueIslands.Autofac",
+    "IngameDebugConsole.Runtime",
+    "AutofacUnity",
+    "RogueIslands"
+  ]
+}

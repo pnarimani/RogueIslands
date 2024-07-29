@@ -1,4 +1,4 @@
-﻿using RogueIslands.DependencyInjection;
+﻿using RogueIslands.Autofac;
 using RogueIslands.Gameplay.View.DeckBuilding;
 using RogueIslands.Gameplay.View.RoundSelection;
 using RogueIslands.UISystem;

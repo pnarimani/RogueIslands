@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using IngameDebugConsole;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.View;
 

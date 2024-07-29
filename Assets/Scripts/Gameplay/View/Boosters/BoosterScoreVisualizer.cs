@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.View.Feedbacks;
 using RogueIslands.View.Audio;

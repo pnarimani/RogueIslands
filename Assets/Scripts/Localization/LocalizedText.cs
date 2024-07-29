@@ -1,5 +1,5 @@
 ﻿using System;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using TMPro;
 using UnityEngine;
 

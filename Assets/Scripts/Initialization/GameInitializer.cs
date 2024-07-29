@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

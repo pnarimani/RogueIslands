@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RogueIslands.DependencyInjection
+namespace RogueIslands.Autofac
 {
     public static class ModuleFinder
     {

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Autofac;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using Object = UnityEngine.Object;
 
 namespace RogueIslands.View.Audio.FMOD

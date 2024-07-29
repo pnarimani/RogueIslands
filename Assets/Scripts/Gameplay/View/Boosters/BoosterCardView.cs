@@ -1,6 +1,6 @@
 ﻿using System;
 using Flexalon;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.View.Shop;
 using TMPro;

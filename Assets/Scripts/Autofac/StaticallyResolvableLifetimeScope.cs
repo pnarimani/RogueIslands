@@ -1,6 +1,6 @@
 ﻿using AutofacUnity;
 
-namespace RogueIslands.DependencyInjection.Autofac
+namespace RogueIslands.Autofac
 {
     public class StaticallyResolvableLifetimeScope : AutofacScope
     {

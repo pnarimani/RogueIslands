@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 
 namespace RogueIslands.Localization.UnityLocalization
 {

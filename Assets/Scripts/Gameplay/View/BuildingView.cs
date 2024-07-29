@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.View.Commons;
 using RogueIslands.Gameplay.View.Descriptions;

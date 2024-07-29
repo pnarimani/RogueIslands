@@ -20,7 +20,7 @@ namespace RogueIslands.Gameplay.DryRun
         public DryRunScoringController(
             ILifetimeScope container,
             GameState realGame,
-            ICloner cloner ,
+            ICloner cloner,
             DryRunGameView fakeView)
         {
             _fakeView = fakeView;
@@ -28,7 +28,7 @@ namespace RogueIslands.Gameplay.DryRun
             _fakeGame = cloner.Clone(realGame);
             _cloner = cloner;
             _realGame = realGame;
-            
+
             _scope = container.BeginLifetimeScope(builder =>
             {
                 builder.RegisterInstance(_fakeGame);
@@ -43,7 +43,7 @@ namespace RogueIslands.Gameplay.DryRun
             Profiler.BeginSample("DryRunScoringController.ExecuteDryRun");
 
             var clonedBuilding = _cloner.Clone(building);
-            
+
             CloneRealGameToFakeGame(clonedBuilding);
             MakeProbabilitiesPass(true);
             _fakeView.IsAllProbabilitiesMode = true;
@@ -55,7 +55,7 @@ namespace RogueIslands.Gameplay.DryRun
             _scoringController.ScoreBuilding(clonedBuilding);
 
             _fakeView.ShowDryRunResults();
-            
+
             Profiler.EndSample();
         }
 
@@ -63,6 +63,9 @@ namespace RogueIslands.Gameplay.DryRun
         {
             _cloner.CloneTo(_realGame.Boosters, _fakeGame.Boosters);
             _cloner.CloneTo(_realGame.Buildings.PlacedDownBuildings, _fakeGame.PlacedDownBuildings);
+            _cloner.CloneTo(_realGame.Randoms, _fakeGame.Randoms);
+            _cloner.CloneTo(_realGame.SeedRandom, _fakeGame.SeedRandom);
+
             _fakeGame.Money = _realGame.Money;
             _fakeGame.CurrentScore = _realGame.CurrentScore;
             _fakeGame.Buildings.PlacedDownBuildings.Add(clonedBuilding);
@@ -71,7 +74,7 @@ namespace RogueIslands.Gameplay.DryRun
         private void MakeProbabilitiesPass(bool pass)
         {
             var riggedCounts = _fakeGame.GetRiggedCount();
-            
+
             foreach (var booster in _fakeGame.Boosters)
             {
                 using var gameConditions = booster.EventAction.GetAllConditions();

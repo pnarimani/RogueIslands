@@ -2,7 +2,7 @@
 using Cysharp.Threading.Tasks;
 using Flexalon;
 using RogueIslands.Assets;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.Shop;

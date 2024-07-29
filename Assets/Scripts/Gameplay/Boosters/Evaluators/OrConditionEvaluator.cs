@@ -1,4 +1,4 @@
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Boosters.Conditions;
 
 namespace RogueIslands.Gameplay.Boosters.Evaluators

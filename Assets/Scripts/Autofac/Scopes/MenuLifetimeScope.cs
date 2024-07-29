@@ -1,4 +1,4 @@
-﻿namespace RogueIslands.DependencyInjection.Autofac
+﻿namespace RogueIslands.Autofac.Scopes
 {
     public class MenuLifetimeScope : StaticallyResolvableLifetimeScope
     {

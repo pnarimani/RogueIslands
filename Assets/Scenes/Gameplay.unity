@@ -1025,7 +1025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _autoRun: 1
-  _useRandomSeed: 1
+  _useRandomSeed: 0
   _seed: 30
 --- !u!4 &768251863
 Transform:

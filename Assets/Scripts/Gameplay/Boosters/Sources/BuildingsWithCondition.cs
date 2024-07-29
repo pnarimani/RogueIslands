@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Boosters.Conditions;
 using RogueIslands.Gameplay.Buildings;
 

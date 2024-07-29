@@ -6,11 +6,10 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
 {
     public sealed class ProbabilityEvaluator : GameConditionEvaluator<ProbabilityCondition>
     {
-        private readonly RogueRandom _random = new((uint)Environment.TickCount); // TODO: Think about this
-
         protected override bool Evaluate(GameState state, IBooster booster, ProbabilityCondition condition)
         {
-            var roll = _random.ForAct(state.Act).NextInt(0, condition.TotalOutcomes);
+            var rand = state.GetRandomForType<ProbabilityCondition>().ForAct(state.Act);
+            var roll = rand.NextInt(0, condition.TotalOutcomes);
             return roll < condition.FavorableOutcome * (state.GetRiggedCount() + 1);
         }
     }

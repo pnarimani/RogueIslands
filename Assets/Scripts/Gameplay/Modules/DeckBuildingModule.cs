@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.DeckBuilding;
 using RogueIslands.Gameplay.DeckBuilding.ActionHandlers;
 

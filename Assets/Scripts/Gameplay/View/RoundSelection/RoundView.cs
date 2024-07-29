@@ -1,4 +1,4 @@
-﻿using RogueIslands.DependencyInjection;
+﻿using RogueIslands.Autofac;
 using RogueIslands.Localization;
 using TMPro;
 using UnityEngine;

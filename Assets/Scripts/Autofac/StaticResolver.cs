@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
-
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
-namespace RogueIslands.DependencyInjection
+namespace RogueIslands.Autofac
 {
     public static class StaticResolver
     {

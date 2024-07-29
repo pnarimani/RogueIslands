@@ -11,6 +11,8 @@ namespace RogueIslands.Gameplay
     {
         public const int RoundsPerAct = 5;
         public const int TotalActs = 4;
+        
+        public SeedRandom SeedRandom { get; set; }
 
         public int Round;
         public int Act;
@@ -68,5 +70,7 @@ namespace RogueIslands.Gameplay
         public GameResult Result;
 
         public WorldBoostersState WorldBoosters;
+
+        public Dictionary<string, RogueRandom> Randoms { get; set; } = new();
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Autofac;
 using Autofac.Builder;
-using RogueIslands.DependencyInjection;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Boosters.Evaluators;
 using RogueIslands.Gameplay.Boosters.Executors;
@@ -24,7 +24,7 @@ namespace RogueIslands.Gameplay.Modules
             builder.Register(c =>
                 {
                     var seed = (uint)c.Resolve<Seed>().GetHashCode();
-                    var seedRandom = new RogueRandom(seed);
+                    var seedRandom = new SeedRandom(seed);
                     return GameFactory.NewGame(seedRandom);
                 })
                 .SingleInstance()

@@ -5,30 +5,25 @@ namespace RogueIslands.Gameplay.Rand
 {
     public class RogueRandom
     {
-        private readonly Random[] _rand = new Random[200];
+        private readonly Random[] _randPerAct = new Random[10];
         private Random _randomGenerator;
 
-        public uint InitialSeed { get; }
-
-        public RogueRandom(uint initialSeed)
-        {
-            InitialSeed = initialSeed;
-            _randomGenerator = new Random(initialSeed);
-        }
+        public RogueRandom(uint initialSeed) => _randomGenerator = new Random(initialSeed);
 
         public RogueRandom(uint initialSeed, List<uint> state)
         {
             _randomGenerator = new Random(initialSeed);
-            for (var i = 0; i < state.Count; i++) 
-                _rand[i] =new Random(state[i]);
+            for (var i = 0; i < state.Count; i++)
+                _randPerAct[i] = new Random(state[i]);
         }
-        
+
         public List<uint> GetState()
         {
             var state = new List<uint>();
-            foreach (var random in _rand)
+            foreach (var random in _randPerAct)
             {
-                state.Add(random.state);
+                if (random.state != 0)
+                    state.Add(random.state);
             }
 
             return state;
@@ -38,12 +33,12 @@ namespace RogueIslands.Gameplay.Rand
 
         internal ref Random GetActRandom(int act)
         {
-            if (_rand[act].state == default)
+            if (_randPerAct[act].state == default)
             {
-                _rand[act] = new Random(_randomGenerator.NextUInt());
+                _randPerAct[act] = new Random(_randomGenerator.NextUInt());
             }
 
-            return ref _rand[act];
+            return ref _randPerAct[act];
         }
     }
 }

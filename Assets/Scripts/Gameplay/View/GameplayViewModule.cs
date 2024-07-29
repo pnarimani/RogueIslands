@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Autofac;
 using RogueIslands.Autofac;
-using RogueIslands.DependencyInjection;
 using RogueIslands.Gameplay.View.DeckBuilding;
 using UnityEngine;
 

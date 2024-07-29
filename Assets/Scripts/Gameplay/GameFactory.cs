@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.DeckBuilding;
@@ -11,11 +10,10 @@ namespace RogueIslands.Gameplay
 {
     public static class GameFactory
     {
-        public static GameState NewGame(RogueRandom rogueRandom)
+        public static GameState NewGame(SeedRandom seedRandom)
         {
             const int handSize = 6;
 
-            var seedRandom = rogueRandom.ForAct(0);
             var buildingBlueprints = DefaultBuildingsList.Get();
             var deck = DefaultBuildingsList.Get();
             deck.Shuffle(seedRandom);
@@ -32,6 +30,7 @@ namespace RogueIslands.Gameplay
 
             return new GameState()
             {
+                SeedRandom = seedRandom,
                 AllRequiredScores = GetScoringRequirements(),
                 CurrentEvent = new ActStart(),
                 Buildings = new BuildingsState()
@@ -62,8 +61,7 @@ namespace RogueIslands.Gameplay
             };
         }
 
-        public static RogueRandom NextRandom(this RandomForAct sysRandom)
-            => new(sysRandom.NextUInt());
+
 
         private static double[] GetScoringRequirements()
         {

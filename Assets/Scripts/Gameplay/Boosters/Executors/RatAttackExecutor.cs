@@ -6,8 +6,6 @@ namespace RogueIslands.Gameplay.Boosters.Executors
     public class RatAttackExecutor : GameActionExecutor<RatAttack>
     {
         private BoosterManagement _boosterManagement;
-        private RogueRandom _rogueRandom = new(3);
-
         public RatAttackExecutor(BoosterManagement boosterManagement)
         {
             _boosterManagement = boosterManagement;
@@ -17,7 +15,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         {
             if (state.Boosters.Count > 1)
             {
-                var randomForAct = _rogueRandom.ForAct(state.Act);
+                var randomForAct = state.GetRandomForType<RatAttack>().ForAct(state.Act);
                 BoosterCard toDestroy;
                 do
                 {
