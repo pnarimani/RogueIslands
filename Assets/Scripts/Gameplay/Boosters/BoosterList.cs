@@ -17,7 +17,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Simple",
-                    Description = "{mult}",
+                    Description = "{mult} score",
                     BuyPrice = 2,
                     EventAction = new ScoringAction
                     {
@@ -362,7 +362,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "The Banana",
-                    Description = "{mult}, {probability} to get destroyed at the end of the round",
+                    Description = "{mult} score, {probability} to get destroyed at the end of the round",
                     BuyPrice = 4,
                     EventAction = new CompositeAction
                     {
@@ -689,7 +689,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Quiet",
-                    Description = "{score} when a {City} building has no {Lumber} building nearby",
+                    Description = "{score} when a {City} building has no {Lumber} building in range",
                     BuyPrice = 6,
                     EventAction = new ScoringAction
                     {
@@ -720,7 +720,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Industry",
-                    Description = "{score} when an {Iron} building has {Lumber} buildings nearby",
+                    Description = "{score} when an {Iron} building has {Lumber} buildings in range",
                     BuyPrice = 5,
                     EventAction = new ScoringAction
                     {
@@ -751,7 +751,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Lowkey",
-                    Description = "{score} \nwhen a placed down {Statue} building \nhas no other {Statue} buildings nearby",
+                    Description = "{score} score\n when {Statue} building is placed down\n without any other {Statue} buildings in range",
                     BuyPrice = 5,
                     EventAction = new ScoringAction
                     {
@@ -796,7 +796,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Good Year",
-                    Description = "{score}",
+                    Description = "{score} bonus",
                     BuyPrice = 3,
                     EventAction = new ModifyBonusAction
                     {
@@ -829,13 +829,13 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Inside Out",
-                    Description = "Instead of in-range buildings, out of range buildings score bonus",
+                    Description = "Instead of in-range buildings,\n out of range buildings score bonus",
                     BuyPrice = 4,
                 },
                 new()
                 {
                     Name = "Double Trouble",
-                    Description = "{score} when a building scores bonus",
+                    Description = "{score} bonus when a building scores bonus",
                     BuyPrice = 6,
                     EventAction = new ScoringAction
                     {
@@ -849,7 +849,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Mine Shaft",
-                    Description = "{score} when an {Iron} building is triggered",
+                    Description = "{score} score when an {Iron} building is triggered",
                     BuyPrice = 6,
                     EventAction = new ScoringAction
                     {
@@ -939,7 +939,7 @@ namespace RogueIslands.Gameplay.Boosters
                 Name = name,
                 Description = new DescriptionData()
                 {
-                    Text = $"{{add}} when {{{color}}} building is triggered",
+                    Text = $"{{add}} score when {{{color}}} building is triggered",
                 },
                 BuyPrice = 3,
                 EventAction = new ScoringAction

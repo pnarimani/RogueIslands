@@ -24,8 +24,13 @@ namespace RogueIslands.Gameplay.View.Descriptions
             { ColorTag.Red, ColorUtility.ToHtmlStringRGB(new Color(1, 0, 0)) },
         };
 
-        private static readonly string MultColor = ColorUtility.ToHtmlStringRGB(new Color(1, 0, 0));
+        private static readonly string MultColor = ColorUtility.ToHtmlStringRGB(new Color(1, 1, 1));
+
+        private static readonly string MultHighlightColor =
+            ColorUtility.ToHtmlStringRGBA(new Color(0f, 0.47f, 0.36f, 0));
+
         private static readonly string AddColor = ColorUtility.ToHtmlStringRGB(new Color(0f, 0.47f, 0.36f));
+
         private static readonly string ProbabilityColor = ColorUtility.ToHtmlStringRGB(new Color(0f, 0.78f, 0.06f));
         private static readonly string ProgressColor = ColorUtility.ToHtmlStringRGB(new Color(0.29f, 0.31f, 0.3f));
         private static readonly string MoneyColor = ColorUtility.ToHtmlStringRGB(new Color(0.76f, 0.55f, 0f));
@@ -83,7 +88,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
 
             if (money != null)
             {
-                var moneyText = money.Change > 0 
+                var moneyText = money.Change > 0
                     ? $"{money.Change:$0.#;-$#.#}".WrapWithColor(MoneyColor)
                     : $"costs {Math.Abs(money.Change):$0.#}".WrapWithColor(MoneyColor);
                 text = text.Replace("{money}", moneyText);
@@ -91,14 +96,14 @@ namespace RogueIslands.Gameplay.View.Descriptions
 
             if (scoring?.Multiplier is { } mult)
             {
-                var xmult = $"x{mult:0.#}".WrapWithColor(MultColor) + " score";
+                var xmult = $"X{mult:0.#}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
                 text = text.ReplaceIgnoreCase("{mult}", xmult);
                 text = text.ReplaceIgnoreCase("{score}", xmult);
             }
 
             if (scoring?.Products is { } products)
             {
-                var add = $"{products:+0.#;-#.#}".WrapWithColor(AddColor) + " score";
+                var add = $"{products:+0.#;-#.#}".WrapWithColor(AddColor);
                 text = text.ReplaceIgnoreCase("{add}", add);
                 text = text.ReplaceIgnoreCase("{score}", add);
             }
@@ -107,35 +112,35 @@ namespace RogueIslands.Gameplay.View.Descriptions
             {
                 if (modifyBonus.Multiplier is { } bmult)
                 {
-                    var multText = $"x{bmult:0.#}".WrapWithColor(MultColor) + " bonus";
+                    var multText = $"X{bmult:0.#}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
                     text = text.ReplaceIgnoreCase("{mult}", multText);
                     text = text.ReplaceIgnoreCase("{score}", multText);
                 }
 
                 if (modifyBonus.Add is { } badd)
                 {
-                    var prodText = $"+{badd:0.#}".WrapWithColor(AddColor) + " bonus";
+                    var prodText = $"+{badd:0.#}".WrapWithColor(AddColor);
                     text = text.ReplaceIgnoreCase("{add}", prodText);
                     text = text.ReplaceIgnoreCase("{score}", prodText);
                 }
 
                 if (modifyBonus.CategoryMultiplier is { } catMult)
                 {
-                    var multText = $"x{catMult:0.#}".WrapWithColor(MultColor) + " bonus";
+                    var multText = $"X{catMult:0.#}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
                     text = text.ReplaceIgnoreCase("{mult}", multText);
                     text = text.ReplaceIgnoreCase("{score}", multText);
                 }
 
                 if (modifyBonus.ColorMultiplier is { } colMult)
                 {
-                    var multText = $"x{colMult:0.#}".WrapWithColor(MultColor) + " bonus";
+                    var multText = $"X{colMult:0.#}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
                     text = text.ReplaceIgnoreCase("{mult}", multText);
                     text = text.ReplaceIgnoreCase("{score}", multText);
                 }
 
                 if (modifyBonus.SizeMultiplier is { } sizeMult)
                 {
-                    var multText = $"x{sizeMult:0.#}".WrapWithColor(MultColor) + " bonus";
+                    var multText = $"X{sizeMult:0.#}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
                     text = text.ReplaceIgnoreCase("{mult}", multText);
                     text = text.ReplaceIgnoreCase("{score}", multText);
                 }
@@ -157,7 +162,8 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 {
                     var finalMult = 1 + multipliedScoring.Multiplier * factor;
                     text +=
-                        ("\n(Currently " + $"{finalMult:0.#}x".WrapWithColor(MultColor) + " Mult)").WrapWithColor(
+                        ("\n(Currently " + $"{finalMult:0.#}x".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor) +
+                         " Mult)").WrapWithColor(
                             ProgressColor);
                 }
             }
@@ -170,8 +176,9 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 if (scalingAction.MultiplierChange is { } multChange)
                 {
                     var changeText = multChange > 0
-                        ? $"x{multChange:0.#}".WrapWithColor(MultColor)
-                        : "loses " + $"x{Math.Abs(multChange):0.#}".WrapWithColor(MultColor);
+                        ? $"X{multChange:0.#}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor)
+                        : "loses " + $"X{Math.Abs(multChange):0.#}".WrapWithColor(MultColor)
+                            .WrapWithHighlight(MultHighlightColor);
 
                     text = text.ReplaceIgnoreCase("{multChange}", changeText);
                 }
@@ -190,7 +197,9 @@ namespace RogueIslands.Gameplay.View.Descriptions
                     text += ("\n(Currently " + $"{scoring.Products:0.#}".WrapWithColor(AddColor) + " Score)")
                         .WrapWithColor(ProgressColor);
                 else if (scoring?.Multiplier != null)
-                    text += ("\n(Currently " + $"{scoring.Multiplier:0.#}x".WrapWithColor(MultColor) + " Mult)")
+                    text += ("\n(Currently " +
+                             $"{scoring.Multiplier:0.#}x".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor) +
+                             " Mult)")
                         .WrapWithColor(ProgressColor);
             }
 
@@ -205,7 +214,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 var colorHex = TextColors[colorTag];
                 var tag = colorTag.Tag;
                 text = text.ReplaceIgnoreCase($"{{{tag}}}",
-                    $"<color=#{colorHex}><b>{localization.Get(tag)}</b></color>");
+                    $"<color=#{colorHex}>{localization.Get(tag)}</color>");
             }
 
             return text;
@@ -224,7 +233,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
             var localization = StaticResolver.Resolve<ILocalization>();
             foreach (var cat in Category.All)
                 text = text.ReplaceIgnoreCase($"{{{cat.Value}}}",
-                    $"<b>{localization.Get(cat.Value)}</b>".WrapWithColor(CategoryColor));
+                    $"{localization.Get(cat.Value)}".WrapWithColor(CategoryColor));
             return text;
         }
 
@@ -232,12 +241,12 @@ namespace RogueIslands.Gameplay.View.Descriptions
         {
             var localization = StaticResolver.Resolve<ILocalization>();
             var key = size.ToString();
-            return text.ReplaceIgnoreCase($"{{{key}}}", $"<b>{localization.Get(key)}</b>".WrapWithColor(SizeColor));
+            return text.ReplaceIgnoreCase($"{{{key}}}", $"{localization.Get(key)}".WrapWithColor(SizeColor));
         }
 
         private static string GetProbabilityText(ProbabilityCondition probability) =>
-            $"<b>{probability.FavorableOutcome * (GameManager.Instance.State.GetRiggedCount() + 1)} in {probability.TotalOutcomes}"
-                .WrapWithColor(ProbabilityColor) + " chance</b>";
+            $"{probability.FavorableOutcome * (GameManager.Instance.State.GetRiggedCount() + 1)} in {probability.TotalOutcomes}"
+                .WrapWithColor(ProbabilityColor) + " chance";
 
         private static string WrapInstancesWithColor(string input, string word, string color)
             => Regex.Replace(input, $"\b{word}\b", word.WrapWithColor(color));
