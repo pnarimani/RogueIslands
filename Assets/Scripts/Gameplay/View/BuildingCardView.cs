@@ -107,7 +107,7 @@ namespace RogueIslands.Gameplay.View
                     _buildingPreview.ShowValidPlacement(isValidPlacement);
 
                     EffectRangeHighlighter.HighlightBuilding(_buildingPreview);
-                    WorldBoosterBoundCheck.HighlightOverlappingWorldBoosters(_buildingPreview.transform);
+                    DecorationRemover.DisableDecorations(_buildingPreview);
 
                     StaticResolver.Resolve<DryRunScoringController>().ExecuteDryRun(_buildingPreview.Data);
                 }
@@ -117,7 +117,7 @@ namespace RogueIslands.Gameplay.View
                 if (_buildingPreview != null)
                 {
                     Destroy(_buildingPreview.gameObject);
-                    WorldBoosterBoundCheck.HideAllDeletionWarnings();
+                    DecorationRemover.EnableAllDecorations();
                     EffectRangeHighlighter.LowlightAll();
                     StaticResolver.Resolve<DryRunScoringController>().Clear();
                 }
@@ -141,6 +141,7 @@ namespace RogueIslands.Gameplay.View
                     _buildingPreview.transform.rotation, CancellationToken.None).Forget();
 
                 EffectRangeHighlighter.LowlightAll();
+                DecorationRemover.RemoveDecorations(_buildingPreview);
                 StaticResolver.Resolve<DryRunScoringController>().Clear();
 
                 GameUI.Instance.RefreshMoney();
