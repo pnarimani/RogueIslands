@@ -89,21 +89,21 @@ namespace RogueIslands.Gameplay.View.Descriptions
             if (money != null)
             {
                 var moneyText = money.Change > 0
-                    ? $"{money.Change:$0.#;-$#.#}".WrapWithColor(MoneyColor)
-                    : $"costs {Math.Abs(money.Change):$0.#}".WrapWithColor(MoneyColor);
+                    ? $"{money.Change:$0.##;-$#.#}".WrapWithColor(MoneyColor)
+                    : $"costs {Math.Abs(money.Change):$0.##}".WrapWithColor(MoneyColor);
                 text = text.Replace("{money}", moneyText);
             }
 
             if (scoring?.Multiplier is { } mult)
             {
-                var xmult = $"X{mult:0.#}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
+                var xmult = $"X{mult:0.##}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
                 text = text.ReplaceIgnoreCase("{mult}", xmult);
                 text = text.ReplaceIgnoreCase("{score}", xmult);
             }
 
             if (scoring?.Addition is { } products)
             {
-                var add = $"{products:+0.#;-#.#}".WrapWithColor(AddColor);
+                var add = $"{products:+0.##;-#.#}".WrapWithColor(AddColor);
                 text = text.ReplaceIgnoreCase("{add}", add);
                 text = text.ReplaceIgnoreCase("{score}", add);
             }
@@ -112,35 +112,35 @@ namespace RogueIslands.Gameplay.View.Descriptions
             {
                 if (modifyBonus.Multiplier is { } bmult)
                 {
-                    var multText = $"X{bmult:0.#}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
+                    var multText = $"X{bmult:0.##}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
                     text = text.ReplaceIgnoreCase("{mult}", multText);
                     text = text.ReplaceIgnoreCase("{score}", multText);
                 }
 
                 if (modifyBonus.Addition is { } badd)
                 {
-                    var prodText = $"+{badd:0.#}".WrapWithColor(AddColor);
+                    var prodText = $"+{badd:0.##}".WrapWithColor(AddColor);
                     text = text.ReplaceIgnoreCase("{add}", prodText);
                     text = text.ReplaceIgnoreCase("{score}", prodText);
                 }
 
                 if (modifyBonus.CategoryMultiplier is { } catMult)
                 {
-                    var multText = $"X{catMult:0.#}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
+                    var multText = $"X{catMult:0.##}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
                     text = text.ReplaceIgnoreCase("{mult}", multText);
                     text = text.ReplaceIgnoreCase("{score}", multText);
                 }
 
                 if (modifyBonus.ColorMultiplier is { } colMult)
                 {
-                    var multText = $"X{colMult:0.#}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
+                    var multText = $"X{colMult:0.##}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
                     text = text.ReplaceIgnoreCase("{mult}", multText);
                     text = text.ReplaceIgnoreCase("{score}", multText);
                 }
 
                 if (modifyBonus.SizeMultiplier is { } sizeMult)
                 {
-                    var multText = $"X{sizeMult:0.#}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
+                    var multText = $"X{sizeMult:0.##}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor);
                     text = text.ReplaceIgnoreCase("{mult}", multText);
                     text = text.ReplaceIgnoreCase("{score}", multText);
                 }
@@ -155,14 +155,14 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 {
                     var finalAdd = multipliedScoring.Addition * factor;
                     text +=
-                        ("\n(Currently " + $"{finalAdd:0.#}".WrapWithColor(AddColor) + " Score)").WrapWithColor(
+                        ("\n(Currently " + $"{finalAdd:0.##}".WrapWithColor(AddColor) + " Score)").WrapWithColor(
                             ProgressColor);
                 }
                 else if (multipliedScoring?.Multiplier != null)
                 {
                     var finalMult = 1 + multipliedScoring.Multiplier * factor;
                     text +=
-                        ("\n(Currently " + $"{finalMult:0.#}x".WrapWithColor(MultColor)
+                        ("\n(Currently " + $"{finalMult:0.##}x".WrapWithColor(MultColor)
                              .WrapWithHighlight(MultHighlightColor) +
                          " Mult)").WrapWithColor(
                             ProgressColor);
@@ -177,8 +177,8 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 if (scalingAction.MultiplierChange is { } multChange)
                 {
                     var changeText = multChange > 0
-                        ? $"X{multChange:0.#}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor)
-                        : "loses " + $"X{Math.Abs(multChange):0.#}".WrapWithColor(MultColor)
+                        ? $"X{multChange:0.##}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor)
+                        : "loses " + $"X{Math.Abs(multChange):0.##}".WrapWithColor(MultColor)
                             .WrapWithHighlight(MultHighlightColor);
 
                     text = text.ReplaceIgnoreCase("{multChange}", changeText);
@@ -188,18 +188,18 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 {
                     string changeText;
                     if (prodChange > 0)
-                        changeText = $"{prodChange:0.#}".WrapWithColor(AddColor);
+                        changeText = $"{prodChange:0.##}".WrapWithColor(AddColor);
                     else
-                        changeText = "loses " + $"{Math.Abs(prodChange):0.#}".WrapWithColor(AddColor);
+                        changeText = "loses " + $"{Math.Abs(prodChange):0.##}".WrapWithColor(AddColor);
                     text = text.ReplaceIgnoreCase("{addChange}", changeText);
                 }
 
                 if (scoring?.Addition != null)
-                    text += ("\n(Currently " + $"{scoring.Addition:0.#}".WrapWithColor(AddColor) + " Score)")
+                    text += ("\n(Currently " + $"{scoring.Addition:0.##}".WrapWithColor(AddColor) + " Score)")
                         .WrapWithColor(ProgressColor);
                 else if (scoring?.Multiplier != null)
                     text += ("\n(Currently " +
-                             $"{scoring.Multiplier:0.#}x".WrapWithColor(MultColor)
+                             $"{scoring.Multiplier:0.##}x".WrapWithColor(MultColor)
                                  .WrapWithHighlight(MultHighlightColor) +
                              " Mult)")
                         .WrapWithColor(ProgressColor);

@@ -91,7 +91,7 @@ namespace RogueIslands.Gameplay.View
             GameUI.Instance.ProductBoosted(count);
 
             var scoringAudio = StaticResolver.Resolve<IScoringAudio>();
-            scoringAudio.PlayScoreSound(TriggerCount / 12f);
+            scoringAudio.PlayScoreSound(Mathf.Clamp01(TriggerCount / 12f));
             TriggerCount++;
 
             await UniTask.WhenAll(_triggerFeedback.Play(), feedback.Play());
