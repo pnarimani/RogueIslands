@@ -183,7 +183,6 @@ namespace RogueIslands.Gameplay.View.Shop
         private async void OnContinueClicked()
         {
             await _openingFeedback.PlayClosing();
-            StaticResolver.Resolve<ShopRerollController>().ResetRerollCosts();
             StaticResolver.Resolve<RoundController>().StartRound();
             Destroy(gameObject);
         }

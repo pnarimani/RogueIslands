@@ -19,7 +19,7 @@ namespace RogueIslands.Gameplay
 
         public int HandSize = 4;
 
-        public int Money = 4;
+        public int Money = 5;
         public int MoneyPayoutPerRound = 4;
         public List<MoneyChange> MoneyChanges = new();
 
