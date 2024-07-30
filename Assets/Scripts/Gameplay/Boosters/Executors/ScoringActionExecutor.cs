@@ -7,7 +7,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
     {
         protected override void Execute(GameState state, IGameView view, IBooster booster, ScoringAction action)
         {
-            if (action.Products is { } products and > 0)
+            if (action.Addition is { } products and > 0)
             {
                 state.TransientScore += products;
                 view.GetBooster(booster.Id).GetScoringVisualizer().ProductApplied(products);

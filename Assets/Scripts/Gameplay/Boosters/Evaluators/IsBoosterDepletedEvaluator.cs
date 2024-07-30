@@ -12,7 +12,7 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
             if (scoringAction.Multiplier is { } mult)
                 return mult == 0;
 
-            if (scoringAction.Products is { } prod)
+            if (scoringAction.Addition is { } prod)
                 return prod == 0;
 
             return false;

@@ -101,7 +101,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 text = text.ReplaceIgnoreCase("{score}", xmult);
             }
 
-            if (scoring?.Products is { } products)
+            if (scoring?.Addition is { } products)
             {
                 var add = $"{products:+0.#;-#.#}".WrapWithColor(AddColor);
                 text = text.ReplaceIgnoreCase("{add}", add);
@@ -117,7 +117,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
                     text = text.ReplaceIgnoreCase("{score}", multText);
                 }
 
-                if (modifyBonus.Add is { } badd)
+                if (modifyBonus.Addition is { } badd)
                 {
                     var prodText = $"+{badd:0.#}".WrapWithColor(AddColor);
                     text = text.ReplaceIgnoreCase("{add}", prodText);
@@ -151,9 +151,9 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 var factor = multipliedScoring.Factor.Get(GameManager.Instance.State, booster).First();
 
 
-                if (multipliedScoring?.Products != null)
+                if (multipliedScoring?.Addition != null)
                 {
-                    var finalAdd = multipliedScoring.Products * factor;
+                    var finalAdd = multipliedScoring.Addition * factor;
                     text +=
                         ("\n(Currently " + $"{finalAdd:0.#}".WrapWithColor(AddColor) + " Score)").WrapWithColor(
                             ProgressColor);
@@ -184,7 +184,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
                     text = text.ReplaceIgnoreCase("{multChange}", changeText);
                 }
 
-                if (scalingAction.ProductChange is { } prodChange)
+                if (scalingAction.AdditionChange is { } prodChange)
                 {
                     string changeText;
                     if (prodChange > 0)
@@ -194,8 +194,8 @@ namespace RogueIslands.Gameplay.View.Descriptions
                     text = text.ReplaceIgnoreCase("{addChange}", changeText);
                 }
 
-                if (scoring?.Products != null)
-                    text += ("\n(Currently " + $"{scoring.Products:0.#}".WrapWithColor(AddColor) + " Score)")
+                if (scoring?.Addition != null)
+                    text += ("\n(Currently " + $"{scoring.Addition:0.#}".WrapWithColor(AddColor) + " Score)")
                         .WrapWithColor(ProgressColor);
                 else if (scoring?.Multiplier != null)
                     text += ("\n(Currently " +

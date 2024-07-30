@@ -6,7 +6,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
     {
         protected override void Execute(GameState state, IGameView view, IBooster booster, ModifyBonusAction action)
         {
-            if (action.Add is { } add)
+            if (action.Addition is { } add)
             {
                 state.Score.TransientExtraBonus += add;
             }

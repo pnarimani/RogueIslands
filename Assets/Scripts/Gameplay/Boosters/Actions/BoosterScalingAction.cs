@@ -2,7 +2,7 @@
 {
     public class BoosterScalingAction : GameAction
     {
-        public double? ProductChange { get; set; }
+        public double? AdditionChange { get; set; }
         public double? MultiplierChange { get; set; }
         
         public bool OneTime { get; set; }

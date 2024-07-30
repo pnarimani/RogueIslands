@@ -21,10 +21,10 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             if (action.HasTriggered && action.OneTime)
                 return;
 
-            if (action.ProductChange is { } p)
+            if (action.AdditionChange is { } p)
             {
                 PlayScalingAnimation(view, booster, p);
-                scoringAction.Products += p;
+                scoringAction.Addition += p;
             }
 
             if (action.MultiplierChange is { } q)

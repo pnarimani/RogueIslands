@@ -7,7 +7,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         protected override void Execute(GameState state, IGameView view, IBooster booster, BoosterResetAction action)
         {
             var scoringAction = booster.GetEventAction<ScoringAction>();
-            scoringAction.Products = action.Product;
+            scoringAction.Addition = action.Product;
             scoringAction.Multiplier = action.Multiplier;
 
             view.GetBooster(booster.Id).GetResetVisualizer().PlayReset();

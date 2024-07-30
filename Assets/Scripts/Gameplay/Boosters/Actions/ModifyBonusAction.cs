@@ -2,7 +2,7 @@
 {
     public class ModifyBonusAction : GameAction
     {
-        public double? Add { get; set; }
+        public double? Addition { get; set; }
         public double? Multiplier { get; set; }
         public double? ColorMultiplier { get; set; }
         public double? CategoryMultiplier { get; set; }

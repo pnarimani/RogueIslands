@@ -18,7 +18,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             
             var boosterView = view.GetBooster(booster.Id);
                 
-            if (action.Products is { } products)
+            if (action.Addition is { } products)
             {
                 state.TransientScore += products * multiplier;
                 boosterView.GetScoringVisualizer().ProductApplied(products * multiplier);

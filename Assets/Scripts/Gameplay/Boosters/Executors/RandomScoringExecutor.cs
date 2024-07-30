@@ -9,7 +9,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         {
             var rand = state.GetRandomForType<RandomScoringAction>().ForAct(state.Act);
 
-            if (action.Products is { } products)
+            if (action.Addition is { } products)
                 state.TransientScore += rand.NextDouble(0, products);
 
             if (action.Multiplier is { } xMult)
