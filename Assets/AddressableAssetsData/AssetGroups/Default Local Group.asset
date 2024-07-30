@@ -16,12 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: b0a68ac49b6b3664b8c1cb0bb087db19
-  m_SerializeEntries:
-  - m_GUID: 0add86853cc748a4989c44b8189accf2
-    m_Address: Assets/Content/Islands
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9d7c87d3599a02240a9dae7f095edb60, type: 2}
   m_SchemaSet:

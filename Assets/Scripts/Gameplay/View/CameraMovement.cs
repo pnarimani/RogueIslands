@@ -55,7 +55,7 @@ namespace RogueIslands.Gameplay.View
 
         private void ClampRadiusTarget()
         {
-            _radiusTarget = Mathf.Clamp(_radiusTarget, _bounds.max.y + 30, _bounds.max.y + 80);
+            _radiusTarget = Mathf.Clamp(_radiusTarget, _bounds.max.y + 15, _bounds.max.y + 80);
         }
 
         private void Update()

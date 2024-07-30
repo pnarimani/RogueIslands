@@ -17,10 +17,10 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Simple",
-                    Description = "{mult} score",
+                    Description = "{score} score",
                     BuyPrice = 2,
                     EventAction = new ScoringAction
-                    {
+                    {   
                         Conditions = new[] { GameEventCondition.Create<AfterAllBuildingTriggers>() },
                         Multiplier = 2,
                     },

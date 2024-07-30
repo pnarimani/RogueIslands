@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Buildings;
@@ -17,6 +16,7 @@ namespace RogueIslands.Gameplay.View
 {
     public class BuildingView : MonoBehaviour, IBuildingView, IHighlightable
     {
+        public static int TriggerCount;
         [SerializeField] private GameObject _synergyRange;
         [SerializeField] private GameObject _highlight;
         [SerializeField] private BuildingTriggerFeedback _triggerFeedback;
@@ -25,11 +25,10 @@ namespace RogueIslands.Gameplay.View
         [SerializeField] private LabelFeedback _outputFeedback;
         [SerializeField] private LabelFeedback _bonusContainer;
         [SerializeField] private GameObject _invalidPlacement;
-
-        public static int TriggerCount;
+        [SerializeField] private GameObject[] _layouts;
+        private readonly List<LabelFeedback> _dryRunLabels = new();
 
         private GameObject _invalidPlacementInstance;
-        private readonly List<LabelFeedback> _dryRunLabels = new();
 
         public Building Data { get; private set; }
 
@@ -54,18 +53,14 @@ namespace RogueIslands.Gameplay.View
 
         public void ShowDryRunTrigger(Dictionary<int, int> triggerAndCount)
         {
-            foreach (var (trigger, count) in triggerAndCount)
-            {
+            foreach (var (trigger, count) in triggerAndCount) 
                 ShowDryRun(trigger * count, _outputFeedback);
-            }
         }
 
         public void ShowDryRunBonus(Dictionary<int, int> bonusAndCount)
         {
-            foreach (var (bonus, count) in bonusAndCount)
-            {
+            foreach (var (bonus, count) in bonusAndCount) 
                 ShowDryRun(bonus * count, _bonusContainer);
-            }
         }
 
         public void HideAllDryRunLabels()
@@ -74,6 +69,16 @@ namespace RogueIslands.Gameplay.View
                 Destroy(label.gameObject);
 
             _dryRunLabels.Clear();
+        }
+
+        public void Highlight(bool highlight)
+        {
+            _highlight.SetActive(highlight);
+        }
+
+        public void ShowRange(bool showRange)
+        {
+            _synergyRange.SetActive(showRange);
         }
 
         private async UniTask ShowScoringFeedback(int count, LabelFeedback feedbackSource)
@@ -93,16 +98,6 @@ namespace RogueIslands.Gameplay.View
             Destroy(feedback.gameObject);
         }
 
-        public void Highlight(bool highlight)
-        {
-            _highlight.SetActive(highlight);
-        }
-
-        public void ShowRange(bool showRange)
-        {
-            _synergyRange.SetActive(showRange);
-        }
-
         public void Initialize(Building building)
         {
             if (building.Id.IsDefault())
@@ -119,6 +114,17 @@ namespace RogueIslands.Gameplay.View
 
             if (IsPlacedDown)
                 StaticResolver.Resolve<IBuildingAudio>().PlayBuildingPlaced();
+
+            for (var i = 0; i < _layouts.Length; i++)
+            {
+                var active = (int)building.Size == i;
+                _layouts[i].SetActive(false);
+                if (active)
+                {
+                    var mesh = _layouts[i].GetComponentInChildren<MeshRenderer>();
+                    mesh.material.color = building.Color.Color;
+                }
+            }
         }
 
         public async UniTask BuildingMadeMoney(int money)
