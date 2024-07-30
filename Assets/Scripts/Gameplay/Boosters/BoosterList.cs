@@ -289,7 +289,7 @@ namespace RogueIslands.Gameplay.Boosters
                                 Source = new PlacedDownBuildings(),
                             },
                         },
-                        Multiplier = 20,
+                        Multiplier = 5,
                     },
                 },
                 new()
@@ -303,33 +303,13 @@ namespace RogueIslands.Gameplay.Boosters
                         {
                             GameEventCondition.Create<AfterAllBuildingTriggers>(),
                         },
-                        Multiplier = 50,
-                    },
-                },
-                new()
-                {
-                    Name = "Sacrifice",
-                    Description = "{mult} if 6 or more buildings are placed down",
-                    BuyPrice = 5,
-                    EventAction = new ScoringAction
-                    {
-                        Conditions = new IGameCondition[]
-                        {
-                            GameEventCondition.Create<AfterAllBuildingTriggers>(),
-                            new CountCondition
-                            {
-                                Source = new PlacedDownBuildings().Count(),
-                                ComparisonMode = CountCondition.Mode.More,
-                                Value = 5,
-                            },
-                        },
-                        Multiplier = 4,
+                        Multiplier = 5,
                     },
                 },
                 new()
                 {
                     Name = "The Rat",
-                    Description = "On the start of the round,\ndestroys a random booster.\nGains x4 multiplier.",
+                    Description = "On the start of the round,\ndestroys a random booster.\nGains x1 multiplier.",
                     BuyPrice = 5,
                     EventAction = new CompositeAction
                     {
@@ -337,6 +317,7 @@ namespace RogueIslands.Gameplay.Boosters
                         {
                             new RatAttack
                             {
+                                Change = 1,
                                 Conditions = new[] { GameEventCondition.Create<RoundStart>() },
                             },
                             new ScoringAction
@@ -350,12 +331,12 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "The Collector",
-                    Description = ".25x score for each different\n building placed in the world",
+                    Description = ".05x score for each different\n building placed in the world",
                     BuyPrice = 8,
                     EventAction = new MultipliedScoringAction
                     {
                         Conditions = new[] { GameEventCondition.Create<AfterAllBuildingTriggers>() },
-                        Multiplier = .25,
+                        Multiplier = .05,
                         Factor = new PlacedDownBuildings().Distinct().Count(),
                     },
                 },
@@ -440,11 +421,11 @@ namespace RogueIslands.Gameplay.Boosters
                         {
                             new ScoringAction
                             {
-                                Products = 100,
+                                Products = 20,
                             },
                             new BoosterScalingAction
                             {
-                                ProductChange = -5,
+                                ProductChange = -2,
                             },
                             new DestroyBoosterAction
                             {
@@ -457,7 +438,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Late Bloomer",
-                    Description = "Starts at 0.5x score.\n After 5 rounds, it turns into x100 mult",
+                    Description = "Starts at 0.5x score.\n After 5 rounds, it turns into x3 mult",
                     BuyPrice = 3,
                     SellPrice = 2,
                     EventAction = new CompositeAction
@@ -471,7 +452,7 @@ namespace RogueIslands.Gameplay.Boosters
                             },
                             new BoosterScalingAction
                             {
-                                MultiplierChange = 99.5,
+                                MultiplierChange = 2.5,
                                 Delay = 5,
                                 OneTime = true,
                                 Conditions = new IGameCondition[]
@@ -671,7 +652,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Away",
-                    Description = "+0.3x for each small building out of range",
+                    Description = "+0.1x for each small building out of range",
                     BuyPrice = 5,
                     EventAction = new MultipliedScoringAction
                     {
@@ -683,7 +664,7 @@ namespace RogueIslands.Gameplay.Boosters
                             .GetBuildingsOutOfRange()
                             .WithCondition(new BuildingSizeCondition { Allowed = new[] { BuildingSize.Small } })
                             .Count(),
-                        Multiplier = .3,
+                        Multiplier = .1,
                     },
                 },
                 new()

@@ -54,7 +54,7 @@ namespace RogueIslands.Gameplay.DryRun
                     vis.ShowDryRunProducts(productsAndCount);
             }
 
-            if (allProbabilities.ScaleUpTriggers != lastFrame.ScaleUpTriggers)
+            if (false && allProbabilities.ScaleUpTriggers != lastFrame.ScaleUpTriggers)
             {
                 var vis = realView.GetScalingVisualizer();
                 vis.HideDryRun();
@@ -64,7 +64,7 @@ namespace RogueIslands.Gameplay.DryRun
                     vis.ShowDryRunScaleUp(allProbabilities.ScaleUpTriggers);
             }
 
-            if (allProbabilities.ScaleDownTriggers != lastFrame.ScaleDownTriggers)
+            if (false && allProbabilities.ScaleDownTriggers != lastFrame.ScaleDownTriggers)
             {
                 var vis = realView.GetScalingVisualizer();
                 vis.HideDryRun();

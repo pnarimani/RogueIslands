@@ -25,7 +25,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
                 _boosterManagement.DestroyBooster(toDestroy.Id);
             }
 
-            booster.GetEventAction<ScoringAction>().Multiplier += 4;
+            booster.GetEventAction<ScoringAction>().Multiplier += action.Change;
             view.GetBooster(booster.Id).GetScalingVisualizer().PlayScaleUp();
         }
     }

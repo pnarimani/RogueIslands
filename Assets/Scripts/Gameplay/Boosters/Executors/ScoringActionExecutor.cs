@@ -13,7 +13,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
                 view.GetBooster(booster.Id).GetScoringVisualizer().ProductApplied(products);
             }
 
-            if (action.Multiplier is { } xMult and > 1)
+            if (action.Multiplier is { } xMult)
             {
                 var final = state.TransientScore * xMult;
                 var diff = final - state.TransientScore;

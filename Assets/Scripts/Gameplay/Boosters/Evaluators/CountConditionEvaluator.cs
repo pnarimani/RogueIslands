@@ -16,7 +16,7 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
             if (condition.Source == null)
                 throw new InvalidOperationException($"Source is null. Booster: {booster.Name}");
             
-            var count = condition.Source.Get(state, booster).Count();
+            var count = condition.Source.Get(state, booster).First();
 
             return condition.ComparisonMode switch
             {

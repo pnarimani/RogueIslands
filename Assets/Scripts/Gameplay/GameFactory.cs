@@ -64,7 +64,7 @@ namespace RogueIslands.Gameplay
             var reqPerAct = new double[]
             {
                 20,
-                600,
+                400,
                 3000,
                 25000,
             };
@@ -75,8 +75,8 @@ namespace RogueIslands.Gameplay
                 for (var j = 0; j < GameState.RoundsPerAct; j++)
                 {
                     var x = i * GameState.RoundsPerAct + j;
-
-                    var score = reqPerAct[i] * (j + 1);
+                    var mult = 1 + j * 0.5;
+                    var score = reqPerAct[i] * mult;
 
                     result[x] = Math.Round(score);
                 }

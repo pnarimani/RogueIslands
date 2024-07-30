@@ -2,5 +2,6 @@
 {
     public class RatAttack : GameAction
     {
+        public double Change { get; set; }
     }
 }
