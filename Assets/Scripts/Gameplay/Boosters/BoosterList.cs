@@ -926,7 +926,8 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Black Coat",
-                    Description = "{score} when you have $4 or less",
+                    Description = "{score} when you have $6 or less",
+                    Rarity = Rare,
                     BuyPrice = 4,
                     EventAction = new ScoringAction
                     {
@@ -937,7 +938,7 @@ namespace RogueIslands.Gameplay.Boosters
                             new CountCondition()
                             {
                                 Source = new MoneyAmount(),
-                                Value = 5,
+                                Value = 7,
                                 ComparisonMode = CountCondition.Mode.Less,
                             },
                         },
