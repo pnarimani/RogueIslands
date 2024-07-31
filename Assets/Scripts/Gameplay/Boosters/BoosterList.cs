@@ -394,17 +394,17 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Country Carl",
-                    Description = "{score} when {farming} building is triggered",
+                    Description = "{score} when {lumber} building is triggered",
                     BuyPrice = 4,
                     EventAction = new ScoringAction
                     {
-                        Addition = 50,
+                        Addition = 30,
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<BuildingTriggered>(),
                             new BuildingCategoryCondition
                             {
-                                Categories = new[] { Category.Farming },
+                                Categories = new[] { Category.Lumber },
                             },
                         },
                     },
@@ -705,7 +705,7 @@ namespace RogueIslands.Gameplay.Boosters
                     BuyPrice = 5,
                     EventAction = new ScoringAction
                     {
-                        Multiplier = 100,
+                        Multiplier = 2,
                         Conditions = new IGameCondition[]
                         {
                             GameEventCondition.Create<AfterAllBuildingTriggers>(),
@@ -785,7 +785,7 @@ namespace RogueIslands.Gameplay.Boosters
                         {
                             GameEventCondition.Create<BuildingBonus>(),
                         },
-                        Addition = 100,
+                        Addition = 15,
                     },
                 },
                 new()
@@ -811,7 +811,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Inside Out",
                     Description = "Instead of in-range buildings,\n out of range buildings score bonus",
-                    BuyPrice = 4,
+                    BuyPrice = 8,
                 },
                 new()
                 {
