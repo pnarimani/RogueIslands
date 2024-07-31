@@ -77,31 +77,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: dfeef0fac42d2bf469d02ff46b3f63aa
-    m_Address: Assets/Content/UI/Font/RobotoCondensed-Black SDF Mult.mat
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e5c6fd1b62935744190a048e277c892b
-    m_Address: Assets/Content/UI/Font/RobotoCondensed-Black SDF Outline.mat
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 81b0efe3ba77a9c49b3cc0c89e5f1973
-    m_Address: Assets/Content/UI/Font/RobotoCondensed-Regular SDF.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1d2e38dce3de3a84ca252d7603c40dd9
-    m_Address: Assets/Content/UI/Font/Bungee-Regular SDF.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b5cf4528c371c9842a0657036d7a734e
-    m_Address: Assets/Content/UI/Font/RobotoCondensed-Black SDF.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9d7c87d3599a02240a9dae7f095edb60, type: 2}
   m_SchemaSet:

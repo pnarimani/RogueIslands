@@ -41,6 +41,21 @@ namespace RogueIslands.Gameplay.View.Descriptions
         private static readonly string TriggerColor = ColorUtility.ToHtmlStringRGB(new Color(0f, 0.22f, 0.39f));
         private static readonly string BonusColor = TriggerColor;
 
+        private const string GameEventOpening = "<e>";
+        private const string GameEventClosing = "</e>";
+        
+        private const string AdditionOpening = "<a>";
+        private const string AdditionClosing = "</a>";
+        
+        private const string MultiplierOpening = "<m>";
+        private const string MultiplierClosing = "</m>";
+        
+        private const string ProbabilityOpening = "<p>";
+        private const string ProbabilityClosing = "</p>";
+        
+        private const string MoneyOpening = "<d>";
+        private const string MoneyClosing = "</d>";
+        
         public static string Get(IDescribableItem item)
         {
             if (item is IBooster booster) return GetBoosterDescription(booster);
@@ -64,6 +79,21 @@ namespace RogueIslands.Gameplay.View.Descriptions
             using var profiler = new ProfilerBlock("GetBoosterDescription");
 
             var text = booster.Description.Text;
+            
+            text = text.Replace(GameEventOpening, "<i>");
+            text = text.Replace(GameEventClosing, "</i>");
+            
+            text = text.Replace(AdditionOpening, $"<color=#{AddColor}>");
+            text = text.Replace(AdditionClosing, "</color>");
+            
+            text = text.Replace(MultiplierOpening, $"<mark=#{MultHighlightColor}><color=#{MultColor}>");
+            text = text.Replace(MultiplierClosing, "</color></mark>");
+            
+            text = text.Replace(ProbabilityOpening, $"<color=#{ProbabilityColor}>");
+            text = text.Replace(ProbabilityClosing, "</color>");
+            
+            text = text.Replace(MoneyOpening, $"<color=#{MoneyColor}>");
+            text = text.Replace(MoneyClosing, "</color>");
 
             using var conditions = booster.EventAction.GetAllConditions();
             var probability = conditions.OfType<ProbabilityCondition>().FirstOrDefault();
