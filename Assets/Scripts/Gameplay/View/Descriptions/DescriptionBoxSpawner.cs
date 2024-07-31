@@ -1,4 +1,5 @@
 ﻿using RogueIslands.Autofac;
+using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.View.Commons;
 using RogueIslands.UISystem;
 using UnityEngine;
@@ -11,7 +12,6 @@ namespace RogueIslands.Gameplay.View.Descriptions
         private static readonly UILayer _overlayLayer = new("OverlayLayer");
         [SerializeField] private Transform _descriptionBoxParent;
         [SerializeField] private DescriptionBox _descriptionBoxPrefab;
-        [SerializeField] private bool _showName;
         [SerializeField] private bool _enableAfterFirstMouseExit;
         [SerializeField] private DescriptionAlignment _horizontalAlignment = DescriptionAlignment.Center;
         [SerializeField] private DescriptionAlignment _verticalAlignment = DescriptionAlignment.Start;
@@ -76,17 +76,20 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 remoteChild.SetParent(_descriptionBoxParent, Vector3.zero);
                 _descBox.SetAlignment(_horizontalAlignment, _verticalAlignment);
                 _descBox.SetDescription(GetDescriptionText());
+                if(_describableItem is BoosterCard b)
+                    _descBox.ShowRarity(b.Rarity);
                 ShowName();
             }
         }
 
         private void ShowName()
         {
-            if (_showName && _describableItem is INamedItem namedItem)
+            if (_describableItem is INamedItem namedItem)
                 _descBox.ShowName(namedItem.Name);
-
-            if (_describableItem is IHasAlternateDescriptionTitle alternateDescriptionTitle)
+            else if (_describableItem is IHasAlternateDescriptionTitle alternateDescriptionTitle)
                 _descBox.ShowName(alternateDescriptionTitle.AlternateTitle);
+            else
+                _descBox.HideName();
         }
 
         private string GetDescriptionText()

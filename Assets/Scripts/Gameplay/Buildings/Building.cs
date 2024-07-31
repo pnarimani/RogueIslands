@@ -19,11 +19,19 @@ namespace RogueIslands.Gameplay.Buildings
         public double OutputUpgrade;
         public DescriptionData Description { get; set; }
 
-        public string Name { get; set; }
         public int BuyPrice { get; set; }
         public int SellPrice { get; set; }
 
         public bool IsPlacedDown(GameState state) 
             => state.Buildings.PlacedDownBuildings.Exists(b => b.Id == Id);
+
+        public int GetIdentityHash()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(Category);
+            hashCode.Add(Color);
+            hashCode.Add(Size);
+            return hashCode.ToHashCode();
+        }
     }
 }

@@ -18,9 +18,14 @@ namespace RogueIslands.Gameplay
         public Building[] BuildingCards { get; set; } = new Building[6];
         public int[] BuildingCardPrices { get; set; } = new int[6];
         public RogueRandom SelectionRandom { get; set; }
+        public RogueRandom RarityRandom { get; set; }
         public RogueRandom BoosterSpawn { get; set; }
         public RogueRandom BuildingSpawn { get; set; }
         public RogueRandom DeduplicationRandom { get; set; }
         public RogueRandom CardPackSpawn { get; set; }
+
+        public float CommonWeight = 70;
+        public float UncommonWeight = 25;
+        public float RareWeight = 5;
     }
 }

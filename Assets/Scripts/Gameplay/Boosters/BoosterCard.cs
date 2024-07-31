@@ -8,10 +8,13 @@ namespace RogueIslands.Gameplay.Boosters
         public BoosterInstanceId Id { get; set; }
         public string Name { get; set; }
         public DescriptionData Description { get; set; }
+        public Rarity Rarity { get; set; }
         public int BuyPrice { get; set; }
         public int SellPrice { get; set; }
         public GameAction BuyAction { get; set; }
         public GameAction SellAction { get; set; }
         public GameAction EventAction { get; set; }
+        
+        public int GetIdentityHash() => Name.GetHashCode();
     }
 }

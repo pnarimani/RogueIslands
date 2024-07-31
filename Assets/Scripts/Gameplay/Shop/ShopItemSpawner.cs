@@ -37,7 +37,17 @@ namespace RogueIslands.Gameplay.Shop
                     if (booster)
                     {
                         var randomForAct = _state.Shop.BoosterSpawn.ForAct(_state.Act);
-                        item = _state.AvailableBoosters.SelectRandom(randomForAct);
+                        var sum = _state.Shop.CommonWeight + _state.Shop.UncommonWeight + _state.Shop.RareWeight;
+                        var rarityRoll = _state.Shop.RarityRandom.ForAct(_state.Act).NextDouble() * sum;
+                        Rarity rarity;
+                        if (rarityRoll < _state.Shop.CommonWeight)
+                            rarity = Rarity.Common;
+                        else if (rarityRoll < _state.Shop.CommonWeight + _state.Shop.UncommonWeight)
+                            rarity = Rarity.Uncommon;
+                        else
+                            rarity = Rarity.Rare;
+                        var pool = _state.AvailableBoosters.Where(b => b.Rarity == rarity).ToArray();
+                        item = pool.SelectRandom(randomForAct);
                     }
                     else
                     {
@@ -73,7 +83,7 @@ namespace RogueIslands.Gameplay.Shop
             
             foreach (var existingItem in _state.Shop.BuildingCards)
             {
-                if (existingItem?.Name == item.Name)
+                if (existingItem?.GetIdentityHash() == item.GetIdentityHash())
                     return DeduplicateBuilding(_state.Buildings.All.SelectRandom(random), depth + 1);
             }
 
@@ -87,13 +97,13 @@ namespace RogueIslands.Gameplay.Shop
             
             foreach (var existingItem in _state.Shop.ItemsForSale)
             {
-                if (existingItem?.Name == item.Name)
+                if (existingItem?.GetIdentityHash() == item.GetIdentityHash())
                     return ReplaceItem(item, depth + 1);
             }
 
             foreach (var booster in _state.Boosters)
             {
-                if (booster.Name == item.Name)
+                if (booster.GetIdentityHash() == item.GetIdentityHash())
                     return ReplaceItem(item, depth + 1);
             }
 

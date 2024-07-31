@@ -52,6 +52,7 @@ namespace RogueIslands.Gameplay
                     DeduplicationRandom = seedRandom.NextRandom(),
                     BuildingSpawn = seedRandom.NextRandom(),
                     SelectionRandom = seedRandom.NextRandom(),
+                    RarityRandom = seedRandom.NextRandom(),
                     CurrentRerollCost = 5,
                 },
             };

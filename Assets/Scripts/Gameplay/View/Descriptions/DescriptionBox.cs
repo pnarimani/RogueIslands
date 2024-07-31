@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using RogueIslands.Gameplay.Boosters;
+using TMPro;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.View.Descriptions
@@ -6,18 +7,28 @@ namespace RogueIslands.Gameplay.View.Descriptions
     public class DescriptionBox : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _desc;
-        [SerializeField] private GameObject _nameBg;
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private RectTransform _container;
+        [SerializeField] private GameObject[] _rarities;
         
         public void SetDescription(string value) => _desc.text = value;
         
         public void ShowName(string name)
         {
-            _nameBg.SetActive(true);
             _name.text = name;
+            _name.gameObject.SetActive(true);
         }
 
+        public void HideName()
+        {
+            _name.gameObject.SetActive(false);
+        }
+
+        public void ShowRarity(Rarity rarity)
+        {
+            Instantiate(_rarities[(int)rarity], _container, false);
+        }
+        
         public void SetAlignment(DescriptionAlignment horizontal, DescriptionAlignment vertical)
         {
             var x = horizontal switch

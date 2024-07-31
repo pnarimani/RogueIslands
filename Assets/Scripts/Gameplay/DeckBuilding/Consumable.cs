@@ -9,6 +9,8 @@ namespace RogueIslands.Gameplay.DeckBuilding
         public DescriptionData Description { get; set; }
         public int BuyPrice { get; set; }
         public int SellPrice { get; set; }
+        public int GetIdentityHash() => throw new System.NotImplementedException();
+
         public DeckAction Action { get; set; }
         
         public string AlternateTitle => "Consumable";

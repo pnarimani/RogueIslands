@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Buildings;
@@ -113,7 +114,10 @@ namespace RogueIslands.Tests
             };
 
             var builder = new ContainerBuilder();
-            builder.RegisterAssemblyModules(AppDomain.CurrentDomain.GetAssemblies());
+            foreach (var module in ModuleFinder.GetProjectModules())
+            {
+                module.Load(builder);
+            }
             var container = builder.Build();
             _serializer = container.Resolve<ISerializer>();
             _deserializer = container.Resolve<IDeserializer>();
