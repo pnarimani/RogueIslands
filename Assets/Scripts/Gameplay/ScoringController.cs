@@ -77,13 +77,13 @@ namespace RogueIslands.Gameplay
                 var initialOutput = building.Output + building.OutputUpgrade;
 
                 if (building.Color == other.Color || (_state.HasBadEyesight() && BadEyesightColorCheck(building.Color, other.Color)))
-                    _state.Score.TransientColorBonus = initialOutput * 0.1;
+                    _state.Score.TransientColorBonus = initialOutput * 0.3;
 
                 if (building.Category == other.Category)
-                    _state.Score.TransientCategoryBonus = initialOutput * 0.2;
+                    _state.Score.TransientCategoryBonus = initialOutput * 0.4;
 
                 if (building.Size == other.Size) 
-                    _state.Score.TransientSizeBonus = initialOutput * 0.05;
+                    _state.Score.TransientSizeBonus = initialOutput * 0.2;
                 
                 _state.Score.TransientCategoryBonus = Math.Ceiling(_state.Score.TransientCategoryBonus);
                 _state.Score.TransientColorBonus = Math.Ceiling(_state.Score.TransientColorBonus);

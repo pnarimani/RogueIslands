@@ -208,7 +208,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clickable: 1
   _dragThreshold: 5
-  _maxClickTime: 0.15
   _draggable: 1
   _interpolationSpeed: 10
   _insertRadius: 0.5
@@ -223,6 +222,7 @@ MonoBehaviour:
   _localSpaceRotation: 1
   _hideCursor: 0
   _handle: {fileID: 4475236877840477489}
+  _bounds: {fileID: 0}
   _layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1426,18 +1426,6 @@ PrefabInstance:
     - target: {fileID: 6232505944039293006, guid: 3be72b3faba3089449c10969b1731712, type: 3}
       propertyPath: m_Name
       value: Downgraded
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949211527469250227, guid: 3be72b3faba3089449c10969b1731712, type: 3}
-      propertyPath: m_Color.b
-      value: 0.9292453
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949211527469250227, guid: 3be72b3faba3089449c10969b1731712, type: 3}
-      propertyPath: m_Color.g
-      value: 0.9581021
-      objectReference: {fileID: 0}
-    - target: {fileID: 6949211527469250227, guid: 3be72b3faba3089449c10969b1731712, type: 3}
-      propertyPath: m_Color.r
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

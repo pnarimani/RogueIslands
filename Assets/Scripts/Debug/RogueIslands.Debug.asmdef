@@ -6,6 +6,7 @@
     "RogueIslands.Gameplay.View",
     "IngameDebugConsole.Runtime",
     "RogueIslands.Autofac",
-    "UniTask"
+    "UniTask",
+    "RogueIslands.Serialization"
   ]
 }

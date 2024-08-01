@@ -22,7 +22,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             StaticResolver.Resolve<IBoosterAudio>().BoosterTriggered();
             _triggerFeedback.Play().Forget();
             GameUI.Instance.ProductBoosted(products);
-            _multiLabelFeedback.SetText($"x{multiplier:0.#}");
+            _multiLabelFeedback.SetText($"x{multiplier:0.##}");
             await _multiLabelFeedback.Play();
         }
 
@@ -33,7 +33,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             StaticResolver.Resolve<IBoosterAudio>().BoosterTriggered();
             _triggerFeedback.Play().Forget();
             GameUI.Instance.ProductBoosted(products);
-            _productLabelFeedback.SetText($"+{products:0.#}");
+            _productLabelFeedback.SetText($"+{products:0.##}");
             await _productLabelFeedback.Play();
         }
 
@@ -43,7 +43,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             {
                 var label = Instantiate(_multiLabelFeedback, _multiLabelFeedback.transform.parent, true);
                 label.transform.localScale = Vector3.one * 0.75f;
-                label.SetText(count > 1 ? $"x{mult:0.#}<size=65%>x{count}" : $"x{mult:0.#}");
+                label.SetText(count > 1 ? $"x{mult:0.##}<size=65%>x{count}" : $"x{mult:0.##}");
                 label.Show();
                 _dryRunLabels.Add(label);
             }
@@ -55,7 +55,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             {
                 var label = Instantiate(_productLabelFeedback, _productLabelFeedback.transform.parent, true);
                 label.transform.localScale = Vector3.one * 0.75f;
-                label.SetText(count > 1 ? $"+{prod:0.#}<size=65%>x{count}" : $"+{prod:0.#}");
+                label.SetText(count > 1 ? $"+{prod:0.##}<size=65%>x{count}" : $"+{prod:0.##}");
                 label.Show();
                 _dryRunLabels.Add(label);
             }

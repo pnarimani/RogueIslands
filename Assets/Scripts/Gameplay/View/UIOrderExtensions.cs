@@ -26,9 +26,10 @@ namespace RogueIslands.Gameplay.View
         {
             if (obj == null)
                 return;
-            
+
             var source = reference.GetComponentInParent<Canvas>();
-            var canvas = obj.AddComponent<Canvas>();
+            if (!obj.TryGetComponent(out Canvas canvas))
+                canvas = obj.AddComponent<Canvas>();
             if (source.gameObject.GetComponent<GraphicRaycaster>())
                 obj.AddComponent<GraphicRaycaster>();
             canvas.overrideSorting = true;
@@ -41,7 +42,7 @@ namespace RogueIslands.Gameplay.View
         {
             if (obj == null)
                 return;
-            
+
             var raycaster = obj.GetComponent<GraphicRaycaster>();
             if (raycaster)
                 Object.Destroy(raycaster);
