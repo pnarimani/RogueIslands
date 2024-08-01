@@ -137,7 +137,7 @@ namespace RogueIslands.Gameplay.View.Shop
             Destroy(card.GetComponent<BoosterView>());
             Destroy(card.GetComponent<BoosterCardView>());
             Destroy(card.GetComponent<DescriptionBoxSpawner>());
-            Destroy(card.GetComponent<FlexalonInteractable>());
+            Destroy(card.GetComponent<InteractableObject>());
 
             item.InnerObject = card.gameObject;
         }
@@ -148,7 +148,7 @@ namespace RogueIslands.Gameplay.View.Shop
             card.Initialize(building);
             Destroy(card.GetComponent<BuildingCardView>());
             Destroy(card.GetComponent<DescriptionBoxSpawner>());
-            Destroy(card.GetComponent<FlexalonInteractable>());
+            Destroy(card.GetComponent<InteractableObject>());
             
             item.InnerObject = card.gameObject;
         }

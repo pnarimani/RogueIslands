@@ -17,12 +17,12 @@ namespace RogueIslands.Gameplay.View.Boosters
 
         private void Awake()
         {
-            var interactable = GetComponentInChildren<FlexalonInteractable>();
+            var interactable = GetComponentInChildren<InteractableObject>();
             interactable.DragEnd.AddListener(OnBoosterReordered);
             interactable.Clicked.AddListener(OnBoosterClicked);
         }
 
-        private void OnBoosterClicked(FlexalonInteractable arg0)
+        private void OnBoosterClicked(InteractableObject arg0)
         {
             foreach (var view in ObjectRegistry.GetBoosters())
             {
@@ -66,7 +66,7 @@ namespace RogueIslands.Gameplay.View.Boosters
             StaticResolver.Resolve<BoosterManagement>().SellBooster(_booster.Id);
         }
 
-        private void OnBoosterReordered(FlexalonInteractable arg0)
+        private void OnBoosterReordered(InteractableObject arg0)
         {
             var boosterOrder = new BoosterCard[GameManager.Instance.State.Boosters.Count];
             var cards = ObjectRegistry.GetBoosters();

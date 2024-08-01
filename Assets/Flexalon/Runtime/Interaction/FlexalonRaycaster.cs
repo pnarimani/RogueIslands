@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Flexalon
 {
-    internal class FlexalonRaycaster
+    public class FlexalonRaycaster
     {
         public Vector3 hitPosition;
 

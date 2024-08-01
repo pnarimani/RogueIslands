@@ -64,7 +64,7 @@ namespace Flexalon
             _dragTargets.Remove(this);
         }
 
-        internal bool OverlapsSphere(Vector3 position, float radius)
+        public bool OverlapsSphere(Vector3 position, float radius)
         {
             var center = _node.Result.AdapterBounds.center;
             var extents = (_node.Result.AdapterBounds.size + _margin * 2) / 2;
