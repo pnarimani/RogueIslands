@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Gameplay.GameEvents
 {
-    public class RoundStart : IGameEvent
+    public class BuildingRemainedInHandEvent : BuildingEvent
     {
     }
 }

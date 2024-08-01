@@ -84,7 +84,7 @@ namespace RogueIslands.Gameplay.Shop
             if (_state.DeckPeek.Contains(building))
                 _view.GetUI().ShowBuildingCardPeek(building);
             
-            _eventController.Execute(new BuildingAdded { Building = building });
+            _eventController.Execute(new BuildingAddedEvent { Building = building });
         }
     }
 }

@@ -8,10 +8,10 @@ namespace RogueIslands.Gameplay
     public class RoundController
     {
         private readonly IEventController _eventController;
+        private readonly ShopRerollController _rerollController;
         private readonly ShopItemSpawner _shopItemSpawner;
         private readonly GameState _state;
         private readonly IGameView _view;
-        private readonly ShopRerollController _rerollController;
 
         public RoundController(
             GameState state,
@@ -80,15 +80,14 @@ namespace RogueIslands.Gameplay
             winScreen.AddMoneyChange(new MoneyChange
             {
                 Change = GetInterestMoney(),
-                Reason = "Interest (1$ interest per 5$ in the bank)",
+                Reason = "Interest ($1 per $5 in the bank)",
             });
 
             foreach (var change in _state.MoneyChanges)
                 winScreen.AddMoneyChange(change);
         }
 
-        private int GetInterestMoney()
-            => Mathf.Clamp(_state.Money, 0, 25) / 5;
+        private int GetInterestMoney() => (_state.HasMoreInterest() ? 2 : 1) * (Mathf.Clamp(_state.Money, 0, 25) / 5);
 
         public void ClaimRoundEndMoney()
         {
@@ -105,7 +104,7 @@ namespace RogueIslands.Gameplay
         {
             _rerollController.ResetRerollCosts();
 
-            _eventController.Execute(new RoundStart());
+            _eventController.Execute(new RoundStartEvent());
 
             if (_state.Act == 0 && _state.Round == 0)
             {

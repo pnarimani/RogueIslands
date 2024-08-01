@@ -23,6 +23,17 @@ namespace RogueIslands.Gameplay
             return state.Boosters.Any(b => b.Name == "Bad Eyesight");
         }
         
+        public static bool HasFreeReroll(this GameState state)
+        {
+            return state.Boosters.Any(b => b.Name == "Free Reroll");
+        }
+
+        
+        public static bool HasMoreInterest(this GameState state)
+        {
+            return state.Boosters.Any(b => b.Name == "More Interest");
+        }
+        
         public static bool HasInsideOut(this GameState state)
         {
             return state.Boosters.Any(b => b.Name == "Inside Out");

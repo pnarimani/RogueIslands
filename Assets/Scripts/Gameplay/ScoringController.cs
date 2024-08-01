@@ -24,7 +24,7 @@ namespace RogueIslands.Gameplay
             
             _eventController.Execute(new ResetRetriggers());
 
-            _eventController.Execute(new BuildingPlaced { Building = building, });
+            _eventController.Execute(new BuildingPlacedEvent { Building = building, });
 
             TriggerBuilding(building);
 
@@ -94,7 +94,7 @@ namespace RogueIslands.Gameplay
                 if (_state.Score.GetTotalBonus() <= 0)
                     continue;
                 
-                _eventController.Execute(new BuildingBonus
+                _eventController.Execute(new BuildingBonusEvent
                 {
                     Building = other,
                     PlacedBuilding = building,

@@ -58,7 +58,7 @@ namespace RogueIslands.Gameplay.Boosters
             _view.GetBooster(boosterId).Remove();
             _view.GetUI().RefreshMoney();
 
-            _eventController.Execute(new BoosterSold() { Booster = booster });
+            _eventController.Execute(new BoosterSoldEvent() { Booster = booster });
             _eventController.Execute(new ResetRetriggers());
         }
 

@@ -95,6 +95,8 @@ namespace RogueIslands.Gameplay.View.Descriptions
             text = text.Replace(MoneyOpening, $"<color=#{MoneyColor}>");
             text = text.Replace(MoneyClosing, "</color>");
 
+            text += "</i></color>";
+
             using var conditions = booster.EventAction.GetAllConditions();
             var probability = conditions.OfType<ProbabilityCondition>().FirstOrDefault();
 
@@ -192,7 +194,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 {
                     var finalMult = 1 + multipliedScoring.Multiplier * factor;
                     text +=
-                        ("\n(Currently " + $"{finalMult:0.##}x".WrapWithColor(MultColor)
+                        ("\n(Currently " + $"X{finalMult:0.##}".WrapWithColor(MultColor)
                              .WrapWithHighlight(MultHighlightColor) +
                          " Mult)").WrapWithColor(
                             ProgressColor);
@@ -229,7 +231,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
                         .WrapWithColor(ProgressColor);
                 else if (scoring?.Multiplier != null)
                     text += ("\n(Currently " +
-                             $"{scoring.Multiplier:0.##}x".WrapWithColor(MultColor)
+                             $"X{scoring.Multiplier:0.##}".WrapWithColor(MultColor)
                                  .WrapWithHighlight(MultHighlightColor) +
                              " Mult)")
                         .WrapWithColor(ProgressColor);

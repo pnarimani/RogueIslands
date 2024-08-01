@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Gameplay.GameEvents
 {
-    public class BoosterRemoved : BoosterEvent
+    public class BuildingPlacedEvent : BuildingEvent
     {
     }
 }

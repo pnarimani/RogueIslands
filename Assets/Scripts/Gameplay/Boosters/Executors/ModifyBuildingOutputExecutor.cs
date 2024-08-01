@@ -8,7 +8,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         protected override void Execute(GameState state, IGameView view, IBooster booster,
             ModifyBuildingOutputAction action)
         {
-            if (state.CurrentEvent is not BuildingPlaced buildingPlaced) 
+            if (state.CurrentEvent is not BuildingPlacedEvent buildingPlaced) 
                 return;
 
             if (action.ProductMultiplier is { } mult)

@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Gameplay.GameEvents
 {
-    public class BuildingRemainedInHand : BuildingEvent
+    public class BuildingAddedEvent : BuildingEvent
     {
     }
 }

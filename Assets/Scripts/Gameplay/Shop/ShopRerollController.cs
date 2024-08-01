@@ -51,8 +51,8 @@ namespace RogueIslands.Gameplay.Shop
 
         public void ResetRerollCosts()
         {
-            _state.Shop.CurrentRerollCost = _state.Shop.StartingRerollCost;
-            _state.Shop.CurrentBuildingRerollCost = _state.Shop.StartingBuildingRerollCost;
+            _state.Shop.CurrentRerollCost = _state.HasFreeReroll() ? 0 : _state.Shop.StartingRerollCost;
+            _state.Shop.CurrentBuildingRerollCost = _state.HasFreeReroll() ? 0 : _state.Shop.StartingBuildingRerollCost;
             for (var i = 0; i < _state.Shop.BuildingCardPrices.Length; i++)
             {
                 _state.Shop.BuildingCardPrices[i] = 1;

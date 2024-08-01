@@ -29,5 +29,10 @@ namespace RogueIslands.Gameplay.Boosters.Sources
         {
             return new DistinctBuildings { Source = source };
         }
+
+        public static ISource<ColorTag> GetColors(this ISource<Building> source)
+        {
+            return new GetBuildingColors() { Source = source };
+        }
     }
 }
