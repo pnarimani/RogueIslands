@@ -57,7 +57,7 @@ namespace RogueIslands.Tests
                         Reason = "A"
                     }
                 },
-                CurrentEvent = new BoosterAdded()
+                CurrentEvent = new BoosterAddedEvent()
                 {
                     Booster = new BoosterCard
                     {

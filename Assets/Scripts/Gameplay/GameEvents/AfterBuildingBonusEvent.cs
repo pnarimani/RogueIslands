@@ -2,7 +2,7 @@
 
 namespace RogueIslands.Gameplay.GameEvents
 {
-    public class AfterBuildingBonus : BuildingEvent
+    public class AfterBuildingBonusEvent : BuildingEvent
     {
         public Building PlacedBuilding { get; set; }
     }

@@ -28,7 +28,7 @@ namespace RogueIslands.Gameplay
             {
                 Seed = seed,
                 AllRequiredScores = GetScoringRequirements(),
-                CurrentEvent = new ActStart(),
+                CurrentEvent = new ActStartEvent(),
                 Buildings = new BuildingsState()
                 {
                     All = buildingBlueprints,

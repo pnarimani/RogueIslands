@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Gameplay.GameEvents
 {
-    public class AfterBuildingScoreTrigger : BuildingEvent
+    public class BuildingTriggeredEvent : BuildingEvent
     {
     }
 }

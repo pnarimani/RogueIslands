@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Gameplay.GameEvents
 {
-    public class BoosterBought : BoosterAdded
+    public class BoostersReorderedEvent : IGameEvent
     {
         
     }

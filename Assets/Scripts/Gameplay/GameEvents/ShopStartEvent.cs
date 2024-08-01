@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Gameplay.GameEvents
 {
-    public class BuildingTriggered : BuildingEvent
+    public class ShopStartEvent : IGameEvent
     {
     }
 }

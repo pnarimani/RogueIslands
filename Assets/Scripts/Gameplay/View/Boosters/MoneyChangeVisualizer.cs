@@ -39,8 +39,8 @@ namespace RogueIslands.Gameplay.View.Boosters
             {
                 if (responsibleBuilding.IsPlacedDown(state))
                 {
-                    var view = ObjectRegistry.GetBuildings().First(b => b.Data == responsibleBuilding);
-                    task = view.BuildingMadeMoney(money);
+                    _money.SetText($"${money}");
+                    task = _money.Play();
                 }
                 else
                 {

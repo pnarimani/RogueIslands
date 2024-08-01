@@ -22,15 +22,13 @@ namespace RogueIslands.Gameplay
         {
             using var profiler = ProfilerBlock.Begin();
             
-            _eventController.Execute(new ResetRetriggers());
-
             _eventController.Execute(new BuildingPlacedEvent { Building = building, });
 
             TriggerBuilding(building);
 
             _state.TransientScore = Math.Ceiling(_state.TransientScore);
 
-            _eventController.Execute(new AfterAllBuildingTriggers { Building = building, });
+            _eventController.Execute(new FinalScoreReadyEvent { Building = building, });
 
             _state.CurrentScore += _state.TransientScore;
 
@@ -50,12 +48,12 @@ namespace RogueIslands.Gameplay
             _state.TransientScore += buildingScore;
             _view.GetBuilding(building).BuildingTriggered((int)buildingScore);
 
-            _eventController.Execute(new BuildingTriggered { Building = building, });
+            _eventController.Execute(new BuildingTriggeredEvent { Building = building, });
 
             if (shouldScoreBonus)
                 ScoreBonusForBuilding(building);
 
-            _eventController.Execute(new AfterBuildingScoreTrigger() { Building = building, });
+            _eventController.Execute(new RetriggerStepEvent() { Building = building, });
         }
 
         private void ScoreBonusForBuilding(Building building)
@@ -110,7 +108,7 @@ namespace RogueIslands.Gameplay
                 _state.TransientScore += _state.Score.GetTotalBonus();
                 _state.Score.ResetBonuses();
                 
-                _eventController.Execute(new AfterBuildingBonus
+                _eventController.Execute(new AfterBuildingBonusEvent
                 {
                     Building = other,
                     PlacedBuilding = building,

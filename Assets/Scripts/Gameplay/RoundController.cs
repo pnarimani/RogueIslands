@@ -38,7 +38,7 @@ namespace RogueIslands.Gameplay
 
             if (IsRoundFinished())
             {
-                _eventController.Execute(new RoundEnd());
+                _eventController.Execute(new RoundEndEvent());
 
                 _state.CurrentScore = 0;
 
@@ -50,7 +50,7 @@ namespace RogueIslands.Gameplay
                 {
                     _state.Round = 0;
                     _state.Act++;
-                    _eventController.Execute(new ActEnd());
+                    _eventController.Execute(new ActEndEvent());
 
                     _view.DestroyAllBuildings();
                     _state.Buildings.PlacedDownBuildings.Clear();

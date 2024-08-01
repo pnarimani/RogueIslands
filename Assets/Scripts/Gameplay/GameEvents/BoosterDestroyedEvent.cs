@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Gameplay.GameEvents
 {
-    public class ActEnd : IGameEvent
+    public class BoosterDestroyedEvent : BoosterRemovedEvent
     {
     }
 }

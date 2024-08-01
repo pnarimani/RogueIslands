@@ -11,23 +11,22 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         {
             _scoringController = scoringController;
         }
-        
+
         protected override void Execute(GameState state, IGameView view, IBooster booster,
             RetriggerBuildingAction action)
         {
-            if (state.CurrentEvent is BuildingEvent e)
-            {
-                if(action.RemainingTriggers <= 0)
-                    return;
-                action.RemainingTriggers--;
-                
-                view.GetBooster(booster.Id).GetRetriggerVisualizer().PlayRetrigger();
-                _scoringController.TriggerBuilding(e.Building);
-            }
-
-            if (state.CurrentEvent is ResetRetriggers)
+            if (state.CurrentEvent is BuildingPlacedEvent)
             {
                 action.RemainingTriggers = action.RetriggerTimes;
+            }
+            else if (state.CurrentEvent is BuildingEvent e)
+            {
+                if (action.RemainingTriggers <= 0)
+                    return;
+                action.RemainingTriggers--;
+
+                view.GetBooster(booster.Id).GetRetriggerVisualizer().PlayRetrigger();
+                _scoringController.TriggerBuilding(e.Building);
             }
         }
     }

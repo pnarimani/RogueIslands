@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Gameplay.GameEvents
 {
-    public class ActStart : IGameEvent
+    public class ShopEndEvent : IGameEvent
     {
     }
 }

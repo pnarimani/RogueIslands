@@ -43,8 +43,7 @@ namespace RogueIslands.Gameplay.Boosters
             if (instance.BuyAction != null)
                 _gameActionController.Execute(instance, instance.BuyAction);
 
-            _eventController.Execute(new BoosterBought { Booster = instance });
-            _eventController.Execute(new ResetRetriggers());
+            _eventController.Execute(new BoosterBoughtEvent { Booster = instance });
             return true;
         }
 
@@ -59,7 +58,6 @@ namespace RogueIslands.Gameplay.Boosters
             _view.GetUI().RefreshMoney();
 
             _eventController.Execute(new BoosterSoldEvent() { Booster = booster });
-            _eventController.Execute(new ResetRetriggers());
         }
 
         public void DestroyBooster(BoosterInstanceId boosterId)
@@ -69,21 +67,19 @@ namespace RogueIslands.Gameplay.Boosters
                 _state.Boosters.Remove(card);
                 _view.GetBooster(boosterId).Remove();
 
-                _eventController.Execute(new BoosterDestroyed() { Booster = card });
+                _eventController.Execute(new BoosterDestroyedEvent() { Booster = card });
             }
             else if (_state.WorldBoosters.SpawnedBoosters.FirstOrDefault(x => x.Id == boosterId) is { } worldBooster)
             {
                 _state.WorldBoosters.SpawnedBoosters.Remove(worldBooster);
                 _view.GetBooster(boosterId).Remove();
 
-                _eventController.Execute(new BoosterDestroyed() { Booster = worldBooster });
+                _eventController.Execute(new BoosterDestroyedEvent() { Booster = worldBooster });
             }
             else
             {
                 throw new Exception("Failed to find booster with id " + boosterId);
             }
-
-            _eventController.Execute(new ResetRetriggers());
         }
 
         public void ReorderBoosters(IReadOnlyList<BoosterCard> order)
@@ -91,7 +87,7 @@ namespace RogueIslands.Gameplay.Boosters
             _state.Boosters.Clear();
             _state.Boosters.AddRange(order);
             
-            _eventController.Execute(new ResetRetriggers());
+            _eventController.Execute(new BoostersReorderedEvent());
         }
     }
 }

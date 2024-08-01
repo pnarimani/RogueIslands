@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Gameplay.GameEvents
 {
-    public class RoundEnd : IGameEvent
+    public class FinalScoreReadyEvent : BuildingEvent
     {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace RogueIslands.Gameplay.GameEvents
 {
-    public class BoosterAdded : IGameEvent
+    public class BoosterAddedEvent : IGameEvent
     {
         public IBooster Booster { get; set; }
     }
