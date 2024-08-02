@@ -5,17 +5,20 @@ using RogueIslands.Gameplay.GameEvents;
 
 namespace RogueIslands.Gameplay.Boosters.Conditions
 {
-    public class GameEventCondition : IGameCondition
+    public class GameEventCondition : IGameEventCondition
     {
         public IReadOnlyList<Type> TriggeringEvents { get; set; }
 
-        public static GameEventCondition Create<T>() where T : IGameEvent
-            => new()
-            {
-                TriggeringEvents = new List<Type>() { typeof(T) },
-            };
+        public GameEventCondition(params Type[] events) => TriggeringEvents = events;
 
-        public GameEventCondition Or<TOther>() where TOther : IGameEvent
+        public GameEventCondition(IReadOnlyList<Type> triggeringEvents) => TriggeringEvents = triggeringEvents;
+    }
+
+    public class GameEventCondition<T> : IGameEventCondition
+    {
+        public IReadOnlyList<Type> TriggeringEvents { get; set; } = new List<Type> { typeof(T) };
+
+        public GameEventCondition<T> Or<TOther>() where TOther : IGameEvent
         {
             TriggeringEvents = TriggeringEvents.Append(typeof(TOther)).ToList();
             return this;

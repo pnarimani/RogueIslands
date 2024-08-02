@@ -3,6 +3,7 @@
 	"rootNamespace": "RogueIslands",
 	"references": [
 		"AutofacUnity",
-		"IngameDebugConsole.Runtime"
+		"IngameDebugConsole.Runtime",
+		"RogueIslands.Diagnostics"
 	]
 }

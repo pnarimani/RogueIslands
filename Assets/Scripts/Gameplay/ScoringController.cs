@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using RogueIslands.Diagnostics;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Gameplay.GameEvents;
@@ -20,8 +21,9 @@ namespace RogueIslands.Gameplay
 
         public void ScoreBuilding(Building building)
         {
-            using var profiler = ProfilerBlock.Begin();
+            using var profiler = ProfilerScope.Begin();
             
+            _eventController.Execute(new ResetTriggersEvent());
             _eventController.Execute(new BuildingPlacedEvent { Building = building, });
 
             TriggerBuilding(building);
@@ -34,8 +36,8 @@ namespace RogueIslands.Gameplay
 
             _state.TransientScore = 0;
 
-            _state.Metadata.RunCategoryPlayCount[building.Category]++;
-            _state.Metadata.RoundSizePlayCount[building.Size]++;
+            IncreaseCount(_state.Metadata.RunCategoryPlayCount, building.Category);
+            IncreaseCount(_state.Metadata.RoundSizePlayCount, building.Size);
         }
 
         public void TriggerBuilding(Building building)
@@ -45,7 +47,7 @@ namespace RogueIslands.Gameplay
 
         private void TriggerBuilding(Building building, bool shouldScoreBonus)
         {
-            using var profiler = ProfilerBlock.Begin();
+            using var profiler = ProfilerScope.Begin();
             
             var buildingScore = Math.Ceiling(building.Output + building.OutputUpgrade);
             _state.TransientScore += buildingScore;
@@ -61,7 +63,7 @@ namespace RogueIslands.Gameplay
 
         private void ScoreBonusForBuilding(Building building)
         {
-            using var profiler = ProfilerBlock.Begin();
+            using var profiler = ProfilerScope.Begin();
 
             var potentialBuildings = _state.HasInsideOut()
                 ? _state.GetOutOfRangeBuildings(building)
@@ -125,5 +127,12 @@ namespace RogueIslands.Gameplay
             (c2 == ColorTag.Red && c1 == ColorTag.Blue) ||
             (c1 == ColorTag.Purple && c2 == ColorTag.Green) ||
             (c2 == ColorTag.Purple && c1 == ColorTag.Green);
+
+        private static void IncreaseCount<T>(Dictionary<T, int> dict, T key)
+        {
+            dict.TryGetValue(key, out var value);
+            value++;
+            dict[key] = value;
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace RogueIslands.Gameplay
         public int StartingBuildingRerollCost { get; set; } = 1;
         public int CurrentBuildingRerollCost { get; set; } = 1;
         
-        public int CardCount = 3;
+        public int CardCount = 2;
         public float ConsumableSpawnChance = 0.0f;
         public float BuildingSpawnChance = 0.0f;
         public IPurchasableItem[] ItemsForSale { get; set; }

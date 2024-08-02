@@ -76,6 +76,9 @@ namespace RogueIslands.Gameplay.Shop
         
         private Building DeduplicateBuilding(Building item, int depth)
         {
+            if (_state.HasBlackMarket())
+                return item;
+            
             if (depth >= 10)
                 return item;
             
@@ -92,6 +95,9 @@ namespace RogueIslands.Gameplay.Shop
 
         private IPurchasableItem Deduplicate(IPurchasableItem item, int depth)
         {
+            if (_state.HasBlackMarket())
+                return item;
+            
             if (depth >= 10)
                 return item;
             

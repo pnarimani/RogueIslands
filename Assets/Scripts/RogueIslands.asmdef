@@ -5,7 +5,8 @@
     "UniTask",
     "RogueIslands.Serialization",
     "RogueIslands.Autofac",
-    "RogueIslands.Gameplay.Rand"
+    "RogueIslands.Gameplay.Rand",
+    "RogueIslands.Diagnostics"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

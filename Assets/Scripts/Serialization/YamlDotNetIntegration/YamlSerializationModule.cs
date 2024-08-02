@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Autofac;
 using RogueIslands.Autofac;
+using RogueIslands.Diagnostics;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -20,12 +21,16 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration
 
         private static void RegisterYaml(ContainerBuilder builder)
         {
-            var types = GetProjectTypes();
+            using var profiler = new ProfilerScope("YamlSerializationModule.RegisterYaml");
+
+            var types = TypeDatabase.GetProjectTypes();
 
             RegisterTypeConverters(builder, types);
 
             builder.Register(c =>
             {
+                using var _ = new ProfilerScope("YamlSerializationModule.CreateYamlDotNetProxy");
+
                 var serializerBuilder = new SerializerBuilder()
                     .WithNamingConvention(PascalCaseNamingConvention.Instance)
                     .EnsureRoundtrip()
@@ -51,22 +56,10 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration
             }).AsImplementedInterfaces().AsSelf().SingleInstance();
         }
 
-        private static Type[] GetProjectTypes()
+        private static void RegisterTypeConverters(ContainerBuilder builder, IEnumerable<Type> types)
         {
-            return AppDomain.CurrentDomain
-                .GetAssemblies()
-                .SelectMany(x => x.GetTypes())
-                .Where(x =>
-                    !x.IsAbstract &&
-                    x.Namespace != null &&
-                    x.Namespace.Contains("RogueIslands") &&
-                    x.GetCustomAttribute<CompilerGeneratedAttribute>() == null
-                )
-                .ToArray();
-        }
+            using var profiler = new ProfilerScope("YamlSerializationModule.RegisterTypeConverters");
 
-        private static void RegisterTypeConverters(ContainerBuilder builder, Type[] types)
-        {
             foreach (var converter in types.Where(t => typeof(IYamlTypeConverter).IsAssignableFrom(t)))
             {
                 builder.RegisterType(converter)
@@ -77,16 +70,24 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration
         private static void AddTypeConvertersToSerializer(IComponentContext c, SerializerBuilder serializerBuilder,
             DeserializerBuilder deserializerBuilder)
         {
-            foreach (var converter in c.Resolve<IReadOnlyList<IYamlTypeConverter>>())
+            using var profiler = new ProfilerScope("YamlSerializationModule.AddTypeConvertersToSerializer");
+
+            IReadOnlyList<IYamlTypeConverter> yamlTypeConverters;
+            using (new ProfilerScope("YamlSerializationModule.AddTypeConvertersToSerializer.ResolveConverters"))
+                yamlTypeConverters = c.Resolve<IReadOnlyList<IYamlTypeConverter>>();
+
+            foreach (var converter in yamlTypeConverters)
             {
                 serializerBuilder.WithTypeConverter(converter);
                 deserializerBuilder.WithTypeConverter(converter);
             }
         }
 
-        private static void RegisterTypeTags(Type[] types, SerializerBuilder serializerBuilder,
+        private static void RegisterTypeTags(IEnumerable<Type> types, SerializerBuilder serializerBuilder,
             DeserializerBuilder deserializerBuilder)
         {
+            using var profiler = new ProfilerScope("YamlSerializationModule.RegisterTypeTags");
+
             var typeGrouping = types.GroupBy(t => t.FullName!.Replace(t.Namespace! + ".", ""));
             foreach (var group in typeGrouping)
             {
@@ -103,10 +104,12 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration
                 {
                     var type = group.First();
                     var tag = "!" + group.Key;
-                    var fullTag = "!" + type.FullName;
                     serializerBuilder.WithTagMapping(tag, type);
                     deserializerBuilder.WithTagMapping(tag, type);
-                    deserializerBuilder.WithTagMapping(fullTag, type);
+
+                    var fullTag = "!" + type.FullName;
+                    if (fullTag != tag)
+                        deserializerBuilder.WithTagMapping(fullTag, type);
                 }
             }
         }

@@ -24,10 +24,7 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
             _typeToName = types.ToDictionary(t => t, t => t.Name);
         }
 
-        public bool Accepts(Type type)
-        {
-            return type == typeof(GameEventCondition);
-        }
+        public bool Accepts(Type type) => typeof(IGameEventCondition).IsAssignableFrom(type);
 
         public object ReadYaml(IParser parser, Type type)
         {
@@ -35,7 +32,6 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
             {
                 var events = new List<Type>();
                 while (parser.TryConsume(out Scalar scalar))
-                {
                     switch (scalar.Value)
                     {
                         case "TriggeringEvents":
@@ -48,10 +44,9 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
 
                             break;
                     }
-                }
 
                 parser.Consume<MappingEnd>();
-                return new GameEventCondition() { TriggeringEvents = events };
+                return new GameEventCondition(events);
             }
 
             return null;
@@ -64,11 +59,9 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
 
             emitter.Emit(new Scalar("TriggeringEvents"));
 
-            emitter.Emit(new SequenceStart(AnchorName.Empty, TagName.Empty, isImplicit: true, SequenceStyle.Block));
+            emitter.Emit(new SequenceStart(AnchorName.Empty, TagName.Empty, true, SequenceStyle.Block));
             foreach (var eventType in ((GameEventCondition)value!).TriggeringEvents)
-            {
                 emitter.Emit(new Scalar(_typeToName[eventType]));
-            }
 
             emitter.Emit(new SequenceEnd());
             emitter.Emit(new MappingEnd());

@@ -19,7 +19,7 @@ namespace RogueIslands.Gameplay.Buildings
 
         public void PlaceBuilding(Building building, Vector3 position, Quaternion rotation)
         {
-            using var profiler = ProfilerBlock.Begin();
+            using var profiler = ProfilerScope.Begin();
 
             building.Position = position;
             building.Rotation = rotation;

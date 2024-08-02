@@ -15,7 +15,8 @@
     "RogueIslands.Assets",
     "RogueIslands.Gameplay.Rand",
     "RogueIslands.Localization",
-    "Flexalon"
+    "Flexalon",
+    "RogueIslands.Diagnostics"
   ],
   "overrideReferences": true,
   "precompiledReferences": [

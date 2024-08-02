@@ -65,7 +65,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
 
         private static string GetBuildingDescription(Building building)
         {
-            using var profiler = new ProfilerBlock("GetBuildingDescription");
+            using var profiler = new ProfilerScope("GetBuildingDescription");
 
             var text = building.Description.Text;
             text = ReplaceCategories(text);
@@ -76,7 +76,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
 
         private static string GetBoosterDescription(IBooster booster)
         {
-            using var profiler = new ProfilerBlock("GetBoosterDescription");
+            using var profiler = new ProfilerScope("GetBoosterDescription");
 
             var text = booster.Description.Text;
             
@@ -226,15 +226,15 @@ namespace RogueIslands.Gameplay.View.Descriptions
                     text = text.ReplaceIgnoreCase("{addChange}", changeText);
                 }
 
-                if (scoring?.Addition != null)
-                    text += ("\n(Currently " + $"{scoring.Addition:0.##}".WrapWithColor(AddColor) + " Score)")
-                        .WrapWithColor(ProgressColor);
-                else if (scoring?.Multiplier != null)
-                    text += ("\n(Currently " +
-                             $"X{scoring.Multiplier:0.##}".WrapWithColor(MultColor)
-                                 .WrapWithHighlight(MultHighlightColor) +
-                             " Mult)")
-                        .WrapWithColor(ProgressColor);
+                // if (scoring?.Addition != null)
+                //     text += ("\n(Currently " + $"{scoring.Addition:0.##}".WrapWithColor(AddColor) + " Score)")
+                //         .WrapWithColor(ProgressColor);
+                // else if (scoring?.Multiplier != null)
+                //     text += ("\n(Currently " +
+                //              $"X{scoring.Multiplier:0.##}".WrapWithColor(MultColor)
+                //                  .WrapWithHighlight(MultHighlightColor) +
+                //              " Mult)")
+                //         .WrapWithColor(ProgressColor);
             }
 
             var copy = booster.GetEventAction<CopyBoosterAction>();

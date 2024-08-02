@@ -4,7 +4,8 @@
   "references": [
     "RogueIslands.Serialization",
     "RogueIslands",
-    "RogueIslands.Autofac"
+    "RogueIslands.Autofac",
+    "RogueIslands.Diagnostics"
   ],
   "overrideReferences": true,
   "precompiledReferences": [

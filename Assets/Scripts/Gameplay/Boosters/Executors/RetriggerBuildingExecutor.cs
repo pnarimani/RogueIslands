@@ -1,4 +1,5 @@
 using RogueIslands.Gameplay.Boosters.Actions;
+using RogueIslands.Gameplay.Boosters.Sources;
 using RogueIslands.Gameplay.GameEvents;
 
 namespace RogueIslands.Gameplay.Boosters.Executors
@@ -15,18 +16,31 @@ namespace RogueIslands.Gameplay.Boosters.Executors
         protected override void Execute(GameState state, IGameView view, IBooster booster,
             RetriggerBuildingAction action)
         {
-            if (state.CurrentEvent is BuildingPlacedEvent)
+            if(action.RemainingCharges is <= 0)
+                return;
+            
+            if (state.CurrentEvent is ResetTriggersEvent)
             {
                 action.RemainingTriggers = action.RetriggerTimes;
             }
-            else if (state.CurrentEvent is BuildingEvent e)
+            else
             {
                 if (action.RemainingTriggers <= 0)
+                {
+                    if (action.RemainingCharges != null)
+                        action.RemainingCharges--;
                     return;
+                }
                 action.RemainingTriggers--;
 
+                action.Buildings ??= new BuildingFromCurrentEvent();
+
                 view.GetBooster(booster.Id).GetRetriggerVisualizer().PlayRetrigger();
-                _scoringController.TriggerBuilding(e.Building);
+
+                foreach (var building in action.Buildings.Get(state, booster))
+                {
+                    _scoringController.TriggerBuilding(building);
+                }
             }
         }
     }

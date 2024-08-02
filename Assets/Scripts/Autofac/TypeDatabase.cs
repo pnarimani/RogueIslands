@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using RogueIslands.Diagnostics;
 
 namespace RogueIslands.Autofac
 {
@@ -15,6 +16,8 @@ namespace RogueIslands.Autofac
 
         public static IReadOnlyList<Type> GetAll()
         {
+            using var profiler = new ProfilerScope("TypeDatabase.GetAll");
+            
             _allTypes ??= AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.GetTypes())
                 .Where(IsInstantiatable)
@@ -25,18 +28,30 @@ namespace RogueIslands.Autofac
 
         public static IReadOnlyList<Type> GetProjectTypes()
         {
-            _projectTypes ??= GetAll()
-                .Where(x => x.Assembly.FullName.Contains("RogueIslands"))
+            using var profiler = new ProfilerScope("TypeDatabase.GetProjectTypes");
+            
+            _projectTypes ??= AppDomain.CurrentDomain.GetAssemblies()
+                .Where(x => x.FullName.Contains("RogueIslands"))
+                .SelectMany(x => x.GetTypes())
+                .Where(IsInstantiatable)
                 .ToList();
 
             return _projectTypes;
         }
 
-        public static IReadOnlyList<Type> GetTypesOf<T>() 
-            => GetCachedSubTypes<T>(_typesByBaseType, () => GetAll().Where(typeof(T).IsAssignableFrom).ToList());
+        public static IReadOnlyList<Type> GetTypesOf<T>()
+        {
+            using var profiler = new ProfilerScope("TypeDatabase.GetTypesOf");
+            return GetCachedSubTypes<T>(_typesByBaseType, () => GetAll().Where(typeof(T).IsAssignableFrom).ToList());
+        }
 
-        public static IReadOnlyList<Type> GetProjectTypesOf<T>() 
-            => GetCachedSubTypes<T>(_projectTypesByBaseType, () => GetProjectTypes().Where(typeof(T).IsAssignableFrom).ToList());
+        public static IReadOnlyList<Type> GetProjectTypesOf<T>()
+        {
+            using var profiler = new ProfilerScope("TypeDatabase.GetProjectTypesOf");
+            
+            return GetCachedSubTypes<T>(_projectTypesByBaseType,
+                () => GetProjectTypes().Where(typeof(T).IsAssignableFrom).ToList());
+        }
 
         private static bool IsInstantiatable(Type x)
         {

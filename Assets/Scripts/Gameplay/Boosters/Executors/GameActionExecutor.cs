@@ -17,8 +17,8 @@ namespace RogueIslands.Gameplay.Boosters.Executors
 
         public sealed override bool Execute(GameState state, IGameView view, IBooster booster, GameAction action)
         {
-            using var profiler = new ProfilerBlock("GameActionExecutor.Execute");
-            using var conditionProfiler = new ProfilerBlock(typeof(T).Name);
+            using var profiler = new ProfilerScope("GameActionExecutor.Execute");
+            using var conditionProfiler = new ProfilerScope(typeof(T).Name);
             
             Execute(state, view, booster, (T)action);
             return true;

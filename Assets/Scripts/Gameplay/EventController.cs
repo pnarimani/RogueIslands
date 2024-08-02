@@ -25,8 +25,8 @@ namespace RogueIslands.Gameplay
 
         public void Execute<T>(T e) where T : IGameEvent
         {
-            using var methodProfiler = new ProfilerBlock("EventController.Execute");
-            using var methodEvent = new ProfilerBlock(typeof(T).Name);
+            using var methodProfiler = new ProfilerScope("EventController.Execute");
+            using var methodEvent = new ProfilerScope(typeof(T).Name);
             
             try
             {

@@ -90,7 +90,7 @@ namespace RogueIslands.Gameplay.View
 
             if (IsSelected && GameUI.Instance.IsInSpawnRegion(Input.mousePosition))
             {
-                using (new ProfilerBlock("BuildingCardView.CardSelected"))
+                using (new ProfilerScope("BuildingCardView.CardSelected"))
                 {
                     if (_buildingPreview == null)
                     {

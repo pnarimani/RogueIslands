@@ -18,7 +18,7 @@ namespace RogueIslands.Gameplay.View
 
         public Vector3 GetPosition(BuildingView building)
         {
-            using var profiler = ProfilerBlock.Begin();
+            using var profiler = ProfilerScope.Begin();
             
             var bounds = building.transform.GetBounds(building.GetMeshRenderers());
 
@@ -45,7 +45,7 @@ namespace RogueIslands.Gameplay.View
 
         private Vector3 SlideDesiredPosition(Transform building, Bounds bounds, Vector3 desiredPosition)
         {
-            using var profiler = ProfilerBlock.Begin();
+            using var profiler = ProfilerScope.Begin();
             
             var currentPos = building.position;
 
@@ -73,7 +73,7 @@ namespace RogueIslands.Gameplay.View
 
         private bool IntersectsAnyBuilding(Transform building, Bounds bounds)
         {
-            using var profiler = ProfilerBlock.Begin();
+            using var profiler = ProfilerScope.Begin();
             
             var count = Physics.OverlapBoxNonAlloc(bounds.center, bounds.extents, _colliderBuffer, building.rotation,
                 _buildingMask);
@@ -88,7 +88,7 @@ namespace RogueIslands.Gameplay.View
         
         private bool IntersectsGround(Transform building, Bounds bounds)
         {
-            using var profiler = ProfilerBlock.Begin();
+            using var profiler = ProfilerScope.Begin();
 
             var extents = bounds.extents;
             extents.y = 0.1f;
@@ -105,7 +105,7 @@ namespace RogueIslands.Gameplay.View
 
         public bool IsValidPlacement(BuildingView building)
         {
-            using var profiler = ProfilerBlock.Begin();
+            using var profiler = ProfilerScope.Begin();
             
             var bounds = building.transform.GetBounds(building.GetMeshRenderers());
             var isIntersectingWithAnyBuildings = IntersectsAnyBuilding(building.transform, bounds);
@@ -120,7 +120,7 @@ namespace RogueIslands.Gameplay.View
 
         private bool IsOnFlatGround(Transform building, Bounds bounds)
         {
-            using var profiler = ProfilerBlock.Begin();
+            using var profiler = ProfilerScope.Begin();
             
             var min = -bounds.extents;
             var max = bounds.extents;

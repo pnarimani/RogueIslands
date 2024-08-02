@@ -27,7 +27,16 @@ namespace RogueIslands.Gameplay
         {
             return state.Boosters.Any(b => b.Name == "Free Reroll");
         }
-
+        
+        public static bool HasFreebie(this GameState state)
+        {
+            return state.Boosters.Any(b => b.Name == "Freebie");
+        }
+        
+        public static bool HasBlackMarket(this GameState state)
+        {
+            return state.Boosters.Any(b => b.Name == "Black Market");
+        }
         
         public static bool HasMoreInterest(this GameState state)
         {

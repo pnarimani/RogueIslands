@@ -17,7 +17,7 @@ namespace RogueIslands.Gameplay.View
 
         public static IEnumerable<BuildingView> GetBuildings()
         {
-            using var profiler = ProfilerBlock.Begin();
+            using var profiler = ProfilerScope.Begin();
 
             if (Time.frameCount != _cacheFrame)
             {
@@ -42,7 +42,7 @@ namespace RogueIslands.Gameplay.View
 
         public static IReadOnlyList<BoosterView> GetBoosters()
         {
-            using var profiler = ProfilerBlock.Begin();
+            using var profiler = ProfilerScope.Begin();
 
             if (Time.frameCount != _cacheFrame)
             {
@@ -55,7 +55,7 @@ namespace RogueIslands.Gameplay.View
 
         public static IReadOnlyList<BuildingCardView> GetBuildingCards()
         {
-            using var profiler = ProfilerBlock.Begin();
+            using var profiler = ProfilerScope.Begin();
             
             if (Time.frameCount != _cacheFrame)
             {

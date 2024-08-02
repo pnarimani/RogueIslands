@@ -4,9 +4,9 @@ using UnityEngine.Profiling;
 
 namespace RogueIslands.Diagnostics
 {
-    public struct ProfilerBlock : IDisposable
+    public struct ProfilerScope : IDisposable
     {
-        public ProfilerBlock(string name)
+        public ProfilerScope(string name)
         {
             Profiler.BeginSample(name);
         }
@@ -16,6 +16,6 @@ namespace RogueIslands.Diagnostics
             Profiler.EndSample();
         }
 
-        public static ProfilerBlock Begin([CallerMemberName] string name = default) => new(name);
+        public static ProfilerScope Begin([CallerMemberName] string name = default) => new(name);
     }
 }

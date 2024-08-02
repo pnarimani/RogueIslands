@@ -21,8 +21,9 @@ namespace RogueIslands.Gameplay
 
         public bool IsConditionMet(IBooster booster, IGameCondition condition)
         {
-            var evaluator = _evaluators.Value.First(x => x.ConditionType == condition.GetType());
-            Assert.IsNotNull(evaluator, $"No evaluator found for condition type {condition.GetType().Name}");
+            var conditionType = condition.GetType();
+            var evaluator = _evaluators.Value.FirstOrDefault(x => x.CanHandle(conditionType));
+            Assert.IsNotNull(evaluator, $"No evaluator found for condition type {conditionType.Name}");
             return evaluator.Evaluate(_state, booster, condition);
         }
     }

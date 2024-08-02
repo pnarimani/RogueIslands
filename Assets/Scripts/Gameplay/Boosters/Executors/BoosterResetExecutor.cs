@@ -9,7 +9,6 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             var scoringAction = booster.GetEventAction<ScoringAction>();
             scoringAction.Addition = action.Product;
             scoringAction.Multiplier = action.Multiplier;
-
             view.GetBooster(booster.Id).GetResetVisualizer().PlayReset();
         }
     }

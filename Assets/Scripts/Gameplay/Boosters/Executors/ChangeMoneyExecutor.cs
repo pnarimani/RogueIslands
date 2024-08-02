@@ -11,17 +11,21 @@ namespace RogueIslands.Gameplay.Boosters.Executors
             if (action.Multiplier != null)
                 mult = action.Multiplier.Get(state, booster).First();
 
+            var finalChange = action.Change * mult;
+            if (finalChange == 0)
+                return;
+            
             if (action.IsImmediate)
             {
-                state.Money += action.Change * mult;
-                view.GetBooster(booster.Id).GetMoneyVisualizer().Play(action.Change * mult);
+                state.Money += finalChange;
+                view.GetBooster(booster.Id).GetMoneyVisualizer().Play(finalChange);
             }
             else
             {
                 state.MoneyChanges.Add(new MoneyChange
                 {
                     Reason = booster.Name,
-                    Change = action.Change * mult,
+                    Change = finalChange,
                 });
             }
         }
