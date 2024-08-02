@@ -2,9 +2,9 @@
 
 namespace RogueIslands.Gameplay.Boosters.Executors
 {
-    public class ScoreBonusExecutor : GameActionExecutor<ModifyBonusAction>
+    public class ScoreBonusExecutor : GameActionExecutor<BonusAction>
     {
-        protected override void Execute(GameState state, IGameView view, IBooster booster, ModifyBonusAction action)
+        protected override void Execute(GameState state, IGameView view, IBooster booster, BonusAction action)
         {
             if (action.Addition is { } add)
             {

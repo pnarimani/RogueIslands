@@ -72,5 +72,6 @@ namespace RogueIslands.Gameplay
         public WorldBoostersState WorldBoosters;
 
         public Dictionary<string, RogueRandom> Randoms { get; set; } = new();
+        public MetadataState Metadata { get; set; } = new();
     }
 }

@@ -10,7 +10,7 @@ namespace RogueIslands.Gameplay.Boosters.Sources
             return new CountItems<T> { Source = source };
         }
 
-        public static BuildingsWithCondition WithCondition(this ISource<Building> source, IGameConditionWithSource<Building> condition)
+        public static BuildingsWithCondition With(this ISource<Building> source, IGameConditionWithSource<Building> condition)
         {
             return new BuildingsWithCondition { Source = source, Condition = condition };
         }
@@ -33,6 +33,16 @@ namespace RogueIslands.Gameplay.Boosters.Sources
         public static ISource<ColorTag> GetColors(this ISource<Building> source)
         {
             return new GetBuildingColors() { Source = source };
+        }
+        
+        public static ISource<BuildingSize> GetSizes(this ISource<Building> source)
+        {
+            return new GetBuildingSizes() { Source = source };
+        }
+        
+        public static ISource<int> GetPlayCountThisRound(this ISource<BuildingSize> source)
+        {
+            return new SizePlayCountSource() { Size = source };
         }
     }
 }

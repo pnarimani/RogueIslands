@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Gameplay.Boosters.Actions
 {
-    public class ModifyBonusAction : GameAction
+    public class BonusAction : GameAction
     {
         public double? Addition { get; set; }
         public double? Multiplier { get; set; }

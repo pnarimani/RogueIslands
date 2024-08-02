@@ -114,9 +114,9 @@ namespace RogueIslands.Gameplay.View.Descriptions
 
             var scoring = booster.GetEventAction<ScoringAction>();
             var money = booster.GetEventAction<ChangeMoneyAction>();
-            var modifyBonus = booster.GetEventAction<ModifyBonusAction>();
+            var modifyBonus = booster.GetEventAction<BonusAction>();
             var multipliedScoring = booster.GetEventAction<MultipliedScoringAction>();
-            var scalingAction = booster.GetEventAction<BoosterScalingAction>();
+            var scalingAction = booster.GetEventAction<ScoreScalingAction>();
 
             if (money != null)
             {

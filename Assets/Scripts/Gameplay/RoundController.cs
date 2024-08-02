@@ -103,6 +103,8 @@ namespace RogueIslands.Gameplay
         public void StartRound()
         {
             _rerollController.ResetRerollCosts();
+            
+            _state.Metadata.RoundSizePlayCount.Clear();
 
             _eventController.Execute(new RoundStartEvent());
 

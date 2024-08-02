@@ -33,6 +33,9 @@ namespace RogueIslands.Gameplay
             _state.CurrentScore += _state.TransientScore;
 
             _state.TransientScore = 0;
+
+            _state.Metadata.RunCategoryPlayCount[building.Category]++;
+            _state.Metadata.RoundSizePlayCount[building.Size]++;
         }
 
         public void TriggerBuilding(Building building)

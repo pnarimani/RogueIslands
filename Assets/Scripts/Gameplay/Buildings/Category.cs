@@ -10,8 +10,8 @@ namespace RogueIslands.Gameplay.Buildings
         public override bool Equals(object obj) => obj is Category other && Equals(other);
         public override int GetHashCode() => (Value != null ? Value.GetHashCode() : 0);
 
-        public override string ToString() 
-            => $"<color=#005500><b>{Value}</b></color>";
+        public override string ToString()
+            => Value;
 
         public static bool operator ==(Category left, Category right) => left.Equals(right);
         public static bool operator !=(Category left, Category right) => !(left == right);
