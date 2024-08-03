@@ -117,6 +117,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
             var modifyBonus = booster.GetEventAction<BonusAction>();
             var multipliedScoring = booster.GetEventAction<MultipliedScoringAction>();
             var scalingAction = booster.GetEventAction<ScoreScalingAction>();
+            var bonusScalingAction = booster.GetEventAction<BonusScalingAction>();
 
             if (money != null)
             {
@@ -210,7 +211,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 {
                     var changeText = multChange > 0
                         ? $"X{multChange:0.##}".WrapWithColor(MultColor).WrapWithHighlight(MultHighlightColor)
-                        : "loses " + $"X{Math.Abs(multChange):0.##}".WrapWithColor(MultColor)
+                        : $"X{Math.Abs(multChange):0.##}".WrapWithColor(MultColor)
                             .WrapWithHighlight(MultHighlightColor);
 
                     text = text.ReplaceIgnoreCase("{multChange}", changeText);
@@ -222,7 +223,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
                     if (prodChange > 0)
                         changeText = $"{prodChange:0.##}".WrapWithColor(AddColor);
                     else
-                        changeText = "loses " + $"{Math.Abs(prodChange):0.##}".WrapWithColor(AddColor);
+                        changeText = $"{Math.Abs(prodChange):0.##}".WrapWithColor(AddColor);
                     text = text.ReplaceIgnoreCase("{addChange}", changeText);
                 }
 
@@ -235,6 +236,12 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 //                  .WrapWithHighlight(MultHighlightColor) +
                 //              " Mult)")
                 //         .WrapWithColor(ProgressColor);
+            }
+            else if (bonusScalingAction != null)
+            {
+                if (bonusScalingAction.Delay != null)
+                    if (!bonusScalingAction.OneTime || !bonusScalingAction.HasTriggered)
+                        text += $"\n({bonusScalingAction.Progress}/{bonusScalingAction.Delay})".WrapWithColor(ProgressColor);
             }
 
             var copy = booster.GetEventAction<CopyBoosterAction>();

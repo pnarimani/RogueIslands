@@ -4,6 +4,7 @@ using System.Linq;
 using RogueIslands.Gameplay.Boosters;
 using RogueIslands.Gameplay.Boosters.Actions;
 using RogueIslands.Gameplay.Boosters.Executors;
+using UnityEngine;
 
 namespace RogueIslands.Gameplay
 {
@@ -25,9 +26,16 @@ namespace RogueIslands.Gameplay
 
         public bool Execute(IBooster booster, GameAction action)
         {
-            if (action.Conditions != null &&
-                action.Conditions.Any(condition => !_conditionsController.IsConditionMet(booster, condition)))
-                return false;
+            if (action.Conditions != null)
+            {
+                foreach (var condition in action.Conditions)
+                {
+                    if (!_conditionsController.IsConditionMet(booster, condition))
+                    {
+                        return false;
+                    }
+                }
+            }
 
             var exec = _execs.Value.FirstOrDefault(x => x.ActionType == action.GetType());
             if (exec == null)

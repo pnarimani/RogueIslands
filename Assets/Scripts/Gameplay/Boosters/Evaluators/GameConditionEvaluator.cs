@@ -2,6 +2,7 @@ using System;
 using Autofac.Features.ResolveAnything;
 using RogueIslands.Diagnostics;
 using RogueIslands.Gameplay.Boosters.Conditions;
+using UnityEngine;
 
 namespace RogueIslands.Gameplay.Boosters.Evaluators
 {
@@ -11,7 +12,7 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
         public abstract bool Evaluate(GameState state, IBooster booster, IGameCondition condition);
     }
 
-    public abstract class GameConditionEvaluator<T> : GameConditionEvaluator where T : IGameCondition
+    public abstract class GameConditionEvaluator<T> : GameConditionEvaluator where T : class, IGameCondition
     {
         public override bool CanHandle(Type conditionType) => conditionType == typeof(T);
 
@@ -19,8 +20,14 @@ namespace RogueIslands.Gameplay.Boosters.Evaluators
         {
             using var profiler = new ProfilerScope("GameConditionEvaluator.Evaluate");
             using var conditionProfiler = new ProfilerScope(typeof(T).Name);
+
+            if (condition is not T gameCondition)
+            {
+                Debug.LogError($"Invalid condition type: {condition.GetType().Name}. Expected: {typeof(T).Name}");
+                return false;
+            }
             
-            return Evaluate(state, booster, (T)condition);
+            return Evaluate(state, booster, gameCondition);
         }
 
         protected abstract bool Evaluate(GameState state, IBooster booster, T condition);

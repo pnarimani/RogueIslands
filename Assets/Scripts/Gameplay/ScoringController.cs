@@ -23,7 +23,7 @@ namespace RogueIslands.Gameplay
         {
             using var profiler = ProfilerScope.Begin();
             
-            _eventController.Execute(new ResetTriggersEvent());
+            _eventController.Execute(new ResetRetriggersEvent());
             _eventController.Execute(new BuildingPlacedEvent { Building = building, });
 
             TriggerBuilding(building);

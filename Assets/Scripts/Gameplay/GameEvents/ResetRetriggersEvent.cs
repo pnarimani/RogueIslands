@@ -1,6 +1,6 @@
 ﻿namespace RogueIslands.Gameplay.GameEvents
 {
-    public class ResetTriggersEvent : IGameEvent
+    public class ResetRetriggersEvent : IGameEvent
     {
         
     }

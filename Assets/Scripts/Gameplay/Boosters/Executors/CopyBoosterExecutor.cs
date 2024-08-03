@@ -36,7 +36,7 @@ namespace RogueIslands.Gameplay.Boosters.Executors
                 return false;
             }
             
-            if (state.CurrentEvent is ResetTriggersEvent)
+            if (state.CurrentEvent is ResetRetriggersEvent)
             {
                 copyBooster.Cloned = _cloner.Clone(nextBooster.EventAction);
                 return false;

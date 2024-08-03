@@ -65,6 +65,7 @@ namespace RogueIslands.Gameplay.DryRun
             _cloner.CloneTo(_realGame.Buildings.PlacedDownBuildings, _fakeGame.Buildings.PlacedDownBuildings);
             _cloner.CloneTo(_realGame.Buildings.Deck, _fakeGame.Buildings.Deck);
             _cloner.CloneTo(_realGame.Randoms, _fakeGame.Randoms);
+            _cloner.CloneTo(_realGame.Metadata, _fakeGame.Metadata);
 
             _fakeGame.Money = _realGame.Money;
             _fakeGame.CurrentScore = _realGame.CurrentScore;
