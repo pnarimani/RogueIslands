@@ -102,7 +102,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Saw Dust",
                     Description = "{probability} to {mult} the score\n when a {lumber} building <e>scores bonus",
                     BuyPrice = 8,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new ScoringAction
                     {
                         Conditions = new IGameCondition[]
@@ -126,7 +126,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Maizinator",
                     Description = "{farming} buildings <e>trigger</e> one more time",
                     BuyPrice = 6,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new RetriggerBuildingAction
                     {
                         RetriggerTimes = 1,
@@ -206,7 +206,7 @@ namespace RogueIslands.Gameplay.Boosters
                                   "For every 8 buildings placed,\n" +
                                   "gains {multchange} mult",
                     BuyPrice = 5,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
@@ -274,7 +274,7 @@ namespace RogueIslands.Gameplay.Boosters
                                   "if at least one building of each color\n" +
                                   " is placed down",
                     BuyPrice = 8,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new ScoringAction
                     {
                         Conditions = new IGameCondition[]
@@ -294,7 +294,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Binary World",
                     Description = "{mult} the score\nif all buildings are {green} or {purple}",
                     BuyPrice = 7,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new ScoringAction
                     {
                         Conditions = new IGameCondition[]
@@ -351,7 +351,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "The Collector",
                     Description = "<m>X0.05</m> score for each different\n building placed in the world",
                     BuyPrice = 8,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new MultipliedScoringAction
                     {
                         Conditions = new[] { new GameEventCondition<FinalScoreReadyEvent>() },
@@ -591,7 +591,7 @@ namespace RogueIslands.Gameplay.Boosters
                                   "Gains {multchange} when there is\n" +
                                   "a {large} building in range",
                     BuyPrice = 9,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
@@ -675,7 +675,7 @@ namespace RogueIslands.Gameplay.Boosters
                                   "Gains {multchange} when there is\n" +
                                   "a {small} building out of range",
                     BuyPrice = 9,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
@@ -760,7 +760,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Description = "{score} the score if the played building is {iron}\n" +
                                   "Gains {multchange} if a {lumber} building is in range",
                     BuyPrice = 7,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
@@ -804,7 +804,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Description = "{score} the score when the played building is {statue}\n" +
                                   "Gains extra {multchange} when there is a {statue} out of range",
                     BuyPrice = 7,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new CompositeAction
                     {
                         Conditions = new IGameCondition[]
@@ -983,11 +983,12 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "The Wall",
-                    Description = "Gains <m>X0.2</m> mult \n" +
+                    Description = "{score} the score.\n\n" +
+                                  "Gains {multchange} mult \n" +
                                   "when a {medium} or {large} building <e>is placed</e>.\n" +
-                                  "Resets when a {small} building <e>is placed",
+                                  "Resets when a {small} building <e>is placed.",
                     BuyPrice = 7,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
@@ -1031,7 +1032,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Black Coat",
                     Description = "{score} score when you have <d>$6</d> or less",
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     BuyPrice = 7,
                     EventAction = new ScoringAction
                     {
@@ -1156,7 +1157,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Last Breath",
                     Description = "After you played your last building\nRetrigger all buildings",
                     BuyPrice = 8,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new RetriggerBuildingAction
                     {
                         Conditions = new IGameCondition[]
@@ -1386,7 +1387,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Hold Off",
                     Description = "<m>X0.1</m> score \nfor every {statue} building in hand",
                     BuyPrice = 5,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new MultipliedScoringAction
                     {
                         Conditions = new IGameCondition[]
@@ -1426,7 +1427,7 @@ namespace RogueIslands.Gameplay.Boosters
                                   "Gains extra {addchange} when \n" +
                                   "a {city} building <e>scores bonus</e>",
                     BuyPrice = 4,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new CompositeAction
                     {
                         Actions = new GameAction[]
@@ -1557,8 +1558,9 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Plot",
-                    Description = "{score} score when a {farming} building <e>is triggered</e>.\n\n" +
-                                  "Gains extra {addchange} when another {farming}\n" +
+                    Description = "{score} score when a {farming}\n" +
+                                  " building <e>is triggered</e>.\n\n" +
+                                  "Gains {addchange} when another {farming}\n" +
                                   "building is in range",
                     BuyPrice = 4,
                     EventAction = new CompositeAction
@@ -2171,7 +2173,7 @@ namespace RogueIslands.Gameplay.Boosters
                                   "when at least 2 {statue} buildings\n" +
                                   " are in range",
                     BuyPrice = 6,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new ScoringAction
                     {
                         Multiplier = 2,
@@ -2351,6 +2353,10 @@ namespace RogueIslands.Gameplay.Boosters
                             {
                                 Change = 10,
                                 IsImmediate = false,
+                                Conditions = new IGameCondition[]
+                                {
+                                    new GameEventCondition<RoundEndEvent>(),
+                                },
                             },
                             new ScaleChangeMoneyAction()
                             {
@@ -2553,7 +2559,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Murder",
                     Description = "{score} per {red} card in hand",
                     BuyPrice = 5,
-                    Rarity = Rare,
+                    Rarity = Uncommon,
                     EventAction = new MultipliedScoringAction
                     {
                         Addition = 30,
@@ -2641,7 +2647,7 @@ namespace RogueIslands.Gameplay.Boosters
                 Description = $"{{add}} score when a {{{color}}}\n" +
                               "building <e>is triggered</e>.\n\n" +
                               $"Gains extra {{addchange}} for \n" +
-                              $"every 5 {{{color}}} building played.",
+                              $"every 2 {{{color}}} building played.",
                 BuyPrice = 3,
                 EventAction = new CompositeAction
                 {
@@ -2663,7 +2669,7 @@ namespace RogueIslands.Gameplay.Boosters
                         new ScoreScalingAction
                         {
                             AdditionChange = 10,
-                            Delay = 5,
+                            Delay = 2,
                             OneTime = false,
                             Conditions = new IGameCondition[]
                             {

@@ -221,7 +221,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
                 {
                     string changeText;
                     if (prodChange > 0)
-                        changeText = $"{prodChange:0.##}".WrapWithColor(AddColor);
+                        changeText = $"{prodChange:+0.##}".WrapWithColor(AddColor);
                     else
                         changeText = $"{Math.Abs(prodChange):0.##}".WrapWithColor(AddColor);
                     text = text.ReplaceIgnoreCase("{addChange}", changeText);
