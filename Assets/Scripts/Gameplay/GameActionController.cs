@@ -26,16 +26,8 @@ namespace RogueIslands.Gameplay
 
         public bool Execute(IBooster booster, GameAction action)
         {
-            if (action.Conditions != null)
-            {
-                foreach (var condition in action.Conditions)
-                {
-                    if (!_conditionsController.IsConditionMet(booster, condition))
-                    {
-                        return false;
-                    }
-                }
-            }
+            if (action.Condition != null && !_conditionsController.IsConditionMet(booster, action.Condition))
+                return false;
 
             var exec = _execs.Value.FirstOrDefault(x => x.ActionType == action.GetType());
             if (exec == null)

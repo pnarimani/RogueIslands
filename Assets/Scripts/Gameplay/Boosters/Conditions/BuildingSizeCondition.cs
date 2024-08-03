@@ -9,5 +9,15 @@ namespace RogueIslands.Gameplay.Boosters.Conditions
         public ISource<Building> Source { get; set; }
         public IReadOnlyList<BuildingSize> Allowed { get; set; }
         public IReadOnlyList<BuildingSize> Banned { get; set; }
+
+        public BuildingSizeCondition()
+        {
+        }
+        
+        public BuildingSizeCondition(BuildingSize size)
+        {
+            Allowed = new List<BuildingSize> { size };
+            Source = new BuildingFromCurrentEvent();
+        }
     }
 }

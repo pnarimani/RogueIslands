@@ -3,9 +3,9 @@ using RogueIslands.Gameplay.Boosters.Conditions;
 
 namespace RogueIslands.Gameplay.Boosters.Evaluators
 {
-    public class OrConditionEvaluator : GameConditionEvaluator<OrCondition>
+    public class OrConditionEvaluator : GameConditionEvaluator<OrConditions>
     {
-        protected override bool Evaluate(GameState state, IBooster booster, OrCondition condition)
+        protected override bool Evaluate(GameState state, IBooster booster, OrConditions condition)
         {
             var m = StaticResolver.Resolve<GameConditionsController>();
             foreach (var subCondition in condition.Conditions)

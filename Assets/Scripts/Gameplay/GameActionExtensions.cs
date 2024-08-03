@@ -10,30 +10,23 @@ namespace RogueIslands.Gameplay
             var result = PooledList<IGameCondition>.CreatePooled();
             if (action == null)
                 return result;
-            
-            if (action.Conditions != null)
+
+            if (action.Condition != null)
             {
-                foreach (var c in action.Conditions)
-                {
-                    if (c is OrCondition or)
-                    {
-                        result.AddRange(or.Conditions);
-                    }
-                    else
-                    {
-                        result.Add(c);
-                    }
-                }
+                if (action.Condition is OrConditions or)
+                    result.AddRange(or.Conditions);
+                else if (action.Condition is AndConditions and)
+                    result.AddRange(and.Conditions);
+                else
+                    result.Add(action.Condition);
             }
 
             if (action is CompositeAction composite)
-            {
                 foreach (var innerAction in composite.Actions)
                 {
                     using var innerConditions = GetAllConditions(innerAction);
                     result.AddRange(innerConditions);
                 }
-            }
 
             return result;
         }

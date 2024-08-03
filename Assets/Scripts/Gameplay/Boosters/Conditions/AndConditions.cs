@@ -2,10 +2,10 @@
 
 namespace RogueIslands.Gameplay.Boosters.Conditions
 {
-    public class OrCondition : IGameCondition
+    public class AndConditions : IGameCondition
     {
         public IReadOnlyList<IGameCondition> Conditions { get; set; }
 
-        public OrCondition(params IGameCondition[] conditions) => Conditions = conditions;
+        public AndConditions(IReadOnlyList<IGameCondition> conditions) => Conditions = conditions;
     }
 }

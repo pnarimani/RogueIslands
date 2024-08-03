@@ -1,8 +1,9 @@
 ﻿using System.Linq;
+using RogueIslands.Gameplay.Boosters.Conditions;
 
 namespace RogueIslands.Gameplay.Boosters.Actions
 {
-    public static class CompositeActionExtensions
+    public static class GameActionExtensions
     {
         public static CompositeAction And(this GameAction main, GameAction extra)
         {
@@ -16,6 +17,12 @@ namespace RogueIslands.Gameplay.Boosters.Actions
             {
                 Actions = new[] { main, extra },
             };
+        }
+        
+        public static T When<T>(this T action, IGameCondition condition) where T : GameAction
+        {
+            action.Condition = condition;
+            return action;
         }
     }
 }

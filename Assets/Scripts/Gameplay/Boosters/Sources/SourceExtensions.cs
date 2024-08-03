@@ -10,11 +10,14 @@ namespace RogueIslands.Gameplay.Boosters.Sources
         public static BuildingsWithCondition With(this ISource<Building> source,
             IGameConditionWithSource<Building> condition) => new() { Source = source, Condition = condition };
 
-        public static BuildingsWithCondition WithCategory(this ISource<Building> source, Category category) 
+        public static BuildingsWithCondition WithCategory(this ISource<Building> source, Category category)
             => source.With(new BuildingCategoryCondition { Categories = new[] { category } });
-        
-        public static BuildingsWithCondition WithSize(this ISource<Building> source, BuildingSize size) 
+
+        public static BuildingsWithCondition WithSize(this ISource<Building> source, BuildingSize size)
             => source.With(new BuildingSizeCondition { Allowed = new[] { size } });
+
+        public static BuildingsWithCondition WithColor(this ISource<Building> source, ColorTag color) 
+            => source.With(new ColorCheckCondition { ForcedColors = new[] { color } });
 
         public static BuildingsByRange GetBuildingsInRange(this ISource<Building> source) =>
             new() { Center = source, ReturnInRange = true };
