@@ -35,7 +35,7 @@ namespace RogueIslands.Gameplay.View
 
             _radiusTarget = _cinemachineCamera.Radius;
             _horizontalAxisValue = _cinemachineCamera.HorizontalAxis.Value;
-            
+
             ClampRadiusTarget();
         }
 
@@ -55,7 +55,11 @@ namespace RogueIslands.Gameplay.View
 
         private void ClampRadiusTarget()
         {
-            _radiusTarget = Mathf.Clamp(_radiusTarget, _bounds.max.y + 15, _bounds.max.y + 80);
+            var position = _target.transform.position + Vector3.up * 500;
+            var max = _bounds.max.y;
+            if (Physics.Raycast(position, Vector3.down, out var hit, 1000, LayerMask.GetMask("Ground")))
+                max = (hit.point.y / Mathf.Sin(Mathf.Deg2Rad * 55)) + 15;
+            _radiusTarget = Mathf.Clamp(_radiusTarget, max, _bounds.max.y + 80);
         }
 
         private void Update()
@@ -63,6 +67,8 @@ namespace RogueIslands.Gameplay.View
             _cinemachineCamera.Radius = Mathf.Lerp(_cinemachineCamera.Radius, _radiusTarget, 20 * Time.deltaTime);
             _cinemachineCamera.HorizontalAxis.Value = Mathf.LerpAngle(_cinemachineCamera.HorizontalAxis.Value,
                 _horizontalAxisValue, 10 * Time.deltaTime);
+
+            ClampRadiusTarget();
         }
 
         private void OnDrag(Vector2 obj)
