@@ -20,6 +20,7 @@ namespace RogueIslands.Gameplay.DryRun
                     .ToDictionary(x => x.Key, x => x.Count());
 
                 var vis = realView.GetMoneyVisualizer();
+                vis.HideDryRun();
                 if (!allProbabilities.MoneyChanges.SequenceEqual(noProbabilities.MoneyChanges))
                     vis.ShowDryRunProbability();
                 else

@@ -66,8 +66,8 @@ namespace RogueIslands.Gameplay
             {
                 20,
                 160,
-                3000,
-                25000,
+                2000,
+                10000,
             };
 
             var result = new double[GameState.RoundsPerAct * GameState.TotalActs];

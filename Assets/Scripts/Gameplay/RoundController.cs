@@ -42,6 +42,7 @@ namespace RogueIslands.Gameplay
 
                 _state.CurrentScore = 0;
 
+                _rerollController.ResetRerollCosts();
                 _shopItemSpawner.PopulateShop();
                 _shopItemSpawner.PopulateBuildings();
 
@@ -102,8 +103,6 @@ namespace RogueIslands.Gameplay
 
         public void StartRound()
         {
-            _rerollController.ResetRerollCosts();
-            
             _state.Metadata.RoundSizePlayCount.Clear();
 
             _eventController.Execute(new RoundStartEvent());

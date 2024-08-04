@@ -10,13 +10,16 @@ namespace RogueIslands.Localization.UnityLocalization
     public class UnityLocalizationAdapter : ILocalization, IDisposable
     {
         private IList<StringTable> _stringTables;
-        
-        public event Action<string> LocaleChanged;
 
-        public UnityLocalizationAdapter()
-        {
+        public UnityLocalizationAdapter() =>
             LocalizationSettings.Instance.OnSelectedLocaleChanged += OnSelectedLocaleChanged;
+
+        public void Dispose()
+        {
+            LocalizationSettings.Instance.OnSelectedLocaleChanged -= OnSelectedLocaleChanged;
         }
+
+        public event Action<string> LocaleChanged;
 
         public IReadOnlyList<string> GetAvailableLocales()
         {
@@ -35,7 +38,7 @@ namespace RogueIslands.Localization.UnityLocalization
 
         public string Get(string key)
         {
-            if ( GetEntry(key) is { } entry)
+            if (GetEntry(key) is { } entry)
                 return entry.GetLocalizedString();
 
             return key;
@@ -43,34 +46,25 @@ namespace RogueIslands.Localization.UnityLocalization
 
         public string Get(string key, params object[] args)
         {
-            if ( GetEntry(key) is { } entry)
+            if (GetEntry(key) is { } entry)
                 return entry.GetLocalizedString(args);
             return key;
-        }
-
-        public void Dispose()
-        {
-            LocalizationSettings.Instance.OnSelectedLocaleChanged -= OnSelectedLocaleChanged;
         }
 
         private void OnSelectedLocaleChanged(Locale obj)
             => LocaleChanged?.Invoke(obj.LocaleName);
 
-        private  StringTableEntry GetEntry(string key)
+        private StringTableEntry GetEntry(string key)
         {
             if (_stringTables == null)
             {
-                 LocalizationSettings.InitializationOperation.WaitForCompletion();
+                LocalizationSettings.InitializationOperation.WaitForCompletion();
                 _stringTables = LocalizationSettings.Instance.GetStringDatabase().GetAllTables().WaitForCompletion();
             }
 
             foreach (var table in _stringTables)
-            {
                 if (table.GetEntry(key) is { } entry)
-                {
                     return entry;
-                }
-            }
 
             return null;
         }

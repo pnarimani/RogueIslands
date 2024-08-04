@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RogueIslands.Diagnostics;
 using RogueIslands.Gameplay.Boosters.Actions;
 using RogueIslands.Gameplay.Boosters.Conditions;
 using RogueIslands.Gameplay.Boosters.Sources;
@@ -15,6 +16,8 @@ namespace RogueIslands.Gameplay.Boosters
     {
         public static List<BoosterCard> Get()
         {
+            using var profiler = new ProfilerScope("BoosterList.Get");
+            
             return new List<BoosterCard>
             {
                 new()
@@ -86,7 +89,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Bad Eyesight",
-                    Description = "{Red} and {Blue} count as the same.\n{Green} and {Purple} count as the same",
+                    Description = "{Red} and {Blue} count as the same\n{Green} and {Purple} count as the same",
                     BuyPrice = 5,
                 },
                 new()
@@ -94,7 +97,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "Rigged",
                     Description = "Double all probabilities\n<p>(ex: 1 in 3 -> 2 in 3)",
                     BuyPrice = 4,
-                    Rarity = Uncommon,
+                    Rarity = Common,
                 },
                 new()
                 {
@@ -137,8 +140,8 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Campfire",
-                    Description = "{score} the score.\n" +
-                                  "Gains {multchange} for each booster sold.\n" +
+                    Description = "{score} the score\n" +
+                                  "Gains {multchange} for each booster sold\n" +
                                   "Resets at the end of the act",
                     BuyPrice = 6,
                     Rarity = Rare,
@@ -273,7 +276,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "The Collector",
-                    Description = "<m>X0.05</m> score for each different\n building placed in the world",
+                    Description = "<m>X005</m> score for each different\n building placed in the world",
                     BuyPrice = 8,
                     Rarity = Uncommon,
                     EventAction = new MultipliedScoringAction
@@ -373,7 +376,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Capitalist",
-                    Description = "{score} for every <d>$2</d> you have.",
+                    Description = "{score} for every <d>$2</d> you have",
                     BuyPrice = 4,
                     Rarity = Uncommon,
                     EventAction = new MultipliedScoringAction
@@ -399,7 +402,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Popcorn",
-                    Description = "Starts with {score} mult.\n{multchange} mult per round played",
+                    Description = "Starts with {score} mult\n{multchange} mult per round played",
                     BuyPrice = 5,
                     EventAction = new CompositeAction
                     {
@@ -426,7 +429,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Explorer",
-                    Description = "{score} the score.\n\nGains {multchange} every time you <e>reroll</e> in the shop",
+                    Description = "{score} the score\n\nGains {multchange} every time you <e>reroll</e> in the shop",
                     BuyPrice = 8,
                     Rarity = Rare,
                     EventAction = new CompositeAction
@@ -435,7 +438,7 @@ namespace RogueIslands.Gameplay.Boosters
                         {
                             new ScoringAction
                             {
-                                Multiplier = 0,
+                                Multiplier = 1,
                                 Condition = new GameEventCondition<FinalScoreReadyEvent>(),
                             },
                             new ScoreScalingAction
@@ -531,7 +534,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Away",
-                    Description = "{score} the score.\n" +
+                    Description = "{score} the score\n" +
                                   "Gains {multchange} when there is\n" +
                                   "a {small} building out of range",
                     BuyPrice = 9,
@@ -564,7 +567,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Quiet",
-                    Description = "{score} when the played building is {city}.\n\n" +
+                    Description = "{score} when the played building is {city}\n\n" +
                                   "Gains extra {addchange} when a {lumber}\n" +
                                   " building is out of range",
                     BuyPrice = 4,
@@ -683,9 +686,9 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Good Year",
-                    Description = "{score} <e>bonus</e>.\n\n" +
+                    Description = "{score} <e>bonus</e>\n\n" +
                                   "Gains <a>1</a> more bonus for\n" +
-                                  "every 10 buildings that score bonus.",
+                                  "every 10 buildings that score bonus",
                     BuyPrice = 5,
                     Rarity = Uncommon,
                     EventAction = new CompositeAction
@@ -743,7 +746,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Mine Shaft",
-                    Description = "{score} score when an {Iron} building <e>is triggered</e>.\n\n" +
+                    Description = "{score} score when an {Iron} building <e>is triggered</e>\n\n" +
                                   "Gains extra {addchange} when a {Lumber} building is in of range",
                     BuyPrice = 4,
                     Rarity = Uncommon,
@@ -770,10 +773,10 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "The Wall",
-                    Description = "{score} the score.\n\n" +
+                    Description = "{score} the score\n\n" +
                                   "Gains {multchange} mult \n" +
-                                  "when a {medium} or {large} building <e>is placed</e>.\n" +
-                                  "Resets when a {small} building <e>is placed.",
+                                  "when a {medium} or {large} building <e>is placed</e>\n" +
+                                  "Resets when a {small} building <e>is placed",
                     BuyPrice = 7,
                     Rarity = Uncommon,
                     EventAction = new ScoringAction
@@ -812,7 +815,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Decorations",
-                    Description = "{score} score when the played building is {statue}.\n\n" +
+                    Description = "{score} score when the played building is {statue}\n\n" +
                                   "Gains extra {addchange} when a {city} building is in range",
                     BuyPrice = 4,
                     Rarity = Uncommon,
@@ -838,15 +841,15 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "More Interest",
-                    Description = "Earn <d>$1</d> more in interest\n per <d>$5</d> in the bank.",
+                    Description = "Earn <d>$1</d> more in interest\n per <d>$5</d> in the bank",
                     BuyPrice = 5,
                 },
                 new()
                 {
                     Name = "Food",
-                    Description = "{score} when a {large} building is played.\n\n" +
+                    Description = "{score} when a {large} building is played\n\n" +
                                   "Gains extra {addchange} when the building\n" +
-                                  " is also {farming}.",
+                                  " is also {farming}",
                     BuyPrice = 4,
                     Rarity = Uncommon,
                     EventAction = new ScoringAction
@@ -874,6 +877,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Rarity = Uncommon,
                     EventAction = new RetriggerBuildingAction
                     {
+                        Buildings = new PlacedDownBuildings(),
                         Condition = new GameEventCondition<RetriggerStepEvent>()
                             .And(new CountCondition
                             {
@@ -886,9 +890,9 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Blue Jeans",
-                    Description = "{score} <e>bonus</e> from {blue} buildings." +
-                                  "\nGains <a>+1</a> when a {blue} building <e>is placed</e>." +
-                                  "\nLoses <a>1</a> when a {red} building <e>is placed.",
+                    Description = "{score} <e>bonus</e> from {blue} buildings" +
+                                  "\nGains <a>+1</a> when a {blue} building <e>is placed</e>" +
+                                  "\nLoses <a>1</a> when a {red} building <e>is placed",
                     BuyPrice = 4,
                     EventAction = new BonusAction
                     {
@@ -919,24 +923,24 @@ namespace RogueIslands.Gameplay.Boosters
                             .And(new BuildingSizeCondition(Small)),
                     },
                 },
-                new()
-                {
-                    Name = "Restraint",
-                    Description = "Every round, a card is\n" +
-                                  "selected from your hand.\n " +
-                                  "If you don't play that card,\n" +
-                                  "earn {money} at the end of the round",
-                    BuyPrice = 5,
-                    Rarity = Uncommon,
-                    EventAction = new SelectCardAction().When(new GameEventCondition<RoundStartEvent>())
-                        .And(new ChangeMoneyAction
-                        {
-                            Change = 10,
-                            IsImmediate = false,
-                            Condition = new GameEventCondition<RoundEndEvent>()
-                                .And(new SelectedCardNotPlayedCondition()),
-                        }),
-                },
+                // new()
+                // {
+                //     Name = "Restraint",
+                //     Description = "Every round, a card is\n" +
+                //                   "selected from your hand\n " +
+                //                   "If you don't play that card,\n" +
+                //                   "earn {money} at the end of the round",
+                //     BuyPrice = 5,
+                //     Rarity = Uncommon,
+                //     EventAction = new SelectCardAction().When(new GameEventCondition<RoundStartEvent>())
+                //         .And(new ChangeMoneyAction
+                //         {
+                //             Change = 10,
+                //             IsImmediate = false,
+                //             Condition = new GameEventCondition<RoundEndEvent>()
+                //                 .And(new SelectedCardNotPlayedCondition()),
+                //         }),
+                // },
                 new()
                 {
                     Name = "Mid",
@@ -966,7 +970,12 @@ namespace RogueIslands.Gameplay.Boosters
                         Condition = new GameEventCondition<RetriggerStepEvent>(),
                         RetriggerTimes = 1,
                         RemainingCharges = 8,
-                    }.And(new ResetRetriggersAction()),
+                    }.And(new ResetRetriggersAction()
+                    ).And(new DestroyBoosterAction
+                        {
+                            Self = true,
+                        }.When(new IsBoosterDepleted())
+                    ),
                 },
                 new()
                 {
@@ -986,32 +995,24 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Erosion",
-                    Description = "{score} the score.\n" +
-                                  "Loses {multchange} when a building <e>is placed</e>.\n" +
-                                  "Resets when the round starts.",
+                    Description = "{score} the score\n" +
+                                  "Loses {multchange} after a building is played\n" +
+                                  "Resets when the round starts",
                     BuyPrice = 8,
                     Rarity = Rare,
-                    EventAction = new CompositeAction
+                    EventAction = new ScoringAction
                     {
-                        Actions = new GameAction[]
-                        {
-                            new ScoringAction
-                            {
-                                Multiplier = 2,
-                                Condition = new GameEventCondition<FinalScoreReadyEvent>(),
-                            },
-                            new ScoreScalingAction
-                            {
-                                MultiplierChange = -0.1,
-                                Condition = new GameEventCondition<BuildingPlacedEvent>(),
-                            },
-                            new BoosterResetAction
-                            {
-                                Multiplier = 1,
-                                Condition = new GameEventCondition<RoundStartEvent>(),
-                            },
-                        },
-                    },
+                        Multiplier = 2,
+                        Condition = new GameEventCondition<FinalScoreReadyEvent>(),
+                    }.And(new ScoreScalingAction
+                    {
+                        MultiplierChange = -0.1,
+                        Condition = new GameEventCondition<FinalScoreReadyEvent>(),
+                    }).And(new BoosterResetAction
+                    {
+                        Multiplier = 2,
+                        Condition = new GameEventCondition<RoundStartEvent>(),
+                    }),
                 },
                 new()
                 {
@@ -1023,7 +1024,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Hold Off",
-                    Description = "<m>X0.1</m> score \nfor every {statue} building in hand",
+                    Description = "<m>X01</m> score \nfor every {statue} building in hand",
                     BuyPrice = 5,
                     Rarity = Uncommon,
                     EventAction = new MultipliedScoringAction
@@ -1051,7 +1052,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "State",
                     Description = "{score} score when a {city} \n" +
-                                  "building <e>is triggered</e>\n" +
+                                  "building <e>is triggered</e>\n\n" +
                                   "Gains extra {addchange} when \n" +
                                   "a {city} building <e>scores bonus</e>",
                     BuyPrice = 4,
@@ -1079,9 +1080,9 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Bronze Lion",
                     Description = "When the played building\n" +
-                                  " is {statue}, {score} to score.\n\n" +
+                                  " is {statue}, {score} to score\n\n" +
                                   "Gains extra {addchange} when an\n" +
-                                  "{iron} building in range.",
+                                  "{iron} building in range",
                     BuyPrice = 4,
                     Rarity = Uncommon,
                     EventAction = new CompositeAction
@@ -1113,7 +1114,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Perimeter",
-                    Description = "{score} score when a {lumber} building <e>is triggered</e>.\n\n" +
+                    Description = "{score} score when a {lumber} building <e>is triggered</e>\n\n" +
                                   "Gains extra {addchange} when there is \n" +
                                   "a {lumber} building out of range",
                     BuyPrice = 4,
@@ -1148,7 +1149,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Plot",
                     Description = "{score} score when a {farming}\n" +
-                                  " building <e>is triggered</e>.\n\n" +
+                                  " building <e>is triggered</e>\n\n" +
                                   "Gains {addchange} when another {farming}\n" +
                                   "building is in range",
                     BuyPrice = 4,
@@ -1182,7 +1183,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Tetros",
-                    Description = "{score} score when a {medium} building <e>is placed</e>.\n\n" +
+                    Description = "{score} score when a {medium} building <e>is placed</e>\n\n" +
                                   "Gains extra {addchange} when a {large} building is in range",
                     BuyPrice = 5,
                     EventAction = new CompositeAction
@@ -1251,7 +1252,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Purple Heart",
-                    Description = "{score} score when a building <e>is placed</e>.\n\n" +
+                    Description = "{score} score when a building <e>is placed</e>\n\n" +
                                   "Gains extra {addchange} when there is\n" +
                                   "a {purple} building out of range",
                     BuyPrice = 3,
@@ -1296,8 +1297,8 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Edge",
-                    Description = "Gains <m>X0.5</m> mult\n" +
-                                  "for every {large} building placed.\n" +
+                    Description = "Gains <m>X05</m> mult\n" +
+                                  "for every {large} building placed\n" +
                                   "Resets at the end of the round",
                     BuyPrice = 7,
                     Rarity = Uncommon,
@@ -1382,7 +1383,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Debut",
                     Description = "Every round, the first building\n" +
-                                  "of each size scores {score} <e>when placed</e>.\n" +
+                                  "of each size scores {score} <e>when placed</e>\n" +
                                   "Gains extra {addchange} when the act is completed",
                     BuyPrice = 3,
                     Rarity = Common,
@@ -1566,7 +1567,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Loner",
-                    Description = "{score} the score.\n" +
+                    Description = "{score} the score\n" +
                                   "Gains extra {multchange} when there is\n" +
                                   "a city building out of range",
                     BuyPrice = 8,
@@ -1601,21 +1602,22 @@ namespace RogueIslands.Gameplay.Boosters
                     EventAction = new ScoringAction
                     {
                         Multiplier = 2,
-                        Condition = new GameEventCondition<BuildingPlacedEvent>().And(new CountCondition
-                        {
-                            Source = new BuildingFromCurrentEvent()
-                                .GetBuildingsInRange()
-                                .WithCategory(Statue)
-                                .Count(),
-                            Value = 1,
-                            ComparisonMode = CountCondition.Mode.More,
-                        }),
+                        Condition = new GameEventCondition<FinalScoreReadyEvent>()
+                            .And(new CountCondition
+                            {
+                                Source = new BuildingFromCurrentEvent()
+                                    .GetBuildingsInRange()
+                                    .WithCategory(Statue)
+                                    .Count(),
+                                Value = 1,
+                                ComparisonMode = CountCondition.Mode.More,
+                            }),
                     },
                 },
                 new()
                 {
                     Name = "Hater",
-                    Description = "{score} when a {small} building <e>is triggered</e>.\n\n" +
+                    Description = "{score} when a {small} building <e>is triggered</e>\n\n" +
                                   "Gains extra {addchange} when there is a {medium} building in range",
                     BuyPrice = 3,
                     EventAction = new CompositeAction
@@ -1647,7 +1649,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Smol",
-                    Description = "{score} score when the played building is {small}.\n\n" +
+                    Description = "{score} score when the played building is {small}\n\n" +
                                   "{probability} to gain extra {addchange}\n" +
                                   "when the {small} building <e>is placed",
                     BuyPrice = 5,
@@ -1681,23 +1683,22 @@ namespace RogueIslands.Gameplay.Boosters
                     EventAction = new CompositeAction
                     {
                         Condition = new CountCondition
-                            {
-                                Source = new BuildingFromCurrentEvent()
-                                    .GetBuildingsInRange()
-                                    .WithCategory(Lumber)
-                                    .Count(),
-                                Value = 0,
-                                ComparisonMode = CountCondition.Mode.More,
-                            }
-                            .And(new CountCondition
-                            {
-                                Source = new BuildingFromCurrentEvent()
-                                    .GetBuildingsInRange()
-                                    .WithCategory(Iron)
-                                    .Count(),
-                                Value = 0,
-                                ComparisonMode = CountCondition.Mode.More,
-                            }),
+                        {
+                            Source = new BuildingFromCurrentEvent()
+                                .GetBuildingsInRange()
+                                .WithCategory(Lumber)
+                                .Count(),
+                            Value = 0,
+                            ComparisonMode = CountCondition.Mode.More,
+                        }.And(new CountCondition
+                        {
+                            Source = new BuildingFromCurrentEvent()
+                                .GetBuildingsInRange()
+                                .WithCategory(Iron)
+                                .Count(),
+                            Value = 0,
+                            ComparisonMode = CountCondition.Mode.More,
+                        }),
                         Actions = new GameAction[]
                         {
                             new ScoringAction
@@ -1718,32 +1719,24 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Piggy Bank",
                     Description = "Pays {money} at the end of the round\n" +
-                                  "Loses <d>$1</d> when a building <e>is placed</e>.\n" +
+                                  "Loses <d>$1</d> for every building played\n" +
                                   "Reset when the round starts",
                     BuyPrice = 4,
                     Rarity = Uncommon,
-                    EventAction = new CompositeAction
+                    EventAction = new ChangeMoneyAction
                     {
-                        Actions = new GameAction[]
-                        {
-                            new ChangeMoneyAction
-                            {
-                                Change = 10,
-                                IsImmediate = false,
-                                Condition = new GameEventCondition<RoundEndEvent>(),
-                            },
-                            new ScaleChangeMoneyAction
-                            {
-                                Change = -1,
-                                Condition = new GameEventCondition<BuildingPlacedEvent>(),
-                            },
-                            new ScaleChangeMoneyAction
-                            {
-                                Set = 10,
-                                Condition = new GameEventCondition<RoundStartEvent>(),
-                            },
-                        },
-                    },
+                        Change = 10,
+                        IsImmediate = false,
+                        Condition = new GameEventCondition<RoundEndEvent>(),
+                    }.And(new ScaleChangeMoneyAction
+                    {
+                        Change = -1,
+                        Condition = new GameEventCondition<FinalScoreReadyEvent>(),
+                    }).And(new ScaleChangeMoneyAction
+                    {
+                        Set = 10,
+                        Condition = new GameEventCondition<RoundStartEvent>(),
+                    }),
                 },
                 new()
                 {
@@ -1800,7 +1793,7 @@ namespace RogueIslands.Gameplay.Boosters
                 {
                     Name = "Heavy",
                     Description = "{score} score when the played\n" +
-                                  "building is {iron}.\n\n" +
+                                  "building is {iron}\n\n" +
                                   "Gains extra {addchange} when there\n" +
                                   "is an {iron} building in range",
                     BuyPrice = 4,
@@ -1837,7 +1830,7 @@ namespace RogueIslands.Gameplay.Boosters
                     Name = "ROBOX",
                     Description = "When a {farming} building <e>is triggered</e>,\n" +
                                   "{score} score for every {farming}\n" +
-                                  "building played in this run.",
+                                  "building played in this run",
                     BuyPrice = 5,
                     Rarity = Rare,
                     EventAction = new MultipliedScoringAction
@@ -1850,7 +1843,7 @@ namespace RogueIslands.Gameplay.Boosters
                 new()
                 {
                     Name = "Wood Working",
-                    Description = "{score} when the played building is {lumber}.\n\n" +
+                    Description = "{score} when the played building is {lumber}\n\n" +
                                   "Gains extra {addchange} when a {statue} building\n" +
                                   "is in range",
                     BuyPrice = 4,
@@ -1971,9 +1964,9 @@ namespace RogueIslands.Gameplay.Boosters
             {
                 Name = name,
                 Description = $"{{add}} score when a {{{color}}}\n" +
-                              "building <e>is triggered</e>.\n\n" +
+                              "building <e>is triggered</e>\n\n" +
                               "Gains extra {addchange} for \n" +
-                              $"every 2 {{{color}}} building played.",
+                              $"every 2 {{{color}}} building played",
                 BuyPrice = 3,
                 EventAction = new ScoringAction
                 {

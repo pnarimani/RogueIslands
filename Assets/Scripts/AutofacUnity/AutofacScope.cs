@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 namespace AutofacUnity
 {
@@ -36,6 +37,8 @@ namespace AutofacUnity
                 throw new InvalidOperationException("Cannot access container while it's building");
             _isBuilding = true;
 
+            Profiler.BeginSample("AutofacScope.Build");
+            
             if (AutofacSettings.Instance == null)
                 AutofacSettings.LoadInstanceFromResources();
 
@@ -51,6 +54,8 @@ namespace AutofacUnity
                     AutofacSettings.Instance.InitializeRootScope();
                 Container = AutofacSettings.Instance.RootScope.Container!.BeginLifetimeScope(this, Configure);
             }
+            
+            Profiler.EndSample();
         }
 
         protected virtual void Configure(ContainerBuilder builder)

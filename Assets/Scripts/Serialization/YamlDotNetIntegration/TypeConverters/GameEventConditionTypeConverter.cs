@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Boosters.Conditions;
 using RogueIslands.Gameplay.GameEvents;
 using YamlDotNet.Core;
@@ -16,10 +17,7 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
 
         public GameEventConditionTypeConverter()
         {
-            var types = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(x => x.GetTypes())
-                .Where(t => typeof(IGameEvent).IsAssignableFrom(t))
-                .ToArray();
+            var types = TypeDatabase.GetProjectTypesOf<IGameEvent>();
             _nameToType = types.ToDictionary(t => t.Name, t => t);
             _typeToName = types.ToDictionary(t => t, t => t.Name);
         }
