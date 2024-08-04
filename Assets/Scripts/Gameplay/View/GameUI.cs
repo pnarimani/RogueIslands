@@ -30,6 +30,10 @@ namespace RogueIslands.Gameplay.View
         [SerializeField] private Image _scoreFill;
         [SerializeField] private Transform _scoreParent;
         [SerializeField] private LabelFeedback _productFeedback;
+        [SerializeField] private GameObject _boosterSlot;
+        [SerializeField] private Transform _boosterSlotHolder;
+        
+
 
         private double _currentScore;
 
@@ -37,6 +41,8 @@ namespace RogueIslands.Gameplay.View
         {
             _deckButton.onClick.AddListener(() => GameManager.Instance.ShowDeckPreview());
             _optionsButton.onClick.AddListener(() => GameManager.Instance.ShowOptions());
+            
+            UpdateBoosterSlots();
         }
 
         public void ShowBuildingCard(Building building)
@@ -111,11 +117,25 @@ namespace RogueIslands.Gameplay.View
 
         public void ShowBoosterCard(BoosterCard booster)
         {
+            UpdateBoosterSlots();
             var card = Instantiate(_boosterPrefab, _boosterList);
             card.Initialize(booster);
 
             RefreshDate();
             RefreshMoney();
+        }
+
+        private void UpdateBoosterSlots()
+        {
+            while (_boosterSlotHolder.childCount < GameManager.Instance.State.MaxBoosters)
+            {
+                Instantiate(_boosterSlot, _boosterSlotHolder);
+            }
+
+            for (var i = GameManager.Instance.State.MaxBoosters; i < _boosterSlotHolder.childCount; i++)
+            {
+                Destroy(_boosterSlotHolder.GetChild(0).gameObject);
+            }
         }
 
         public bool IsInSpawnRegion(Vector3 screenPosition)
@@ -209,7 +229,8 @@ namespace RogueIslands.Gameplay.View
         public async void ShowStageInformation()
         {
             var state = GameManager.Instance.State;
-            _stageInformation.text = $"Act {state.Act + 1}/{GameState.TotalActs}\n<size=80%>Round {state.Round + 1}/{GameState.RoundsPerAct}";
+            _stageInformation.text =
+                $"Act {state.Act + 1}/{GameState.TotalActs}\n<size=80%>Round {state.Round + 1}/{GameState.RoundsPerAct}";
             _stageInformation.gameObject.SetActive(true);
             _stageInformation.transform.localScale = Vector3.zero;
             await _stageInformation.transform.DOScale(1, 0.25f)
