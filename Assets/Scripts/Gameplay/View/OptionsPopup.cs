@@ -18,7 +18,7 @@ namespace RogueIslands.Gameplay.View
         {
             _settings.onClick.AddListener(() => GameManager.Instance.ShowSettingsPopup());
             _resume.onClick.AddListener(() => Destroy(gameObject));
-            _leave.onClick.AddListener(() => StaticResolver.Resolve<IAssetLoader>().LoadScene("MainMenu"));
+            _leave.onClick.AddListener(() => StaticResolver.Resolve<IAssetLoader>().LoadScene("MainMenu", LoadSceneMode.Single));
             
             _seed.text = StaticResolver.Resolve<Seed>().Value;
         }

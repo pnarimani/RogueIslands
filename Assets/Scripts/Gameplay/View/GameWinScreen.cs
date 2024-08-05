@@ -2,6 +2,7 @@
 using RogueIslands.Autofac;
 using RogueIslands.UISystem;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace RogueIslands.Gameplay.View
@@ -12,7 +13,7 @@ namespace RogueIslands.Gameplay.View
         
         private void Start()
         {
-            _backToMenu.onClick.AddListener(() => StaticResolver.Resolve<IAssetLoader>().LoadScene("MainMenu"));
+            _backToMenu.onClick.AddListener(() => StaticResolver.Resolve<IAssetLoader>().LoadScene("MainMenu", LoadSceneMode.Single));
         }
     }
 }

@@ -17,6 +17,18 @@ namespace RogueIslands.Gameplay.View
 
         private void Start()
         {
+            InputHandling.Instance.Drag += OnDrag;
+            InputHandling.Instance.Scroll += OnScroll;
+            InputHandling.Instance.AltDrag += OnAltDrag;
+
+            _radiusTarget = _cinemachineCamera.Radius;
+            _horizontalAxisValue = _cinemachineCamera.HorizontalAxis.Value;
+
+            ClampRadiusTarget();
+        }
+
+        public void CalculateBounds()
+        {
             _bounds = new Bounds(Vector3.zero, Vector3.zero);
 
             foreach (var o in GameObject.FindGameObjectsWithTag("Environment"))
@@ -28,15 +40,6 @@ namespace RogueIslands.Gameplay.View
             }
 
             _bounds.Expand(30);
-
-            InputHandling.Instance.Drag += OnDrag;
-            InputHandling.Instance.Scroll += OnScroll;
-            InputHandling.Instance.AltDrag += OnAltDrag;
-
-            _radiusTarget = _cinemachineCamera.Radius;
-            _horizontalAxisValue = _cinemachineCamera.HorizontalAxis.Value;
-
-            ClampRadiusTarget();
         }
 
         private void OnAltDrag(Vector2 obj)

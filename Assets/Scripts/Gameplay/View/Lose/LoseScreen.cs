@@ -13,7 +13,7 @@ namespace RogueIslands.Gameplay.View.Lose
         
         private void Start()
         {
-            _back.onClick.AddListener(() => StaticResolver.Resolve<IAssetLoader>().LoadScene("MainMenu"));
+            _back.onClick.AddListener(() => StaticResolver.Resolve<IAssetLoader>().LoadScene("MainMenu", LoadSceneMode.Single));
         }
     }
 }

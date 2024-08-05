@@ -1,4 +1,5 @@
-﻿using RogueIslands.Assets;
+﻿using Cysharp.Threading.Tasks;
+using RogueIslands.Assets;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,15 +20,27 @@ namespace RogueIslands.UISystem
 
         public T Open<T>(UILayer layer = default)
         {
-            var layerTransform = _rootProvider.GetRoot(layer);
             var path = _registry.GetAssetKey<T>();
             var prefab = _assetLoader.Load<GameObject>(path);
+            return OpenInternal<T>(layer, prefab);
+        }
+
+        public async UniTask<T> OpenAsync<T>(UILayer layer = default)
+        {
+            var path = _registry.GetAssetKey<T>();
+            var prefab = await _assetLoader.LoadAsync<GameObject>(path);
+            return OpenInternal<T>(layer, prefab);
+        }
+
+        private T OpenInternal<T>(UILayer layer, GameObject prefab)
+        {
+            var layerTransform = _rootProvider.GetRoot(layer);
             var gameObject = Object.Instantiate(prefab, layerTransform, false);
-            AttachNestedCanvas(gameObject, layerTransform);
+            AttachNestedCanvas(gameObject);
             return gameObject.GetComponent<T>();
         }
 
-        private static void AttachNestedCanvas(GameObject gameObject, Transform layerTransform)
+        private static void AttachNestedCanvas(GameObject gameObject)
         {
             gameObject.AddComponent<Canvas>();
             gameObject.AddComponent<GraphicRaycaster>();

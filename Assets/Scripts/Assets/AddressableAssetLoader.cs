@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 
 namespace RogueIslands.Assets
 {
@@ -12,9 +14,14 @@ namespace RogueIslands.Assets
             return loadAsset.Result;
         }
 
-        public void LoadScene(string sceneName)
+        public UniTask<T> LoadAsync<T>(string key) where T : Object => Addressables.LoadAssetAsync<T>(key).ToUniTask();
+
+        public UniTask LoadSceneAsync(string sceneName, LoadSceneMode mode = LoadSceneMode.Single)
+            => Addressables.LoadSceneAsync(sceneName, mode).ToUniTask();
+
+        public void LoadScene(string sceneName, LoadSceneMode mode)
         {
-            Addressables.LoadSceneAsync(sceneName);
+            Addressables.LoadSceneAsync(sceneName, mode);
         }
     }
 }

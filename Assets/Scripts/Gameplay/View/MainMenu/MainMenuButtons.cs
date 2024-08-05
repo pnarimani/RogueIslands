@@ -13,7 +13,7 @@ namespace RogueIslands.Gameplay.View.MainMenu
 
         private void Start()
         {
-            _play.onClick.AddListener(() => StaticResolver.Resolve<IAssetLoader>().LoadScene("Gameplay"));
+            _play.onClick.AddListener(() => StaticResolver.Resolve<IAssetLoader>().LoadScene("Gameplay", LoadSceneMode.Single));
             _settingsButton.onClick.AddListener(() => StaticResolver.Resolve<IWindowOpener>().Open<SettingsPopup>());
             _quit.onClick.AddListener(Application.Quit);
         }

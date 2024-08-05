@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using RogueIslands.Assets;
 using RogueIslands.Autofac;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RogueIslands.Initialization
 {
@@ -17,7 +18,7 @@ namespace RogueIslands.Initialization
         {
             foreach (var step in StaticResolver.Resolve<IReadOnlyList<IInitializationStep>>()) await step.Initialize();
 
-            StaticResolver.Resolve<IAssetLoader>().LoadScene("MainMenu");
+            StaticResolver.Resolve<IAssetLoader>().LoadScene("MainMenu", LoadSceneMode.Single);
         }
     }
 }
