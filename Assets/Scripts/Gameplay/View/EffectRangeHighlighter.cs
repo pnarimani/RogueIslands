@@ -14,6 +14,8 @@ namespace RogueIslands.Gameplay.View
 
             foreach (var building in ObjectRegistry.GetBuildings())
             {
+                building.ShowLayout(true);
+                
                 if (building == center)
                 {
                     continue;
@@ -30,6 +32,7 @@ namespace RogueIslands.Gameplay.View
             {
                 view.Highlight(false);
                 view.ShowRange(false);
+                view.ShowLayout(false);
             }
         }
 

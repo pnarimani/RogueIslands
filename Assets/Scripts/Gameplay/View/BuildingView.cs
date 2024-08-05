@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Buildings;
@@ -9,7 +8,6 @@ using RogueIslands.Gameplay.View.Descriptions;
 using RogueIslands.Gameplay.View.Feedbacks;
 using RogueIslands.UISystem;
 using RogueIslands.View.Audio;
-using TMPro;
 using UnityEngine;
 
 namespace RogueIslands.Gameplay.View
@@ -25,10 +23,13 @@ namespace RogueIslands.Gameplay.View
         [SerializeField] private LabelFeedback _outputFeedback;
         [SerializeField] private LabelFeedback _bonusContainer;
         [SerializeField] private GameObject _invalidPlacement;
-        [SerializeField] private GameObject[] _layouts;
+        [SerializeField] private GameObject _modelParent;
+        [SerializeField] private GameObject[] _layoutPrefabs;
+
         private readonly List<LabelFeedback> _dryRunLabels = new();
 
         private GameObject _invalidPlacementInstance;
+        private GameObject _layoutInstance;
 
         public Building Data { get; private set; }
 
@@ -36,9 +37,30 @@ namespace RogueIslands.Gameplay.View
 
         public bool IsPreview { get; set; }
 
-        private void Awake()
+        public void Initialize(Building building)
         {
+            if (building.Id.IsDefault())
+                throw new InvalidOperationException();
+
+            Data = building;
+            _synergyRange.transform.localScale = Vector3.one * (building.Range * 2);
+
+            GetComponent<DescriptionBoxSpawner>().Initialize(building);
+
+            if (IsPlacedDown)
+                StaticResolver.Resolve<IBuildingAudio>().PlayBuildingPlaced();
+
+            for (var i = 0; i < _layoutPrefabs.Length; i++)
+                if ((int)building.Size == i)
+                {
+                    _layoutInstance = Instantiate(_layoutPrefabs[i], transform, false);
+                    var mesh = _layoutInstance.GetComponentInChildren<MeshRenderer>();
+                    mesh.material.color = building.Color.Color;
+                }
+
             SetLayerRecursively(gameObject, LayerMask.NameToLayer("Building"));
+            foreach (var col in _modelParent.GetComponentsInChildren<Collider>(true))
+                Destroy(col);
         }
 
         public async void BuildingTriggered(int score)
@@ -53,13 +75,13 @@ namespace RogueIslands.Gameplay.View
 
         public void ShowDryRunTrigger(Dictionary<int, int> triggerAndCount)
         {
-            foreach (var (trigger, count) in triggerAndCount) 
+            foreach (var (trigger, count) in triggerAndCount)
                 ShowDryRun(trigger * count, _outputFeedback);
         }
 
         public void ShowDryRunBonus(Dictionary<int, int> bonusAndCount)
         {
-            foreach (var (bonus, count) in bonusAndCount) 
+            foreach (var (bonus, count) in bonusAndCount)
                 ShowDryRun(bonus * count, _bonusContainer);
         }
 
@@ -73,7 +95,7 @@ namespace RogueIslands.Gameplay.View
 
         public void Highlight(bool highlight)
         {
-            _highlight.SetActive(highlight);
+            // _highlight.SetActive(highlight);
         }
 
         public void ShowRange(bool showRange)
@@ -98,39 +120,10 @@ namespace RogueIslands.Gameplay.View
             Destroy(feedback.gameObject);
         }
 
-        public void Initialize(Building building)
+        public void ShowLayout(bool show)
         {
-            if (building.Id.IsDefault())
-                throw new InvalidOperationException();
-
-            Data = building;
-            _synergyRange.transform.localScale = Vector3.one * (building.Range * 2);
-            var vector3 = transform.GetBounds(GetMeshRenderers()).size;
-            vector3.y = vector3.z;
-            vector3.z = 1;
-            _highlight.transform.localScale = vector3 * 1.5f;
-
-            GetComponent<DescriptionBoxSpawner>().Initialize(building);
-
-            if (IsPlacedDown)
-                StaticResolver.Resolve<IBuildingAudio>().PlayBuildingPlaced();
-
-            for (var i = 0; i < _layouts.Length; i++)
-            {
-                var active = (int)building.Size == i;
-                _layouts[i].SetActive(false);
-                if (active)
-                {
-                    var mesh = _layouts[i].GetComponentInChildren<MeshRenderer>();
-                    mesh.material.color = building.Color.Color;
-                }
-            }
-        }
-
-        public async UniTask BuildingMadeMoney(int money)
-        {
-            _moneyFeedback.GetComponentInChildren<TextMeshProUGUI>().text = "$" + money;
-            await _moneyFeedback.Play();
+            foreach (var rend in _layoutInstance.GetComponentsInChildren<MeshRenderer>(true))
+                rend.gameObject.SetActive(show);
         }
 
         private static void SetLayerRecursively(GameObject obj, int newLayer)
@@ -159,16 +152,10 @@ namespace RogueIslands.Gameplay.View
                     .SetParent(_invalidPlacement.transform, Vector3.zero);
                 _invalidPlacementInstance.SetActive(true);
             }
-            else if(isValidPlacement && _invalidPlacementInstance != null)
+            else if (isValidPlacement && _invalidPlacementInstance != null)
             {
                 Destroy(_invalidPlacementInstance);
             }
-        }
-
-        public IEnumerable<MeshRenderer> GetMeshRenderers()
-        {
-            return GetComponentsInChildren<MeshRenderer>()
-                .Where(m => m.gameObject != _synergyRange && m.gameObject != _highlight);
         }
 
         private void ShowDryRun(double bonus, LabelFeedback source)
@@ -180,9 +167,33 @@ namespace RogueIslands.Gameplay.View
             _dryRunLabels.Add(instance);
         }
 
-        private static Transform GetOverlayRoot()
+        private static Transform GetOverlayRoot() =>
+            StaticResolver.Resolve<IUIRootProvider>().GetRoot(new UILayer("OverlayLayer"));
+
+        private void OnDrawGizmos()
         {
-            return StaticResolver.Resolve<IUIRootProvider>().GetRoot(new UILayer("OverlayLayer"));
+            foreach (var bounds in GetAllBounds().Bounds)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireCube(bounds.center, bounds.size);
+            }
+        }
+
+        public CompositeBounds GetAllBounds()
+        {
+            if (Data == null)
+                return new CompositeBounds(Vector3.zero, Array.Empty<Bounds>());
+
+            var colliders = _layoutInstance.GetComponentsInChildren<BoxCollider>(true);
+            var bounds = new Bounds[colliders.Length];
+            for (var i = 0; i < colliders.Length; i++)
+            {
+                var col = colliders[i];
+                var colliderBounds = new Bounds(col.transform.position + col.center, col.size);
+                bounds[i] = colliderBounds;
+            }
+
+            return new CompositeBounds(transform.position, bounds);
         }
     }
 }

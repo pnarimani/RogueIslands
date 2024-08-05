@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1602206855645372692
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,37 +7,31 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Water
-  m_Shader: {fileID: 4800000, guid: efcaf526ceb1f4efd9eb4e4c30c6ade6, type: 3}
+  m_Name: Beach
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _COLORMODE_LINEAR
-  - _FOAMMODE_GRADIENT_NOISE
-  - _WAVEMODE_GRID
-  m_InvalidKeywords:
-  - _OPAQUE_OFF
+  - _METALLICSPECGLOSSMAP
+  - _NORMALMAP
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap:
-    RenderType: Transparent
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 5baec0008b151c44a99d1dbe0af429c4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ColorGradient:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: d5ed2b33e6fff654cb08ef35673d38d8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -70,15 +51,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 5baec0008b151c44a99d1dbe0af429c4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NoiseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: fcdeefcc3a93ebd439ffab8879c3b57f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -114,9 +91,6 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _ColorMode: 0
-    - _CrestSharpness: 0.1
-    - _CrestSize: 0.066
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
@@ -124,33 +98,15 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _FadeDistance: -0.17
-    - _FoamAmount: 0.16
-    - _FoamDepth: 0.5
-    - _FoamDirection: 0
-    - _FoamMode: 1
-    - _FoamNoiseAmount: 1
-    - _FoamScale: 1
-    - _FoamSharpness: 0.5
-    - _FoamSpeed: 0.1
-    - _FoamStretchX: 1
-    - _FoamStretchY: 1
     - _GlossMapScale: 1
-    - _Glossiness: 0
+    - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LightContribution: 0.043
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Opaque: 0
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RefractionAmplitude: 0.01
-    - _RefractionFrequency: 35
-    - _RefractionScale: 1
-    - _RefractionSpeed: 0.1
-    - _ShadowStrength: 0.189
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -158,23 +114,24 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _UVSec: 0
-    - _WaterClearness: 0
-    - _WaterDepth: 17.36
-    - _WaveAmplitude: 0.14
-    - _WaveDirection: 0.36
-    - _WaveFrequency: 1
-    - _WaveMode: 2
-    - _WaveNoise: 0.935
-    - _WaveSpeed: 0.5
     - _WorkflowMode: 1
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0, g: 0.779325, b: 1, a: 1}
-    - _Color: {r: 0, g: 0.779325, b: 1, a: 1}
-    - _ColorDeep: {r: 0.24959952, g: 0.7359588, b: 0.745283, a: 1}
-    - _ColorShallow: {r: 0.35857958, g: 0.9526819, b: 0.9622642, a: 1}
-    - _CrestColor: {r: 0.6556604, g: 0.9955281, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.9063317, g: 0.9063317, b: 0.9063317, a: 1}
+    - _Color: {r: 0.9063317, g: 0.9063317, b: 0.9063317, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &2036049266045013412
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7

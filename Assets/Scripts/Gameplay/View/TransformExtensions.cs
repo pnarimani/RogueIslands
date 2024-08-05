@@ -43,24 +43,5 @@ namespace RogueIslands.Gameplay.View
             ArrayPool<Vector3>.Shared.Return(corners);
             return new Rect(min, max - min);
         }
-
-        public static Bounds GetBounds(this Transform root, IEnumerable<MeshRenderer> renderers)
-        {
-            var bounds = new Bounds(root.position, Vector3.zero);
-            foreach (var ren in renderers)
-            {
-                var rendererBounds = ren.localBounds;
-                rendererBounds.center = ren.transform.position;
-                var size = rendererBounds.size;
-                var scale = ren.transform.lossyScale;
-                size.x *= scale.x;
-                size.y *= scale.y;
-                size.z *= scale.z;
-                rendererBounds.size = size;
-                bounds.Encapsulate(rendererBounds);
-            }
-
-            return bounds;
-        }
     }
 }
