@@ -170,7 +170,7 @@ namespace RogueIslands.Gameplay.View
         private static Transform GetOverlayRoot() =>
             StaticResolver.Resolve<IUIRootProvider>().GetRoot(new UILayer("OverlayLayer"));
 
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             foreach (var bounds in GetAllBounds().Bounds)
             {
