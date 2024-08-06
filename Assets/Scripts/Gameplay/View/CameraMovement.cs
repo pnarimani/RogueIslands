@@ -36,6 +36,7 @@ namespace RogueIslands.Gameplay.View
                 foreach (var r in o.GetComponentsInChildren<MeshRenderer>())
                 {
                     _bounds.Encapsulate(r.bounds);
+                    r.renderingLayerMask = 1 << 1;
                 }
             }
 

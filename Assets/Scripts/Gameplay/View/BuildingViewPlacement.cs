@@ -129,6 +129,8 @@ namespace RogueIslands.Gameplay.View
         {
             using var profiler = ProfilerScope.Begin();
 
+            float? previousHitDistance = null;
+
             foreach (var bounds in allBounds.Bounds)
             {
                 var min = -bounds.extents;
@@ -152,7 +154,6 @@ namespace RogueIslands.Gameplay.View
                     new(bottomRight, Vector3.down),
                 };
 
-                float? previousHitDistance = null;
                 foreach (var ray in rays)
                 {
                     if (!Physics.Raycast(ray, out var hit, 1.5f, _groundMask | _buildingMask))
