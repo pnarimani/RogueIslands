@@ -51,7 +51,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 12, y: 5, z: 12}
+  m_Size: {x: 10, y: 5, z: 10}
   m_Center: {x: 0, y: 2.5, z: 0}
 --- !u!1 &4307600520429270780
 GameObject:
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_DecalLayerMask: 2
   m_ScaleMode: 0
   m_Offset: {x: 0, y: 0, z: 0}
-  m_Size: {x: 18, y: 18, z: 10}
+  m_Size: {x: 14.76, y: 14.76, z: 10}
   m_FadeFactor: 1
 --- !u!1001 &5422938862272125100
 PrefabInstance:
@@ -199,6 +199,18 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 877ec2d7e999a8545a24e39fdc925adc, type: 2}
+    - target: {fileID: -3153699681748286946, guid: 360c1ac2761798d489ea5655dbd9ef63, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.82
+      objectReference: {fileID: 0}
+    - target: {fileID: -3153699681748286946, guid: 360c1ac2761798d489ea5655dbd9ef63, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.82
+      objectReference: {fileID: 0}
+    - target: {fileID: -3153699681748286946, guid: 360c1ac2761798d489ea5655dbd9ef63, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -1857257970752255197, guid: 360c1ac2761798d489ea5655dbd9ef63, type: 3}
       propertyPath: m_IsActive
       value: 0
