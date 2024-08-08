@@ -8,5 +8,12 @@ namespace RogueIslands.Gameplay.Boosters.Actions
     {
         public ResetRetriggersAction() =>
             Condition = new GameEventCondition<ResetRetriggersEvent>();
+
+        protected override bool ExecuteAction(IBooster booster)
+        {
+            var retrigger = booster.GetEventAction<RetriggerBuildingAction>();
+            retrigger.RemainingTriggers = retrigger.RetriggerTimes;
+            return true;
+        }
     }
 }

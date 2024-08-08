@@ -9,9 +9,9 @@ namespace RogueIslands.Gameplay.Boosters.Sources
     {
         public ISource<Building> Source { get; set; }
 
-        public IEnumerable<Building> Get(GameState state, IBooster booster)
+        public IEnumerable<Building> Get(IBooster booster)
         {
-            return Source.Get(state, booster).Distinct(new Comparer());
+            return Source.Get(booster).Distinct(new Comparer());
         }
         
         private struct Comparer : IEqualityComparer<Building>

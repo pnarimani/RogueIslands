@@ -22,7 +22,7 @@ namespace RogueIslands.Serialization.YamlDotNetIntegration.TypeConverters
             _typeToName = types.ToDictionary(t => t, t => t.Name);
         }
 
-        public bool Accepts(Type type) => typeof(IGameEventCondition).IsAssignableFrom(type);
+        public bool Accepts(Type type) => typeof(GameEventCondition).IsAssignableFrom(type);
 
         public object ReadYaml(IParser parser, Type type)
         {

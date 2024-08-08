@@ -2,5 +2,6 @@
 {
     public interface IGameCondition
     {
+        bool Evaluate(IBooster booster);
     }
 }

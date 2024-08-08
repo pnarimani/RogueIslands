@@ -181,7 +181,7 @@ namespace RogueIslands.Gameplay.View.Descriptions
 
             if (multipliedScoring != null)
             {
-                var factor = multipliedScoring.Factor.Get(GameManager.Instance.State, booster).First();
+                var factor = multipliedScoring.Factor.Get(booster).First();
 
 
                 if (multipliedScoring?.Addition != null)

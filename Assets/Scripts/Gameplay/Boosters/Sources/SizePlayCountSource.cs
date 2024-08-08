@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Buildings;
 
 namespace RogueIslands.Gameplay.Boosters.Sources
@@ -7,9 +8,10 @@ namespace RogueIslands.Gameplay.Boosters.Sources
     {
         public ISource<BuildingSize> Size { get; set; }
 
-        public IEnumerable<int> Get(GameState state, IBooster booster)
+        public IEnumerable<int> Get(IBooster booster)
         {
-            foreach (var size in Size.Get(state, booster))
+            var state = StaticResolver.Resolve<GameState>();
+            foreach (var size in Size.Get(booster))
             {
                 state.Metadata.RoundSizePlayCount.TryGetValue(size, out var value);
                 yield return value;

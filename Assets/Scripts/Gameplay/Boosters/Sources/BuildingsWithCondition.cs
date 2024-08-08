@@ -10,15 +10,14 @@ namespace RogueIslands.Gameplay.Boosters.Sources
         public ISource<Building> Source { get; set; }
         public IGameConditionWithSource<Building> Condition { get; set; }
 
-        public IEnumerable<Building> Get(GameState state, IBooster booster)
+        public IEnumerable<Building> Get(IBooster booster)
         {
-            var controller = StaticResolver.Resolve<GameConditionsController>();
             var instance = new Instance<Building>();
             Condition.Source = instance;
-            foreach (var building in Source.Get(state, booster))
+            foreach (var building in Source.Get(booster))
             {
                 instance.Value = building;
-                if (controller.IsConditionMet(booster, Condition))
+                if (Condition.Evaluate(booster))
                     yield return building;
             }
         }

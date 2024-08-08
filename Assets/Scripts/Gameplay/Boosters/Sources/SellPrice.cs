@@ -7,9 +7,9 @@ namespace RogueIslands.Gameplay.Boosters.Sources
     {
         public ISource<T> Source { get; set; }
 
-        public IEnumerable<int> Get(GameState state, IBooster booster)
+        public IEnumerable<int> Get(IBooster booster)
         {
-            yield return Source.Get(state, booster).Sum(c =>
+            yield return Source.Get(booster).Sum(c =>
             {
                 if (c is IPurchasableItem item)
                     return item.SellPrice;

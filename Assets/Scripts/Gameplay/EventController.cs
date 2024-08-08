@@ -15,11 +15,9 @@ namespace RogueIslands.Gameplay
     public class EventController : IEventController
     {
         private readonly GameState _state;
-        private readonly GameActionController _gameActionController;
 
-        public EventController(GameState state, GameActionController gameActionController)
+        public EventController(GameState state)
         {
-            _gameActionController = gameActionController;
             _state = state;
         }
 
@@ -38,7 +36,7 @@ namespace RogueIslands.Gameplay
                 {
                     _state.CurrentEvent = e;
                     if (_state.Boosters.Contains((BoosterCard)booster))
-                        ExecuteBooster(booster);
+                        booster.EventAction?.Execute(booster);
                 }
             }
             catch (Exception exception)
@@ -48,17 +46,6 @@ namespace RogueIslands.Gameplay
             finally
             {
                 _state.CurrentEvent = null;
-            }
-        }
-
-        private void ExecuteBooster(IBooster b)
-        {
-            if (b.EventAction == null)
-                return;
-
-            if (_gameActionController.Execute(b, b.EventAction))
-            {
-                // Execute(new BoosterScoredEvent { Booster = b });
             }
         }
     }

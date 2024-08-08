@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Boosters.Conditions;
 using RogueIslands.Gameplay.Buildings;
 using RogueIslands.Serialization;
@@ -42,6 +43,15 @@ namespace RogueIslands.Gameplay.DryRun
         {
             Profiler.BeginSample("DryRunScoringController.ExecuteDryRun");
 
+            StaticResolver.AddContainer(_scope);
+            Run(building);
+            StaticResolver.RemoveContainer(_scope);
+
+            Profiler.EndSample();
+        }
+
+        private void Run(Building building)
+        {
             var clonedBuilding = _cloner.Clone(building);
 
             CloneRealGameToFakeGame(clonedBuilding);
@@ -55,8 +65,6 @@ namespace RogueIslands.Gameplay.DryRun
             _scoringController.ScoreBuilding(clonedBuilding);
 
             _fakeView.ShowDryRunResults();
-
-            Profiler.EndSample();
         }
 
         private void CloneRealGameToFakeGame(Building clonedBuilding)

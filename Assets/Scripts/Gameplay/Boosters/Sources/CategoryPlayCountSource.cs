@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RogueIslands.Autofac;
 using RogueIslands.Gameplay.Buildings;
 
 namespace RogueIslands.Gameplay.Boosters.Sources
@@ -7,8 +8,9 @@ namespace RogueIslands.Gameplay.Boosters.Sources
     {
         public Category Category { get; set; }
 
-        public IEnumerable<int> Get(GameState state, IBooster booster)
+        public IEnumerable<int> Get(IBooster booster)
         {
+            var state = StaticResolver.Resolve<GameState>();
             state.Metadata.RunCategoryPlayCount.TryGetValue(Category, out var value);
             return new[] { value };
         }

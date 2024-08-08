@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using RogueIslands.Gameplay.Boosters.Sources;
 using RogueIslands.Gameplay.Buildings;
 
@@ -36,6 +37,19 @@ namespace RogueIslands.Gameplay.Boosters.Conditions
         {
             Source = source;
             Categories = new List<Category> { category };
+        }
+
+        public bool Evaluate(IBooster booster)
+        {
+            Source ??= new BuildingFromCurrentEvent();
+            
+            foreach (var building in Source.Get(booster))
+            {
+                if (!Categories.Contains(building.Category))
+                    return false;
+            }
+
+            return true;
         }
     }
 }

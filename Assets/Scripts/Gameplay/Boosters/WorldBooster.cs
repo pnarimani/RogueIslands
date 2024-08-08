@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using RogueIslands.Gameplay.Boosters.Actions;
-using RogueIslands.Gameplay.Boosters.Evaluators;
 using RogueIslands.Gameplay.Descriptions;
 using UnityEngine;
 
@@ -16,7 +14,6 @@ namespace RogueIslands.Gameplay.Boosters
         public float Range { get; set; }
         public DescriptionData Description { get; set; }
         public GameAction EventAction { get; set; }
-        public IReadOnlyList<GameConditionEvaluator> EvaluationOverrides { get; set; }
         public string PrefabAddress { get; set; }
 
         public bool Equals(WorldBooster other)

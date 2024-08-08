@@ -1,3 +1,5 @@
+using RogueIslands.Autofac;
+
 namespace RogueIslands.Gameplay.Boosters.Conditions
 {
     public class TimeCondition : IGameCondition
@@ -27,6 +29,21 @@ namespace RogueIslands.Gameplay.Boosters.Conditions
             {
                 FromStart = true,
                 Time = 0,
+            };
+        }
+
+        public bool Evaluate(IBooster booster)
+        {
+            var state = StaticResolver.Resolve<GameState>();
+            return TimeMode switch
+            {
+                Mode.Round => FromStart
+                    ? state.Round == Time
+                    : state.Round == GameState.RoundsPerAct - Time,
+                Mode.Act => FromStart
+                    ? state.Act == Time
+                    : state.Act == GameState.TotalActs - Time,
+                _ => false,
             };
         }
     }

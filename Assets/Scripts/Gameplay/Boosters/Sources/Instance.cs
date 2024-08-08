@@ -6,7 +6,7 @@ namespace RogueIslands.Gameplay.Boosters.Sources
     {
         public T Value { get; set; }
 
-        public IEnumerable<T> Get(GameState state, IBooster booster)
+        public IEnumerable<T> Get(IBooster booster)
         {
             yield return Value;
         }
